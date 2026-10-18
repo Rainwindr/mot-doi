@@ -7,6 +7,7 @@ const head = `<!doctype html>
 <html lang="vi">
 <head>
 <meta charset="utf-8">
+<title>Một Đời</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
