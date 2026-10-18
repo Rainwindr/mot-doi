@@ -251,5 +251,5 @@ export function endAllLovers(life) {
   syncAffair(life);
 }
 /** Ai có thể quyến rũ: người lớn ngoài gia đình. Không bao giờ có bố mẹ, anh chị em, con cái, thú cưng hay người dưới 18. */
-export const SEDUCIBLE = ['friend', 'bestie', 'contact', 'ex', 'rival', 'mentor', 'coworker', 'neighbor'];
+export const SEDUCIBLE = ['friend', 'bestie', 'contact', 'ex', 'rival', 'mentor', 'coworker', 'neighbor', 'boss'];
 export const canSeduce = (life, p) => p.alive && life.age >= 18 && p.age >= 18 && SEDUCIBLE.includes(p.role);

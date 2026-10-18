@@ -102,6 +102,16 @@ export const CHEST = {
   costume: { em: '🦸', units: 5, name: L('Trang phục cosplay', 'Cosplay costume') },
   rope: { em: '🪢', units: 2, name: L('Dây shibari', 'Shibari rope') },
   book: { em: '📕', units: 2, name: L('Sổ tay 36 tư thế', 'The 36 Positions Handbook') },
+  boa: { em: '🪶', tour: true, name: L('Khăn lông vũ burlesque', 'Burlesque feather boa') },
+  mask: { em: '🎭', tour: true, name: L('Mặt nạ lễ hội', 'Carnival mask') },
+  artbook: { em: '📖', tour: true, name: L('Sách nghệ thuật khiêu gợi', 'Erotic art book') },
+  yukata: { em: '👘', tour: true, name: L('Yukata lụa', 'Silk yukata') },
+  neon: { em: '💗', tour: true, name: L('Đèn neon trái tim', 'Neon heart sign') },
+};
+export const ROOMS = {
+  red: { em: '🟥', name: L('Phòng đỏ', 'The red room'), text: L('Ánh đèn đỏ, lụa đỏ, và một cánh cửa luôn khóa.', 'Red light, red silk, and a door that\'s always locked.') },
+  mirror: { em: '🪞', name: L('Phòng gương', 'The mirror room'), text: L('Gương ở mọi bức tường. Không có góc nào để trốn.', 'Mirrors on every wall. Nowhere to hide.') },
+  theme: { em: '🌴', name: L('Phòng chủ đề', 'The theme room'), text: L('Hôm nay là rừng nhiệt đới, ngày mai là văn phòng giám đốc.', 'Today a jungle, tomorrow a CEO\'s office.') },
 };
 
 const P = (vi, en) => L(vi, en);
@@ -583,7 +593,7 @@ export const IX_ACTIVITIES = [
 
 function shopMenu(life) {
   const m = me(life);
-  const items = Object.entries(CHEST).filter(([k]) => !m.chest.includes(k));
+  const items = Object.entries(CHEST).filter(([k, it]) => !it.tour && !m.chest.includes(k));
   if (!items.length) return res(L('Rương bí mật của bạn đã đầy đủ mọi thứ.', 'Your secret chest already has everything.'), []);
   return modal('ix/shop', L('Cửa hàng kín đáo, giao hàng không ghi tên người gửi. Mua gì?', 'A discreet shop, unmarked delivery. What will you buy?'), items.map(([k, it]) => ({
     label: L(`${it.em} ${it.name.vi}`, `${it.em} ${it.name.en}`),
@@ -627,7 +637,7 @@ function sugarFind(life, st) {
   const tiers = (p) => (lf) => ({ uid: 'ix/sugar_deal', text: L(`Thương lượng trợ cấp hằng năm với ${nm(lf, p)}.`, `Negotiate a yearly allowance with ${nm(lf, p)}.`), choices: [[L('Khiêm tốn', 'Modest'), 20, 0.55], [L('Rộng rãi', 'Generous'), 50, 0.8], [L('Không giới hạn', 'Lavish'), 120, 0.97]].map(([lb, a, c]) => ({
     label: L(`${lb.vi} · ${a}% thu nhập TB/năm`, `${lb.en} · ${a}% of avg income/yr`),
     outcomes: [
-      oc(L(`${nm(lf, p)} đồng ý. Hai người bắt tay, rồi nhiều hơn thế.`, `${nm(lf, p)} agrees. You shake hands, and then some.`), { happy: 8 }, (x) => { if (!x.people.includes(p)) x.people.push(p); p.baby = true; p.allow = u(x, a); makeLover(x, p); p.wasLover = true; me(x).babies++; addLog(x, L(`${nm(x, p)} trở thành sugar baby của bạn.`, `${nm(x, p)} becomes your sugar baby.`), 'good'); }, null, agree(lf, p, c - 0.15, true)),
+      oc(L(`${nm(lf, p)} đồng ý. Hai người bắt tay, rồi nhiều hơn thế.`, `${nm(lf, p)} agrees. You shake hands, and then some.`), { happy: 8 }, (x) => { if (!x.people.includes(p)) x.people.push(p); p.baby = true; p.allow = u(x, a); p.term = 3; makeLover(x, p); p.wasLover = true; me(x).babies++; addLog(x, L(`${nm(x, p)} trở thành sugar baby của bạn.`, `${nm(x, p)} becomes your sugar baby.`), 'good'); }, null, agree(lf, p, c - 0.15, true)),
       oc(L(`${nm(lf, p)} cười: "Tôi đáng giá hơn thế."`, `${nm(lf, p)} laughs: "I'm worth more than that."`), { happy: -3 }, null, null, 1 - agree(lf, p, c - 0.15, true)),
     ],
   })) });
@@ -1017,6 +1027,8 @@ export function intimateScene25(life, st, p, closer) {
     { label: L('Bãi biển vắng lúc nửa đêm', 'A deserted beach at midnight'), text: L('Sóng, sao, và cát ở những chỗ không ngờ tới.', 'Waves, stars, and sand in unexpected places.') },
     { label: L('Trong bếp', 'The kitchen'), text: L('Nồi canh trào. Bữa tối gọi đồ ăn ngoài.', 'The soup boils over. Dinner is takeaway.') },
   ];
+  const rm = me(life).room && ROOMS[me(life).room];
+  if (rm) places.unshift({ label: L(`${rm.em} ${rm.name.vi}`, `${rm.em} ${rm.name.en}`), text: L(`${rm.text.vi} Hai người ở trong đó đến sáng.`, `${rm.text.en} You stay in there till morning.`), after: (lf) => { lf.stats.happy = clamp(lf.stats.happy + 4); x.fire = clamp(x.fire + 6); } });
   return {
     event: {
       uid: 'ix/intimate', text: L(`Bạn muốn gần gũi với ${name}. Ở đâu?`, `You want some intimacy with ${name}. Where?`),

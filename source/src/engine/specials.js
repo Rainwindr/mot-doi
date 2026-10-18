@@ -153,7 +153,7 @@ export function specialYear(life) {
 const fmt = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${(n / 1e3).toFixed(1)}K` : String(n));
 export const followersText = (n) => fmt(n || 0);
 
-function gainFollowers(life, base, viralP) {
+export function gainFollowers(life, base, viralP) {
   const so = (life.social ||= { followers: 0, posts: 0 });
   const before = so.followers;
   const viral = chance(life, viralP);

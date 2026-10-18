@@ -12,6 +12,8 @@ import { choiceLocked } from './events.js';
 import { assignGoals } from './goals.js';
 import { buildCareerSys } from './career.js';
 import { buildIxSys, inheritSecrets } from './intimacy.js';
+import { buildHaremSys } from './harem.js';
+import { buildWorldSys } from './world.js';
 import big from '../data/packs/core_big.json';
 import love from '../data/packs/love_core.json';
 import coreLife from '../data/packs/core_life.json';
@@ -108,7 +110,7 @@ export function currentEvent(game) {
   while (life.queue.length) {
     const item = life.queue[0];
     if (item.sys) {
-      const ev = buildSysEvent(life, item, game.settings) || buildCrimeSys(life, item) || buildLoveSys(life, item) || buildArcEvent(life, item) || buildCareerSys(life, item) || buildIxSys(life, item, game.settings);
+      const ev = buildSysEvent(life, item, game.settings) || buildCrimeSys(life, item) || buildLoveSys(life, item) || buildArcEvent(life, item) || buildCareerSys(life, item) || buildIxSys(life, item, game.settings) || buildHaremSys(life, item, game.settings) || buildWorldSys(life, item, game.settings);
       if (ev && ev.choices.every((c) => choiceLocked(life, c))) ev.choices = ev.choices.map((c, i) => (i === ev.choices.length - 1 ? { ...c, requires: undefined } : c));
       if (ev) return ev;
       life.queue.shift();

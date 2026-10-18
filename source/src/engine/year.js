@@ -12,6 +12,8 @@ import { economyYear, netWorth, livesInOwnHome } from './economy.js';
 import { prisonYear, cobornYear } from './crime.js';
 import { loveYear } from './love.js';
 import { ixYear, funeral } from './intimacy.js';
+import { haremYear, haremFuneral } from './harem.js';
+import { worldYear } from './world.js';
 import { arcYear } from './arcs.js';
 
 /** Xác suất chết trong năm. */
@@ -195,6 +197,8 @@ export function ageUp(life, events, settings) {
   economyYear(life);
   loveYear(life);
   ixYear(life, settings);
+  haremYear(life, settings);
+  worldYear(life, settings);
   arcYear(life);
   cobornYear(life, mortality);
   life.counts.maxMoney = Math.max(life.counts.maxMoney, netWorth(life));
@@ -222,6 +226,8 @@ export function die(life, cause) {
   life.cause = cause || causeFor(life);
   addLog(life, L(`Bạn qua đời ở tuổi ${life.age} vì ${life.cause.vi}.`, `You die at age ${life.age} from ${life.cause.en}.`), 'bad');
   funeral(life);
+  const hf = haremFuneral(life);
+  if (hf) { (life.funeral ||= []).push(hf); addLog(life, hf); }
   life.ribbons = ribbonsFor(life);
 }
 
@@ -254,6 +260,10 @@ export const RIBBONS = {
   carer: { name: L('Bậc thầy chăm sóc', 'Aftercare expert'), why: L('Chăm sóc người ấy sau cảnh từ 30 lần', 'Gave aftercare 30 or more times') },
   posmaster: { name: L('Bậc thầy sổ tay', 'Handbook master'), why: L('Đã thử đủ 36/36 tư thế', 'Tried all 36 positions') },
   sugarlegend: { name: L('Sugar huyền thoại', 'Sugar legend'), why: L('Bao bọc từ 5 sugar baby', 'Kept five or more sugar babies') },
+  harem: { name: L('Hậu cung', 'Harem'), why: L('Giữ hậu cung từ 4 người trở lên trong 10 năm', 'Kept a harem of 4+ for 10 years') },
+  peace: { name: L('Thái bình thịnh trị', 'Golden age'), why: L('Hậu cung trên 5 năm, Hòa hợp chưa bao giờ dưới 50', 'A harem for 5+ years, harmony never below 50') },
+  coup: { name: L('Sống sót qua cung đấu', 'Survived the palace intrigue'), why: L('Dập tắt một cuộc đảo chính trong nhà', 'Crushed a coup at home') },
+  island: { name: L('Chủ đảo', 'Island ruler'), why: L('Có hậu cung trên đảo riêng', 'Kept a harem on a private island') },
   crowdfuneral: { name: L('Đám tang đông nhất', 'Packed funeral'), why: L('Từ 5 người tình dự đám tang', 'Five or more lovers at the funeral') },
   mediocre: { name: L('Bình thường', 'Ordinary'), why: L('Một đời không có gì đặc biệt', 'An unremarkable life') },
 };
@@ -292,6 +302,13 @@ export function ribbonsFor(life) {
     if (ix.babies >= 5) r.push('sugarlegend');
   }
   if ((life.counts.funeralLovers || 0) >= 5) r.push('crowdfuneral');
+  const hh = life.harem;
+  if (hh) {
+    if (hh.years4 >= 10) r.push('harem');
+    if (hh.years >= 5 && hh.minHarm >= 50) r.push('peace');
+    if (hh.coup) r.push('coup');
+    if (hh.house === 'island' && hh.members.length) r.push('island');
+  }
   // Đời tùy chỉnh (God Mode / Tự do) không nhận ribbon khó
   const HARD = ['loaded', 'academic', 'longlived', 'saint', 'famous', 'tycoon', 'houdini', 'cunning'];
   const out = life.customized ? r.filter((k) => !HARD.includes(k)) : r;

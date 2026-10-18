@@ -20,7 +20,10 @@ import { resolveEscape, resolveCasino, resolveOlympiad, resolveRace, resolveBlac
 import { SPECIALS, canJoin, specialAction, followersText } from '../engine/specials.js';
 import { GOALS, goalById, checkGoals, ACHIEVEMENTS, archiveLife, emptyProfile } from '../engine/goals.js';
 import { emigrate, emigrationOdds, emigrationCost, cobornName } from '../engine/crime.js';
-import { ATT, attOf, attOptions, KINKS, KINK_GROUPS, kinkById, CHEST, POSITIONS, POS_LEVELS, posLevel, prof, me, firmOf, adultOK, ROM as ROM_ROLES } from '../engine/intimacy.js';
+import { ATT, attOf, attOptions, KINKS, KINK_GROUPS, kinkById, CHEST, POSITIONS, POS_LEVELS, posLevel, prof, me, firmOf, adultOK, ROM as ROM_ROLES, ROOMS } from '../engine/intimacy.js';
+import { members as hMembers, inHarem, hm, titleOf, HTRAITS, HOUSES, relOf, haremActions } from '../engine/harem.js';
+import { ensureTeam, teamPeople, DYN } from '../engine/world.js';
+import { doHaremAction, doAll } from '../engine/actions.js';
 
 // ───────── Lưu trữ (an toàn khi trình duyệt chặn) ─────────
 const KEY = { gate: 'motdoi.gate', settings: 'motdoi.settings', save: 'motdoi.save', packs: 'motdoi.packs', profile: 'motdoi.profile' };
@@ -105,14 +108,15 @@ const ARC_EM = { bestie: '🤜', rival: '😤', firstlove: '💌', mentor: '🎓
 const evEmoji = (ev) => (!ev ? null : ev.big ? '🌟' : ev.arc ? ARC_EM[ev.arc] || '📖' : UID_EM[ev.uid] || CAT_EM[ev.category] || null);
 const GROUP_EM = { fun: '🎬', shop: '🛍️', life: '🌈', pet: '🐾', money: '🏦', net: '📱', kid: '🧸', teen: '🎒', mind: '🧠', night: '🌃', love: '💘', adult: '🔞', crime: '🦹', prison: '⛓️' };
 const ACT_EM = {
+  post_selfie: '🤳', post_travel: '🏝️', post_food: '🍜', post_couple: '💑', post_dance: '💃', post_vlog: '🎥', post_trend: '📈', post_sexy: '🔥', post_boudoir: '📸', post_sexyvid: '🎞️', post_harem: '👑', cr_open: '🔞', cr_photo: '📷', cr_video: '🎬', cr_live: '🔴', cr_request: '💌', cr_collab: '👥', cr_close: '🔒', nudist: '🏖️', onsen: '♨️', nighttour: '🌃', yachtbuy: '🛥️', yachtparty: '🥂', secretroom: '🚪', nc_open: '🪩', nc_theme: '🎶', nc_staff: '🧑‍🍳', nc_vip: '💎', nc_adult: '🔞', nc_sell: '🏷️',
   adultshop: '🛍️', club25: '🎭', sugarfind: '💎', fling: '✈️', ropeclass: '🪢', memoir: '📓',
   language: '🗣️', instrument: '🎹', martial: '🥋', yoga: '🧘', hike: '🥾', diet: '🥗', spa: '💆', movie: '🍿', concert: '🎤', cook: '🍳', garden: '🌱', comics: '📚', boardgame: '🎲', luxury: '👜', thrift: '🧥', tattoo: '🖋️', hairdye: '💇', license: '🚗', travel: '🧳', comeout: '🏳️‍🌈', donate: '🤲', will: '📜', rename: '🪪', adopt_pet: '🐾', loan: '🏦', repay: '💳', insure: '🛡️',
   cry: '😭', toys: '🧸', mischief: '😈', cartoons: '📺', friends: '🧑‍🤝‍🧑', art: '🎨', sleepover: '🛏️', swim: '🏊', tutor: '📚', sportclub: '⚽', band: '🎸', volunteer: '🤲', chores: '🧹', games: '🎮',
   net_photo: '📸', net_video: '🎥', net_live: '📡', net_sponsor: '🤑', races: '🏇', blackjack: '🃏', social: '📱', gym: '🏋️', library: '📖', meditate: '🧘', doctor: '🩺', vacation: '✈️', surgery: '💉', bar: '🍺', club: '🪩', casino: '🎰', lottery: '🎟️', date: '💐', app: '📲', hookup: '🔥', affair: '🤫',
   prison_escape: '🏃', prison_parole: '📝', prison_work: '🔨', prison_riot: '🔥', crime_pickpocket: '👛', crime_shoplift: '🛍️', crime_burglary: '🏚️', crime_cartheft: '🚗', crime_fraud: '💳', crime_bank: '🏦',
 };
-const PA_EM = { hangout: '🎡', hug: '🤗', deeptalk: '🫂', favor: '🤝', invite: '🎉', gossip: '🗣️', flirtx: '😘', confessx: '💌', ixtalk: '🕯️', kink: '🗝️', pos: '📕', sext: '📱', group: '👥', clubtogether: '🎭', spoil: '💎', rules: '📜', endbaby: '✋', walk: '🦮', vet: '🩺', treat: '🦴', outing: '🎡', care: '🫶', familytrip: '🧳', inherit: '💰', read: '📖', play: '🧸', teach: '✏️', allowance: '🪙', tutor: '👩‍🏫', praise: '👏', punish: '⛔', drinks: '🍻', borrow: '🤲', lend: '💸', collect: '🧾', payback: '💵', setup: '💘', prank: '🤡', counsel: '🛋️', photo: '📸', insult: '🗯️', fight: '👊', cutoff: '✂️', seduce: '😏', trip: '🏝️', official: '💑', askopen: '🔓', closeopen: '🔐', confess: '🙏', talk: '💬', compliment: '🌹', flirt: '😘', gift: '🎁', date: '🍷', intimate: '🔥', baby: '👶', adopt: '🍼', askmoney: '💸', money: '💸', movein: '🏡', propose: '💍', wedding: '💒', vows: '💞', breakup: '💔', divorce: '⚖️', endaffair: '✋', argue: '😠', askout: '💐' };
-const DANGER_PA = ['endbaby', 'breakup', 'divorce', 'argue', 'endaffair', 'insult', 'fight', 'cutoff', 'punish'];
+const PA_EM = { toharem: '👑', h_promote: '⬆️', h_demote: '⬇️', h_favor: '💗', h_investigate: '🕵️', h_release: '🚪', allowup: '💸', check: '🕵️', btrip: '🏝️', bpublic: '📣', bflatter: '🙇', bdrink: '🍻', braise: '💰', bproj: '📊', breport: '📝', bobject: '✋', clunch: '🍱', chelp: '🤝', cask: '🙏', cblame: '👉', ccompete: '🏁', cprank: '🤡', hangout: '🎡', hug: '🤗', deeptalk: '🫂', favor: '🤝', invite: '🎉', gossip: '🗣️', flirtx: '😘', confessx: '💌', ixtalk: '🕯️', kink: '🗝️', pos: '📕', sext: '📱', group: '👥', clubtogether: '🎭', spoil: '💎', rules: '📜', endbaby: '✋', walk: '🦮', vet: '🩺', treat: '🦴', outing: '🎡', care: '🫶', familytrip: '🧳', inherit: '💰', read: '📖', play: '🧸', teach: '✏️', allowance: '🪙', tutor: '👩‍🏫', praise: '👏', punish: '⛔', drinks: '🍻', borrow: '🤲', lend: '💸', collect: '🧾', payback: '💵', setup: '💘', prank: '🤡', counsel: '🛋️', photo: '📸', insult: '🗯️', fight: '👊', cutoff: '✂️', seduce: '😏', trip: '🏝️', official: '💑', askopen: '🔓', closeopen: '🔐', confess: '🙏', talk: '💬', compliment: '🌹', flirt: '😘', gift: '🎁', date: '🍷', intimate: '🔥', baby: '👶', adopt: '🍼', askmoney: '💸', money: '💸', movein: '🏡', propose: '💍', wedding: '💒', vows: '💞', breakup: '💔', divorce: '⚖️', endaffair: '✋', argue: '😠', askout: '💐' };
+const DANGER_PA = ['h_release', 'h_demote', 'breport', 'cblame', 'endbaby', 'breakup', 'divorce', 'argue', 'endaffair', 'insult', 'fight', 'cutoff', 'punish'];
 const JOB_EM = { fast_food: '🍔', delivery: '🛵', babysitter: '🍼', retail: '🛒', waiter: '🍽️', factory: '🏭', driver: '🚕', cleaner: '🧽', bartender: '🍸', model: '📸', office_clerk: '🗂️', sales: '🤝', police: '👮', nurse: '🩹', teacher: '🧑‍🏫', marketing: '📣', accountant: '🧮', engineer: '🛠️', developer: '💻', lawyer: '⚖️', doctor: '🩺', chef: '👨‍🍳', electrician: '⚡', mechanic: '🔧', hairdresser: '💇', it_tech: '🖥️', designer: '🎨', journalist: '📰', architect: '📐', analyst: '📈', pharmacist: '💊', psychologist: '🛋️', scientist: '🔬', professor: '🧑‍🏫' };
 const ASSET_EM = { savings: '🏦', index: '📊', gold: '🥇', tech: '💻', bank: '🏛️', energy: '⚡', crypto: '🪙' };
 const HOME_EM = { studio: '🛏️', apartment: '🏢', house: '🏠', villa: '🏰' };
@@ -245,7 +249,7 @@ function resultCard(r) {
 
 function sheetBody() {
   if (ui.sheet.startsWith('godp:')) return sheetGodPerson(ui.sheet.slice(5));
-  return ({ work: sheetWork, people: sheetPeople, acts: sheetActs, self: sheetSelf, god: sheetGod, settings: sheetSettings, assets: sheetAssets, trophies: sheetTrophies, graveyard: sheetGraveyard }[ui.sheet] || (() => sheetPerson(ui.sheet.slice(7))))();
+  return ({ harem: sheetHarem, work: sheetWork, people: sheetPeople, acts: sheetActs, self: sheetSelf, god: sheetGod, settings: sheetSettings, assets: sheetAssets, trophies: sheetTrophies, graveyard: sheetGraveyard }[ui.sheet] || (() => sheetPerson(ui.sheet.slice(7))))();
 }
 
 function overlays(ev) {
@@ -728,6 +732,7 @@ function sheetWork() {
     html += `<div class="section"><h3>${t('studyOptions')}</h3><div class="list">${li('w:exam', '📝', t('examPrep'), t('examPrepSub'))}${li('w:uni', '🎓', t('enrolUni'), t('uniSub'))}${li('w:trade', '🧰', t('enrolTrade'), t('tradeSub'))}${['bachelor', 'master', 'phd'].includes(e.level) ? li('w:grad', '📜', t('enrolGrad'), t('gradSub')) : ''}</div></div>`;
   }
   if (L.job) html += jobBlock(L);
+  if (L.job && L.team) { const tp = teamPeople(L); if (tp.length) html += `<div class="section"><h3>🏢 ${t('workplace')}</h3><div class="list">${tp.map((p) => personRow(L, p)).join('')}</div></div>`; }
   html += specialBlock(L);
   if (L.age < 15) return html + `<p class="note">${t('tooYoung')}</p>`;
   if (!L.job) {
@@ -783,17 +788,50 @@ function personRow(L, p) {
 function sheetPeople() {
   const L = game.life;
   const groups = [
-    ['love', '💘', ['spouse', 'partner', 'lover']],
+    ['love', '💘', ['spouse', 'partner', 'lover'], (p) => !p.baby],
+    ['sugarGroup', '💎', ['lover', 'partner'], (p) => p.baby],
     ['family', '👪', ['mother', 'father', 'sibling', 'half', 'pet']],
     ['children', '🧒', ['child']],
     ['friends', '🤝', ['bestie', 'friend']],
-    ['others', '👥', ['mentor', 'rival', 'coworker', 'neighbor', 'contact', 'ex']],
+    ['others', '👥', ['boss', 'mentor', 'rival', 'coworker', 'neighbor', 'contact', 'ex']],
   ];
   let html = head(`❤️ ${t('tabPeople')}`, 'var(--b-people)');
-  for (const [g, em, roles] of groups) {
-    const list = L.people.filter((p) => !p.cut && roles.includes(p.role) && (p.alive || g !== 'others')).sort((a, b) => roles.indexOf(a.role) - roles.indexOf(b.role));
+  const hn = hMembers(L).length;
+  html += `<div class="list">${li('doall', '⚡', t('doAll'), t('doAllSub'))}${settings.adult25 && L.age >= 18 ? li('sheet:harem', '👑', t('harem'), hn ? `${hn} ${t('membersN')} · ${t('harmony')} ${Math.round(L.harem.harmony)}` : t('haremNone')) : ''}</div>`;
+  for (const [g, em, roles, f] of groups) {
+    if (g === 'sugarGroup' && !settings.adult25) continue;
+    const list = L.people.filter((p) => !p.cut && roles.includes(p.role) && (!f || f(p)) && (p.alive || g !== 'others')).sort((a, b) => roles.indexOf(a.role) - roles.indexOf(b.role));
     if (!list.length && g !== 'love') continue;
     html += `<div class="section"><h3>${em} ${t(g)}</h3>${list.length ? `<div class="list">${list.slice(-12).map((p) => personRow(L, p)).join('')}</div>` : `<p class="note">${t('alone')}</p>`}</div>`;
+  }
+  return html;
+}
+function sheetHarem() {
+  const L = game.life;
+  let html = head(`👑 ${t('harem')}`, '#9d174d', 'sheet:people');
+  if (!settings.adult25 || L.age < 18) return html + `<p class="note">${t('haremLocked')}</p>`;
+  const ms = hMembers(L);
+  const acts = haremActions(L, settings);
+  const btns = acts.length ? `<div class="list">${acts.map(([k, em, lb]) => li(`h:${k}`, em, esc(tx(lb)))).join('')}</div>` : '';
+  if (!ms.length) return html + `<p class="note">${t('haremIntro')}</p>` + (btns || `<p class="note">${t('haremNeed')}</p>`);
+  const h = L.harem;
+  const H = HOUSES[h.house];
+  const hd = L.people.find((p) => p.id === h.head);
+  html += `<dl class="kv"><dt>🕊️ ${t('harmony')}</dt><dd>${lvl(h.harmony)}</dd><dt>${H.em} ${t('house')}</dt><dd>${esc(tx(H.name))} · ${ms.length}/${H.cap === 99 ? '∞' : H.cap}</dd><dt>💸 ${t('costYear')}</dt><dd class="mono">${money((15 * ms.length * country(L).gdp) / 100)}</dd><dt>👑 ${t('headP')}</dt><dd>${hd ? esc(personName(L, hd)) : '—'}</dd><dt>⚖️ ${t('structure')}</dt><dd>${t(h.structure === 'rank' ? 'sRank' : 'sEqual')}</dd></dl>`;
+  html += btns;
+  const mood = (v) => (v >= 60 ? '😊' : v >= 30 ? '😐' : '😤');
+  const rows = ms.slice().sort((a, b) => hm(a).rank - hm(b).rank || hm(b).favor - hm(a).favor).map((p) => {
+    const x = hm(p);
+    const tr = x.known || settings.godEnabled ? `${HTRAITS[x.trait].em} ` : '';
+    return `<button class="item" data-a="person:${p.id}"><span class="avatar sm">${face(p.gender, p.age, p.role, p.alive)}</span><div class="main"><b>${tr}${esc(personName(L, p))} ${mood(x.mood)}</b><small>${esc(tx(titleOf(p)))} · ${p.age}${p.baby ? ' · 💎' : ''}</small></div><div class="side">${lvl(x.favor, true)}</div></button>`;
+  }).join('');
+  html += `<div class="section"><h3>💗 ${t('membersT')} · ${t('hfavor')}</h3><div class="list">${rows}</div></div>`;
+  const pairs = [];
+  for (let i = 0; i < ms.length; i++) for (let j = i + 1; j < ms.length; j++) pairs.push([ms[i], ms[j], relOf(L, ms[i], ms[j])]);
+  const bad = pairs.filter((x) => x[2] <= -25).sort((a, b) => a[2] - b[2]).slice(0, 4);
+  const good = pairs.filter((x) => x[2] >= 25).sort((a, b) => b[2] - a[2]).slice(0, 4);
+  if (bad.length || good.length) {
+    html += `<div class="section"><h3>🕸️ ${t('relations')}</h3><div class="list">${bad.map(([a, b]) => li(`h:reconcile:${a.id},${b.id}`, '⚔️', `${esc(personName(L, a))} – ${esc(personName(L, b))}`, `${t('relJealous')} · ${t('reconcile')}`)).join('')}${good.map(([a, b]) => `<div class="li"><span class="em">💞</span><span class="tx"><b>${esc(personName(L, a))} – ${esc(personName(L, b))}</b><small>${t('relClose')}</small></span></div>`).join('')}</div></div>`;
   }
   return html;
 }
@@ -828,7 +866,17 @@ function knownKv(L, p) {
   if (x.known.length) rows.push(`<dt>♥ ${t('likes')}</dt><dd>${nmK(x.known)}</dd>`);
   if (x.knownLim.length) rows.push(`<dt>⛔ ${t('limits')}</dt><dd>${nmK(x.knownLim)}</dd>`);
   if (x.fav != null) rows.push(`<dt>⭐ ${t('favPos')}</dt><dd>${esc(tx(POSITIONS[x.fav]))}</dd>`);
-  if (p.baby) rows.push(`<dt>💎 ${t('allowance')}</dt><dd class="mono">${money(p.allow || 0)}</dd>`);
+  if (p.baby) {
+    rows.push(`<dt>💎 ${t('allowance')}</dt><dd class="mono">${money(p.allow || 0)}</dd>`);
+    if (p.term != null && p.term < 50) rows.push(`<dt>⏳ ${t('term')}</dt><dd>${p.term}</dd>`);
+    if (p.sinKnown || settings.godEnabled) rows.push(`<dt>💖 ${t('sincere')}</dt><dd>${lvl(x.sincere)}</dd>`);
+  }
+  if (x.dyn && DYN[x.dyn]) rows.push(`<dt>🎚️ ${t('dyn')}</dt><dd>${DYN[x.dyn].em} ${esc(tx(DYN[x.dyn].name))}</dd>`);
+  if (inHarem(L, p)) {
+    const h = hm(p);
+    rows.push(`<dt>👑 ${t('hRank')}</dt><dd>${esc(tx(titleOf(p)))}</dd><dt>💗 ${t('hfavor')}</dt><dd>${lvl(h.favor)}</dd><dt>🙂 ${t('hmood')}</dt><dd>${lvl(h.mood)}</dd>`);
+    if (h.known || settings.godEnabled) rows.push(`<dt>🧬 ${t('hTrait')}</dt><dd>${HTRAITS[h.trait].em} ${esc(tx(HTRAITS[h.trait].name))}</dd>`);
+  }
   return rows.length ? `<dl class="kv">${rows.join('')}</dl>` : '';
 }
 function sheetGodPerson(id) {
@@ -847,8 +895,28 @@ function sheetGodPerson(id) {
     <div class="box">${sl('closeness', '🤝')}${sl('looks', '✨')}${sl('smarts', '🧠')}</div>
     <div class="section"><h3>💭 ${t('attitudeTitle')}</h3><div class="box">${attSel}${sl('firm', '🪨')}<p class="note" style="margin:0">${t('firmNote')}</p></div></div>
     ${adult ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${sl('poly', '💞')}${sl('skill', '🔥')}${sl('fert', '🌱')}${p.gender === 'male' ? sl('size', '📏') : ''}${sl('fidelity', '🔒')}${sl('crazy', '😤')}${sl('chem', '🧪')}${sl('fire', '🔥')}${sl('libido', '💓')}${sl('flex', '🤸')}${p.role === 'lover' ? sl('jeal', '👀') : ''}${p.baby ? sl('sincere', '💎') : ''}${p.role === 'lover' ? chk('knows', t('knowsOthers')) : ''}${favSel}</div></div>
-    <div class="section"><details class="box"><summary><b>🗝️ ${t('kinksTitle')}</b></summary>${kinkRows}${chk('reveal', t('revealAll'))}</details></div>` : ''}
+    <div class="section"><details class="box"><summary><b>🗝️ ${t('kinksTitle')}</b></summary>${kinkRows}${chk('reveal', t('revealAll'))}</details></div>
+    ${godExtra(L, p, g, sl, chk)}` : ''}
     <button class="btn primary" data-a="godp-apply:${p.id}">${t('godApply')}</button>`;
+}
+function godExtra(L, p, g, sl, chk) {
+  const sel = (k, label, opts) => `<div class="field"><label for="gps-${k}">${label}</label><select id="gps-${k}" data-gps="${k}">${opts.map(([v, lb]) => `<option value="${v}" ${String(g[k] ?? '') === String(v) ? 'selected' : ''}>${esc(lb)}</option>`).join('')}</select></div>`;
+  let html = `<div class="section"><h3>🎚️ ${t('dyn')}</h3><div class="box">${sel('dyn', t('dyn'), [['', '—'], ...Object.entries(DYN).map(([k, d]) => [k, `${d.em} ${tx(d.name)}`])])}</div></div>`;
+  if (inHarem(L, p)) {
+    const others = hMembers(L).filter((q) => q !== p);
+    html += `<div class="section"><h3>👑 ${t('harem')}</h3><div class="box">
+      ${sel('htrait', t('hTrait'), Object.entries(HTRAITS).map(([k, d]) => [k, `${d.em} ${tx(d.name)}`]))}
+      ${sel('hrank', t('hRank'), [0, 1, 2, 3].map((r) => [r, tx(titleOf({ ...p, hm: { ...p.hm, rank: r } }))]))}
+      ${sl('hfavor', '💗')}${sl('hmood', '🙂')}${chk('hknown', t('hknown'))}
+      ${others.map((q) => `<div class="slider"><span>🤝</span><label for="gpr-${q.id}">${esc(personName(L, q))}</label><input id="gpr-${q.id}" type="range" min="0" max="100" value="${g.hrel[q.id] ?? 50}" data-gpr="${q.id}"><output class="mono">${g.hrel[q.id] ?? 50}</output></div>`).join('')}
+      ${others.length ? `<p class="note" style="margin:0">${t('hRelNote')}</p>` : ''}
+      ${chk('leaveHarem', t('leaveHarem'))}</div></div>`;
+  } else if (adultOK(L, p)) html += `<div class="section"><div class="box">${chk('joinHarem', t('joinHarem'))}</div></div>`;
+  if (p.baby) html += `<div class="section"><h3>💎 ${t('sugarGroup')}</h3><div class="box">
+      <div class="field"><label for="gpn-allowPct">${t('allowPct')}</label><input id="gpn-allowPct" type="number" min="0" step="1" value="${g.allowPct}" data-gpn="allowPct"></div>
+      <div class="slider"><span>⏳</span><label for="gp-term">${t('term')}</label><input id="gp-term" type="range" min="1" max="10" value="${g.term}" data-gp="term"><output class="mono">${g.term}</output></div>
+      ${chk('sinKnown', t('sinKnown'))}</div></div>`;
+  return html;
 }
 const ACT_GROUPS = ['prison', 'kid', 'teen', 'mind', 'fun', 'shop', 'life', 'pet', 'net', 'night', 'love', 'adult', 'money', 'crime'];
 function sheetActs() {
@@ -995,12 +1063,35 @@ function sheetGod() {
     ${L.dead ? '' : `<div class="box">${STAT_KEYS.map(slider).join('')}</div><div class="section"><h3>${t('hidden')}</h3><div class="box">${HIDDEN_KEYS.map(slider).join('')}</div></div>
     ${settings.adult25 && L.age >= 18 ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${['skill', 'fert'].concat(L.gender === 'male' ? ['size'] : []).map((k) => `<div class="slider"><span>${{ skill: '🔥', fert: '🌱', size: '📏' }[k]}</span><label for="gb-${k}">${t(k)}</label><input id="gb-${k}" type="range" min="0" max="100" value="${g.body[k] ?? 50}" data-gb="${k}"><output class="mono">${g.body[k] ?? 50}</output></div>`).join('')}${[['libido', '💓'], ['flex', '🤸'], ['charm', '🌹'], ['loyal', '💍'], ['scandal', '📰']].map(([k, em]) => `<div class="slider"><span>${em}</span><label for="gx-${k}">${t(k)}</label><input id="gx-${k}" type="range" min="0" max="100" value="${g.ix[k]}" data-gx="${k}"><output class="mono">${g.ix[k]}</output></div>`).join('')}</div></div>
     <div class="section"><details class="box"><summary><b>🧰 ${t('chest')}</b></summary><div class="traits">${Object.entries(CHEST).map(([k, it]) => `<label><input type="checkbox" data-gxc="${k}" ${g.ix.chest.includes(k) ? 'checked' : ''}>${it.em} ${esc(tx(it.name))}</label>`).join('')}</div>
-      ${[['allPos', t('allPos')], ['club', t('clubCard')], ['rope', t('ropeDone')]].map(([k, lb]) => `<label class="toggle" for="gxb-${k}"><span><b>${lb}</b></span><input id="gxb-${k}" type="checkbox" data-gxb="${k}" ${g.ix[k] ? 'checked' : ''}></label>`).join('')}</details></div>` : ''}
+      ${[['allPos', t('allPos')], ['club', t('clubCard')], ['rope', t('ropeDone')]].map(([k, lb]) => `<label class="toggle" for="gxb-${k}"><span><b>${lb}</b></span><input id="gxb-${k}" type="checkbox" data-gxb="${k}" ${g.ix[k] ? 'checked' : ''}></label>`).join('')}</details></div>
+    ${godSelfExtra(L, g)}` : ''}
     <div class="box"><div class="field"><label for="g-money">💵 ${t('money')} (${c.cur})</label><input id="g-money" type="number" step="1" value="${Math.round(g.money)}" data-gm="1"></div></div>
     <button class="btn primary" data-a="god-apply">${t('godApply')}</button>
     <div class="list">${li('god-cure', '💊', t('cure'))}${li('god-debt', '🧾', t('clearDebt'))}</div>
     <div class="box"><div class="field"><label for="g-country">🌍 ${t('moveCountry')}</label><div class="row" style="flex-wrap:nowrap"><select id="g-country" style="flex:1;min-width:0">${countries}</select><button class="btn small" data-a="god-move">${t('confirm')}</button></div></div></div>`}
     <button class="btn" data-a="rewind" ${L.snapshots.length && L.counts.rewinds < 3 ? '' : 'disabled'}>⏪ ${t('rewind')} · ${t('rewindLeft', { n: 3 - L.counts.rewinds })}</button>`;
+}
+function godSelfExtra(L, g) {
+  const sel = (grp, k, label, opts) => `<div class="field"><label for="g${grp}-${k}">${label}</label><select id="g${grp}-${k}" data-g${grp}s="${k}">${opts.map(([v, lb]) => `<option value="${v}" ${String(g[grp === 'h' ? 'harem' : 'world'][k] ?? '') === String(v) ? 'selected' : ''}>${esc(lb)}</option>`).join('')}</select></div>`;
+  const tog = (grp, k, label) => `<label class="toggle" for="g${grp}c-${k}"><span><b>${label}</b></span><input id="g${grp}c-${k}" type="checkbox" data-g${grp}c="${k}" ${g[grp === 'h' ? 'harem' : 'world'][k] ? 'checked' : ''}></label>`;
+  const num = (k, label) => `<div class="field"><label for="gwn-${k}">${label}</label><input id="gwn-${k}" type="number" min="0" step="1" value="${g.world[k] ?? 0}" data-gwn="${k}"></div>`;
+  let html = '';
+  const ms = hMembers(L);
+  if (ms.length) html += `<div class="section"><details class="box"><summary><b>👑 ${t('harem')}</b></summary>
+    <div class="slider"><span>🕊️</span><label for="gh-harmony">${t('harmony')}</label><input id="gh-harmony" type="range" min="0" max="100" value="${g.harem.harmony}" data-gh="harmony"><output class="mono">${g.harem.harmony}</output></div>
+    ${sel('h', 'head', t('headP'), ms.map((p) => [p.id, personName(L, p)]))}
+    ${sel('h', 'structure', t('structure'), [['rank', t('sRank')], ['equal', t('sEqual')]])}
+    ${sel('h', 'house', t('house'), Object.entries(HOUSES).map(([k, H]) => [k, `${H.em} ${tx(H.name)}`]))}
+    ${sel('h', 'protect', t('protectDef'), [['each', t('pEach')], ['always', t('pAlways')], ['never', t('pNever')]])}
+    ${tog('h', 'cungdau', t('cungdau'))}</details></div>`;
+  html += `<div class="section"><details class="box"><summary><b>🌍 ${t('worldGod')}</b></summary>
+    ${tog('w', 'yacht', t('yacht'))}
+    ${sel('w', 'room', t('room'), [['', '—'], ...Object.entries(ROOMS).map(([k, r]) => [k, `${r.em} ${tx(r.name)}`])])}
+    ${num('followers', t('followersN'))}${num('creatorSubs', t('creatorSubs'))}
+    ${L.nclub ? `<div class="slider"><span>🪩</span><label for="gw-clubRep">${t('clubRep')}</label><input id="gw-clubRep" type="range" min="0" max="100" value="${g.world.clubRep}" data-gw="clubRep"><output class="mono">${g.world.clubRep}</output></div>${num('clubStaff', t('clubStaff'))}` : ''}
+  </details></div>
+  <div class="list">${li('god-unlock', '🔓', t('unlockAll'), t('unlockAllSub'))}</div>`;
+  return html;
 }
 function sheetSettings() {
   const tog = (k, title, sub) => `<label class="toggle" for="set-${k}"><span><b>${title}</b><small>${sub}</small></span><input id="set-${k}" type="checkbox" data-set="${k}" ${settings[k] ? 'checked' : ''}></label>`;
@@ -1103,7 +1194,8 @@ $app.addEventListener('click', (e) => {
     }
     case 'sheet':
       ui.sheet = arg; ui.resetArmed = false; ui.packMsg = null; ui.sub = null;
-      if (arg === 'god' && L) { const m = me(L); ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate, body: { fert: L.fert ?? 70, skill: L.skill ?? 50, size: L.size ?? 50 }, ix: { libido: m.libido, flex: m.flex, charm: m.charm, loyal: m.loyal, scandal: m.scandal, chest: [...m.chest], allPos: false, club: m.club, rope: m.rope } }; }
+      if (arg === 'work' && L) ensureTeam(L);
+      if (arg === 'god' && L) { const m = me(L); ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate, body: { fert: L.fert ?? 70, skill: L.skill ?? 50, size: L.size ?? 50 }, ix: { libido: m.libido, flex: m.flex, charm: m.charm, loyal: m.loyal, scandal: m.scandal, chest: [...m.chest], allPos: false, club: m.club, rope: m.rope }, harem: L.harem ? { harmony: Math.round(L.harem.harmony), head: L.harem.head, structure: L.harem.structure, house: L.harem.house, protect: L.harem.protect || 'each', cungdau: L.harem.cungdau } : {}, world: { yacht: !!m.yacht, room: m.room || '', followers: L.social?.followers || 0, creatorSubs: L.creator?.subs || 0, clubRep: L.nclub?.rep ?? 0, clubStaff: L.nclub?.staff ?? 0 } }; }
       break;
     case 'close': ui.sheet = null; break;
     case 'person': ui.sheet = `person:${arg}`; break;
@@ -1116,12 +1208,16 @@ $app.addEventListener('click', (e) => {
           Object.assign(ui.godp, { chem: x.chem, fire: x.fire, libido: x.libido, flex: x.flex, jeal: x.jeal, sincere: x.sincere, knows: x.knows, fav: x.fav ?? '', reveal: false });
           for (const k of x.kinks) ui.godp.kinks[k] = 'want';
           for (const k of x.limits) ui.godp.kinks[k] = 'never';
+          ui.godp.dyn = x.dyn || '';
+          ui.godp.hrel = {};
+          if (inHarem(L, p)) { const h = hm(p); Object.assign(ui.godp, { htrait: h.trait, hrank: h.rank, hfavor: Math.round(h.favor), hmood: Math.round(h.mood), hknown: h.known }); for (const q of hMembers(L)) if (q !== p) ui.godp.hrel[q.id] = Math.round(relOf(L, p, q) / 2 + 50); }
+          if (p.baby) Object.assign(ui.godp, { allowPct: Math.round((p.allow || 0) / (country(L).gdp / 100)), term: Math.min(10, Math.max(1, p.term ?? 3)), sinKnown: !!p.sinKnown });
         }
         ui.sheet = `godp:${arg}`;
       }
       break;
     }
-    case 'godp-apply': { const gv = { ...ui.godp }; const gp = L.people.find((x) => x.id === arg); if (gp && gp.age < 18) { delete gv.kinks; } godPerson(L, arg, gv); } ui.sheet = `person:${arg}`; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
+    case 'godp-apply': { const gv = { ...ui.godp }; if (gv.hrel && !Object.keys(gv.hrel).length) delete gv.hrel; const gp = L.people.find((x) => x.id === arg); if (gp && gp.age < 18) { delete gv.kinks; } godPerson(L, arg, gv); } ui.sheet = `person:${arg}`; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
     case 'pa': {
       const p = L.people.find((x) => x.id === arg);
       const lab = p && personActions(L, p, settings).find(([k]) => k === arg2);
@@ -1141,7 +1237,10 @@ $app.addEventListener('click', (e) => {
     }
     case 'job': record(applyJob(L, arg), { vi: `${STRINGS.vi.apply}: ${careerById[arg].title.vi}`, en: `${STRINGS.en.apply}: ${careerById[arg].title.en}` }, false, JOB_EM[arg]); break;
     case 'w': record(workAction(L, arg), { vi: STRINGS.vi[W_LABEL[arg]], en: STRINGS.en[W_LABEL[arg]] }, false, { exam: '📝', overtime: '⏰', bossdrinks: '🍻', transfer: '🔁', leave: '🏖️', strike: '✊', whistle: '📣', promote: '⬆️', study: '📚', skip: '🛹', dropout: '🚪', uni: '🎓', trade: '🧰', grad: '📜', switch: '🔀', club: '🎭', parttime: '☕', scholar: '🏅', exchange: '✈️', intern: '🗂️', olympiad: '🏆', hard: '💪', raise: '💰', quit: '🚪' }[arg]); break;
-    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate, body: ui.god.body, ix: settings.adult25 && L.age >= 18 ? ui.god.ix : undefined }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
+    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate, body: ui.god.body, ix: settings.adult25 && L.age >= 18 ? ui.god.ix : undefined, harem: settings.adult25 && L.harem ? ui.god.harem : undefined, world: settings.adult25 && L.age >= 18 ? ui.god.world : undefined }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
+    case 'god-unlock': godApply(L, { unlockAll: true }); ui.sheet = null; ui.result = { text: t('unlockDone'), tone: 'good', emoji: '🔓' }; break;
+    case 'doall': record(doAll(L, settings), { vi: STRINGS.vi.doAll, en: STRINGS.en.doAll }, true, '⚡'); break;
+    case 'h': record(doHaremAction(L, settings, arg, arg2), { vi: STRINGS.vi.harem, en: STRINGS.en.harem }, true, '👑'); break;
     case 'god-cure': godApply(L, { cure: true }); ui.god.stats = { ...L.stats }; ui.result = { text: t('cure'), tone: 'good', emoji: '💊' }; break;
     case 'god-debt': godApply(L, { clearDebt: true }); ui.god.money = L.money * country(L).rate; ui.result = { text: t('clearDebt'), tone: 'good', emoji: '🧾' }; break;
     case 'god-move': { const v = document.getElementById('g-country').value; godApply(L, { country: v }); ui.god.money = L.money * country(L).rate; ui.result = { text: `${byCode[v].flag} ${tx(byCode[v].name)}`, tone: 'good', emoji: '🌍' }; break; }
@@ -1206,6 +1305,19 @@ $app.addEventListener('input', (e) => {
   } else if (el.dataset.gp) {
     ui.godp[el.dataset.gp] = Number(el.value);
     el.nextElementSibling.textContent = el.value;
+  } else if (el.dataset.gpr) {
+    ui.godp.hrel[el.dataset.gpr] = Number(el.value);
+    el.nextElementSibling.textContent = el.value;
+  } else if (el.dataset.gh) {
+    ui.god.harem[el.dataset.gh] = Number(el.value);
+    el.nextElementSibling.textContent = el.value;
+  } else if (el.dataset.gw) {
+    ui.god.world[el.dataset.gw] = Number(el.value);
+    el.nextElementSibling.textContent = el.value;
+  } else if (el.dataset.gwn) {
+    ui.god.world[el.dataset.gwn] = Number(el.value) || 0;
+  } else if (el.dataset.gpn) {
+    ui.godp[el.dataset.gpn] = Number(el.value) || 0;
   } else if (el.dataset.gx) {
     ui.god.ix[el.dataset.gx] = Number(el.value);
     el.nextElementSibling.textContent = el.value;
@@ -1234,6 +1346,14 @@ $app.addEventListener('change', (e) => {
     ui.god.ix.chest = el.checked ? [...new Set([...ui.god.ix.chest, k])] : ui.god.ix.chest.filter((x) => x !== k);
   } else if (el.dataset.gxb) {
     ui.god.ix[el.dataset.gxb] = el.checked;
+  } else if (el.dataset.ghs) {
+    ui.god.harem[el.dataset.ghs] = el.value;
+  } else if (el.dataset.ghc) {
+    ui.god.harem[el.dataset.ghc] = el.checked;
+  } else if (el.dataset.gws) {
+    ui.god.world[el.dataset.gws] = el.value;
+  } else if (el.dataset.gwc) {
+    ui.god.world[el.dataset.gwc] = el.checked;
   } else if (el.dataset.set) {
     settings[el.dataset.set] = el.checked;
     persist();

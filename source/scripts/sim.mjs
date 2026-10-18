@@ -12,6 +12,9 @@ import { autoPlay } from '../src/engine/minigames.js';
 import { SPECIALS, specialAction, canJoin, socialAction } from '../src/engine/specials.js';
 import { checkGoals, archiveLife, emptyProfile } from '../src/engine/goals.js';
 import { ATT, KINKS, FAMILY, ROM, attOf } from '../src/engine/intimacy.js';
+import { haremActions, members as hMembers } from '../src/engine/harem.js';
+import { doHaremAction, doAll } from '../src/engine/actions.js';
+let haremMax = 0, haremLives = 0;
 let ruleErr = 0; const ixStat = { pos: 0, tried: 0, babies: 0, groups: 0, funeral: 0, memoir: 0, rom: 0, care: 0 };
 const ribbonsSeen = {};
 const profile = emptyProfile(); let goalsHit = 0;
@@ -68,6 +71,18 @@ for (let i = 0; i < N; i++) {
         if (r2 && r2.mini) autoPlay(life, r2.mini);
         if (Math.random() < 0.03) godPerson(life, q.id, { poly: 90, fert: 90, skill: 80, size: 70, firm: R([0, 50, 100]), att: R(Object.keys(ATT)), chem: 80, fire: 85, kinks: Object.fromEntries(KINKS.map((k) => [k.id, R(['want', 'never', ''])])), reveal: Math.random() < 0.5, fav: R(['', 3, 30]) });
       }
+      if (!life.dead && life.age >= 18 && Math.random() < 0.5) {
+        const ha = haremActions(life, st);
+        if (ha.length) {
+          const [act] = R(ha);
+          let r = doHaremAction(life, st, act);
+          let g = 0;
+          while (r && r.event && g++ < 6) { const m = chooseModal(game, r.event, Math.floor(Math.random() * r.event.choices.length)); r = m.next ? { event: m.next } : null; }
+        }
+        haremMax = Math.max(haremMax, hMembers(life).length);
+        if (Math.random() < 0.1) doAll(life, st);
+        if (Math.random() < 0.01) godPerson(life, R(life.people).id, { joinHarem: true, htrait: 'scheme', hrank: 0, hfavor: 90, dyn: 'wild', allowPct: 50, term: 2 });
+      }
       if (life.job && Math.random() < 0.3) workAction(life, R(['overtime', 'bossdrinks', 'transfer', 'leave', 'strike', 'whistle']));
       if (!life.dead && life.age >= 14) {
         if (!life.special && !life.job && Math.random() < 0.15) { const id = R(Object.keys(SPECIALS)); if (canJoin(life, id, st)) specialAction(life, 'join', id, st); }
@@ -106,6 +121,7 @@ for (let i = 0; i < N; i++) {
       }
     }
     check();
+    if (life.harem && life.harem.years) haremLives++;
     if (!life.dead) stuck++;
     if (life.ix) { ixStat.pos = Math.max(ixStat.pos, life.ix.pos.length); ixStat.tried = Math.max(ixStat.tried, life.ix.tried.length); ixStat.babies += life.ix.babies; ixStat.groups += life.ix.groups; ixStat.memoir += life.ix.memoir ? 1 : 0; ixStat.care += life.ix.care; }
     if (life.funeral && life.funeral.length) ixStat.funeral++;
@@ -138,9 +154,10 @@ for (let i = 0; i < N; i++) {
   }
 }
 const total = game.events.length;
+console.log('harem lives', haremLives, 'max members', haremMax);
 console.log('RULE VIOLATIONS', ruleErr, '· ix', JSON.stringify(ixStat));
 console.log('ribbons', JSON.stringify(ribbonsSeen));
-console.log('ix events', [...seen].filter((u) => u.includes('ix')).sort().join(' '));
+console.log('ix events', [...seen].filter((u) => /ix|h_|cr_|nc_/.test(u)).sort().join(' '));
 console.log('degrees', JSON.stringify(degs));
 console.log('max followers', maxFollow);
 console.log('goals hit', goalsHit, 'of', N * 3, '· achievements', Object.keys(profile.ach).join(','), '· ribbons', Object.keys(profile.ribbons).length);
