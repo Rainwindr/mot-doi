@@ -25,28 +25,51 @@ export const SPECIALS = {
     pay: [1, 3, 10, 25],
     join: L('Đi thử việc ở câu lạc bộ', 'Try out for a club'), big: L('Thi đấu trận lớn', 'Play a big match'), train: L('Tập luyện cường độ cao', 'Train hard'), promo: L('Ký hợp đồng quảng cáo', 'Sign an endorsement deal'),
   },
+  adult_actor: {
+    em: '🔞', adult: true, name: L('Diễn viên phim người lớn', 'Adult film performer'), stat: 'looks', req: 55, minAge: 21, maxAge: 50,
+    levels: [L('Diễn viên mới', 'Newcomer'), L('Diễn viên hợp đồng', 'Contract performer'), L('Ngôi sao phim người lớn', 'Adult film star'), L('Huyền thoại trong ngành', 'Industry legend')],
+    pay: [0.8, 2, 6, 15],
+    join: L('Đi thử vai ở studio phim người lớn', 'Audition at an adult film studio'), big: L('Ký hợp đồng với studio lớn hơn', 'Sign with a bigger studio'), train: L('Tập gym, chăm sóc ngoại hình', 'Gym and self-care'), promo: L('Mở trang fan trả phí', 'Run a paid fan page'),
+    fail: L('Studio lớn chọn một gương mặt mới hơn. Ngành này thay người nhanh hơn bạn nghĩ.', 'The big studio picks a fresher face. This industry moves faster than you think.'),
+    promoText: L('Trang fan trả phí của bạn có thêm vài nghìn người đăng ký. Hộp thư đầy những lời tỏ tình kỳ quặc.', 'Your paid fan page gains a few thousand subscribers. Your inbox fills with strange declarations of love.'), promoPay: 18,
+  },
+  adult_director: {
+    em: '🎥', adult: true, name: L('Đạo diễn phim người lớn', 'Adult film director'), stat: 'smarts', req: 45, minAge: 23, maxAge: 70,
+    levels: [L('Quay phim tự do', 'Freelance shooter'), L('Đạo diễn studio nhỏ', 'Indie studio director'), L('Đạo diễn có giải thưởng', 'Award-winning director'), L('Chủ studio', 'Studio owner')],
+    pay: [0.7, 2, 5, 18],
+    join: L('Nhận quay cho một studio phim người lớn', 'Take a job shooting for an adult studio'), big: L('Sản xuất một phim lớn', 'Produce a big feature'), train: L('Học quay dựng, ánh sáng', 'Study cinematography and lighting'), promo: L('Dự lễ trao giải của ngành', 'Attend the industry awards'),
+    fail: L('Phim mới bị chê "kịch bản nhiều hơn mức cần thiết". Doanh thu thấp.', 'The new film is panned for "more plot than anyone asked for". Low sales.'),
+    promoText: L('Bạn lên sân khấu nhận giải. Bài phát biểu cảm ơn đoàn phim, luật sư và người giữ hợp đồng đồng thuận.', 'You take the stage to accept an award, thanking the crew, the lawyers and the consent coordinator.'), promoPay: 12,
+  },
 };
 
 /** Có thể thử sức nghề này không (tuổi, đang ở tù...). */
-export function canJoin(life, id) {
+export function canJoin(life, id, settings) {
   const s = SPECIALS[id];
+  if (s.adult && !(settings && settings.adult25)) return false;
   return !life.special && !life.prison && life.age >= s.minAge && life.age <= s.maxAge;
 }
 
-export function specialAction(life, act, id) {
+export function specialAction(life, act, id, settings) {
   if (life.dead || life.prison) return null;
   const key = `sp:${act}`;
   const n = (life.yearActs[key] = (life.yearActs[key] || 0) + 1);
   const tired = res(L('Năm nay như vậy là đủ rồi.', "That's enough for this year."), []);
   if (act === 'join') {
     const s = SPECIALS[id];
-    if (!s || !canJoin(life, id)) return res(L('Bạn chưa thể thử sức nghề này.', "You can't try this career right now."), [], 'bad');
+    if (!s || !canJoin(life, id, settings)) return res(L('Bạn chưa thể thử sức nghề này.', "You can't try this career right now."), [], 'bad');
     if (life.job) return res(L('Hãy nghỉ công việc hiện tại trước.', 'Quit your current job first.'), []);
     if (n > 1) return tired;
     const v = life.stats[s.stat];
-    const p = clamp(0.2 + (v - s.req) / 60 + life.stats.fame / 300, 0.03, 0.85);
+    const p = clamp(0.2 + (v - s.req) / 60 + life.stats.fame / 300 + (id === 'adult_director' && 'adult_past' in life.flags ? 0.25 : 0), 0.03, 0.85);
     if (!chance(life, p)) return res(pick(life, [L('Ban giám khảo cảm ơn bạn đã đến. Đó là cách họ nói "không".', 'The panel thanks you for coming. That\'s how they say no.'), L('Họ nói bạn "chưa đúng hình mẫu". Bạn không biết hình mẫu là gì.', 'They say you\'re "not quite the look". Nobody explains the look.')]), fx(life, { happy: -5 }), 'bad');
     life.special = { id, level: 0, perf: 50, years: 0 };
+    if (s.adult) {
+      life.flags.adult_past = life.age;
+      for (const role of ['mother', 'father']) for (const q of life.people) if (q.role === role && q.alive) q.closeness = clamp(q.closeness - randint(life, 5, 15));
+      const pt = life.people.find((q) => q.alive && ['partner', 'spouse'].includes(q.role));
+      if (pt) pt.closeness = clamp(pt.closeness - randint(life, 0, 12));
+    }
     milestone(life, L(`Bước vào nghề ${s.name.vi.toLowerCase()}`, `Started a career as ${s.name.en.toLowerCase()}`), 'good');
     return res(L(`Bạn được nhận! Giờ bạn là ${s.levels[0].vi.toLowerCase()}.`, `You're in! You're now a ${s.levels[0].en.toLowerCase()}.`), fx(life, { happy: 12, fame: 3 }), 'good');
   }
@@ -58,7 +81,7 @@ export function specialAction(life, act, id) {
     case 'train':
       if (n > 2) return tired;
       sp.perf = clamp(sp.perf + randint(life, 7, 14));
-      return res(pick(life, [L('Bạn tập đến kiệt sức. Huấn luyện viên gật đầu một lần.', 'You train until you drop. Your coach nods once.'), L('Buổi tập hôm nay tốt hơn hôm qua. Đó là tất cả những gì cần.', 'Better than yesterday. That\'s all it takes.')]), fx(life, sp.id === 'athlete' ? { health: 3, willpower: 2 } : sp.id === 'actor' ? { looks: 1, smarts: 1 } : { happy: 2, willpower: 2 }));
+      return res(pick(life, [L('Bạn tập đến kiệt sức. Huấn luyện viên gật đầu một lần.', 'You train until you drop. Your coach nods once.'), L('Buổi tập hôm nay tốt hơn hôm qua. Đó là tất cả những gì cần.', 'Better than yesterday. That\'s all it takes.')]), fx(life, sp.id === 'athlete' ? { health: 3, willpower: 2 } : sp.id === 'actor' || sp.id === 'adult_actor' ? { looks: 1, health: 1 } : sp.id === 'adult_director' ? { smarts: 2 } : { happy: 2, willpower: 2 }));
     case 'big': {
       if (n > 1) return tired;
       if (sp.level >= top) {
@@ -76,14 +99,15 @@ export function specialAction(life, act, id) {
         return res(t, fx(life, { happy: 12, fame: 6 + sp.level * 4 }), 'good');
       }
       sp.perf = clamp(sp.perf - 5);
-      const fail = { actor: L('Vai diễn về tay một người có nhiều người theo dõi hơn bạn.', 'The role goes to someone with more followers.'), musician: L('Bài hát mới có 312 lượt nghe. 290 lượt là của mẹ bạn.', 'Your new single gets 312 plays. 290 are your mum.'), athlete: L('Đội bạn thua. Bình luận viên nhắc tên bạn hơi nhiều.', 'Your team loses. The commentators mention you a bit too often.') }[sp.id];
+      const fail = s.fail || { actor: L('Vai diễn về tay một người có nhiều người theo dõi hơn bạn.', 'The role goes to someone with more followers.'), musician: L('Bài hát mới có 312 lượt nghe. 290 lượt là của mẹ bạn.', 'Your new single gets 312 plays. 290 are your mum.'), athlete: L('Đội bạn thua. Bình luận viên nhắc tên bạn hơi nhiều.', 'Your team loses. The commentators mention you a bit too often.') }[sp.id];
       return res(fail, fx(life, { happy: -5 }), 'bad');
     }
     case 'promo': {
       if (n > 1) return tired;
       if (chance(life, 0.15)) return res(pick(life, [L('Bạn lỡ lời trên sóng trực tiếp. Mạng xã hội có meme mới, và đó là bạn.', 'You misspeak on live TV. The internet has a new meme, and it\'s you.'), L('Một bức ảnh cũ của bạn bị đào lại. Không đẹp.', 'An old photo of you resurfaces. It\'s not great.')]), fx(life, { fame: 3, karma: -3, happy: -6 }), 'bad');
-      const pay = { actor: 8, musician: 15, athlete: 20 }[sp.id] * (sp.level + 1);
+      const pay = (s.promoPay || { actor: 8, musician: 15, athlete: 20 }[sp.id]) * (sp.level + 1);
       const h = sp.id === 'musician' ? -3 : 0;
+      if (s.promoText) return res(s.promoText, fx(life, { money: pay, fame: 4 }), 'good');
       return res({ actor: L('Bạn kể chuyện hậu trường. Khán giả cười, MC cười, ê-kíp cười.', 'You tell backstage stories. The audience laughs. The host laughs. Even the crew laughs.'), musician: L('Tour diễn cháy vé. Giọng bạn thì gần cháy.', 'The tour sells out. Your voice nearly burns out too.'), athlete: L('Bạn ký hợp đồng quảng cáo nước tăng lực. Bạn không uống nước tăng lực.', 'You sign with an energy drink brand. You don\'t drink energy drinks.') }[sp.id], fx(life, { money: pay, fame: 4, health: h }), 'good');
     }
     case 'quit':

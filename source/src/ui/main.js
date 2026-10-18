@@ -664,7 +664,7 @@ function specialBlock(L) {
       <div class="list">${li('sp:big', '🚀', esc(tx(s.big)))}${li('sp:train', '🏋️', esc(tx(s.train)))}${li('sp:promo', '🎙️', esc(tx(s.promo)))}${li('sp:quit', '🚪', t('quitSpecial'), '', { danger: true })}</div></div>`;
   }
   if (L.age < 14 || L.prison) return '';
-  const rows = Object.entries(SPECIALS).map(([id, s]) => li(`sp:join:${id}`, s.em, esc(tx(s.join)), `${esc(tx(s.name))} · ${STAT_EM[s.stat]} ${s.req}+ · ${t('ageRange', { a: s.minAge, b: s.maxAge })}`, { disabled: !canJoin(L, id) })).join('');
+  const rows = Object.entries(SPECIALS).filter(([, s]) => !s.adult || settings.adult25).map(([id, s]) => li(`sp:join:${id}`, s.em, esc(tx(s.join)), `${esc(tx(s.name))} · ${STAT_EM[s.stat]} ${s.req}+ · ${t('ageRange', { a: s.minAge, b: s.maxAge })}`, { disabled: !canJoin(L, id, settings) })).join('');
   return `<div class="section"><h3>🌟 ${t('special')}</h3><div class="list">${rows}</div></div>`;
 }
 function personRow(L, p) {
@@ -909,7 +909,7 @@ $app.addEventListener('click', (e) => {
     case 'birth-ok': ui.birth = false; break;
     case 'result-ok': ui.result = ui.queue.shift() || null; break;
     case 'mg': mgClick(arg, arg2); break;
-    case 'sp': record(specialAction(L, arg, arg2), { vi: STRINGS.vi.special, en: STRINGS.en.special }, true, arg2 ? SPECIALS[arg2]?.em : L.special ? SPECIALS[L.special.id].em : '🌟'); break;
+    case 'sp': record(specialAction(L, arg, arg2, settings), { vi: STRINGS.vi.special, en: STRINGS.en.special }, true, arg2 ? SPECIALS[arg2]?.em : L.special ? SPECIALS[L.special.id].em : '🌟'); break;
     case 'sub': ui.sub = arg || null; break;
     case 'ageup': ui.sheet = null; ageUpGame(game); break;
     case 'choose': {

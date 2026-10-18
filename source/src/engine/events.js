@@ -45,6 +45,7 @@ export function eligible(ev, life, settings) {
   if (r.incomeTier && !r.incomeTier.includes(tier(life))) return false;
   if (r.eduStage && !r.eduStage.includes(life.edu.stage)) return false;
   if (r.job && !(life.job && r.job.includes(life.job.id))) return false;
+  if (r.special && !(life.special && r.special.includes(life.special.id))) return false;
   if ('retired' in r && r.retired !== (!life.job && life.pension > 0)) return false;
   if ('ill' in r && r.ill !== !!life.ill) return false;
   if (r.childAge && !people(life, 'child').some((k) => k.alive && k.age >= r.childAge[0] && k.age <= r.childAge[1])) return false;

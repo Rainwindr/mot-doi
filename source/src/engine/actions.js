@@ -249,7 +249,8 @@ export function applyJob(life, id) {
   const fit = c.major && (e.degrees || []).some((d) => c.major.includes(d.major));
   const honors = fit && e.degrees.some((d) => d.honors && c.major.includes(d.major));
   const intern = e.intern && (!c.major || c.major.includes(e.intern));
-  const p = (meets ? clamp(0.35 + life.stats.smarts / 200 + life.stats.looks / 400 + (honors ? 0.1 : 0) + (intern ? 0.15 : 0), 0.1, 0.95) : 0.04) * (life.record ? 0.55 : 1);
+  const stigma = 'adult_past' in life.flags && ['teacher', 'police', 'professor', 'nurse', 'lawyer'].includes(id) ? 0.6 : 1;
+  const p = stigma * (meets ? clamp(0.35 + life.stats.smarts / 200 + life.stats.looks / 400 + (honors ? 0.1 : 0) + (intern ? 0.15 : 0), 0.1, 0.95) : 0.04) * (life.record ? 0.55 : 1);
   if (!chance(life, p)) return res(L(`Hồ sơ ${c.title.vi.toLowerCase()} của bạn bị từ chối.`, `Your application for ${c.title.en.toLowerCase()} is rejected.`), fx(life, { happy: -3 }), 'bad');
   const rank = entryRank(life, id, entryBonus(life, id));
   const company = randomCompany(life);

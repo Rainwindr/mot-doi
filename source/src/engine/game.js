@@ -26,8 +26,9 @@ import oldPack from '../data/packs/old_age.json';
 import healthPack from '../data/packs/health.json';
 import parentPack from '../data/packs/parenting.json';
 import afterDark from '../data/packs/after_dark.json';
+import adultFilm from '../data/packs/adult_industry.json';
 
-export const BUILTIN = [core, coreLife, school, weird, workPack, oldPack, healthPack, parentPack, afterDark, big, love, uni, ons, adult, kinks].map((p) => ({ ...normalizePack(p), builtin: true }));
+export const BUILTIN = [core, coreLife, school, weird, workPack, oldPack, healthPack, parentPack, afterDark, adultFilm, big, love, uni, ons, adult, kinks].map((p) => ({ ...normalizePack(p), builtin: true }));
 
 export function defaultSettings() {
   return { lang: 'vi', adult25: false, alwaysProtect: true, godEnabled: true, packs: {}, packWeight: {} };

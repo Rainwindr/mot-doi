@@ -1,0 +1,727 @@
+{
+ "manifest": {
+  "id": "core.adultfilm",
+  "name": {
+   "vi": "Gói 25+: ngành phim người lớn",
+   "en": "25+: The adult film industry"
+  },
+  "version": "1.0.0",
+  "rating": "25+",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "ai_family_finds",
+   "category": "family",
+   "age": [
+    21,
+    70
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Một người họ hàng gửi vào nhóm gia đình đường link phim của bạn, kèm ba dấu chấm hỏi.",
+    "en": "A relative posts a link to one of your films in the family group chat, with three question marks."
+   },
+   "requires": {
+    "flags": [
+     "adult_past"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thẳng thắn thừa nhận",
+      "en": "Own it openly"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "willpower": 5,
+        "rel_mother": -5
+       },
+       "text": {
+        "vi": "Bạn nói đây là công việc hợp pháp, an toàn và bạn tự chọn. Nhóm chat im lặng ba ngày, rồi mẹ bạn hỏi bạn ăn cơm chưa.",
+        "en": "You say it's legal, safe work you chose. The chat goes silent for three days, then your mum asks if you've eaten."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -8,
+        "rel_mother": -15,
+        "rel_father": -15
+       },
+       "text": {
+        "vi": "Bố mẹ không nghe máy cả tháng.",
+        "en": "Your parents don't pick up for a month."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Rời nhóm chat",
+      "en": "Leave the group"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Bạn rời nhóm. Năm phút sau có ba người nhắn riêng.",
+        "en": "You leave. Five minutes later, three people message you privately."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai_partner_talk",
+   "category": "love",
+   "age": [
+    21,
+    70
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Người yêu nói thật: họ tôn trọng công việc của bạn, nhưng có những ngày thấy khó chịu.",
+    "en": "Your partner is honest: they respect your work, but some days it's hard for them."
+   },
+   "requires": {
+    "special": [
+     "adult_actor"
+    ],
+    "hasPartner": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đặt ranh giới rõ ràng cùng nhau",
+      "en": "Set clear boundaries together"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_partner": 8,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Hai người nói chuyện đến khuya và đồng ý những điều cả hai thoải mái.",
+        "en": "You talk late into the night and agree on what you're both comfortable with."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_partner": -4
+       },
+       "text": {
+        "vi": "Nói chuyện xong, cả hai vẫn thấy có khoảng cách.",
+        "en": "Afterwards, there's still a gap between you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bảo họ phải chấp nhận",
+      "en": "Tell them to accept it"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_partner": -10
+       },
+       "text": {
+        "vi": "Họ im lặng. Đêm đó họ ngủ ở sofa.",
+        "en": "They go quiet. They sleep on the sofa that night."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "breakup": true,
+        "happy": -10
+       },
+       "text": {
+        "vi": "Họ thu dọn đồ.",
+        "en": "They pack their things."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai_safety_skip",
+   "category": "work",
+   "age": [
+    21,
+    70
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Studio muốn quay gấp, bỏ qua buổi họp về ranh giới và giấy tờ đồng thuận để kịp lịch.",
+    "en": "The studio wants to rush, skipping the boundaries meeting and consent paperwork to stay on schedule."
+   },
+   "requires": {
+    "special": [
+     "adult_actor",
+     "adult_director"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Từ chối quay nếu thiếu quy trình",
+      "en": "Refuse to shoot without it"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "karma": 6,
+        "willpower": 4,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Studio lùi lịch. Tiếng lành đồn xa: bạn là người làm nghề chuyên nghiệp.",
+        "en": "The studio reschedules. Word spreads that you're a professional."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "karma": 6,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Studio thay bạn bằng người khác. Bạn không tiếc.",
+        "en": "They replace you. You don't regret it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chiều theo cho xong",
+      "en": "Go along with it"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "karma": -6,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Ngày quay hỗn loạn. Bạn về nhà thấy không ổn chút nào.",
+        "en": "A chaotic shoot. You go home feeling far from okay."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "karma": -8,
+        "fame": -6,
+        "money": -20
+       },
+       "text": {
+        "vi": "Một vụ tranh chấp nổ ra sau đó. Bạn bị kéo vào kiện tụng.",
+        "en": "A dispute erupts afterwards. You're dragged into a lawsuit."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai_director_consent",
+   "category": "work",
+   "age": [
+    23,
+    75
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Một diễn viên trong đoàn muốn đổi ý về một cảnh ngay trước giờ quay.",
+    "en": "A performer on your set wants to change their mind about a scene just before shooting."
+   },
+   "requires": {
+    "special": [
+     "adult_director"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dừng lại, tôn trọng quyết định",
+      "en": "Stop and respect it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 8,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Bạn sửa kịch bản tại chỗ. Cả đoàn nhìn bạn khác hẳn. Diễn viên đó sau này chỉ muốn làm với bạn.",
+        "en": "You rewrite on the spot. The crew sees you differently. That performer later only wants to work with you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ép quay cho kịp tiến độ",
+      "en": "Push to stay on schedule"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": -15,
+        "fame": -10,
+        "happy": -6
+       },
+       "text": {
+        "vi": "Bạn mất cả đoàn làm phim và danh tiếng trong ngành chỉ sau một ngày.",
+        "en": "You lose your crew and your reputation in a single day."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai_award",
+   "category": "work",
+   "age": [
+    21,
+    75
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn được đề cử giải thưởng của ngành phim người lớn.",
+    "en": "You're nominated for an adult industry award."
+   },
+   "requires": {
+    "special": [
+     "adult_actor",
+     "adult_director"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi dự, mặc thật nổi",
+      "en": "Attend in something unforgettable"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 12,
+        "fame": 8
+       },
+       "text": {
+        "vi": "Bạn thắng giải. Ảnh thảm đỏ của bạn lan khắp mạng.",
+        "en": "You win. Your red-carpet photos are everywhere."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 4,
+        "fame": 4
+       },
+       "text": {
+        "vi": "Không thắng, nhưng bộ đồ của bạn được bàn tán nhiều hơn người thắng.",
+        "en": "You don't win, but your outfit gets more buzz than the winner."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở nhà",
+      "en": "Stay home"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Bạn xem trực tiếp trên mạng và bình luận nặc danh.",
+        "en": "You watch the stream and comment anonymously."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai_recognised",
+   "category": "random",
+   "age": [
+    21,
+    90
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Ở siêu thị, một người lạ nhìn bạn rất lâu rồi đỏ mặt quay đi.",
+    "en": "At the supermarket, a stranger stares at you for a while, then turns away blushing."
+   },
+   "requires": {
+    "flags": [
+     "adult_past"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nháy mắt",
+      "en": "Wink"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Họ làm rơi giỏ hàng.",
+        "en": "They drop their basket."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giả vờ không thấy",
+      "en": "Pretend not to notice"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -1
+       },
+       "text": {
+        "vi": "Bạn mua xong đồ nhanh hơn thường lệ.",
+        "en": "You finish shopping faster than usual."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai_stalker_fan",
+   "category": "random",
+   "age": [
+    21,
+    70
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Một người hâm mộ tìm ra địa chỉ nhà bạn và gửi quà đến tận cửa.",
+    "en": "A fan finds your home address and leaves gifts at your door."
+   },
+   "requires": {
+    "special": [
+     "adult_actor",
+     "adult_director"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Báo cảnh sát, chuyển nhà",
+      "en": "Report it and move"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -20,
+        "happy": -3,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Phiền phức, tốn kém, nhưng bạn ngủ yên hơn.",
+        "en": "A hassle and expensive, but you sleep better."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thuê bảo vệ",
+      "en": "Hire security"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -12,
+        "happy": 1
+       },
+       "text": {
+        "vi": "Người bảo vệ to như cái tủ lạnh. Món quà ngừng đến.",
+        "en": "Your guard is the size of a fridge. The gifts stop."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai_mainstream_offer",
+   "category": "work",
+   "age": [
+    21,
+    60
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Một đạo diễn phim thường mời bạn đóng vai phụ trong một phim điện ảnh.",
+    "en": "A mainstream director offers you a supporting role in a feature film."
+   },
+   "requires": {
+    "special": [
+     "adult_actor"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận vai",
+      "en": "Take the role"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "fame": 10,
+        "happy": 10,
+        "money": 20
+       },
+       "text": {
+        "vi": "Phim được khen. Báo chí viết về 'cú chuyển mình' của bạn.",
+        "en": "The film is praised. The press writes about your 'crossover'."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "fame": 4,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Báo chí chỉ hỏi về quá khứ của bạn, không ai hỏi về vai diễn.",
+        "en": "Every interview is about your past, not the role."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Từ chối",
+      "en": "Decline"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bạn thích làm chủ con đường mình chọn.",
+        "en": "You prefer to run your own path."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai_retire_new_life",
+   "category": "work",
+   "age": [
+    25,
+    70
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Đã rời ngành được một thời gian, bạn nộp đơn xin việc văn phòng. Nhà tuyển dụng tra tên bạn trên mạng.",
+    "en": "Some time after leaving the industry, you apply for an office job. The recruiter googles your name."
+   },
+   "requires": {
+    "flags": [
+     "adult_past"
+    ],
+    "employed": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chủ động kể trước",
+      "en": "Bring it up first"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "karma": 3,
+        "willpower": 4
+       },
+       "text": {
+        "vi": "Nhà tuyển dụng cảm ơn sự thẳng thắn và mời bạn vòng hai.",
+        "en": "The recruiter thanks you for your honesty and invites you to round two."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "'Chúng tôi sẽ liên hệ lại.' Họ không liên hệ.",
+        "en": "'We'll be in touch.' They aren't."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đổi tên trên mạng xã hội",
+      "en": "Change your online name"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Một khởi đầu mới, ít nhất là trên giấy.",
+        "en": "A fresh start, at least on paper."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai_own_studio",
+   "category": "money",
+   "age": [
+    25,
+    75
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn có đủ tiền và kinh nghiệm để mở studio riêng, với quy định an toàn và đãi ngộ tốt nhất ngành.",
+    "en": "You have the money and experience to open your own studio, with the industry's best safety rules and pay."
+   },
+   "requires": {
+    "special": [
+     "adult_director",
+     "adult_actor"
+    ],
+    "min": {
+     "fame": 40
+    }
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mở studio",
+      "en": "Open the studio"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "money": -80,
+        "fame": 8,
+        "karma": 5,
+        "happy": 10
+       },
+       "text": {
+        "vi": "Studio của bạn nổi tiếng vì đối xử tử tế với diễn viên. Hồ sơ xin việc chất cao.",
+        "en": "Your studio becomes known for treating performers well. Applications pile up."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "money": -80,
+        "happy": -8
+       },
+       "text": {
+        "vi": "Năm đầu lỗ nặng. Làm người tử tế cũng tốn kém.",
+        "en": "A heavy loss in year one. Decency is expensive."
+       }
+      }
+     ],
+     "requires": {
+      "min": {
+       "money": 80
+      }
+     }
+    },
+    {
+     "label": {
+      "vi": "Chưa phải lúc",
+      "en": "Not yet"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {},
+       "text": {
+        "vi": "Bạn tiết kiệm thêm.",
+        "en": "You keep saving."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

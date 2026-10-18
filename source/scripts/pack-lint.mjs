@@ -32,7 +32,7 @@ for (const [f, pack] of packs) {
   }
 }
 // Cờ được yêu cầu nhưng không gói nào bật (engine có thể tự bật một số cờ hệ thống)
-const engineFlags = new Set(['recent_breakup', 'long_distance', 'in_relationship', 'recent_intimate', 'widowed']);
+const engineFlags = new Set(['recent_breakup', 'long_distance', 'in_relationship', 'recent_intimate', 'widowed', 'adult_past', 'has_affair', 'open_rel', 'retire_now']);
 for (const [id, fl] of allNeeded) {
   if (!allSet.has(fl) && !engineFlags.has(fl)) console.log(`   chú ý  ${id}: cần cờ "${fl}" nhưng không sự kiện nào bật cờ này`);
 }

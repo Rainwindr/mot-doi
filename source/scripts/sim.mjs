@@ -45,7 +45,7 @@ for (let i = 0; i < N; i++) {
       }
       goalsHit += checkGoals(life).length;
       if (!life.dead && life.age >= 14) {
-        if (!life.special && !life.job && Math.random() < 0.15) { const id = R(Object.keys(SPECIALS)); if (canJoin(life, id)) specialAction(life, 'join', id); }
+        if (!life.special && !life.job && Math.random() < 0.15) { const id = R(Object.keys(SPECIALS)); if (canJoin(life, id, st)) specialAction(life, 'join', id, st); }
         if (life.special) specialAction(life, R(['train', 'big', 'promo', 'train', 'big']));
         if (Math.random() < 0.3) socialAction(life, R(['photo', 'video', 'live', 'sponsor']));
       }

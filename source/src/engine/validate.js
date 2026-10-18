@@ -12,6 +12,7 @@ const EVENT_KEYS = ['id', 'category', 'age', 'weight', 'once', 'rating', 'requir
 import { ILLNESS_IDS } from '../data/illness.js';
 import { CAREERS } from '../data/careers.js';
 const CAREER_IDS = CAREERS.map((c) => c.id);
+const SPECIAL_IDS = ['actor', 'musician', 'athlete', 'adult_actor', 'adult_director'];
 export const EDU_STAGES = ['primary', 'secondary', 'uni', 'grad', 'trade'];
 export const MAJOR_IDS = ['cs', 'engineering', 'medicine', 'nursing', 'law', 'business', 'finance', 'science', 'architecture', 'psychology', 'comms', 'education', 'arts'];
 export const STAT_CAP = 30;
@@ -56,6 +57,8 @@ function checkRequires(where, req, errors) {
       for (const s of Object.keys(v)) {
         if (!(STATS.includes(s) || isRel(s) || s === 'money' || s === 'age')) errors.push(`${where}: ${k}.${s} không phải chỉ số hợp lệ`);
       }
+    } else if (k === 'special') {
+      if (!Array.isArray(v) || v.some((x) => !SPECIAL_IDS.includes(x))) errors.push(`${where}: special phải là mảng trong ${SPECIAL_IDS.join(', ')}`);
     } else if (k === 'job') {
       if (!Array.isArray(v) || v.some((x) => !CAREER_IDS.includes(x))) errors.push(`${where}: job phải là mảng mã nghề: ${CAREER_IDS.join(', ')}`);
     } else if (k === 'childAge') {
