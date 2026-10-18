@@ -31,10 +31,6 @@ function onsModal(life, settings, intro) {
       lf.counts.ons++;
       setFlag(lf, 'ons_happened');
       tryConceive(lf, c, protectChance(protect));
-      if (!protect && chance(lf, 0.08)) {
-        lf.ill = { name: L('bệnh lây qua đường tình dục', 'a sexually transmitted infection'), drain: 4 };
-        addLog(lf, L('Vài tuần sau bạn thấy cơ thể có dấu hiệu lạ. Nên đi khám.', 'A few weeks later something feels off. You should see a doctor.'), 'bad');
-      }
     },
   });
   return {

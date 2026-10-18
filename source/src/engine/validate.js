@@ -6,7 +6,7 @@ export const CATEGORIES = ['childhood', 'school', 'teen', 'love', 'work', 'money
 export const STATS = ['health', 'happy', 'smarts', 'looks', 'karma', 'willpower', 'risk', 'fame'];
 export const REL_KEYS = ['mother', 'father', 'sibling', 'partner', 'spouse', 'child', 'friend', 'boss'];
 const BOOL_REQ = ['retired', 'ill', 'inSchool', 'employed', 'hasPartner', 'married', 'hasChildren', 'inPrison', 'addicted', 'pregnant', 'hasAffair', 'hasBusiness', 'ownsHome', 'fugitive', 'hasRecord', 'engaged', 'cohabiting'];
-const SPECIAL_EFFECTS = ['pregnancyChance', 'newContact', 'startAffair', 'affairExposed', 'breakup', 'divorce', 'cure', 'retire', 'loseJob'];
+const SPECIAL_EFFECTS = ['pregnancyChance', 'newContact', 'startAffair', 'affairExposed', 'breakup', 'divorce', 'cure', 'retire', 'loseJob', 'endAffair'];
 const OUTCOME_KEYS = ['chance', 'effects', 'text', 'setFlags', 'clearFlags', 'newContact'];
 const EVENT_KEYS = ['id', 'category', 'age', 'weight', 'once', 'rating', 'requires', 'text', 'choices', 'effects', 'setFlags', 'clearFlags', 'sensitive', 'big'];
 import { ILLNESS_IDS } from '../data/illness.js';

@@ -139,6 +139,7 @@ export function applyEffects(life, effects = {}, ctx = {}) {
   if (effects.salaryPct && life.job) { const d = Math.round(life.job.salary * effects.salaryPct / 100); life.job.salary += d; changes.push(['salary', d]); }
   if (effects.illness && illnessById[effects.illness] && !life.ill) { const x = illnessById[effects.illness]; life.ill = { id: x.id, name: x.name, drain: x.drain, mood: x.mood, smarts: x.smarts, cure: x.cure }; addLog(life, L(`Bạn được chẩn đoán ${x.name.vi}.`, `You're diagnosed with ${x.name.en}.`), 'bad'); }
   if (effects.cure && life.ill) life.ill = null;
+  if (effects.endAffair && life.affair) { const lv = byId(life, life.affair.id); if (lv) { lv.role = 'ex'; lv.closeness = 20; } life.affair = null; clearFlag(life, 'has_affair'); }
   if (effects.retire && life.job) life.flags.retire_now = life.age;
   if (effects.loseJob && life.job) { life.job = null; addLog(life, L('Bạn mất việc.', 'You lose your job.'), 'bad'); }
   if (effects.newContact) {
