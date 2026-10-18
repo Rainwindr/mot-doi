@@ -1,0 +1,1540 @@
+{
+ "manifest": {
+  "id": "core",
+  "name": {
+   "vi": "Gói gốc",
+   "en": "Core"
+  },
+  "version": "0.1.0",
+  "rating": "18+",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "baby_first_word",
+   "category": "childhood",
+   "age": [
+    1,
+    2
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn nói từ đầu tiên trong đời. Cả nhà nín thở.",
+    "en": "You say your first word. The whole family holds its breath."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "\"Mẹ!\"",
+      "en": "\"Mama!\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_mother": 10,
+        "happy": 5
+       },
+       "text": {
+        "vi": "Mẹ khóc vì hạnh phúc. Bố giả vờ không ghen tị.",
+        "en": "Mum cries with joy. Dad pretends he isn't jealous."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "\"Bố!\"",
+      "en": "\"Dada!\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_father": 10,
+        "happy": 5
+       },
+       "text": {
+        "vi": "Bố kể chuyện này cho cả xóm, ba lần mỗi người.",
+        "en": "Dad tells the whole street. Three times each."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "\"Không!\"",
+      "en": "\"No!\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 5,
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Cả nhà nhìn nhau. Họ biết những năm tới sẽ rất dài.",
+        "en": "The family exchanges a look. The coming years will be long."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "baby_sick",
+   "category": "childhood",
+   "age": [
+    0,
+    4
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn sốt cao giữa đêm. Bố mẹ tra mạng và chắc chắn bạn mắc đủ 14 loại bệnh.",
+    "en": "You spike a fever at night. Your parents google it and conclude you have 14 diseases."
+   },
+   "effects": {
+    "health": -8,
+    "happy": -3
+   }
+  },
+  {
+   "id": "child_lost_market",
+   "category": "childhood",
+   "age": [
+    4,
+    8
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn bị lạc bố mẹ ở chợ. Xung quanh toàn là chân người lớn.",
+    "en": "You lose your parents at the market. All you can see are adult legs."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đứng yên chờ",
+      "en": "Stay put and wait"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "smarts": 3
+       },
+       "text": {
+        "vi": "Bố mẹ tìm thấy bạn sau mười phút.",
+        "en": "Your parents find you ten minutes later."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "Bạn đứng khóc cả tiếng. Một bà bán cá cho bạn kẹo và dạy bạn chửi thề.",
+        "en": "You cry for an hour. A fishmonger gives you sweets and teaches you a swear word."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tự đi tìm",
+      "en": "Go looking yourself"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "willpower": 5,
+        "risk": 3
+       },
+       "text": {
+        "vi": "Bạn tự tìm được đường về. Bố mẹ vừa mừng vừa giận.",
+        "en": "You find your way back. Your parents are relieved and furious."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -8,
+        "health": -3
+       },
+       "text": {
+        "vi": "Bạn đi lạc xa hơn, vấp ngã và về nhà với hai đầu gối như bản đồ.",
+        "en": "You wander further, trip, and come home with knees like a map."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "child_first_school_day",
+   "category": "school",
+   "age": [
+    6,
+    6
+   ],
+   "weight": 10,
+   "once": true,
+   "rating": "all",
+   "requires": {
+    "inSchool": true
+   },
+   "text": {
+    "vi": "Ngày đầu tiên đi học. Một bạn ngồi cạnh nhìn bạn chằm chằm.",
+    "en": "Your first day of school. The kid next to you is staring."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chào bạn ấy",
+      "en": "Say hi"
+     },
+     "outcomes": [
+      {
+       "chance": 0.75,
+       "effects": {
+        "happy": 8,
+        "rel_friend": 15
+       },
+       "text": {
+        "vi": "Hai đứa thành bạn thân ngay buổi trưa.",
+        "en": "You're best friends by lunchtime."
+       }
+      },
+      {
+       "chance": 0.25,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bạn ấy quay đi không nói gì.",
+        "en": "They turn away without a word."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhìn lại chằm chằm",
+      "en": "Stare back"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 5,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Cả hai cùng phá lên cười.",
+        "en": "You both burst out laughing."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Cô giáo nhắc cả hai đứa tập trung.",
+        "en": "The teacher tells you both to focus."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "child_tooth_fairy",
+   "category": "childhood",
+   "age": [
+    6,
+    8
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Chiếc răng sữa đầu tiên rụng. Bạn đặt nó dưới gối và chờ xem thị trường trả bao nhiêu.",
+    "en": "Your first baby tooth falls out. You put it under your pillow to see what the market pays."
+   },
+   "effects": {
+    "happy": 4,
+    "looks": -1
+   }
+  },
+  {
+   "id": "child_pet_request",
+   "category": "childhood",
+   "age": [
+    5,
+    11
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn năn nỉ bố mẹ cho nuôi một chú chó.",
+    "en": "You beg your parents for a puppy."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hứa sẽ tự chăm",
+      "en": "Promise to look after it"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 12,
+        "willpower": 4
+       },
+       "setFlags": [
+        "has_pet"
+       ],
+       "text": {
+        "vi": "Bố mẹ đồng ý. Bạn có một người bạn bốn chân.",
+        "en": "They say yes. You have a four-legged friend."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "Bố mẹ nói nhà chật quá. Bạn chỉ vào phòng của em.",
+        "en": "Your parents say the house is too small. You point at your sibling's room."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Khóc lóc ăn vạ",
+      "en": "Throw a tantrum"
+     },
+     "outcomes": [
+      {
+       "chance": 0.25,
+       "effects": {
+        "happy": 10,
+        "karma": -3
+       },
+       "setFlags": [
+        "has_pet"
+       ],
+       "text": {
+        "vi": "Bố mẹ chịu thua.",
+        "en": "Your parents give in."
+       }
+      },
+      {
+       "chance": 0.75,
+       "effects": {
+        "happy": -8,
+        "rel_mother": -5,
+        "rel_father": -5
+       },
+       "text": {
+        "vi": "Bạn bị cấm xem hoạt hình một tuần. Chiến lược thất bại.",
+        "en": "No cartoons for a week. Strategy failed."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "child_parents_fight",
+   "category": "family",
+   "age": [
+    4,
+    15
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bố mẹ cãi nhau to tiếng trong bếp.",
+    "en": "Your parents are shouting at each other in the kitchen."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bịt tai đi ngủ",
+      "en": "Cover your ears and sleep"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -5
+       },
+       "text": {
+        "vi": "Bạn ngủ thiếp đi, lòng nặng trĩu.",
+        "en": "You drift off with a heavy heart."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chạy vào can",
+      "en": "Run in and stop them"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_mother": 5,
+        "rel_father": 5,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Họ im lặng, ôm bạn và xin lỗi.",
+        "en": "They go quiet, hug you and apologise."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -8
+       },
+       "text": {
+        "vi": "Họ bảo bạn về phòng ngay.",
+        "en": "They send you straight to your room."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "child_talent_show",
+   "category": "school",
+   "age": [
+    8,
+    13
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "requires": {
+    "inSchool": true
+   },
+   "text": {
+    "vi": "Trường tổ chức buổi biểu diễn tài năng.",
+    "en": "School is holding a talent show."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lên hát",
+      "en": "Sing"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 12,
+        "fame": 3
+       },
+       "text": {
+        "vi": "Cả trường vỗ tay rần rần.",
+        "en": "The whole school cheers."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -8
+       },
+       "text": {
+        "vi": "Bạn hát lạc tông. Cả trường nhớ, kể cả bác bảo vệ.",
+        "en": "You sing off-key. The whole school remembers, including the security guard."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ngồi xem thôi",
+      "en": "Just watch"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bạn ăn bỏng ngô và chấm điểm từng tiết mục như giám khảo truyền hình.",
+        "en": "You eat popcorn and score each act like a TV judge."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "teen_bully",
+   "category": "teen",
+   "age": [
+    10,
+    15
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "requires": {
+    "inSchool": true
+   },
+   "text": {
+    "vi": "Một đứa lớn hơn chặn đường đòi tiền ăn sáng của bạn.",
+    "en": "An older kid blocks your way and demands your lunch money."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đưa tiền",
+      "en": "Hand it over"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -6,
+        "willpower": -3
+       },
+       "text": {
+        "vi": "Bạn nhịn đói cả buổi. Đứa kia mua bánh mì kẹp trứng bằng tiền của bạn.",
+        "en": "You go hungry. They buy an egg sandwich with your money."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Báo thầy cô",
+      "en": "Tell a teacher"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "karma": 3,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Đứa kia bị mời phụ huynh.",
+        "en": "The bully's parents get called in."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "Bạn bị gọi là mách lẻo.",
+        "en": "You get called a snitch."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đánh lại",
+      "en": "Fight back"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 10,
+        "willpower": 6,
+        "health": -4
+       },
+       "text": {
+        "vi": "Bạn thắng. Từ hôm đó đứa kia đi đường vòng.",
+        "en": "You win. They take the long way round from then on."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "health": -12,
+        "happy": -6
+       },
+       "text": {
+        "vi": "Bạn về nhà với con mắt bầm tím.",
+        "en": "You go home with a black eye."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "teen_first_phone",
+   "category": "teen",
+   "age": [
+    11,
+    15
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bố mẹ cho bạn chiếc điện thoại đầu tiên, kèm một bài giảng dài 40 phút.",
+    "en": "Your parents give you your first phone, plus a 40-minute lecture."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lướt mạng thâu đêm",
+      "en": "Scroll all night"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "health": -4,
+        "smarts": -2
+       },
+       "text": {
+        "vi": "Mắt bạn thâm quầng nhưng bạn thuộc mọi trend trước cả lớp.",
+        "en": "Dark circles, but you know every trend before anyone else."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Dùng có chừng mực",
+      "en": "Use it in moderation"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "willpower": 4
+       },
+       "text": {
+        "vi": "Bố mẹ khen bạn tự giác. Họ không biết về chiếc điện thoại thứ hai.",
+        "en": "Your parents praise your self-control. They don't know about the second phone."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "teen_exam",
+   "category": "school",
+   "age": [
+    14,
+    17
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "requires": {
+    "inSchool": true
+   },
+   "text": {
+    "vi": "Kỳ thi lớn sắp đến. Bạn bè đều nói 'tao chưa học gì', và bạn biết họ nói dối.",
+    "en": "Big exams are coming. Everyone says 'I haven't studied at all.' They're lying."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ôn thật kỹ",
+      "en": "Study hard"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "smarts": 6,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn đạt điểm cao.",
+        "en": "You ace it."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "smarts": 3,
+        "happy": -5
+       },
+       "text": {
+        "vi": "Đề khó hơn bạn tưởng. Câu 5 như viết bằng tiếng nước ngoài.",
+        "en": "Harder than expected. Question 5 might be in another language."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Học tủ",
+      "en": "Gamble on a few topics"
+     },
+     "outcomes": [
+      {
+       "chance": 0.35,
+       "effects": {
+        "smarts": 2,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Trúng tủ! Bạn mừng như bắt được vàng.",
+        "en": "Lucky guess! You're thrilled."
+       }
+      },
+      {
+       "chance": 0.65,
+       "effects": {
+        "smarts": -2,
+        "happy": -8
+       },
+       "text": {
+        "vi": "Trật tủ hoàn toàn. Bạn viết một bài văn về một chủ đề không ai hỏi.",
+        "en": "Completely wrong guess. You write an essay nobody asked for."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "teen_part_time_cash",
+   "category": "money",
+   "age": [
+    15,
+    17
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Hàng xóm nhờ bạn trông nhà cả kỳ nghỉ, trả công hậu hĩnh.",
+    "en": "A neighbour asks you to house-sit over the holidays and pays well."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận lời",
+      "en": "Take the job"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "money": 15,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Mọi việc suôn sẻ, bạn có món tiền đầu tiên.",
+        "en": "All goes well. Your first real money."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "money": 5,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Con mèo nhà họ bỏ trốn. Bạn bị trừ tiền.",
+        "en": "Their cat escapes. Your pay gets docked."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Từ chối, đi chơi",
+      "en": "Decline and have fun"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Bạn có một kỳ nghỉ thảnh thơi.",
+        "en": "You enjoy a lazy holiday."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adult_lottery_ticket",
+   "category": "money",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 2,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn nhặt được một tờ vé số trên vỉa hè.",
+    "en": "You find a lottery ticket on the pavement."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dò số",
+      "en": "Check the numbers"
+     },
+     "outcomes": [
+      {
+       "chance": 0.9,
+       "effects": {
+        "happy": -1
+       },
+       "text": {
+        "vi": "Trượt hết. Vũ trụ vẫn nhất quán.",
+        "en": "Not a single number. The universe stays consistent."
+       }
+      },
+      {
+       "chance": 0.1,
+       "effects": {
+        "money": 200,
+        "happy": 15
+       },
+       "text": {
+        "vi": "Trúng giải ba!",
+        "en": "Third prize!"
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tìm người đánh rơi",
+      "en": "Find the owner"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 8
+       },
+       "text": {
+        "vi": "Một cụ bà cảm ơn bạn rối rít.",
+        "en": "An old lady thanks you over and over."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "work_boss_overtime",
+   "category": "work",
+   "age": [
+    18,
+    65
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "requires": {
+    "employed": true
+   },
+   "text": {
+    "vi": "Sếp nhờ bạn 'giúp một chút' cuối tuần. Không có lương. 'Mình là gia đình mà.'",
+    "en": "Your boss asks you to 'help out a bit' at the weekend. Unpaid. 'We're family here.'"
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đồng ý",
+      "en": "Agree"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_boss": 10,
+        "happy": -6
+       },
+       "text": {
+        "vi": "Sếp ghi nhận công sức của bạn.",
+        "en": "Your boss notices the effort."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -8,
+        "health": -3
+       },
+       "text": {
+        "vi": "Bạn làm cả cuối tuần. Thứ Hai sếp hỏi bạn đi đâu chơi.",
+        "en": "You work all weekend. On Monday your boss asks if you had a nice break."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Từ chối thẳng",
+      "en": "Say no"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "willpower": 5,
+        "rel_boss": -5
+       },
+       "text": {
+        "vi": "Sếp không vui nhưng cũng thôi.",
+        "en": "Your boss isn't happy but lets it go."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_boss": -15
+       },
+       "text": {
+        "vi": "Sếp bắt đầu để ý mọi lỗi chính tả trong email của bạn.",
+        "en": "Your boss starts noticing every typo in your emails."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "work_coworker_credit",
+   "category": "work",
+   "age": [
+    20,
+    65
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "requires": {
+    "employed": true
+   },
+   "text": {
+    "vi": "Đồng nghiệp nhận vơ ý tưởng của bạn trong cuộc họp.",
+    "en": "A coworker presents your idea as their own in a meeting."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lên tiếng ngay",
+      "en": "Speak up right away"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_boss": 8,
+        "willpower": 4
+       },
+       "text": {
+        "vi": "Sếp tin bạn. Đồng nghiệp đỏ mặt.",
+        "en": "The boss believes you. Your coworker turns red."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_boss": -5,
+        "happy": -5
+       },
+       "text": {
+        "vi": "Không khí cuộc họp trở nên ngượng ngập.",
+        "en": "The meeting turns awkward."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nuốt giận",
+      "en": "Swallow it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "Bạn nuốt giận và lập một thư mục tên 'Bằng chứng'.",
+        "en": "You swallow it and create a folder called 'Evidence'."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_partner_moves_away",
+   "category": "love",
+   "age": [
+    18,
+    50
+   ],
+   "weight": 2,
+   "once": true,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true,
+    "married": false
+   },
+   "text": {
+    "vi": "Người yêu nhận việc ở một thành phố cách xa nghìn cây số.",
+    "en": "Your partner gets a job a thousand kilometres away."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thử yêu xa",
+      "en": "Try long distance"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_partner": 5,
+        "happy": -3
+       },
+       "setFlags": [
+        "long_distance"
+       ],
+       "text": {
+        "vi": "Hai người hứa gọi video mỗi tối.",
+        "en": "You promise a video call every night."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "rel_partner": -10
+       },
+       "setFlags": [
+        "long_distance"
+       ],
+       "text": {
+        "vi": "Mới một tháng, tin nhắn chỉ còn là 'ok' và một sticker.",
+        "en": "One month in, messages are down to 'ok' and a sticker."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chia tay trong êm đẹp",
+      "en": "Part on good terms"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -10,
+        "breakup": true
+       },
+       "text": {
+        "vi": "Hai người ôm nhau lần cuối ở sân bay.",
+        "en": "One last hug at the airport."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_wedding_drama",
+   "category": "love",
+   "age": [
+    20,
+    60
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "18+",
+   "requires": {
+    "married": true
+   },
+   "text": {
+    "vi": "Họ hàng hai bên cãi nhau ngay trong tiệc kỷ niệm ngày cưới của bạn.",
+    "en": "Both families start arguing at your wedding anniversary party."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cầm micro hát to",
+      "en": "Grab the mic and sing loudly"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 8,
+        "rel_spouse": 6
+       },
+       "text": {
+        "vi": "Mọi người cười ồ và quên chuyện cãi nhau.",
+        "en": "Everyone laughs and forgets the argument."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -4,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Video bạn hát lan khắp nhóm chat họ hàng.",
+        "en": "The video of you singing spreads through the family group chat."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lặng lẽ về sớm",
+      "en": "Slip away early"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_spouse": -3,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Hai vợ chồng ăn mì tôm ở nhà, lại thấy vui.",
+        "en": "Instant noodles at home with your spouse. Oddly nice."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adult_scam_call",
+   "category": "money",
+   "age": [
+    25,
+    90
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Một số lạ báo bạn trúng một chiếc ô tô. Chỉ cần chuyển trước 'phí vận chuyển xe'.",
+    "en": "A stranger says you've won a car. You just need to pay the 'car delivery fee' first."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cúp máy",
+      "en": "Hang up"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Bạn cúp máy. Năm phút sau họ gọi lại với giọng khác.",
+        "en": "You hang up. Five minutes later they call back with a different accent."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chuyển tiền",
+      "en": "Send the money"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -40,
+        "happy": -10
+       },
+       "text": {
+        "vi": "Tiền đi. Xe không đến. Số điện thoại cũng không còn.",
+        "en": "Money gone. No car. No phone number either."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adult_old_friend",
+   "category": "random",
+   "age": [
+    25,
+    70
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn tình cờ gặp lại bạn học cũ trên phố.",
+    "en": "You bump into an old classmate on the street."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Rủ đi cà phê",
+      "en": "Grab a coffee"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 8,
+        "rel_friend": 10
+       },
+       "text": {
+        "vi": "Hai người ngồi kể chuyện đến tối.",
+        "en": "You talk until evening."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "money": -10,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Sau mười phút họ mở cặp ra. Họ đang bán bảo hiểm.",
+        "en": "Ten minutes in, they open a folder. They sell insurance now."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giả vờ không thấy",
+      "en": "Pretend not to see them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": -2
+       },
+       "text": {
+        "vi": "Bạn rẽ vội vào một tiệm cắt tóc và cắt tóc luôn cho tự nhiên.",
+        "en": "You duck into a barber's and get a haircut so it looks natural."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "health_checkup_warning",
+   "category": "health",
+   "age": [
+    40,
+    90
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bác sĩ nhìn kết quả huyết áp, rồi nhìn bạn, rồi nhìn lại kết quả.",
+    "en": "The doctor looks at your blood pressure, then at you, then back at the numbers."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bỏ đồ mặn, đi bộ",
+      "en": "Cut salt, start walking"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 6,
+        "happy": -2,
+        "willpower": 4
+       },
+       "text": {
+        "vi": "Sau vài tháng, chỉ số đẹp hơn hẳn.",
+        "en": "A few months later, the numbers look better."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Kệ đi",
+      "en": "Ignore it"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Tạm thời chưa có gì. Tạm thời.",
+        "en": "Nothing happens. For now."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "health": -12
+       },
+       "text": {
+        "vi": "Bạn nhập viện vài ngày. Đồ ăn bệnh viện còn nhạt hơn lời khuyên của bác sĩ.",
+        "en": "A few days in hospital. The food is blander than the doctor's advice."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_retirement_party",
+   "category": "old_age",
+   "age": [
+    60,
+    70
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "requires": {
+    "employed": true
+   },
+   "text": {
+    "vi": "Công ty tổ chức tiệc khi bạn đến tuổi nghỉ hưu.",
+    "en": "Your workplace throws a party as you reach retirement age."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nghỉ hưu",
+      "en": "Retire"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "health": 3
+       },
+       "setFlags": [
+        "retire_now"
+       ],
+       "text": {
+        "vi": "Bạn nhận một chiếc đồng hồ để đo khoảng thời gian bạn không còn phải đi làm.",
+        "en": "You receive a watch, to measure all the time you no longer spend at work."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Làm thêm vài năm",
+      "en": "Work a few more years"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 4,
+        "health": -3
+       },
+       "text": {
+        "vi": "Đồng nghiệp trẻ nể bạn thêm một chút.",
+        "en": "The young staff respect you a little more."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_grandchild_visit",
+   "category": "old_age",
+   "age": [
+    55,
+    100
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "requires": {
+    "hasChildren": true
+   },
+   "text": {
+    "vi": "Con cháu về thăm và đòi bạn kể chuyện ngày xưa.",
+    "en": "The family visits and begs you for stories from the old days."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Kể thật",
+      "en": "Tell the truth"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "rel_child": 6
+       },
+       "text": {
+        "vi": "Cả nhà cười chảy nước mắt.",
+        "en": "Everyone laughs until they cry."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thêm mắm thêm muối",
+      "en": "Embellish wildly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 10,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Trong chuyện của bạn, bạn từng đánh bại một con gấu bằng dép tổ ong.",
+        "en": "In your version, you once beat a bear using only a flip-flop."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "random_bird_poop",
+   "category": "random",
+   "age": [
+    5,
+    100
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Một con chim ị trúng đầu bạn. Người ta bảo thế là may mắn.",
+    "en": "A bird poops on your head. People say it's good luck."
+   },
+   "effects": {
+    "happy": -2,
+    "karma": 1
+   }
+  },
+  {
+   "id": "random_viral_video",
+   "category": "random",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 2,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một video bạn trượt chân ngã bỗng nổi tiếng trên mạng.",
+    "en": "A video of you slipping and falling goes viral."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tận dụng độ nổi",
+      "en": "Lean into the fame"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "fame": 15,
+        "money": 20,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Bạn có hợp đồng quảng cáo đầu tiên.",
+        "en": "You land your first sponsorship."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "fame": 5,
+        "happy": -6
+       },
+       "text": {
+        "vi": "Người ta chỉ nhớ bạn là 'người ngã'. Mãi mãi.",
+        "en": "People only know you as 'the one who fell'. Forever."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xin gỡ video",
+      "en": "Ask for it to be taken down"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Một tuần sau mọi người đã quên.",
+        "en": "A week later everyone has forgotten."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

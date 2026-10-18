@@ -1,0 +1,1156 @@
+<title>Một Đời</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one phone-width column. Life ledger in the middle, four stat gauges under it,
+   a tab bar whose centre is a big yellow "+1" stamp. Sheets slide up from the bottom. */
+:root{
+  --bg:#e7eeed; --surface:#ffffff; --surface-2:#f2f6f5; --ink:#13222a; --muted:#56686e; --line:#d1dcdb;
+  --brand:#0c5a60; --brand-ink:#ffffff; --accent:#f3b70a; --accent-ink:#1d1600;
+  --good:#2b9656; --warn:#c98d00; --bad:#cf3f3f; --shade:rgba(10,30,34,.45);
+  --shadow:0 12px 32px rgba(12,40,46,.18);
+  --f-display:"Bricolage Grotesque","Be Vietnam Pro",system-ui,sans-serif;
+  --f-body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-num:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1315; --surface:#142023; --surface-2:#1a292d; --ink:#e4eeed; --muted:#92a5a8; --line:#26383c;
+    --brand:#5bc3c4; --brand-ink:#042220; --accent:#f6c533; --accent-ink:#1d1600;
+    --good:#4cc27c; --warn:#f0b429; --bad:#f06b6b; --shade:rgba(0,0,0,.6);
+    --shadow:0 12px 32px rgba(0,0,0,.5); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1315; --surface:#142023; --surface-2:#1a292d; --ink:#e4eeed; --muted:#92a5a8; --line:#26383c;
+  --brand:#5bc3c4; --brand-ink:#042220; --accent:#f6c533; --accent-ink:#1d1600;
+  --good:#4cc27c; --warn:#f0b429; --bad:#f06b6b; --shade:rgba(0,0,0,.6);
+  --shadow:0 12px 32px rgba(0,0,0,.5); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+#root{height:100%;display:flex;justify-content:center}
+.app{width:100%;max-width:540px;height:100%;display:flex;flex-direction:column;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+.muted{color:var(--muted)}
+.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:700;background:var(--surface-2);border:1px solid var(--line)}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:transparent}
+.btn.accent{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.btn.small{padding:7px 11px;font-size:13px;border-radius:9px}
+.btn.danger{color:var(--bad)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;background:var(--surface-2);border:1px solid var(--line);white-space:nowrap}
+.chip.code{font-family:var(--f-num);letter-spacing:.04em}
+
+/* topbar */
+.top{display:flex;align-items:center;gap:10px;padding-block:12px 10px;border-bottom:1px solid var(--line)}
+.top .who{flex:1;min-width:0}
+.top .name{font-family:var(--f-display);font-weight:800;font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.cash{text-align:right}
+.cash b{display:block;font-family:var(--f-num);font-size:17px}
+.cash span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.iconbtn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 9px;font-size:12px;font-weight:700}
+
+/* ledger */
+.log{flex:1;overflow-y:auto;padding-block:14px;display:flex;flex-direction:column;gap:10px;min-height:0}
+.year{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:start}
+.year .age{font-family:var(--f-display);font-weight:800;font-size:22px;line-height:1;color:var(--brand);text-align:right;padding-top:2px}
+.year .age small{display:block;font-family:var(--f-body);font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.year ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;min-width:0}
+.year li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:14px}
+.year.last li{border-color:color-mix(in srgb,var(--brand) 35%,var(--line))}
+
+/* stats */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;padding-block:10px;border-top:1px solid var(--line)}
+.stat{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font-size:12px;font-weight:600}
+.bar{height:8px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;transition:width .4s ease}
+.stat .num{font-size:12px;min-width:2ch;text-align:right}
+
+/* tab bar */
+.tabs{display:grid;grid-template-columns:1fr 1fr auto 1fr 1fr;align-items:end;gap:6px;
+  padding-block:8px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+.tab{background:none;border:0;padding:6px 2px;font-size:12px;font-weight:700;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:10px}
+.tab:hover{color:var(--ink);background:var(--surface-2)}
+.tab svg{width:22px;height:22px}
+.age-btn{width:78px;height:78px;margin-top:-30px;border-radius:50%;border:4px solid var(--bg);background:var(--accent);color:var(--accent-ink);
+  font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .12s}
+.age-btn small{font-family:var(--f-body);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.age-btn:active{transform:scale(.94)}
+
+/* sheets and modals */
+.shade{position:fixed;inset:0;background:var(--shade);display:flex;justify-content:center;z-index:20}
+.sheet{align-items:flex-end}
+.sheet .panel{width:100%;max-width:540px;max-height:86%;overflow-y:auto;background:var(--bg);border-radius:20px 20px 0 0;
+  padding:16px max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));box-shadow:var(--shadow)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.panel-head h2{font-size:22px}
+.sec{margin-block:16px 8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.item .grow{flex:1;min-width:0}
+.item .t{font-weight:700}
+.item .s{font-size:12.5px;color:var(--muted)}
+button.item{text-align:left;width:100%}
+button.item:hover{border-color:var(--brand)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.act{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.act:hover:not(:disabled){border-color:var(--brand)}
+.act b{font-size:14px}
+.act span{font-size:12px;color:var(--muted)}
+.act:disabled{opacity:.45;cursor:not-allowed}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px}
+.kpi span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.kpi b{display:block;font-family:var(--f-num);font-size:16px;margin-top:2px}
+.up{color:var(--good)} .down{color:var(--bad)}
+.modal{align-items:center;padding:16px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
+.modal .box{width:100%;max-width:440px;background:var(--surface);border-radius:20px;padding:20px;box-shadow:var(--shadow);border:1px solid var(--line);max-height:90%;overflow-y:auto}
+.modal .tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--brand)}
+.modal p{font-size:16px;margin:8px 0 16px}
+.modal .choices{display:flex;flex-direction:column;gap:8px}
+.modal .choices .btn{text-align:left}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(110px + env(safe-area-inset-bottom,0px));z-index:40;max-width:min(440px,calc(100% - 32px));
+  background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:12px;font-size:14px;box-shadow:var(--shadow)}
+
+/* title, create, birth card, death */
+.screen{flex:1;overflow-y:auto;padding-block:20px 32px;display:flex;flex-direction:column;gap:16px}
+.hero{padding-block:28px 8px}
+.hero .kicker{font-family:var(--f-num);font-size:12px;color:var(--brand);letter-spacing:.08em}
+.hero h1{font-size:clamp(46px,14vw,72px);font-weight:800;line-height:.95;letter-spacing:-.02em;margin-top:8px}
+.hero p{max-width:34ch;font-size:16px;color:var(--muted);margin:12px 0 0}
+.counter{font-family:var(--f-num);font-size:13px;color:var(--muted)}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+.seg button{border:0;background:none;border-radius:9px;padding:9px;font-weight:700;color:var(--muted)}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12px;font-weight:700;color:var(--muted)}
+.field input[type=text],.field select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form .full{grid-column:1/-1}
+.slider{display:grid;grid-template-columns:96px 1fr 3ch;gap:10px;align-items:center;font-size:13px;font-weight:600}
+.slider input{width:100%;accent-color:var(--brand)}
+.traits{display:flex;flex-wrap:wrap;gap:6px}
+.traits label{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:13px;cursor:pointer}
+.traits input{accent-color:var(--brand)}
+.birth{text-align:center}
+.birth .big{font-family:var(--f-display);font-size:32px;font-weight:800;line-height:1.05;margin:6px 0}
+.birth .odds{font-family:var(--f-num);color:var(--brand);font-size:13px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:left;margin:14px 0}
+.facts div{background:var(--surface-2);border-radius:10px;padding:8px 10px;font-size:13px}
+.facts span{display:block;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+.stone{text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:120px 120px 16px 16px;padding:40px 20px 22px}
+.stone h2{font-size:28px}
+.ribbon{display:inline-block;margin-top:12px;padding:6px 16px;background:var(--accent);color:var(--accent-ink);font-weight:800;border-radius:6px;font-family:var(--f-display);font-size:18px}
+table.cmp{width:100%;border-collapse:collapse;font-size:13px}
+table.cmp th,table.cmp td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+table.cmp th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+table.cmp tr.me td{font-weight:700;color:var(--brand)}
+.tablewrap{overflow-x:auto}
+.gate p{font-size:15px}
+@media (max-width:380px){.form{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div id="root"></div>
+<div id="layer"></div>
+
+<script>
+/* ---------- helpers ---------- */
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const KEY='motdoi_save_v1';
+let lang=store.get('motdoi_lang')||'vi';
+const L=(vi,en)=>[vi,en];
+const tr=a=>Array.isArray(a)?a[lang==='vi'?0:1]:(a&&typeof a==='object'&&'vi' in a)?a[lang]:a;
+const R=Math.random;
+const rint=(a,b)=>Math.floor(a+R()*(b-a+1));
+const pick=a=>a[Math.floor(R()*a.length)];
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const gauss=()=>{let u=0,v=0;while(!u)u=R();while(!v)v=R();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)};
+const wpick=(arr,wf)=>{const t=arr.reduce((s,x)=>s+wf(x),0);let r=R()*t;for(const x of arr){r-=wf(x);if(r<=0)return x}return arr[arr.length-1]};
+const uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>{const neg=n<0;n=Math.abs(n);let s;if(n>=1e9)s=(n/1e9).toFixed(2)+'B';else if(n>=1e6)s=(n/1e6).toFixed(2)+'M';else if(n>=1e4)s=Math.round(n/1e3)+'K';else s=Math.round(n).toLocaleString('en-US');return(neg?'-':'')+'$'+s};
+const pct=r=>(r>=0?'+':'')+(r*100).toFixed(1)+'%';
+const both=(a,b)=>[a[0]+' '+b[0],a[1]+' '+b[1]];
+
+/* ---------- data (approximate figures, UN / WHO / World Bank) ---------- */
+const CTRY={
+ IN:{vi:'Ấn Độ',en:'India',b:23,le:72,gdp:2500,pool:'sa',rate:.065},
+ CN:{vi:'Trung Quốc',en:'China',b:9,le:78,gdp:12600,pool:'cn',rate:.02},
+ NG:{vi:'Nigeria',en:'Nigeria',b:7.8,le:54,gdp:1600,pool:'af',rate:.08},
+ PK:{vi:'Pakistan',en:'Pakistan',b:6.5,le:67,gdp:1500,pool:'sa',rate:.08},
+ ID:{vi:'Indonesia',en:'Indonesia',b:4.4,le:71,gdp:4900,pool:'sea',rate:.05},
+ CD:{vi:'CHDC Congo',en:'DR Congo',b:4.3,le:60,gdp:650,pool:'af',rate:.07},
+ ET:{vi:'Ethiopia',en:'Ethiopia',b:4,le:66,gdp:1300,pool:'af',rate:.07},
+ US:{vi:'Hoa Kỳ',en:'United States',b:3.6,le:77,gdp:82000,pool:'an',rate:.04},
+ BD:{vi:'Bangladesh',en:'Bangladesh',b:3,le:73,gdp:2600,pool:'sa',rate:.06},
+ BR:{vi:'Brazil',en:'Brazil',b:2.5,le:75,gdp:10000,pool:'la',rate:.08},
+ EG:{vi:'Ai Cập',en:'Egypt',b:2.2,le:71,gdp:3500,pool:'me',rate:.08,cons:1},
+ MX:{vi:'Mexico',en:'Mexico',b:1.9,le:75,gdp:13000,pool:'la',rate:.07},
+ PH:{vi:'Philippines',en:'Philippines',b:1.7,le:72,gdp:3800,pool:'sea',rate:.05},
+ KE:{vi:'Kenya',en:'Kenya',b:1.5,le:62,gdp:2000,pool:'af',rate:.07},
+ VN:{vi:'Việt Nam',en:'Vietnam',b:1.4,le:74,gdp:4300,pool:'vn',rate:.05,cons:1},
+ RU:{vi:'Nga',en:'Russia',b:1.3,le:71,gdp:13000,pool:'ru',rate:.08,cons:1},
+ IR:{vi:'Iran',en:'Iran',b:1.1,le:76,gdp:4500,pool:'me',rate:.08,cons:1},
+ TR:{vi:'Thổ Nhĩ Kỳ',en:'Türkiye',b:1.0,le:76,gdp:13000,pool:'me',rate:.08,cons:1},
+ JP:{vi:'Nhật Bản',en:'Japan',b:.73,le:84,gdp:33000,pool:'jp',rate:.005},
+ DE:{vi:'Đức',en:'Germany',b:.69,le:81,gdp:52000,pool:'eu',rate:.025},
+ FR:{vi:'Pháp',en:'France',b:.68,le:83,gdp:44000,pool:'eu',rate:.03},
+ GB:{vi:'Anh',en:'United Kingdom',b:.66,le:81,gdp:48000,pool:'an',rate:.04},
+ TH:{vi:'Thái Lan',en:'Thailand',b:.5,le:79,gdp:7300,pool:'sea',rate:.02,cons:1},
+ KR:{vi:'Hàn Quốc',en:'South Korea',b:.23,le:83,gdp:33000,pool:'kr',rate:.03,cons:1}
+};
+const NAMES={
+ sa:{m:['Arjun','Rahul','Imran','Ayaan','Vikram','Farhan'],f:['Priya','Ananya','Ayesha','Fatima','Kavya','Nadia'],l:['Sharma','Khan','Patel','Rahman','Singh','Hossain']},
+ cn:{m:['Wei','Hao','Jun','Lei','Tao'],f:['Mei','Xiu','Ling','Yan','Jing'],l:['Wang','Li','Zhang','Liu','Chen']},
+ af:{m:['Chidi','Tunde','Kwame','Abebe','Juma','Emeka'],f:['Amara','Ngozi','Zawadi','Aisha','Makena','Hana'],l:['Okafor','Adeyemi','Mensah','Bekele','Otieno','Mwangi']},
+ sea:{m:['Budi','Rizal','Somchai','José','Agus'],f:['Siti','Maria','Dewi','Ploy','Ana'],l:['Santoso','Reyes','Wongsa','Hidayat','Cruz']},
+ vn:{m:['Minh','Huy','Khang','Tuấn','Phúc'],f:['Linh','Trang','Ngọc','Thảo','Vy'],l:['Nguyễn','Trần','Lê','Phạm','Hoàng']},
+ la:{m:['Mateo','Diego','Lucas','Santiago','Gabriel'],f:['Sofía','Valentina','Camila','Ana','Lucía'],l:['García','Silva','Hernández','Santos','López']},
+ an:{m:['James','Liam','Noah','Oliver','Ethan'],f:['Emma','Olivia','Ava','Grace','Chloe'],l:['Smith','Johnson','Brown','Taylor','Miller']},
+ eu:{m:['Lukas','Louis','Felix','Hugo','Leon'],f:['Mia','Léa','Hannah','Chloé','Emilia'],l:['Müller','Martin','Schmidt','Bernard','Dubois']},
+ ru:{m:['Ivan','Dmitri','Alexei','Mikhail'],f:['Anna','Olga','Daria','Elena'],l:['Ivanov','Smirnov','Petrov','Volkov']},
+ me:{m:['Omar','Ahmed','Ali','Emre','Reza'],f:['Layla','Zeynep','Mariam','Sara','Elif'],l:['Hassan','Yılmaz','Ahmadi','Mostafa','Demir']},
+ jp:{m:['Haruto','Ren','Sota','Yuto'],f:['Yui','Hina','Sakura','Aoi'],l:['Sato','Suzuki','Takahashi','Tanaka']},
+ kr:{m:['Min-jun','Ji-ho','Seo-jun','Do-yun'],f:['Seo-yeon','Ji-woo','Ha-eun','Min-seo'],l:['Kim','Lee','Park','Choi']}
+};
+const TIERS=[L('Nghèo','Poor'),L('Trung lưu','Middle class'),L('Khá giả','Well-off'),L('Giàu có','Wealthy')];
+const TIER_JOBS=[
+ [L('Nông dân','Farmer'),L('Công nhân','Laborer'),L('Bán hàng rong','Street vendor')],
+ [L('Giáo viên','Teacher'),L('Nhân viên văn phòng','Office worker'),L('Thợ điện','Electrician'),L('Y tá','Nurse')],
+ [L('Kỹ sư','Engineer'),L('Bác sĩ','Doctor'),L('Chủ cửa hàng','Shop owner')],
+ [L('Giám đốc điều hành','CEO'),L('Nhà đầu tư','Investor'),L('Chính trị gia','Politician')]
+];
+const TRAITS={
+ genius:{l:L('Thông minh bẩm sinh','Gifted'),s:['smarts',15]},
+ charming:{l:L('Quyến rũ','Charming'),s:['looks',15]},
+ athletic:{l:L('Khỏe như vâm','Athletic'),s:['health',15]},
+ optimist:{l:L('Lạc quan','Optimist'),s:['happy',15]},
+ lucky:{l:L('May mắn','Lucky')},
+ hustler:{l:L('Máu kinh doanh','Hustler')},
+ addictive:{l:L('Dễ nghiện','Addictive personality')},
+ hothead:{l:L('Nóng tính','Hothead')}
+};
+const DEG=[L('Chưa có bằng','No diploma'),L('Tốt nghiệp phổ thông','High school'),L('Bằng nghề','Trade diploma'),L('Cử nhân','Bachelor'),L('Thạc sĩ','Master')];
+const RANKS=[L('Thực tập','Junior'),L('Nhân viên','Associate'),L('Chuyên viên','Senior'),L('Trưởng nhóm','Lead'),L('Quản lý','Manager'),L('Giám đốc','Director'),L('Điều hành','Executive')];
+const JOBS={
+ waiter:{n:L('Phục vụ nhà hàng','Waiter'),base:26000,deg:0,sm:0},
+ cashier:{n:L('Thu ngân','Cashier'),base:27000,deg:0,sm:0},
+ factory:{n:L('Công nhân nhà máy','Factory worker'),base:33000,deg:0,sm:0},
+ driver:{n:L('Tài xế giao hàng','Delivery driver'),base:38000,deg:0,sm:0},
+ guard:{n:L('Bảo vệ','Security guard'),base:34000,deg:0,sm:0},
+ bartender:{n:L('Bartender','Bartender'),base:31000,deg:0,sm:0,lk:40},
+ model:{n:L('Người mẫu','Model'),base:65000,deg:0,sm:0,lk:78},
+ actor:{n:L('Diễn viên','Actor'),base:48000,deg:0,sm:0,lk:62},
+ clerk:{n:L('Nhân viên văn phòng','Office clerk'),base:42000,deg:1,sm:30},
+ sales:{n:L('Nhân viên kinh doanh','Sales rep'),base:52000,deg:1,sm:35},
+ electrician:{n:L('Thợ điện','Electrician'),base:60000,deg:2,sm:35},
+ chef:{n:L('Đầu bếp','Chef'),base:50000,deg:2,sm:30},
+ nurse:{n:L('Y tá','Nurse'),base:77000,deg:2,sm:50},
+ teacher:{n:L('Giáo viên','Teacher'),base:56000,deg:3,sm:50},
+ marketing:{n:L('Chuyên viên marketing','Marketing specialist'),base:70000,deg:3,sm:45},
+ accountant:{n:L('Kế toán','Accountant'),base:78000,deg:3,sm:55},
+ architect:{n:L('Kiến trúc sư','Architect'),base:90000,deg:3,sm:65},
+ dev:{n:L('Lập trình viên','Software engineer'),base:125000,deg:3,sm:70},
+ lawyer:{n:L('Luật sư','Lawyer'),base:145000,deg:4,sm:75},
+ scientist:{n:L('Nhà khoa học','Research scientist'),base:100000,deg:4,sm:82},
+ doctor:{n:L('Bác sĩ','Doctor'),base:220000,deg:4,sm:80}
+};
+const ASSETS=[
+ {id:'savings',n:L('Tiết kiệm ngân hàng','Savings account'),risk:L('An toàn','Safe')},
+ {id:'index',n:L('Quỹ chỉ số toàn cầu','Global index fund'),risk:L('Vừa','Medium'),mu:.035,beta:1,sd:.06},
+ {id:'nova',n:L('Cổ phiếu NovaTech','NovaTech stock'),risk:L('Cao','High'),mu:.045,beta:1.6,sd:.26},
+ {id:'green',n:L('Cổ phiếu GreenGrid Năng lượng','GreenGrid Energy stock'),risk:L('Cao','High'),mu:.035,beta:.8,sd:.18},
+ {id:'lumi',n:L('Cổ phiếu Lumi Mỹ phẩm','Lumi Beauty stock'),risk:L('Cao','High'),mu:.03,beta:1.1,sd:.2},
+ {id:'port',n:L('Cổ phiếu PortLine Vận tải biển','PortLine Shipping stock'),risk:L('Cao','High'),mu:.03,beta:1.3,sd:.16},
+ {id:'gold',n:L('Vàng','Gold'),risk:L('Thấp','Low'),mu:.025,beta:-.4,sd:.1},
+ {id:'meme',n:L('Tiền số BitMeme','BitMeme crypto'),risk:L('Cực cao','Extreme'),mu:.08,beta:2,sd:.7}
+];
+const PH={boom:{n:L('Tăng trưởng','Boom'),r:.10},peak:{n:L('Đỉnh chu kỳ','Peak'),r:.02},recession:{n:L('Suy thoái','Recession'),r:-.12},crisis:{n:L('Khủng hoảng','Crisis'),r:-.32}};
+const BIZ={
+ cafe:{n:L('Quán cà phê','Café'),cap:30000,mean:.06,sd:.15},
+ fashion:{n:L('Thương hiệu thời trang','Fashion label'),cap:60000,mean:.08,sd:.28},
+ tech:{n:L('Startup công nghệ','Tech startup'),cap:100000,mean:-.02,sd:.5},
+ club:{n:L('Hộp đêm','Nightclub'),cap:150000,mean:.10,sd:.25},
+ realty:{n:L('Công ty bất động sản','Real estate firm'),cap:300000,mean:.07,sd:.12}
+};
+const RIBBONS={
+ jailbird:{n:L('Chim lồng','Jailbird'),d:L('Dành phần lớn đời trong tù.','Spent much of life behind bars.')},
+ houdini:{n:L('Houdini','Houdini'),d:L('Vượt ngục nhiều lần.','Escaped prison again and again.')},
+ loaded:{n:L('Ngập trong tiền','Loaded'),d:L('Tài sản trên 10 triệu USD.','Net worth above $10M.')},
+ tycoon:{n:L('Ông trùm','Tycoon'),d:L('Gây dựng cơ nghiệp từ kinh doanh.','Built a fortune in business.')},
+ rich:{n:L('Giàu có','Rich'),d:L('Tài sản trên 1 triệu USD.','Net worth above $1M.')},
+ fertile:{n:L('Đông con','Fertile'),d:L('Có từ 4 con trở lên.','Had four or more children.')},
+ addict:{n:L('Con nghiện','Addict'),d:L('Không bao giờ thoát được cơn nghiện.','Never beat the addiction.')},
+ gambler:{n:L('Con bạc','Gambler'),d:L('Sống trong sòng bạc.','Practically lived at the casino.')},
+ party:{n:L('Dân chơi','Party animal'),d:L('Hộp đêm là nhà thứ hai.','The club was a second home.')},
+ heartbreaker:{n:L('Sát thủ tình trường','Heartbreaker'),d:L('Hẹn hò với rất nhiều người.','Dated a lot of people.')},
+ academic:{n:L('Học giả','Academic'),d:L('Học vấn cao, trí tuệ xuất chúng.','Highly educated and brilliant.')},
+ hero:{n:L('Người tốt','Saint'),d:L('Karma gần như hoàn hảo.','Near-perfect karma.')},
+ wicked:{n:L('Kẻ xấu','Wicked'),d:L('Để lại nhiều điều tệ hại.','Left a trail of bad deeds.')},
+ elder:{n:L('Trường thọ','Elder'),d:L('Sống quá 95 tuổi.','Lived past 95.')},
+ lazy:{n:L('Lười biếng','Lazy'),d:L('Gần như chỉ bấm +1 tuổi.','Mostly just pressed age up.')},
+ mediocre:{n:L('Bình thường','Mediocre'),d:L('Một đời không có gì nổi bật.','An unremarkable life.')}
+};
+
+/* ---------- state ---------- */
+let S=null;                 // saved game: {p, econ, twins, queue}
+const U={screen:'title',sheet:null,mode:'destiny',form:null,toast:null};
+let evQ=[], modalOpen=false;
+const P=()=>S.p;
+const F=()=>cf(S.p.country);
+function cf(code){return clamp(Math.pow(CTRY[code].gdp/82000,.55),.06,1)}
+const hasT=t=>S.p.traits.includes(t);
+function add(k,d){const p=P();p.st[k]=clamp(Math.round(p.st[k]+d),0,100)}
+function karma(d){P().karma=clamp(P().karma+d,0,100)}
+function log(line){const p=P();p.log[p.log.length-1].lines.push(line)}
+function save(){if(S)store.set(KEY,JSON.stringify(S))}
+function partner(){return P().people.find(x=>(x.role==='partner'||x.role==='spouse')&&x.alive)}
+function kids(){return P().people.filter(x=>x.role==='child'&&x.alive)}
+function parents(){return P().people.filter(x=>(x.role==='mother'||x.role==='father')&&x.alive)}
+function invested(p){return Object.values(p.inv).reduce((s,v)=>s+v,0)}
+function netWorth(p){return p.money+invested(p)+p.houses.reduce((s,h)=>s+h.value,0)+(p.biz?p.biz.value:0)-p.debt}
+function fullName(p){return p.first+' '+p.last}
+function wantG(p){return p.orient==='straight'?(p.g==='m'?'f':'m'):p.orient==='gay'?p.g:(R()<.5?'m':'f')}
+function npc(role,g,age,code){const c=CTRY[code||P().country];const pool=NAMES[c.pool];return{id:uid(),role,g,name:pick(g==='m'?pool.m:pool.f)+' '+pick(pool.l),age,rel:rint(45,75),alive:true,looks:clamp(Math.round(50+gauss()*22),5,100)}}
+
+/* ---------- creating a life ---------- */
+function tierFor(f){const w=f<.15?[.55,.35,.08,.02]:f<.4?[.3,.45,.2,.05]:[.15,.5,.28,.07];return wpick([0,1,2,3],i=>w[i])}
+function makePerson(o){
+  const c=CTRY[o.country],pool=NAMES[c.pool],f=cf(o.country);
+  const base=()=>clamp(Math.round(50+gauss()*18),5,100);
+  const p={first:o.first||pick(o.g==='m'?pool.m:pool.f),last:o.last||pick(pool.l),g:o.g,orient:o.orient,country:o.country,age:o.age||0,alive:true,
+    st:o.st?{...o.st}:{health:clamp(base()+12,5,100),happy:base(),smarts:base(),looks:base()},karma:o.karma??50,traits:o.traits||[],tier:o.tier,
+    money:o.money||0,debt:0,edu:{stage:'none',degree:0,yrs:0,tuition:0},job:null,retired:false,pension:0,income:0,
+    people:[],prison:0,prisonTotal:0,escapes:0,wanted:false,addict:false,addPts:0,
+    inv:{savings:0,index:0,nova:0,green:0,lumi:0,port:0,gold:0,meme:0},lastRet:{},houses:[],biz:null,bizSold:0,
+    log:[{age:o.age||0,lines:[]}],used:{},seen:{},cnt:{club:0,casino:0,crime:0,acts:0,partners:0,kids:0,drink:0},cheated:false,
+    custom:!!o.custom,gen:o.gen||1,cause:null,listings:null,houseOffers:null,tmp:{}};
+  if(!o.st) for(const t of p.traits){const s=TRAITS[t].s;if(s)p.st[s[0]]=clamp(p.st[s[0]]+s[1],0,100)}
+  return p;
+}
+function makeFamily(p){
+  const c=CTRY[p.country],pool=NAMES[c.pool],f=cf(p.country);
+  const pm=[.25,1,3.5,18][p.tier]*40000*f;
+  const mk=(role,g,age,extra)=>({id:uid(),role,g,name:pick(g==='m'?pool.m:pool.f)+' '+p.last,age,rel:rint(55,90),alive:true,...extra});
+  p.people.push(mk('mother','f',rint(19,38),{money:pm/2,job:pick(TIER_JOBS[p.tier])}));
+  p.people.push(mk('father','m',rint(20,42),{money:pm/2,job:pick(TIER_JOBS[p.tier])}));
+  const ns=rint(0,f<.2?3:2);for(let i=0;i<ns;i++)p.people.push(mk('sibling',R()<.5?'m':'f',rint(1,12)));
+}
+function makeTwins(){
+  const codes=Object.keys(CTRY);const out=[];
+  for(let i=0;i<4;i++){
+    const code=wpick(codes,k=>CTRY[k].b),c=CTRY[code],g=R()<.5?'m':'f',pool=NAMES[c.pool],f=cf(code);
+    const infant=R()<(90-c.le)*.004;
+    const death=infant?rint(0,4):clamp(Math.round(c.le+gauss()*11),6,104);
+    const tier=tierFor(f);
+    const job=death<18?null:pick(Object.keys(JOBS).filter(k=>JOBS[k].deg<=(tier>=2?4:tier===1?2:0)));
+    out.push({name:pick(g==='m'?pool.m:pool.f)+' '+pick(pool.l),code,g,death,tier,job});
+  }
+  return out;
+}
+function startLife(o){
+  const p=makePerson(o);makeFamily(p);
+  S={p,econ:{phase:'boom',left:rint(2,5),ret:{}},twins:makeTwins(),queue:[]};
+  econStep(true);
+  const c=CTRY[p.country],mom=p.people[0],dad=p.people[1];
+  log(L(`Bạn chào đời là ${p.g==='m'?'một bé trai':'một bé gái'} tại ${c.vi}.`,`You were born a ${p.g==='m'?'boy':'girl'} in ${c.en}.`));
+  log(L(`Gia đình bạn thuộc nhóm ${TIERS[p.tier][0].toLowerCase()}. Mẹ là ${mom.name} (${mom.job[0].toLowerCase()}), bố là ${dad.name} (${dad.job[0].toLowerCase()}).`,
+        `Your family is ${TIERS[p.tier][1].toLowerCase()}. Mom is ${mom.name} (${mom.job[1].toLowerCase()}), dad is ${dad.name} (${dad.job[1].toLowerCase()}).`));
+  log(L('Cùng giây đó, thêm 4 em bé khác chào đời ở những nơi khác trên thế giới.','In that same second, four other babies were born elsewhere in the world.'));
+  U.screen='game';U.sheet=null;save();render();showBirthCard();
+}
+
+/* ---------- yearly simulation ---------- */
+function econStep(silent){
+  const e=S.econ;
+  if(!silent){e.left--;if(e.left<=0){
+    if(e.phase==='boom'){e.phase='peak';e.left=rint(1,2)}
+    else if(e.phase==='peak'){if(R()<.3){e.phase='crisis';e.left=1}else{e.phase='recession';e.left=rint(1,2)}}
+    else{e.phase='boom';e.left=rint(3,7)}
+    log(L(`Kinh tế thế giới bước vào giai đoạn: ${PH[e.phase].n[0].toLowerCase()}.`,`The world economy enters a ${PH[e.phase].n[1].toLowerCase()} phase.`));
+  }}
+  const m=PH[e.phase].r,ret={savings:Math.min(CTRY[S.p.country].rate,.08)};
+  for(const a of ASSETS){if(a.id==='savings')continue;let r=a.mu+a.beta*m+a.sd*gauss();
+    if(a.id==='meme'){if(R()<.08)r=-.8+R()*.1;else if(R()<.05)r=2+R()*5}
+    ret[a.id]=clamp(r,-.95,8)}
+  ret.house=.02+.4*m+.05*gauss();e.ret=ret;
+}
+function hazard(age,le,health,addict){
+  if(age<=5)return(90-le)*.0013*(age<=1?1:.4)*(1.6-health/100);
+  return Math.min(.9,.00004*Math.exp(.088*(age+(79-le)))*(1.6-health/100)*(addict?1.6:1));
+}
+function eduStep(){
+  const p=P(),e=p.edu,f=F();
+  if(p.prison>0)return;
+  if(p.age===6&&e.stage==='none'){
+    const prob=.72+.26*f+.04*p.tier;
+    if(R()<prob){e.stage='school';log(L('Bạn bắt đầu đi học tiểu học.','You start primary school.'))}
+    else{e.noSchool=true;log(L('Gia đình không đủ điều kiện cho bạn đi học.','Your family cannot afford to send you to school.'))}
+  }
+  if(e.stage==='school'){
+    add('smarts',rint(0,3));
+    if(p.age>=11&&p.age<=15&&p.tier===0&&f<.3&&R()<.05&&!p.seen.dropout)S.queue.push('dropout');
+    if(p.age>=18){e.stage='done';e.degree=1;log(L('Bạn tốt nghiệp phổ thông.','You graduate from high school.'));S.queue.push('after_hs')}
+  } else if(e.stage==='uni'||e.stage==='trade'||e.stage==='grad'){
+    add('smarts',rint(1,4));e.yrs--;
+    if(e.tuition>0){p.money-=e.tuition}
+    if(e.yrs<=0){
+      const d=e.stage==='trade'?2:e.stage==='uni'?3:4;e.degree=d;e.stage='done';e.tuition=0;
+      log(L(`Bạn nhận bằng ${DEG[d][0].toLowerCase()}.`,`You earn your ${DEG[d][1].toLowerCase()} degree.`));
+      if(d===3&&p.st.smarts>=60)S.queue.push('after_uni');
+    }
+  }
+}
+function jobStep(){
+  const p=P(),f=F();p.income=0;
+  if(p.job&&!p.prison){
+    const j=JOBS[p.job.id],sal=Math.round(j.base*f*(1+.12*p.job.level));
+    p.income=sal;p.money+=sal*.75;p.job.yrs++;
+    p.job.perf=clamp(Math.round(p.job.perf+rint(-8,7)+(p.used.work?6:0)+(p.st.smarts-50)/25),0,100);
+    if(p.job.perf>78&&R()<.45&&p.job.level<6){p.job.level++;log(L(`Bạn được thăng chức lên ${RANKS[p.job.level][0]} ${j.n[0].toLowerCase()}.`,`You are promoted to ${RANKS[p.job.level][1]} ${j.n[1]}.`))}
+    else if(p.job.perf<15&&R()<.5){log(L(`Bạn bị đuổi việc ${j.n[0].toLowerCase()} vì làm việc kém.`,`You are fired from your ${j.n[1]} job for poor performance.`));p.job=null;add('happy',-10)}
+    else if(S.econ.phase==='crisis'&&R()<.2){log(L('Công ty cắt giảm nhân sự vì khủng hoảng. Bạn mất việc.','Your company lays people off in the crisis. You lose your job.'));p.job=null;add('happy',-12)}
+  }
+  if(p.retired&&p.pension)p.money+=p.pension;
+}
+function financeStep(){
+  const p=P(),f=F(),e=S.econ;
+  for(const a of ASSETS){const r=e.ret[a.id];p.lastRet[a.id]=r;if(p.inv[a.id]>0)p.inv[a.id]*=1+r}
+  for(const h of p.houses){h.value*=1+e.ret.house+.03*gauss();p.money+=(h.rented?h.value*.045:0)-h.value*.01}
+  if(p.age>=18&&!p.prison){
+    const home=p.age<=24&&!p.job&&parents().length>0;
+    let cost=(home?3500:11000)*f+.08*p.income+(p.money>1e6?p.money*.01:0);
+    p.money-=cost;
+  }
+  if(p.debt>0){p.debt*=1.07;const pay=Math.min(Math.max(p.money,0)*.5,p.debt);p.money-=pay;p.debt-=pay;if(p.debt<1)p.debt=0}
+  if(p.money<0){p.debt+=-p.money;p.money=0;log(L(`Bạn tiêu quá tay. Nợ hiện tại: ${money(p.debt)}.`,`You overspent. Current debt: ${money(p.debt)}.`))}
+}
+function bizStep(){
+  const p=P(),b=p.biz;if(!b)return;
+  const t=BIZ[b.type],f=F();
+  let rate=t.mean+PH[S.econ.phase].r*.5+t.sd*gauss()+(p.st.smarts-50)/400+(hasT('hustler')?.05:0)+(b.mkt?.07:0)-(p.prison?.15:0);
+  if(b.type==='tech'&&R()<.04)rate+=2.5;
+  let profit=b.value*rate*.5;if(b.evade&&profit>0)profit*=1.2;
+  p.money+=profit;b.value*=1+rate*.6;b.yrs++;b.mkt=false;b.last=profit;
+  log(profit>=0?L(`${b.name} lãi ${money(profit)} năm nay.`,`${b.name} made a ${money(profit)} profit this year.`):L(`${b.name} lỗ ${money(-profit)} năm nay.`,`${b.name} lost ${money(-profit)} this year.`));
+  if(b.value<t.cap*f*.15){log(L(`${b.name} phá sản và đóng cửa.`,`${b.name} goes bankrupt and closes.`));p.biz=null;add('happy',-15);return}
+  if(b.evade&&R()<.12)S.queue.push('tax_audit');
+  if(b.type==='tech'&&!b.ipo&&b.value>3e6*f&&R()<.3)S.queue.push('ipo');
+}
+function prisonStep(){
+  const p=P();
+  if(p.prison>0){p.prison--;p.prisonTotal++;add('happy',-6);add('health',-2);
+    log(p.prison===0?L('Bạn mãn hạn tù và được thả.','You finish your sentence and walk free.'):L(`Bạn vẫn đang ngồi tù. Còn ${p.prison} năm.`,`You are still in prison. ${p.prison} years left.`))}
+  else if(p.wanted&&R()<.15){p.wanted=false;sentence(rint(2,5),L('Cảnh sát tìm ra nơi bạn lẩn trốn.','The police track down your hideout.'))}
+}
+function peopleStep(){
+  const p=P(),le=CTRY[p.country].le;
+  for(const x of p.people){
+    if(!x.alive)continue;x.age++;
+    if(['friend','partner','spouse'].includes(x.role))x.rel=clamp(x.rel-rint(1,5),0,100);
+    const h=x.age<5?.004:.00004*Math.exp(.088*(x.age+(79-le)));
+    if(R()<h){x.alive=false;
+      const close=['mother','father','spouse','partner','child'].includes(x.role);add('happy',close?-18:-8);
+      log(L(`${roleName(x)[0]} ${x.name} qua đời ở tuổi ${x.age}.`,`Your ${roleName(x)[1].toLowerCase()} ${x.name} died at ${x.age}.`));
+      if((x.role==='mother'||x.role==='father')&&x.money>0){const sib=p.people.filter(s=>s.role==='sibling'&&s.alive).length;const share=x.money/(sib+1);p.money+=share;log(L(`Bạn được thừa kế ${money(share)}.`,`You inherit ${money(share)}.`))}
+    } else if(x.role==='partner'&&x.rel<12){x.gone=true;log(L(`${x.name} chia tay bạn.`,`${x.name} breaks up with you.`));add('happy',-10)}
+  }
+  p.people=p.people.filter(x=>!x.gone);
+}
+function twinsStep(){
+  const p=P();if(![10,25,40,60,80].includes(p.age))return;
+  const t=pick(S.twins),c=CTRY[t.code];
+  if(t.death<p.age)log(L(`Người sinh cùng giây với bạn ở ${c.vi}, ${t.name}, đã mất năm ${t.death} tuổi.`,`${t.name}, born the same second as you in ${c.en}, died at ${t.death}.`));
+  else log(L(`Ở ${c.vi}, ${t.name} cũng vừa tròn ${p.age} tuổi${t.job&&p.age>=25?', đang làm '+JOBS[t.job].n[0].toLowerCase():''}.`,`In ${c.en}, ${t.name} also just turned ${p.age}${t.job&&p.age>=25?', working as a '+JOBS[t.job].n[1].toLowerCase():''}.`));
+}
+function ageUp(){
+  const p=P();if(!p.alive||modalOpen)return;
+  p.age++;p.used={};p.listings=null;p.houseOffers=null;p.log.push({age:p.age,lines:[]});
+  if(p.age<45&&!p.addict)add('health',Math.max(0,Math.round((80-p.st.health)*.15)));
+  if(p.age>40)add('health',-rint(0,p.age>65?4:2));
+  add('happy',Math.round((55-p.st.happy)*.1));
+  if(p.age<25)add('looks',rint(-1,2));else if(p.age>45)add('looks',-rint(0,2));
+  econStep();prisonStep();eduStep();jobStep();bizStep();financeStep();
+  if(p.addict){add('health',-rint(2,6));add('happy',-2);p.money-=1500*F();log(L('Cơn nghiện tiếp tục bào mòn sức khỏe và ví tiền của bạn.','Your addiction keeps draining your health and wallet.'))}
+  peopleStep();twinsStep();
+  if(p.money<0){p.debt+=-p.money;p.money=0}
+  if(p.st.health<=0||R()<hazard(p.age,CTRY[p.country].le,p.st.health,p.addict)){die();return}
+  // events
+  const q=S.queue.splice(0);
+  const elig=EVENTS.filter(e=>p.age>=e.age[0]&&p.age<=e.age[1]&&(!e.once||!p.seen[e.id])&&(!e.c||e.c(p))&&(p.prison>0?(e.prison||e.any):!e.prison));
+  let n=R()<.6?1:(R()<.55?2:0);
+  while(n-->0&&elig.length){const e=wpick(elig,x=>x.w);q.push(e.id);elig.splice(elig.indexOf(e),1)}
+  save();render();
+  evQ=q;nextEvent();
+}
+function causeOfDeath(){
+  const p=P(),f=F();
+  if(p.st.health<=0&&p.addict&&R()<.6)return L('Biến chứng do nghiện','Complications of addiction');
+  if(p.age<=5)return f<.3?pick([L('Sốt rét','Malaria'),L('Viêm phổi','Pneumonia'),L('Tiêu chảy cấp','Severe diarrhea')]):pick([L('Bệnh bẩm sinh','Congenital illness'),L('Tai nạn','Accident')]);
+  if(p.age<40)return pick([L('Tai nạn giao thông','Traffic accident'),L('Đuối nước','Drowning'),L('Bệnh hiểm nghèo','Serious illness')]);
+  if(p.age<75)return pick([L('Đau tim','Heart attack'),L('Ung thư','Cancer'),L('Đột quỵ','Stroke')]);
+  return pick([L('Tuổi già','Old age'),L('Suy tim','Heart failure'),L('Viêm phổi','Pneumonia')]);
+}
+function die(){
+  const p=P();p.alive=false;p.cause=causeOfDeath();
+  log(L(`Bạn qua đời ở tuổi ${p.age}. Nguyên nhân: ${p.cause[0].toLowerCase()}.`,`You died at ${p.age}. Cause: ${p.cause[1].toLowerCase()}.`));
+  evQ=[];closeModal();U.sheet=null;U.screen='death';const tt=document.getElementById('toast');if(tt)tt.hidden=true;save();render();
+}
+function ribbonFor(p){
+  const nw=netWorth(p);
+  if(p.prisonTotal>=10)return'jailbird';if(p.escapes>=3)return'houdini';if(nw>=1e7)return'loaded';
+  if(p.bizSold>0&&nw>=1e6)return'tycoon';if(p.cnt.kids>=4)return'fertile';if(p.addict)return'addict';
+  if(p.cnt.casino>=12)return'gambler';if(p.cnt.club>=15)return'party';if(nw>=1e6)return'rich';
+  if(p.cnt.partners>=8)return'heartbreaker';if(p.edu.degree>=4&&p.st.smarts>=80)return'academic';
+  if(p.karma>=85)return'hero';if(p.karma<=15)return'wicked';if(p.age>=95)return'elder';
+  if(p.cnt.acts<6&&p.age>20)return'lazy';return'mediocre';
+}
+
+/* ---------- crime and court ---------- */
+function sentence(years,why){
+  const p=P();p.prison=years;p.job=null;if(['uni','trade','grad'].includes(p.edu.stage)){p.edu.stage='done';p.edu.tuition=0}
+  karma(-8);add('happy',-15);const pa=partner();if(pa)pa.rel=clamp(pa.rel-20,0,100);
+  log(both(why,L(`Bạn bị kết án ${years} năm tù.`,`You are sentenced to ${years} years in prison.`)));
+}
+function courtEvent(years,crime){
+  return{id:'court',tag:L('Tòa án','Court'),text:()=>L(`Bạn bị bắt vì ${crime[0]}. Công tố đề nghị ${years} năm tù.`,`You are arrested for ${crime[1]}. The prosecutor asks for ${years} years.`),
+   choices:[
+    {l:L(`Thuê luật sư giỏi (${money(9000*F())})`,`Hire a top lawyer (${money(9000*F())})`),run:p=>{const cost=9000*F();if(p.money<cost){sentence(years,L('Bạn không đủ tiền thuê luật sư.','You cannot afford the lawyer.'));return L('Không đủ tiền, bạn phải nhận luật sư công.','No money, so you get a public defender.')}
+      p.money-=cost;if(R()<.5){karma(-3);return L('Luật sư tìm ra kẽ hở. Bạn được tha bổng!','Your lawyer finds a loophole. You walk free!')}const y=Math.max(1,Math.round(years*.6));sentence(y,L('Luật sư giúp giảm án.','Your lawyer gets the sentence reduced.'));return L(`Bạn lĩnh ${y} năm tù.`,`You get ${y} years.`)}},
+    {l:L('Dùng luật sư công','Use a public defender'),run:p=>{if(R()<.2)return L('Thật bất ngờ, bạn được tha bổng.','Against all odds, you are acquitted.');sentence(years,L('Luật sư công gần như không làm gì.','The public defender barely tries.'));return L(`Bạn lĩnh ${years} năm tù.`,`You get ${years} years.`)}},
+    {l:L('Nhận tội để được giảm án','Plead guilty for a lighter sentence'),run:p=>{const y=Math.max(1,Math.round(years*.7));sentence(y,L('Bạn nhận tội.','You plead guilty.'));return L(`Bạn lĩnh ${y} năm tù.`,`You get ${y} years.`)}}
+   ]};
+}
+function crime(o){
+  return p=>{const f=F();p.cnt.crime++;karma(-o.k);
+    const luck=hasT('lucky')?.1:0;
+    if(R()<o.ok+luck){const gain=rint(o.min,o.max)*Math.max(f,.15);p.money+=gain;add('happy',3);return L(`${o.win[0]} Bạn kiếm được ${money(gain)}.`,`${o.win[1]} You got ${money(gain)}.`)}
+    if(R()<o.caught){const y=rint(o.y[0],o.y[1]);if(y===0){p.money=Math.max(0,p.money-300*f);return L('Bạn bị bắt và chỉ bị phạt tiền.','You get caught and only fined.')}return courtEvent(y,o.n)}
+    return L('Bạn thất bại nhưng chạy thoát được.','It fails, but you get away.');
+  };
+}
+
+/* ---------- events ---------- */
+const inSchool=p=>p.edu.stage==='school';
+const hasJob=p=>!!p.job;
+const single=p=>!partner()&&p.age>=18;
+const EVENTS=[
+ {id:'word',age:[1,2],w:8,once:1,text:()=>L('Bạn nói từ đầu tiên trong đời: "Không!". Cả nhà cười ồ.','You say your first word: "No!". The whole family laughs.'),auto:()=>add('happy',3)},
+ {id:'marble',age:[1,5],w:5,once:1,text:()=>L('Bạn nuốt nhầm một viên bi.','You swallow a marble.'),choices:[
+   {l:L('Khóc thật to','Cry loudly'),run:()=>{add('health',-3);return L('Bố mẹ đưa bạn đi viện kịp thời.','Your parents rush you to the hospital in time.')}},
+   {l:L('Giả vờ như không có gì','Act like nothing happened'),run:()=>R()<.7?(add('health',-2),L('Viên bi tự ra ngoài theo cách... tự nhiên.','The marble leaves by the natural route.')):(add('health',-15),L('Bạn đau bụng mấy ngày liền.','You have a stomach ache for days.'))}]},
+ {id:'fever',age:[0,5],w:6,c:()=>F()<.3,text:()=>L('Bạn bị sốt cao kéo dài.','You come down with a long, high fever.'),auto:()=>add('health',-rint(8,18))},
+ {id:'puppy',age:[4,12],w:5,once:1,text:()=>L('Một chú chó hoang đi theo bạn về nhà.','A stray puppy follows you home.'),choices:[
+   {l:L('Xin bố mẹ cho nuôi','Beg your parents to keep it'),run:()=>R()<.6?(add('happy',10),L('Bố mẹ đồng ý. Bạn có bạn thân mới.','They agree. You have a new best friend.')):(add('happy',-5),L('Bố mẹ từ chối thẳng thừng.','Your parents flatly refuse.'))},
+   {l:L('Đuổi nó đi','Shoo it away'),run:()=>{karma(-3);return L('Chú chó cụp đuôi bỏ đi.','The puppy slinks away.')}}]},
+ {id:'bully',age:[7,15],w:6,once:1,c:inSchool,text:()=>L('Một bạn cùng lớp liên tục bắt nạt bạn.','A classmate keeps bullying you.'),choices:[
+   {l:L('Báo thầy cô','Tell a teacher'),run:()=>R()<.7?(add('happy',4),L('Thầy cô xử lý ổn thỏa.','The teacher sorts it out.')):(add('happy',-6),L('Bạn bị gọi là kẻ mách lẻo.','You get labeled a snitch.'))},
+   {l:L('Đánh lại','Fight back'),run:()=>R()<(hasT('hothead')?.6:.45)?(add('happy',10),add('health',-4),L('Bạn thắng. Không ai dám động vào bạn nữa.','You win. Nobody messes with you again.')):(add('health',-12),L('Bạn thua và về nhà với con mắt bầm tím.','You lose and go home with a black eye.'))},
+   {l:L('Chịu đựng','Put up with it'),run:()=>{add('happy',-8);return L('Những năm học trở nên dài lê thê.','School years drag on.')}}]},
+ {id:'exam',age:[8,17],w:7,c:inSchool,text:()=>L('Sắp có một bài kiểm tra quan trọng.','A big exam is coming up.'),choices:[
+   {l:L('Học thâu đêm','Study all night'),run:()=>{add('smarts',3);add('happy',-2);return L('Bạn đạt điểm cao.','You ace it.')}},
+   {l:L('Gian lận','Cheat'),run:()=>{karma(-5);return R()<.7?L('Không ai phát hiện. Điểm số đẹp như mơ.','Nobody notices. Dream grades.'):(add('happy',-10),L('Bạn bị bắt quả tang và phải mời phụ huynh.','You get caught and your parents are called in.'))}},
+   {l:L('Phó mặc số phận','Wing it'),run:()=>R()<.5?L('Bạn qua môn sát nút.','You barely pass.'):(add('happy',-4),L('Bạn trượt thảm hại.','You fail badly.'))}]},
+ {id:'sneak',age:[13,17],w:5,text:()=>L('Bạn bè rủ bạn trốn nhà đi chơi khuya.','Friends invite you to sneak out late at night.'),choices:[
+   {l:L('Đi luôn','Go'),run:()=>{add('happy',8);if(R()<.35){parents().forEach(x=>x.rel=clamp(x.rel-15,0,100));return L('Bố mẹ bắt gặp lúc bạn trèo cửa sổ về.','Your parents catch you climbing back in.')}return L('Một đêm đáng nhớ. Không ai biết.','A night to remember. Nobody finds out.')}},
+   {l:L('Ở nhà','Stay home'),run:()=>{add('happy',-2);return L('Bạn nghe kể lại câu chuyện vào sáng hôm sau.','You hear all about it the next morning.')}}]},
+ {id:'cig',age:[13,17],w:5,once:1,text:()=>L('Nhóm bạn mời bạn hút thử thuốc lá.','Friends offer you your first cigarette.'),choices:[
+   {l:L('Thử một hơi','Take a drag'),run:p=>{p.addPts++;add('health',-2);return L('Bạn ho sặc sụa nhưng vẫn cố tỏ ra ngầu.','You cough hard but try to look cool.')}},
+   {l:L('Từ chối','Refuse'),run:()=>{karma(2);return L('Bạn từ chối. Cả nhóm gọi bạn là "con ngoan".','You refuse. The group calls you a goody two-shoes.')}}]},
+ {id:'wallet',age:[8,80],w:4,prep:p=>{p.tmp.amt=Math.round(rint(20,600)*Math.max(F(),.2))},text:p=>L(`Bạn nhặt được một chiếc ví có ${money(p.tmp.amt)}.`,`You find a wallet with ${money(p.tmp.amt)} inside.`),choices:[
+   {l:L('Trả lại chủ','Return it'),run:()=>{karma(8);add('happy',3);return L('Người chủ cảm ơn bạn rối rít.','The owner thanks you over and over.')}},
+   {l:L('Giữ lấy','Keep it'),run:p=>{p.money+=p.tmp.amt;karma(-6);return L('Tiền vào túi bạn. Lương tâm hơi cắn rứt.','The cash is yours. Your conscience itches a little.')}}]},
+ {id:'lend',age:[20,75],w:5,prep:p=>{p.tmp.amt=Math.round(rint(500,5000)*F())},text:p=>L(`Một người bạn hỏi vay ${money(p.tmp.amt)}.`,`A friend asks to borrow ${money(p.tmp.amt)}.`),choices:[
+   {l:L('Cho vay','Lend it'),run:p=>{if(p.money<p.tmp.amt)return L('Bạn không có đủ tiền để cho vay.','You do not have that much.');p.money-=p.tmp.amt;if(R()<.5){p.money+=p.tmp.amt*1.1;return L('Bạn ấy trả đủ, còn mời bạn một bữa.','They pay it back and buy you dinner.')}return L('Bạn ấy biến mất cùng khoản tiền.','They vanish with the money.')}},
+   {l:L('Từ chối','Say no'),run:()=>{add('happy',-1);return L('Không khí giữa hai người hơi gượng gạo.','Things get a bit awkward between you.')}}]},
+ {id:'overtime',age:[18,70],w:6,c:hasJob,text:()=>L('Sếp yêu cầu bạn làm thêm cả cuối tuần.','Your boss wants you to work the whole weekend.'),choices:[
+   {l:L('Đồng ý','Accept'),run:p=>{p.job.perf=clamp(p.job.perf+10,0,100);add('happy',-6);return L('Sếp ghi nhận sự chăm chỉ của bạn.','Your boss notices your effort.')}},
+   {l:L('Từ chối','Refuse'),run:p=>{p.job.perf=clamp(p.job.perf-8,0,100);add('happy',3);return L('Bạn tận hưởng cuối tuần. Sếp không vui.','You enjoy your weekend. Your boss does not.')}}]},
+ {id:'flirt',age:[20,65],w:4,c:hasJob,text:()=>L('Một đồng nghiệp liên tục thả thính bạn.','A coworker keeps flirting with you.'),choices:[
+   {l:L('Đáp lại','Flirt back'),run:p=>{add('happy',6);if(partner())p.cheated=true;if(R()<.2){p.job.perf=clamp(p.job.perf-20,0,100);return L('Phòng nhân sự để ý. Bạn bị nhắc nhở.','HR notices. You get a warning.')}return L('Hai người bắt đầu một mối quan hệ mờ ám nơi công sở.','The two of you start a secret office fling.')}},
+   {l:L('Giữ khoảng cách','Keep it professional'),run:p=>{p.job.perf=clamp(p.job.perf+3,0,100);return L('Bạn tập trung vào công việc.','You stay focused on work.')}}]},
+ {id:'pyramid',age:[20,65],w:4,text:()=>L('Người quen rủ bạn vào một "cơ hội đầu tư" lãi 30% mỗi tháng.','An acquaintance pitches an "investment" paying 30% a month.'),choices:[
+   {l:L('Bỏ tiền vào','Invest'),run:p=>{const a=Math.min(p.money,8000*F());if(a<=0)return L('Bạn chẳng có đồng nào để đầu tư.','You have nothing to invest.');if(R()<.1){p.money+=a;return L(`Bạn rút kịp, lãi ${money(a)}.`,`You got out in time with ${money(a)} profit.`)}p.money-=a*.85;return L(`Đường dây sụp đổ. Bạn mất ${money(a*.85)}.`,`The scheme collapses. You lose ${money(a*.85)}.`)}},
+   {l:L('Từ chối','Decline'),run:()=>{karma(1);return L('Vài tháng sau, đường dây bị triệt phá.','A few months later, the scheme gets busted.')}}]},
+ {id:'accident',age:[16,85],w:3,any:1,text:()=>L('Bạn gặp tai nạn giao thông nhẹ.','You get into a minor traffic accident.'),auto:p=>{add('health',-rint(5,18));p.money-=400*F()}},
+ {id:'bp',age:[32,85],w:4,once:1,text:()=>L('Bác sĩ cảnh báo bạn bị huyết áp cao.','Your doctor warns you about high blood pressure.'),choices:[
+   {l:L('Ăn kiêng, tập luyện','Diet and exercise'),run:()=>{add('health',6);add('happy',-4);return L('Huyết áp ổn định dần.','Your blood pressure settles down.')}},
+   {l:L('Kệ nó','Ignore it'),run:()=>{add('health',-7);return L('Bạn tiếp tục ăn đồ chiên mỗi ngày.','You keep eating fried food daily.')}}]},
+ {id:'viral',age:[16,60],w:3,text:()=>L('Một bài đăng của bạn bất ngờ lan truyền khắp mạng.','One of your posts suddenly goes viral.'),choices:[
+   {l:L('Nhận quảng cáo kiếm tiền','Cash in on sponsorships'),run:p=>{const g=rint(500,20000)*F();p.money+=g;return L(`Bạn kiếm được ${money(g)} từ nhà tài trợ.`,`You earn ${money(g)} from sponsors.`)}},
+   {l:L('Xóa bài, sống ẩn','Delete it and lie low'),run:()=>{add('happy',-2);return L('Cơn sốt qua đi nhanh chóng.','The buzz fades fast.')}}]},
+ {id:'heir',age:[18,90],w:1,once:1,prep:p=>{p.tmp.amt=rint(5000,120000)*F()},text:p=>L(`Một người họ hàng xa bạn chưa từng gặp qua đời và để lại cho bạn ${money(p.tmp.amt)}.`,`A distant relative you never met dies and leaves you ${money(p.tmp.amt)}.`),auto:p=>{p.money+=p.tmp.amt;add('happy',8)}},
+ {id:'midlife',age:[38,55],w:5,once:1,text:()=>L('Khủng hoảng tuổi trung niên ập đến.','A midlife crisis hits.'),choices:[
+   {l:L(`Mua xe thể thao (${'$'}60K)`,`Buy a sports car ($60K)`),run:p=>{const c=60000*Math.max(F(),.4);if(p.money<c)return L('Bạn ra đại lý ngắm rồi về tay không.','You browse the dealership and leave empty-handed.');p.money-=c;add('happy',15);return L('Bạn phóng xe qua phố, cảm thấy trẻ lại 20 tuổi.','You speed through town feeling 20 years younger.')}},
+   {l:L('Xăm một hình thật lớn','Get a huge tattoo'),run:()=>{add('happy',7);add('looks',-2);return L('Một con rồng phủ kín lưng bạn.','A dragon now covers your whole back.')}},
+   {l:L('Đi trị liệu tâm lý','See a therapist'),run:p=>{p.money-=1500*F();add('happy',9);return L('Bạn hiểu bản thân hơn.','You understand yourself a bit better.')}}]},
+ {id:'movein',age:[18,60],w:5,c:p=>partner()&&partner().role==='partner',text:()=>L(`${partner().name} muốn hai người dọn về sống chung.`,`${partner().name} wants to move in together.`),choices:[
+   {l:L('Đồng ý','Yes'),run:()=>{partner().rel=clamp(partner().rel+15,0,100);add('happy',5);return L('Hai người chính thức sống chung.','You officially move in together.')}},
+   {l:L('Chưa sẵn sàng','Not yet'),run:()=>{partner().rel=clamp(partner().rel-12,0,100);return L('Người ấy có vẻ thất vọng.','They look disappointed.')}}]},
+ {id:'anniv',age:[20,95],w:4,c:p=>partner()&&partner().role==='spouse',text:()=>L('Bạn quên mất ngày kỷ niệm cưới.','You forgot your wedding anniversary.'),choices:[
+   {l:L('Mua quà đắt tiền bù đắp','Buy an expensive gift'),run:p=>{p.money-=1200*F();partner().rel=clamp(partner().rel+5,0,100);return L('Món quà cứu vãn tình hình.','The gift saves the day.')}},
+   {l:L('Thành thật xin lỗi','Apologize honestly'),run:()=>{partner().rel=clamp(partner().rel-5,0,100);return L('Người ấy tha thứ, nhưng nhớ dai.','They forgive you, but they will remember.')}},
+   {l:L('Giả vờ đã lên kế hoạch','Pretend you had a plan'),run:()=>{partner().rel=clamp(partner().rel-15,0,100);return L('Kế hoạch bịa đặt lộ tẩy ngay lập tức.','Your fake plan falls apart instantly.')}}]},
+ {id:'caught',age:[18,99],w:12,c:p=>p.cheated&&partner(),text:()=>L(`${partner().name} phát hiện bạn ngoại tình.`,`${partner().name} finds out you cheated.`),choices:[
+   {l:L('Quỳ xuống xin tha thứ','Beg for forgiveness'),run:p=>{p.cheated=false;const pa=partner();if(R()<.4){pa.rel=clamp(pa.rel-30,0,100);return L('Người ấy cho bạn thêm một cơ hội cuối.','They give you one last chance.')}return breakup(pa)}},
+   {l:L('Chối bay chối biến','Deny everything'),run:p=>{p.cheated=false;const pa=partner();if(R()<.35){pa.rel=clamp(pa.rel-10,0,100);return L('Kỳ lạ thay, người ấy tin bạn.','Somehow, they believe you.')}return breakup(pa)}}]},
+ {id:'kidfight',age:[25,75],w:4,c:()=>kids().some(k=>k.age>=6&&k.age<=17),prep:p=>{p.tmp.kid=pick(kids().filter(k=>k.age>=6&&k.age<=17)).id},text:p=>L(`Con bạn, ${p.people.find(x=>x.id===p.tmp.kid).name}, bị gọi lên phòng hiệu trưởng vì đánh nhau.`,`Your kid ${p.people.find(x=>x.id===p.tmp.kid).name} is sent to the principal for fighting.`),choices:[
+   {l:L('Mắng một trận','Scold them'),run:p=>{const k=p.people.find(x=>x.id===p.tmp.kid);k.rel=clamp(k.rel-6,0,100);return L('Con bạn hậm hực cả tuần.','Your kid sulks for a week.')}},
+   {l:L('Hỏi han, bênh vực con','Hear them out'),run:p=>{const k=p.people.find(x=>x.id===p.tmp.kid);k.rel=clamp(k.rel+8,0,100);return L('Hóa ra con bạn bênh một bạn bị bắt nạt.','Turns out they stood up for a bullied kid.')}}]},
+ {id:'rival',age:[18,95],w:6,c:p=>!!p.biz,text:()=>L('Một đối thủ mở cửa hàng ngay đối diện công ty bạn.','A competitor opens right across from your business.'),choices:[
+   {l:L('Giảm giá cạnh tranh','Start a price war'),run:p=>{p.biz.value*=.9;return L('Bạn giữ được khách nhưng biên lợi nhuận mỏng đi.','You keep customers but margins shrink.')}},
+   {l:L('Mặc kệ','Ignore them'),run:p=>{if(R()<.5){p.biz.value*=.85;return L('Bạn mất một phần khách hàng.','You lose some customers.')}return L('Đối thủ đóng cửa sau vài tháng.','The rival shuts down after a few months.')}},
+   {l:L('Chơi xấu đối thủ','Sabotage them'),run:p=>{karma(-10);if(R()<.7){p.biz.value*=1.1;return L('Đối thủ dính scandal và phải đóng cửa.','The rival gets hit by a scandal and closes.')}const fine=20000*F();p.money-=fine;return L(`Bạn bị phát hiện và phải bồi thường ${money(fine)}.`,`You get caught and pay ${money(fine)} in damages.`)}}]},
+ {id:'embezzle',age:[18,95],w:4,c:p=>!!p.biz,prep:p=>{p.tmp.amt=p.biz.value*.08},text:p=>L(`Kế toán của bạn biển thủ ${money(p.tmp.amt)}.`,`Your accountant embezzled ${money(p.tmp.amt)}.`),choices:[
+   {l:L('Kiện ra tòa','Sue'),run:p=>{p.money-=3000*F();if(R()<.6)return L('Bạn thắng kiện và lấy lại tiền.','You win and recover the money.');p.biz.value-=p.tmp.amt;return L('Tòa xử thua. Tiền không đòi lại được.','You lose the case. The money is gone.')}},
+   {l:L('Đuổi việc, cho qua','Fire them and move on'),run:p=>{p.biz.value-=p.tmp.amt;return L('Bạn ngậm bồ hòn làm ngọt.','You swallow the loss.')}}]},
+ {id:'tip',age:[22,95],w:4,c:p=>p.money>5000,text:()=>L('Một "chuyên gia" mách bạn dồn tiền vào cổ phiếu NovaTech ngay.','A self-styled guru tells you to pile into NovaTech stock now.'),choices:[
+   {l:L('Dồn một nửa tiền mặt','Put in half your cash'),run:p=>{const a=p.money/2;p.money-=a;const r=R()<.45?.6:-.5;p.inv.nova+=a*(1+r);return r>0?L(`Cổ phiếu tăng vọt! Khoản đầu tư giờ là ${money(a*(1+r))}.`,`The stock soars! Your stake is now ${money(a*(1+r))}.`):L(`Cổ phiếu lao dốc. Còn lại ${money(a*(1+r))}.`,`The stock tanks. You have ${money(a*(1+r))} left.`)}},
+   {l:L('Bỏ ngoài tai','Ignore it'),run:()=>L('Bạn không tin "chuyên gia" trên mạng.','You do not trust internet gurus.')}]},
+ {id:'scamcall',age:[18,95],w:5,text:()=>L('Có cuộc gọi báo bạn trúng thưởng lớn, chỉ cần đọc mã OTP.','A caller says you won a big prize, you just need to read them your OTP code.'),choices:[
+   {l:L('Đọc mã','Read the code'),run:p=>{const l=p.money*.3+p.inv.savings*.3;p.money*=.7;p.inv.savings*=.7;add('happy',-10);return L(`Tài khoản của bạn bị rút ${money(l)}.`,`${money(l)} is drained from your accounts.`)}},
+   {l:L('Cúp máy','Hang up'),run:()=>L('Bạn cúp máy và chặn số.','You hang up and block the number.')}]},
+ {id:'neighbor',age:[18,95],w:4,text:()=>L('Hàng xóm mở tiệc ồn ào đến 3 giờ sáng.','Your neighbor throws a loud party until 3 a.m.'),choices:[
+   {l:L('Sang phàn nàn','Complain'),run:()=>R()<.5?L('Họ xin lỗi và vặn nhỏ nhạc.','They apologize and turn it down.'):(add('happy',-5),L('Hai nhà bắt đầu cạch mặt nhau.','A neighborhood feud begins.'))},
+   {l:L('Sang nhập hội','Join the party'),run:()=>{add('happy',8);add('health',-2);return L('Bạn có thêm vài người bạn nhậu.','You make some new drinking buddies.')}}]},
+ {id:'blind',age:[18,50],w:5,c:single,text:()=>L('Bạn thân sắp xếp cho bạn một buổi hẹn giấu mặt.','Your best friend sets you up on a blind date.'),choices:[
+   {l:L('Đi thử','Go'),run:()=>candEvent(L('Buổi hẹn giấu mặt.','The blind date.'))},
+   {l:L('Thôi khỏi','Skip it'),run:()=>L('Bạn ở nhà xem phim.','You stay in and watch a movie.')}]},
+ {id:'tattooex',age:[18,55],w:5,once:1,c:p=>p.cnt.drink>=3,text:()=>L('Sau một đêm say khướt, bạn tỉnh dậy với hình xăm tên người yêu cũ.','After a wild night, you wake up with your ex\'s name tattooed on you.'),auto:()=>{add('looks',-3);add('happy',-4)}},
+ {id:'overdose',age:[16,95],w:14,c:p=>p.addict,text:()=>L('Bạn suýt sốc thuốc sau một cuộc vui.','You nearly overdose after a party.'),choices:[
+   {l:L(`Vào trại cai (${'$'}5K)`,`Check into rehab ($5K)`),run:p=>{p.money-=5000*F();if(R()<.6){p.addict=false;p.addPts=0;add('health',8);return L('Bạn cai nghiện thành công.','You get clean.')}return L('Bạn tái nghiện chỉ sau vài tuần.','You relapse within weeks.')}},
+   {l:L('Tiếp tục cuộc chơi','Keep partying'),run:()=>{add('health',-15);return L('Cơ thể bạn đang gào thét.','Your body is screaming.')}}]},
+ {id:'army',age:[18,19],w:30,once:1,c:p=>p.g==='m'&&CTRY[p.country].cons,text:p=>L(`Bạn nhận được giấy gọi nhập ngũ tại ${CTRY[p.country].vi}.`,`You receive a military draft notice in ${CTRY[p.country].en}.`),choices:[
+   {l:L('Nhập ngũ','Serve'),run:()=>{add('health',8);add('happy',-8);karma(3);return L('Bạn hoàn thành nghĩa vụ, rắn rỏi hơn hẳn.','You complete your service, tougher than before.')}},
+   {l:L('Trốn nghĩa vụ','Dodge the draft'),run:()=>{if(R()<.4)return courtEvent(rint(1,2),L('trốn nghĩa vụ quân sự','draft evasion'));karma(-4);return L('Bạn trót lọt.','You get away with it.')}}]},
+ {id:'abroad',age:[22,45],w:3,once:1,c:hasJob,prep:p=>{const opts=Object.keys(CTRY).filter(k=>cf(k)>cf(p.country));p.tmp.to=opts.length?pick(opts):null},text:p=>p.tmp.to?L(`Công ty đề nghị điều bạn sang làm việc tại ${CTRY[p.tmp.to].vi}.`,`Your company offers to transfer you to ${CTRY[p.tmp.to].en}.`):L('Công ty đề nghị bạn chuyển sang chi nhánh khác.','Your company offers a transfer to another branch.'),choices:[
+   {l:L('Nhận lời','Accept'),run:p=>{if(!p.tmp.to){p.job.perf+=10;return L('Bạn chuyển chi nhánh và được đánh giá cao.','You move branches and impress everyone.')}p.country=p.tmp.to;add('happy',6);return L(`Bạn chuyển tới ${CTRY[p.country].vi}. Lương tính theo mặt bằng mới.`,`You move to ${CTRY[p.country].en}. Your salary follows the local level.`)}},
+   {l:L('Ở lại','Stay'),run:()=>L('Bạn chọn ở lại quê nhà.','You choose to stay home.')}]},
+ {id:'flu',age:[0,110],w:3,any:1,text:()=>L('Bạn bị cúm nặng.','You catch a nasty flu.'),auto:()=>add('health',-rint(2,8))},
+ {id:'fall',age:[68,115],w:6,any:1,text:()=>L('Bạn trượt chân ngã trong nhà tắm.','You slip and fall in the bathroom.'),auto:()=>add('health',-rint(5,15))},
+ {id:'grandkid',age:[45,95],w:4,once:1,c:()=>kids().some(k=>k.age>=20),text:p=>L(`Bạn lên chức ${p.g==='m'?'ông':'bà'}!`,`You become a ${p.g==='m'?'grandfather':'grandmother'}!`),auto:()=>add('happy',10)},
+ {id:'robbed',age:[14,95],w:3,text:()=>L('Bạn bị cướp giật giữa phố.','You get mugged on the street.'),choices:[
+   {l:L('Chống trả','Fight back'),run:p=>R()<.4?(karma(3),L('Tên cướp bỏ chạy tay không.','The mugger flees empty-handed.')):(add('health',-12),p.money-=Math.min(p.money,300*F()),L('Bạn bị đánh và mất ví.','You get beaten and lose your wallet.'))},
+   {l:L('Đưa ví','Hand over the wallet'),run:p=>{const l=Math.min(p.money,300*F());p.money-=l;return L(`Bạn mất ${money(l)}.`,`You lose ${money(l)}.`)}}]},
+ {id:'retire',age:[60,75],w:8,once:1,c:hasJob,text:()=>L('Công ty đề nghị bạn nghỉ hưu sớm kèm gói trợ cấp.','Your company offers you early retirement with a package.'),choices:[
+   {l:L('Nghỉ hưu','Retire'),run:p=>{retire(p);return L('Bạn chính thức về hưu.','You officially retire.')}},
+   {l:L('Làm tiếp','Keep working'),run:()=>L('Bạn vẫn còn sung sức.','You still have plenty of energy.')}]},
+ {id:'yard',age:[12,110],w:8,prison:1,text:()=>L('Một bạn tù gây sự với bạn ngoài sân.','An inmate picks a fight with you in the yard.'),choices:[
+   {l:L('Đánh lại','Fight'),run:()=>R()<.5?(add('happy',6),add('health',-5),L('Bạn thắng và được nể trọng.','You win and earn respect.')):(add('health',-15),L('Bạn nằm phòng y tế cả tuần.','You spend a week in the infirmary.'))},
+   {l:L('Tránh mặt','Walk away'),run:()=>{add('happy',-5);return L('Bạn bị coi là yếu đuối.','You are seen as weak.')}}]},
+ {id:'smuggle',age:[16,110],w:5,prison:1,text:()=>L('Bạn cùng phòng giam rủ bạn tham gia đường dây buôn lậu trong tù.','Your cellmate invites you into a prison smuggling ring.'),choices:[
+   {l:L('Tham gia','Join'),run:p=>{karma(-5);if(R()<.7){const g=2000*F();p.money+=g;return L(`Bạn kiếm được ${money(g)}.`,`You make ${money(g)}.`)}p.prison+=2;return L('Bạn bị quản giáo phát hiện. Cộng thêm 2 năm tù.','The guards find out. Two years added.')}},
+   {l:L('Từ chối','Refuse'),run:()=>L('Bạn giữ mình sạch sẽ.','You keep your nose clean.')}]}
+];
+const SPECIAL={
+ after_hs:{tag:L('Ngã rẽ','Crossroads'),text:()=>L('Bạn đã tốt nghiệp phổ thông. Tiếp theo là gì?','You finished high school. What next?'),choices:[
+   {l:L('Thi vào đại học (4 năm)','Apply to university (4 years)'),run:p=>{
+     if(p.st.smarts<40&&R()<.7)return L('Bạn trượt đại học.','You do not get in.');
+     const f=F(),fee=9000*f;p.edu.stage='uni';p.edu.yrs=4;
+     if(p.st.smarts>=82){p.edu.tuition=0;return L('Bạn đỗ với học bổng toàn phần!','You get in with a full scholarship!')}
+     if(p.tier>=2){p.edu.tuition=0;return L('Bạn đỗ đại học. Bố mẹ lo học phí.','You get in. Your parents cover tuition.')}
+     p.edu.tuition=fee;return L(`Bạn đỗ đại học. Học phí ${money(fee)}/năm, thiếu thì thành nợ.`,`You get in. Tuition is ${money(fee)}/year; any shortfall becomes debt.`)}},
+   {l:L('Học nghề (2 năm)','Trade school (2 years)'),run:p=>{p.edu.stage='trade';p.edu.yrs=2;p.edu.tuition=3000*F();return L('Bạn đăng ký học nghề.','You enroll in trade school.')}},
+   {l:L('Đi làm luôn','Start working'),run:()=>L('Bạn quyết định kiếm tiền ngay. Vào tab Học & Nghề để tìm việc.','You decide to earn money right away. Check the Career tab for jobs.')},
+   {l:L('Nghỉ một năm đi phượt','Take a gap year'),run:()=>{add('happy',10);return L('Bạn đi khắp nơi, chẳng có kế hoạch gì.','You wander around with no plan at all.')}}]},
+ after_uni:{tag:L('Ngã rẽ','Crossroads'),text:()=>L('Bạn có muốn học thạc sĩ không?','Do you want to do a master\'s degree?'),choices:[
+   {l:L('Học tiếp (2 năm)','Go for it (2 years)'),run:p=>{p.edu.stage='grad';p.edu.yrs=2;p.edu.tuition=12000*F();return L('Bạn bắt đầu học thạc sĩ.','You start your master\'s.')}},
+   {l:L('Đi làm','Get a job'),run:()=>L('Đủ học rồi. Đi làm thôi.','Enough school. Time to work.')}]},
+ dropout:{tag:L('Gia đình','Family'),text:()=>L('Gia đình gặp khó khăn và muốn bạn nghỉ học đi làm phụ.','Your family is struggling and wants you to quit school to help out.'),choices:[
+   {l:L('Nghỉ học giúp gia đình','Quit and help'),run:p=>{p.edu.stage='none';p.money+=300;parents().forEach(x=>x.rel=clamp(x.rel+10,0,100));return L('Bạn nghỉ học và đi làm phụ gia đình.','You leave school to help the family.')}},
+   {l:L('Năn nỉ được học tiếp','Beg to stay in school'),run:()=>{add('happy',-4);return L('Bố mẹ miễn cưỡng đồng ý.','Your parents reluctantly agree.')}}]},
+ tax_audit:{tag:L('Thuế','Taxes'),text:()=>L('Cơ quan thuế mở cuộc thanh tra công ty của bạn.','Tax authorities open an audit of your company.'),choices:[
+   {l:L('Nộp phạt','Pay the fine'),run:p=>{const fine=p.biz?p.biz.value*.3:20000*F();p.money-=fine;if(p.biz)p.biz.evade=false;return L(`Bạn nộp phạt ${money(fine)}.`,`You pay a ${money(fine)} fine.`)}},
+   {l:L('Hối lộ thanh tra','Bribe the auditor'),run:p=>{karma(-8);if(R()<.5){p.money-=5000*F();return L('Hồ sơ được "làm đẹp". Bạn thoát nạn.','The paperwork gets cleaned up. You are off the hook.')}return courtEvent(rint(3,7),L('trốn thuế và hối lộ','tax evasion and bribery'))}}]},
+ ipo:{tag:L('Kinh doanh','Business'),text:()=>L('Các quỹ đầu tư muốn đưa startup của bạn lên sàn chứng khoán.','Investors want to take your startup public.'),choices:[
+   {l:L('Lên sàn (IPO)','Go public'),run:p=>{const b=p.biz;b.ipo=true;b.value*=2.5;const cash=b.value*.25;p.money+=cash;b.value-=cash;add('happy',15);return L(`IPO thành công! Bạn bán bớt cổ phần, thu về ${money(cash)}.`,`The IPO is a hit! You sell some shares for ${money(cash)}.`)}},
+   {l:L('Giữ công ty tư nhân','Stay private'),run:()=>L('Bạn muốn tự quyết mọi thứ.','You want to keep full control.')}]}
+};
+
+function candEvent(src){
+  const p=P(),g=wantG(p),n=npc('partner',g,clamp(p.age+rint(-6,6),18,99));
+  return{id:'cand',tag:L('Tình yêu','Romance'),text:()=>both(src,L(`Bạn gặp ${n.name}, ${n.age} tuổi. Ngoại hình: ${n.looks}/100.`,`You meet ${n.name}, ${n.age}. Looks: ${n.looks}/100.`)),choices:[
+    {l:L('Mời hẹn hò','Ask them out'),run:p=>{const ch=.35+(p.st.looks-n.looks)/150+(hasT('charming')?.2:0);
+      if(R()<ch){p.cnt.partners++;add('happy',10);if(partner()){p.cheated=true;return L(`${n.name} đồng ý. Bạn bắt đầu lén lút hẹn hò sau lưng người yêu.`,`${n.name} says yes. You start seeing them behind your partner's back.`)}p.people.push(n);return L(`${n.name} đồng ý! Hai người chính thức hẹn hò.`,`${n.name} says yes! You are officially dating.`)}
+      add('happy',-6);return L(`${n.name} từ chối khéo.`,`${n.name} politely turns you down.`)}},
+    {l:L('Bỏ qua','Pass'),run:()=>L('Bạn không có hứng.','You are not feeling it.')}]};
+}
+function breakup(pa){const p=P();
+  if(pa.role==='spouse'){const loss=p.money*.4;p.money-=loss;log(L(`Ly hôn khiến bạn mất ${money(loss)}.`,`The divorce costs you ${money(loss)}.`))}
+  pa.alive=false;pa.gone=true;p.people=p.people.filter(x=>x!==pa);add('happy',-12);
+  return pa.role==='spouse'?L(`Bạn và ${pa.name} ly hôn.`,`You and ${pa.name} divorce.`):L(`Bạn và ${pa.name} chia tay.`,`You and ${pa.name} break up.`);
+}
+function retire(p){if(!p.job)return;const j=JOBS[p.job.id];p.pension=j.base*F()*(1+.12*p.job.level)*.4;p.job=null;p.retired=true}
+function haveBaby(how){const p=P(),g=R()<.5?'m':'f';const k=npc('child',g,0);k.name=k.name.split(' ')[0]+' '+p.last;k.rel=80;p.people.push(k);p.cnt.kids++;add('happy',12);
+  return L(`${how[0]} ${k.name} chào đời!`,`${how[1]} ${k.name} is born!`)}
+
+/* ---------- event runner ---------- */
+function nextEvent(){
+  const p=P();if(!p.alive){return}
+  if(!evQ.length){save();render();return}
+  let e=evQ.shift();if(typeof e==='string')e=SPECIAL[e]?{id:e,...SPECIAL[e]}:EVENTS.find(x=>x.id===e);
+  if(!e){nextEvent();return}
+  if(e.c&&!SPECIAL[e.id]&&!e.c(p)){nextEvent();return}
+  if(e.id)p.seen[e.id]=1;
+  if(e.prep)e.prep(p);
+  if(e.auto){log(e.text(p));e.auto(p);if(p.st.health<=0){die();return}nextEvent();return}
+  showEvent(e);
+}
+function trigger(e){evQ.unshift(e);if(!modalOpen)nextEvent()}
+function showEvent(e){
+  const p=P();const text=e.text(p);modalOpen=true;
+  const box=`<div class="shade modal" role="dialog" aria-modal="true"><div class="box">
+    <div class="tag">${esc(tr(e.tag||L('Tuổi '+p.age,'Age '+p.age)))}</div><p>${esc(tr(text))}</p>
+    <div class="choices">${e.choices.map((c,i)=>`<button class="btn" data-a="choose" data-v="${i}">${esc(tr(c.l))}</button>`).join('')}</div></div></div>`;
+  layer(box);
+  layerEl().onclick=ev=>{const b=ev.target.closest('[data-a="choose"]');if(!b)return;
+    const c=e.choices[+b.dataset.v];const res=c.run(p);
+    if(res&&res.choices){log(both(text,L('→ '+tr(c.l),'→ '+tr(c.l))));modalOpen=false;evQ.unshift(res);nextEvent();return}
+    log(both(text,res));
+    showResult(res);
+  };
+}
+function showResult(res){
+  const p=P();
+  layer(`<div class="shade modal" role="dialog" aria-modal="true"><div class="box"><div class="tag">${esc(tr(L('Kết quả','Outcome')))}</div><p>${esc(tr(res))}</p>
+    <button class="btn primary" data-a="ok" style="width:100%">${esc(tr(L('Tiếp tục','Continue')))}</button></div></div>`);
+  layerEl().onclick=ev=>{if(!ev.target.closest('[data-a="ok"]'))return;closeModal();
+    if(p.money<0){p.debt+=-p.money;p.money=0}
+    if(p.st.health<=0){die();return}nextEvent()};
+}
+function closeModal(){modalOpen=false;layer('')}
+const layerEl=()=>document.getElementById('layer');
+function layer(html){layerEl().innerHTML=html;layerEl().onclick=null}
+
+/* ---------- activities ---------- */
+function cost(n){return Math.round(n*Math.max(F(),.2))}
+const ACTS=[
+ {id:'gym',g:'self',age:12,l:L('Tập gym','Hit the gym'),d:L('Sức khỏe, ngoại hình','Health, looks'),run:()=>{add('health',rint(2,6));add('looks',rint(0,3));return L('Bạn đổ mồ hôi và thấy khỏe hơn.','You sweat it out and feel stronger.')}},
+ {id:'library',g:'self',age:6,l:L('Lên thư viện','Visit the library'),d:L('Trí tuệ','Smarts'),run:()=>{add('smarts',rint(1,4));return L('Bạn đọc ngấu nghiến vài cuốn sách.','You devour a few books.')}},
+ {id:'meditate',g:'self',age:10,l:L('Thiền','Meditate'),d:L('Hạnh phúc','Happiness'),run:()=>{add('happy',rint(2,6));return L('Đầu óc bạn nhẹ nhõm hơn.','Your mind feels lighter.')}},
+ {id:'doctor',g:'self',age:0,l:L('Đi khám bác sĩ','See a doctor'),d:()=>money(cost(250)),run:p=>{p.money-=cost(250);add('health',rint(4,10));return L('Bác sĩ kê đơn và dặn bạn ngủ sớm.','The doctor prescribes meds and tells you to sleep more.')}},
+ {id:'surgery',g:'self',age:18,l:L('Phẫu thuật thẩm mỹ','Plastic surgery'),d:()=>money(cost(7000)),need:7000,run:p=>{p.money-=cost(7000);if(R()<.75){add('looks',rint(8,18));return L('Ca phẫu thuật thành công mỹ mãn.','The surgery is a big success.')}add('looks',-rint(8,18));return L('Ca phẫu thuật hỏng. Bạn không dám soi gương.','The surgery goes wrong. You avoid mirrors.')}},
+ {id:'vacation',g:'self',age:18,l:L('Đi du lịch','Take a vacation'),d:()=>money(cost(3000)),need:3000,run:p=>{p.money-=cost(3000);add('happy',rint(8,14));return L('Bạn trở về với làn da rám nắng và hàng trăm bức ảnh.','You come back tanned with hundreds of photos.')}},
+ {id:'rehab',g:'self',age:12,c:p=>p.addict,l:L('Vào trại cai nghiện','Go to rehab'),d:()=>money(cost(5000)),need:5000,run:p=>{p.money-=cost(5000);if(R()<.55){p.addict=false;p.addPts=0;add('health',8);return L('Bạn cai nghiện thành công.','You get clean.')}return L('Bạn trốn trại sau một tuần.','You walk out after a week.')}},
+ {id:'club',g:'party',age:18,l:L('Đi hộp đêm','Go clubbing'),d:L('Vui, có thể gặp ai đó','Fun, maybe meet someone'),run:p=>{p.cnt.club++;add('happy',rint(4,9));if(R()<.4)return candEvent(L('Giữa sàn nhảy đông nghẹt,','On the packed dance floor,'));return L('Bạn nhảy đến sáng.','You dance until sunrise.')}},
+ {id:'bar',g:'party',age:18,l:L('Nhậu tới bến','Go on a bender'),d:L('Vui, hại sức khỏe','Fun, bad for health'),run:p=>{p.cnt.drink++;add('happy',5);add('health',-3);p.addPts+=hasT('addictive')?2:1;if(!p.addict&&p.addPts>=6&&R()<.5){p.addict=true;return L('Bạn nhận ra mình không thể dừng uống. Bạn đã nghiện rượu.','You realize you cannot stop drinking. You are now an alcoholic.')}return L('Bạn uống quá chén và quên mất đường về.','You drink too much and forget the way home.')}},
+ {id:'drugs',g:'party',age:18,l:L('Tiệc với chất kích thích','Party with substances'),d:L('Rất vui, rất nguy hiểm','Very fun, very risky'),run:p=>{add('happy',12);add('health',-6);karma(-2);p.addPts+=hasT('addictive')?3:2;
+   if(R()<.04){add('health',-30);return L('Bạn sốc thuốc và được đưa đi cấp cứu.','You overdose and get rushed to the ER.')}
+   if(!p.addict&&p.addPts>=5&&R()<.5){p.addict=true;return L('Một lần thành thói quen. Bạn đã nghiện.','Once became a habit. You are hooked.')}
+   if(R()<.08)return courtEvent(rint(1,3),L('tàng trữ chất cấm','drug possession'));
+   return L('Một đêm rực rỡ và một buổi sáng tồi tệ.','A brilliant night and a terrible morning.')}},
+ {id:'casino',g:'party',age:18,l:L('Vào sòng bạc','Hit the casino'),d:L('Cược tiền','Place a bet'),run:p=>{p.cnt.casino++;return casinoEvent()}},
+ {id:'lottery',g:'party',age:18,l:L('Mua vé số','Buy a lottery ticket'),d:'$10',run:p=>{p.money-=10;const r=R();if(r<1/20000){const w=5e6*Math.max(F(),.2);p.money+=w;add('happy',30);return L(`TRÚNG ĐỘC ĐẮC! ${money(w)}!`,`JACKPOT! ${money(w)}!`)}if(r<.05){p.money+=60;return L('Bạn trúng giải an ủi $60.','You win a $60 consolation prize.')}return L('Trượt. Như mọi lần.','No luck. As usual.')}},
+ {id:'app',g:'love',age:18,l:L('Lướt app hẹn hò','Swipe a dating app'),d:L('Tìm người yêu','Find a partner'),run:()=>R()<.75?candEvent(L('Bạn match với một người trên app.','You match with someone on the app.')):L('Không ai quẹt phải bạn hôm nay.','Nobody swipes right on you today.')},
+ {id:'hookup',g:'love',age:18,l:L('Tìm tình một đêm','Look for a hookup'),d:L('Không ràng buộc','No strings attached'),run:p=>{const ch=.3+p.st.looks/150+(hasT('charming')?.15:0);if(R()>ch){add('happy',-3);return L('Bạn về nhà một mình.','You go home alone.')}
+   p.cnt.partners++;add('happy',8);if(partner()){p.cheated=true}
+   return L('Bạn đưa một người lạ về nhà. Cánh cửa khép lại, và câu chuyện dừng ở đó.','You bring a stranger home. The door closes, and the story ends there.')}},
+ {id:'pickpocket',g:'crime',age:12,l:L('Móc túi','Pickpocket'),d:L('Rủi ro thấp','Low risk'),run:crime({ok:.65,caught:.3,y:[0,1],min:20,max:400,k:4,n:L('móc túi','pickpocketing'),win:L('Bạn lấy được một chiếc ví.','You lift a wallet.')})},
+ {id:'shoplift',g:'crime',age:12,l:L('Ăn cắp ở cửa hàng','Shoplift'),d:L('Rủi ro thấp','Low risk'),run:crime({ok:.6,caught:.35,y:[0,1],min:30,max:300,k:3,n:L('ăn cắp vặt','shoplifting'),win:L('Bạn lén mang hàng ra khỏi cửa.','You slip the goods out the door.')})},
+ {id:'burglary',g:'crime',age:16,l:L('Đột nhập nhà','Burglary'),d:L('Rủi ro vừa','Medium risk'),run:crime({ok:.5,caught:.5,y:[1,4],min:1500,max:25000,k:8,n:L('đột nhập trái phép','burglary'),win:L('Bạn đột nhập trót lọt.','The break-in goes smoothly.')})},
+ {id:'scam',g:'crime',age:18,l:L('Lừa đảo qua mạng','Online scam'),d:L('Rủi ro vừa','Medium risk'),run:crime({ok:.5,caught:.45,y:[2,6],min:3000,max:60000,k:10,n:L('lừa đảo qua mạng','online fraud'),win:L('Vài người cả tin chuyển tiền cho bạn.','A few gullible people wire you money.')})},
+ {id:'bank',g:'crime',age:18,l:L('Cướp ngân hàng','Rob a bank'),d:L('Rủi ro cực cao','Extreme risk'),run:crime({ok:.22,caught:.75,y:[6,15],min:50000,max:600000,k:15,n:L('cướp ngân hàng','bank robbery'),win:L('Phi vụ thế kỷ thành công!','The heist of the century works!')})},
+ {id:'emigrate',g:'other',age:18,l:L('Di cư sang nước khác','Emigrate'),d:L('Đổi đời','Start over'),run:()=>emigrateEvent()},
+ {id:'escape',g:'prison',age:0,l:L('Vượt ngục','Attempt an escape'),d:L('Mỗi năm một lần','Once a year'),run:p=>{if(R()<.25+(hasT('lucky')?.1:0)){p.prison=0;p.wanted=true;p.escapes++;add('happy',15);return L('Bạn vượt ngục thành công! Giờ bạn là kẻ bị truy nã.','You escape! You are now a fugitive.')}p.prison+=2;add('health',-6);return L('Bạn bị bắt lại. Cộng thêm 2 năm tù.','You get caught. Two years added.')}},
+ {id:'pgym',g:'prison',age:0,l:L('Tập thể lực trong tù','Work out in the yard'),d:L('Sức khỏe','Health'),run:()=>{add('health',rint(2,5));return L('Bạn tập hít đất cả buổi chiều.','You do push-ups all afternoon.')}},
+ {id:'pread',g:'prison',age:0,l:L('Đọc sách thư viện tù','Read in the prison library'),d:L('Trí tuệ','Smarts'),run:()=>{add('smarts',rint(1,4));return L('Bạn đọc hết bộ sách luật hình sự.','You read every criminal law book they have.')}}
+];
+const ACT_GROUPS=[['self',L('Bản thân','Self')],['party',L('Ăn chơi','Nightlife')],['love',L('Tình yêu','Love')],['crime',L('Tội phạm','Crime')],['other',L('Khác','Other')]];
+function casinoEvent(){
+  const p=P();const amounts=[100,1000,Math.max(100,Math.round(p.money*.25))];
+  return{id:'casino',tag:L('Sòng bạc','Casino'),text:()=>L(`Bạn đứng trước bàn roulette với ${money(p.money)} trong túi.`,`You stand at the roulette table with ${money(p.money)} in your pocket.`),choices:[
+    ...amounts.map((a,i)=>({l:L(i===2?`Cược 25% tiền (${money(a)})`:`Cược ${money(a)}`,i===2?`Bet 25% of cash (${money(a)})`:`Bet ${money(a)}`),run:p=>{if(p.money<a)return L('Bạn không đủ tiền cho mức cược này.','You do not have enough for that bet.');
+      if(R()<(hasT('lucky')?.52:.46)){p.money+=a;add('happy',6);return L(`Bạn thắng ${money(a)}!`,`You win ${money(a)}!`)}p.money-=a;add('happy',-5);return L(`Bạn thua ${money(a)}.`,`You lose ${money(a)}.`)}})),
+    {l:L('Thôi, về','Walk away'),run:()=>L('Bạn rời sòng bạc với cái đầu tỉnh táo.','You leave with a clear head.')}]};
+}
+function emigrateEvent(){
+  const p=P();const opts=Object.keys(CTRY).filter(k=>k!==p.country).sort(()=>R()-.5).slice(0,3);
+  return{id:'emig',tag:L('Di cư','Emigration'),text:()=>L('Bạn muốn chuyển tới đâu?','Where do you want to move?'),choices:[
+    ...opts.map(k=>{const c=CTRY[k],price=Math.round(8000*cf(k));return{l:L(`${c.vi} (${money(price)})`,`${c.en} (${money(price)})`),run:p=>{
+      if(p.money<price)return L('Bạn không đủ tiền làm thủ tục.','You cannot afford the paperwork.');
+      p.money-=price;const ch=.35+p.st.smarts/250+(p.money>50000?.2:0)-(cf(k)-cf(p.country))*.3;
+      if(R()<ch){p.country=k;p.job=null;p.listings=null;add('happy',8);return L(`Visa được duyệt! Bạn chuyển tới ${c.vi}.`,`Visa approved! You move to ${c.en}.`)}
+      return L('Hồ sơ visa bị từ chối.','Your visa is denied.')}}}),
+    {l:L('Thôi, ở lại','Never mind'),run:()=>L('Bạn quyết định ở lại.','You decide to stay.')}]};
+}
+function doAct(id){
+  const p=P(),a=ACTS.find(x=>x.id===id);if(!a||!p.alive)return;
+  if(p.used[id]){toast(L('Bạn đã làm việc này trong năm nay.','You already did this this year.'));return}
+  if(a.need&&p.money<cost(a.need)){toast(L('Bạn không đủ tiền.','You cannot afford it.'));return}
+  p.used[id]=1;p.cnt.acts++;
+  const res=a.run(p);
+  if(res&&res.choices){U.sheet=null;render();trigger(res);return}
+  log(res);if(p.money<0){p.debt+=-p.money;p.money=0}
+  if(p.st.health<=0){die();return}
+  save();render();toast(res);
+}
+
+/* ---------- people actions ---------- */
+function roleName(x){const m=x.g==='m';return{mother:L('Mẹ','Mother'),father:L('Bố','Father'),sibling:m?L('Anh/em trai','Brother'):L('Chị/em gái','Sister'),partner:L('Người yêu','Partner'),spouse:m?L('Chồng','Husband'):L('Vợ','Wife'),child:m?L('Con trai','Son'):L('Con gái','Daughter'),friend:L('Bạn','Friend')}[x.role]}
+function personActs(x){
+  const p=P(),out=[];
+  out.push(['time',L('Dành thời gian bên nhau','Spend time together')]);
+  out.push(['gift',L(`Tặng quà (${money(cost(150))})`,`Give a gift (${money(cost(150))})`)]);
+  out.push(['argue',L('Cãi nhau','Start an argument')]);
+  if((x.role==='mother'||x.role==='father')&&p.age>=5)out.push(['askmoney',L('Xin tiền','Ask for money')]);
+  if(x.role==='partner'||x.role==='spouse'){
+    out.push(['date',L(`Hẹn hò lãng mạn (${money(cost(200))})`,`Romantic date (${money(cost(200))})`)]);
+    if(p.age>=18)out.push(['intimate',L('Thân mật','Be intimate')]);
+    if(x.role==='partner')out.push(['propose',L('Cầu hôn','Propose')]);
+    out.push(['baby',x.g!==p.g?L('Thử có em bé','Try for a baby'):L(`Nhận con nuôi (${money(cost(20000))})`,`Adopt a child (${money(cost(20000))})`)]);
+    out.push(['leave',x.role==='spouse'?L('Ly hôn','Divorce'):L('Chia tay','Break up')]);
+  }
+  if(x.role==='child'&&p.age>=18)out.push(['allow',L(`Cho tiền (${money(cost(1000))})`,`Give money (${money(cost(1000))})`)]);
+  return out;
+}
+function doPerson(id,act){
+  const p=P(),x=p.people.find(y=>y.id===id);if(!x)return;const key=act+id;
+  if(p.used[key]&&!['leave'].includes(act)){toast(L('Đã làm việc này với người này trong năm nay.','Already done with them this year.'));return}
+  p.used[key]=1;p.cnt.acts++;let res;
+  const rel=d=>x.rel=clamp(x.rel+d,0,100);
+  switch(act){
+   case'time':rel(rint(4,10));add('happy',3);res=L(`Bạn và ${x.name} có một khoảng thời gian vui vẻ.`,`You and ${x.name} have a good time.`);break;
+   case'gift':if(p.money<cost(150)){res=L('Bạn không đủ tiền mua quà.','You cannot afford a gift.');break}p.money-=cost(150);rel(rint(6,14));res=L(`${x.name} rất thích món quà.`,`${x.name} loves the gift.`);break;
+   case'argue':rel(-rint(8,20));add('happy',-3);res=L(`Bạn và ${x.name} cãi nhau to tiếng.`,`You and ${x.name} have a loud fight.`);break;
+   case'askmoney':{if(R()<x.rel/140&&x.money>0){const a=Math.max(5,Math.round(x.money*rint(1,4)/100));x.money-=a;p.money+=a;res=L(`${x.name} cho bạn ${money(a)}.`,`${x.name} gives you ${money(a)}.`)}else{rel(-4);res=L(`${x.name} từ chối.`,`${x.name} says no.`)}break}
+   case'date':if(p.money<cost(200)){res=L('Bạn không đủ tiền.','You cannot afford it.');break}p.money-=cost(200);rel(rint(6,12));add('happy',5);res=L(`Một buổi tối lãng mạn với ${x.name}.`,`A romantic evening with ${x.name}.`);break;
+   case'intimate':rel(rint(4,10));add('happy',rint(5,9));res=L(`Bạn và ${x.name} dành cho nhau một đêm nồng nàn. Đèn tắt.`,`You and ${x.name} share a passionate night. Lights out.`);
+     if(x.g!==p.g&&p.age<50&&R()<.12)res=both(res,haveBaby(L('Chín tháng sau,','Nine months later,')));break;
+   case'propose':if(x.rel>=60&&R()<.75){x.role='spouse';const c=cost(15000);p.money-=Math.min(c,p.money);add('happy',15);res=L(`${x.name} đồng ý! Hai người tổ chức đám cưới.`,`${x.name} says yes! You get married.`)}else{rel(-15);add('happy',-8);res=L(`${x.name} từ chối lời cầu hôn.`,`${x.name} turns down your proposal.`)}break;
+   case'baby':if(x.g!==p.g){res=(p.age<50&&R()<.4)?haveBaby(L('Tin vui!','Good news!')):L('Lần này chưa thành.','No luck this time.')}else{const c=cost(20000);if(p.money<c){res=L('Bạn không đủ tiền làm thủ tục nhận con nuôi.','You cannot afford the adoption.');break}p.money-=c;res=haveBaby(L('Thủ tục hoàn tất.','The adoption goes through.'))}break;
+   case'leave':res=breakup(x);U.sheet='people';break;
+   case'allow':if(p.money<cost(1000)){res=L('Bạn không đủ tiền.','You cannot afford it.');break}p.money-=cost(1000);rel(8);res=L(`${x.name} cảm ơn bạn.`,`${x.name} thanks you.`);break;
+  }
+  log(res);save();render();toast(res);
+}
+
+/* ---------- career and money actions ---------- */
+function listings(){const p=P();if(!p.listings){const ks=Object.keys(JOBS).sort(()=>R()-.5).slice(0,7);p.listings=ks}return p.listings}
+function applyJob(id){
+  const p=P(),j=JOBS[id];
+  if(p.edu.degree<j.deg){toast(L(`Cần bằng ${DEG[j.deg][0].toLowerCase()}.`,`Requires a ${DEG[j.deg][1].toLowerCase()} degree.`));return}
+  if(p.used['apply'+id]){toast(L('Bạn đã nộp đơn vị trí này năm nay.','You already applied this year.'));return}
+  p.used['apply'+id]=1;
+  let ch=.55+(p.st.smarts-j.sm)/120+(j.lk?(p.st.looks-j.lk)/90:0)-(S.econ.phase==='recession'?.15:S.econ.phase==='crisis'?.3:0);
+  let res;
+  if(R()<ch){p.job={id,level:0,perf:50,yrs:0};p.retired=false;add('happy',6);res=L(`Bạn được nhận vào vị trí ${j.n[0].toLowerCase()}!`,`You got the ${j.n[1]} job!`)}
+  else res=L(`Hồ sơ ${j.n[0].toLowerCase()} bị từ chối.`,`Your ${j.n[1]} application was rejected.`);
+  log(res);save();render();toast(res);
+}
+function careerAct(a){
+  const p=P();let res;
+  if(a==='study'){if(p.used.study){toast(L('Bạn đã học chăm năm nay rồi.','Already studied hard this year.'));return}p.used.study=1;add('smarts',rint(2,5));add('happy',-2);res=L('Bạn vùi đầu vào sách vở.','You bury yourself in books.')}
+  if(a==='dropuni'){p.edu.stage='done';p.edu.tuition=0;res=L('Bạn bỏ học giữa chừng.','You drop out.')}
+  if(a==='work'){if(p.used.work){toast(L('Bạn đã làm chăm năm nay rồi.','Already worked hard this year.'));return}p.used.work=1;p.job.perf=clamp(p.job.perf+rint(4,10),0,100);add('happy',-3);res=L('Bạn ở lại văn phòng tới khuya.','You stay late at the office.')}
+  if(a==='raise'){if(p.used.raise){toast(L('Bạn đã xin tăng lương năm nay.','Already asked this year.'));return}p.used.raise=1;if(p.job.perf>65&&R()<.6&&p.job.level<6){p.job.level++;res=L('Sếp đồng ý tăng lương cho bạn.','Your boss gives you a raise.')}else{p.job.perf=clamp(p.job.perf-10,0,100);res=L('Sếp cười và lắc đầu.','Your boss laughs and shakes their head.')}}
+  if(a==='quit'){res=L(`Bạn nghỉ việc ${JOBS[p.job.id].n[0].toLowerCase()}.`,`You quit your ${JOBS[p.job.id].n[1]} job.`);p.job=null}
+  if(a==='retire'){retire(p);res=L('Bạn nghỉ hưu và nhận lương hưu hằng năm.','You retire and start drawing a pension.')}
+  log(res);save();render();toast(res);
+}
+function invest(id,how){
+  const p=P();let amt=0;
+  if(how==='sell'){amt=p.inv[id];if(amt<=0)return;p.money+=amt;p.inv[id]=0;toast(L(`Đã bán, thu về ${money(amt)}.`,`Sold for ${money(amt)}.`))}
+  else{amt=how==='q'?p.money*.25:Math.round(+how*Math.max(F(),.2));if(amt<1||p.money<amt){toast(L('Bạn không đủ tiền mặt.','Not enough cash.'));return}p.money-=amt;p.inv[id]+=amt;toast(L(`Đã đầu tư ${money(amt)}.`,`Invested ${money(amt)}.`))}
+  save();render();
+}
+function houseOffers(){const p=P();if(!p.houseOffers){const f=F();p.houseOffers=[0,1].map(()=>({id:uid(),value:Math.round(220000*f*(0.5+R()*1.5)),kind:pick([L('Căn hộ chung cư','Apartment'),L('Nhà phố','Townhouse'),L('Biệt thự nhỏ','Small villa')])}))}return p.houseOffers}
+function moneyAct(a,v){
+  const p=P(),f=F();let res;
+  if(a==='buyhouse'||a==='mortgage'){const h=p.houseOffers.find(x=>x.id===v);if(!h)return;const need=a==='buyhouse'?h.value:h.value*.2;
+    if(p.money<need){toast(L('Bạn không đủ tiền.','Not enough cash.'));return}
+    p.money-=need;if(a==='mortgage')p.debt+=h.value*.8;p.houses.push({id:h.id,value:h.value,kind:h.kind,rented:false});p.houseOffers=p.houseOffers.filter(x=>x!==h);
+    res=L(`Bạn mua ${h.kind[0].toLowerCase()} giá ${money(h.value)}${a==='mortgage'?' (trả góp)':''}.`,`You buy a ${h.kind[1].toLowerCase()} for ${money(h.value)}${a==='mortgage'?' (mortgage)':''}.`)}
+  if(a==='rent'){const h=p.houses.find(x=>x.id===v);h.rented=!h.rented;res=h.rented?L('Bạn cho thuê căn nhà.','You rent the property out.'):L('Bạn ngừng cho thuê.','You stop renting it out.')}
+  if(a==='sellhouse'){const h=p.houses.find(x=>x.id===v);p.money+=h.value*.97;p.houses=p.houses.filter(x=>x!==h);res=L(`Bạn bán nhà, thu về ${money(h.value*.97)}.`,`You sell for ${money(h.value*.97)}.`)}
+  if(a==='open'){const t=BIZ[v],c=t.cap*f;if(p.money<c){toast(L('Bạn không đủ vốn.','Not enough capital.'));return}p.money-=c;
+    const nm=pick(['Nova','Lotus','Atlas','Mango','Cobalt','Sunny','Orbit','Maple'])+' '+tr(t.n);p.biz={type:v,name:nm,value:c,yrs:0,evade:false,mkt:false,last:0};
+    res=L(`Bạn mở ${nm} với vốn ${money(c)}.`,`You open ${nm} with ${money(c)} in capital.`)}
+  if(a==='mkt'){const c=p.biz.value*.05;if(p.used.mkt){toast(L('Đã chạy marketing năm nay.','Marketing already running this year.'));return}if(p.money<c){toast(L('Bạn không đủ tiền.','Not enough cash.'));return}p.used.mkt=1;p.money-=c;p.biz.mkt=true;res=L(`Bạn chi ${money(c)} cho chiến dịch quảng cáo.`,`You spend ${money(c)} on an ad campaign.`)}
+  if(a==='inject'){const c=p.money*.25;if(c<100){toast(L('Bạn không đủ tiền.','Not enough cash.'));return}p.money-=c;p.biz.value+=c;res=L(`Bạn rót thêm ${money(c)} vào công ty.`,`You inject ${money(c)} into the company.`)}
+  if(a==='evade'){p.biz.evade=!p.biz.evade;if(p.biz.evade)karma(-5);res=p.biz.evade?L('Bạn bắt đầu "tối ưu" sổ sách để trốn thuế.','You start cooking the books to dodge taxes.'):L('Bạn quay lại khai thuế trung thực.','You go back to honest tax filings.')}
+  if(a==='sellbiz'){const v2=p.biz.value*(0.8+R()*.5);p.money+=v2;p.bizSold++;res=L(`Bạn bán ${p.biz.name} với giá ${money(v2)}.`,`You sell ${p.biz.name} for ${money(v2)}.`);p.biz=null}
+  if(a==='loan'){if(p.used.loan){toast(L('Ngân hàng chỉ duyệt một khoản vay mỗi năm.','The bank approves one loan per year.'));return}p.used.loan=1;const c=Math.round(10000*f+p.income*.5);p.money+=c;p.debt+=c;res=L(`Ngân hàng cho bạn vay ${money(c)}, lãi 7%/năm.`,`The bank lends you ${money(c)} at 7% a year.`)}
+  if(a==='repay'){const c=Math.min(p.money,p.debt);if(c<=0)return;p.money-=c;p.debt-=c;res=L(`Bạn trả ${money(c)} nợ.`,`You repay ${money(c)} of debt.`)}
+  log(res);save();render();toast(res);
+}
+
+/* ---------- rendering ---------- */
+const ICON={
+ career:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+ money:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>',
+ people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg>',
+ acts:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>'
+};
+function langBtn(){return`<button class="iconbtn" data-a="lang" aria-label="Language">${lang==='vi'?'EN':'VI'}</button>`}
+function barColor(v){return v>=60?'var(--good)':v>=30?'var(--warn)':'var(--bad)'}
+function render(){
+  const root=document.getElementById('root');
+  if(U.screen==='title')root.innerHTML=renderTitle();
+  else if(U.screen==='create')root.innerHTML=renderCreate();
+  else if(U.screen==='death')root.innerHTML=renderDeath();
+  else root.innerHTML=renderGame();
+  if(U.screen==='game'){const lg=document.getElementById('log');if(lg)lg.scrollTop=lg.scrollHeight;
+    if(U.sheet&&!modalOpen)layer(renderSheet());else if(!modalOpen)layer('')}
+  else if(!modalOpen&&!U.gate)layer('');
+  if(U.gate)showGate();
+}
+function renderTitle(){
+  const saved=S&&S.p&&S.p.alive;
+  return`<div class="app"><div class="screen">
+   <div class="row" style="justify-content:space-between"><span class="counter num">≈ 4.3 ${tr(L('em bé chào đời mỗi giây','births per second'))}</span>${langBtn()}</div>
+   <div class="hero"><div class="kicker">1 / 8 000 000 000</div><h1>${tr(L('Một Đời','One Life'))}</h1>
+   <p>${tr(L('Bạn không chọn được nơi sinh ra, nhưng chọn được cách sống. Học, yêu, kiếm tiền, phá sản, vào tù, làm lại, mỗi năm một lần bấm.','You do not choose where you are born, but you choose how to live. Study, love, get rich, go broke, go to jail, start over, one tap per year.'))}</p></div>
+   <button class="btn accent" data-a="tocreate" style="font-size:17px;padding:16px">${tr(L('Bắt đầu đời mới','Start a new life'))}</button>
+   ${saved?`<button class="btn" data-a="continue">${tr(L('Chơi tiếp','Continue'))}: ${esc(fullName(S.p))}, ${S.p.age} ${tr(L('tuổi','years'))}</button>`:''}
+   <div class="card muted" style="font-size:13px">${tr(L('Bản demo 18+. Số liệu tuổi thọ, thu nhập và số ca sinh là ước tính làm tròn theo UN, WHO và World Bank cho 24 nước đông dân. Tiền tính theo USD.','18+ demo. Life expectancy, income and birth figures are rounded estimates from UN, WHO and World Bank data for 24 populous countries. Money is in USD.'))}</div>
+  </div></div>`;
+}
+function defaultForm(){const code='VN',pool=NAMES[CTRY[code].pool];return{first:pick(pool.f),last:pick(pool.l),g:'f',orient:'straight',country:code,tier:1,health:70,happy:60,smarts:60,looks:60,karma:50,traits:[]}}
+function renderCreate(){
+  const f=U.form||(U.form=defaultForm());
+  const opt=(v,cur,label)=>`<option value="${v}"${String(v)===String(cur)?' selected':''}>${esc(label)}</option>`;
+  const sl=(k,label)=>`<div class="slider"><label for="s-${k}">${tr(label)}</label><input id="s-${k}" type="range" min="0" max="100" value="${f[k]}" data-f="${k}"><span class="num" id="v-${k}">${f[k]}</span></div>`;
+  const destiny=`<div class="card"><h3 style="font-size:20px">${tr(L('Chế độ Số phận','Destiny mode'))}</h3>
+    <p class="muted" style="margin:6px 0 12px">${tr(L('Nơi sinh được bốc theo số ca sinh thật mỗi năm của từng nước. Giới tính, gia đình, giàu nghèo và chỉ số đều ngẫu nhiên. Giống như ngoài đời, bạn không được chọn.','Your birthplace is drawn by each country\'s real yearly births. Gender, family, wealth and stats are all random. Like real life, you do not get a say.'))}</p>
+    <div class="field" style="margin-bottom:12px"><label for="d-orient">${tr(L('Bạn thích','Attracted to'))}</label><select id="d-orient" data-f="orient">${opt('straight',f.orient,tr(L('Người khác giới','Opposite sex')))}${opt('gay',f.orient,tr(L('Người cùng giới','Same sex')))}${opt('bi',f.orient,tr(L('Cả hai','Both')))}</select></div>
+    <button class="btn accent" data-a="destiny" style="width:100%;padding:15px;font-size:16px">${tr(L('Bốc thăm số phận','Roll your fate'))}</button></div>`;
+  const free=`<div class="card"><div class="form">
+    <div class="field"><label for="f-first">${tr(L('Tên','First name'))}</label><input id="f-first" type="text" value="${esc(f.first)}" data-f="first"></div>
+    <div class="field"><label for="f-last">${tr(L('Họ','Last name'))}</label><input id="f-last" type="text" value="${esc(f.last)}" data-f="last"></div>
+    <div class="field"><label for="f-g">${tr(L('Giới tính','Gender'))}</label><select id="f-g" data-f="g">${opt('f',f.g,tr(L('Nữ','Female')))}${opt('m',f.g,tr(L('Nam','Male')))}</select></div>
+    <div class="field"><label for="f-orient">${tr(L('Bạn thích','Attracted to'))}</label><select id="f-orient" data-f="orient">${opt('straight',f.orient,tr(L('Khác giới','Opposite sex')))}${opt('gay',f.orient,tr(L('Cùng giới','Same sex')))}${opt('bi',f.orient,tr(L('Cả hai','Both')))}</select></div>
+    <div class="field"><label for="f-country">${tr(L('Quốc gia','Country'))}</label><select id="f-country" data-f="country">${Object.keys(CTRY).sort((a,b)=>tr(CTRY[a]).localeCompare(tr(CTRY[b]))).map(k=>opt(k,f.country,tr(CTRY[k]))).join('')}</select></div>
+    <div class="field"><label for="f-tier">${tr(L('Gia cảnh','Family wealth'))}</label><select id="f-tier" data-f="tier">${TIERS.map((t,i)=>opt(i,f.tier,tr(t))).join('')}</select></div>
+    <div class="full" style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+      ${sl('health',L('Sức khỏe','Health'))}${sl('happy',L('Hạnh phúc','Happiness'))}${sl('smarts',L('Trí tuệ','Smarts'))}${sl('looks',L('Ngoại hình','Looks'))}${sl('karma',L('Karma (ẩn)','Karma (hidden)'))}
+    </div>
+    <div class="field full"><label>${tr(L('Đặc điểm (tối đa 2)','Traits (up to 2)'))}</label><div class="traits">${Object.entries(TRAITS).map(([k,t])=>`<label><input type="checkbox" data-trait="${k}"${f.traits.includes(k)?' checked':''}>${esc(tr(t.l))}</label>`).join('')}</div></div>
+    <div class="row full"><button class="btn" data-a="randform">${tr(L('Ngẫu nhiên tất cả','Randomize all'))}</button></div>
+  </div>
+  <p class="muted" style="font-size:12.5px;margin:12px 0">${tr(L('Đời tùy chỉnh được gắn nhãn "Tùy chỉnh". Mọi chỉ số chốt khi bấm Bắt đầu.','Custom lives are labeled "Custom". Everything locks when you press Start.'))}</p>
+  <button class="btn accent" data-a="free" style="width:100%;padding:15px;font-size:16px">${tr(L('Bắt đầu','Start'))}</button></div>`;
+  return`<div class="app"><div class="screen">
+   <div class="row" style="justify-content:space-between"><button class="iconbtn" data-a="totitle">← ${tr(L('Quay lại','Back'))}</button>${langBtn()}</div>
+   <h2 style="font-size:30px">${tr(L('Đời mới','New life'))}</h2>
+   <div class="seg"><button class="${U.mode==='destiny'?'on':''}" data-a="mode" data-v="destiny">${tr(L('Số phận','Destiny'))}</button><button class="${U.mode==='free'?'on':''}" data-a="mode" data-v="free">${tr(L('Tự do','Free'))}</button></div>
+   ${U.mode==='destiny'?destiny:free}
+  </div></div>`;
+}
+function renderGame(){
+  const p=P(),c=CTRY[p.country];
+  const years=p.log.slice(-40).map((y,i,arr)=>`<div class="year${i===arr.length-1?' last':''}"><div class="age">${y.age}<small>${tr(L('tuổi','age'))}</small></div><ul>${y.lines.length?y.lines.map(l=>`<li>${esc(tr(l))}</li>`).join(''):`<li class="muted">${tr(L('Một năm bình lặng.','A quiet year.'))}</li>`}</ul></div>`).join('');
+  const st=[['health',L('Sức khỏe','Health')],['happy',L('Hạnh phúc','Happy')],['smarts',L('Trí tuệ','Smarts')],['looks',L('Ngoại hình','Looks')]];
+  return`<div class="app">
+   <header class="top"><div class="who"><div class="name">${esc(fullName(p))}</div>
+     <div class="meta"><span class="chip code">${p.country}</span><span class="chip">${esc(tr(c))}</span>${p.job?`<span class="chip">${esc(tr(JOBS[p.job.id].n))}</span>`:''}${p.prison?`<span class="chip" style="color:var(--bad)">${tr(L('Đang ngồi tù','In prison'))}</span>`:''}${p.custom?`<span class="chip">${tr(L('Tùy chỉnh','Custom'))}</span>`:''}</div></div>
+     <div class="cash"><span>${tr(L('Tiền mặt','Cash'))}</span><b>${money(p.money)}</b></div>
+     <div style="display:flex;flex-direction:column;gap:4px">${langBtn()}<button class="iconbtn" data-a="menu" aria-label="Menu">☰</button></div></header>
+   <main class="log" id="log" aria-live="polite">${years}</main>
+   <section class="stats">${st.map(([k,l])=>`<div class="stat"><span>${tr(l)}</span><div class="bar"><i style="width:${p.st[k]}%;background:${barColor(p.st[k])}"></i></div><span class="num">${p.st[k]}</span></div>`).join('')}</section>
+   <nav class="tabs">
+     <button class="tab" data-a="sheet" data-v="career">${ICON.career}${tr(L('Học & Nghề','Career'))}</button>
+     <button class="tab" data-a="sheet" data-v="money">${ICON.money}${tr(L('Tài chính','Money'))}</button>
+     <button class="age-btn" data-a="age" aria-label="${tr(L('Thêm 1 tuổi','Age up'))}">+1<small>${tr(L('tuổi','age'))}</small></button>
+     <button class="tab" data-a="sheet" data-v="people">${ICON.people}${tr(L('Quan hệ','People'))}</button>
+     <button class="tab" data-a="sheet" data-v="acts">${ICON.acts}${tr(L('Hoạt động','Activities'))}</button>
+   </nav></div>`;
+}
+function sheetWrap(title,body){return`<div class="shade sheet" data-a="closesheet"><div class="panel" role="dialog" aria-modal="true" data-stop="1"><div class="panel-head"><h2>${title}</h2><button class="iconbtn" data-a="closesheet">${tr(L('Đóng','Close'))}</button></div>${body}</div></div>`}
+function renderSheet(){
+  const p=P(),s=U.sheet;
+  if(s==='career'){
+    const e=p.edu;const stageTxt={none:e.noSchool?L('Không được đi học','Never went to school'):L('Không đi học','Not in school'),school:L('Đang học phổ thông','In school'),uni:L(`Đang học đại học (còn ${e.yrs} năm)`,`At university (${e.yrs} years left)`),trade:L(`Đang học nghề (còn ${e.yrs} năm)`,`At trade school (${e.yrs} years left)`),grad:L(`Đang học thạc sĩ (còn ${e.yrs} năm)`,`In grad school (${e.yrs} years left)`),done:L('Đã ra trường','Finished school')}[e.stage];
+    let b=`<div class="sec">${tr(L('Học vấn','Education'))}</div><div class="item"><div class="grow"><div class="t">${tr(stageTxt)}</div><div class="s">${tr(L('Bằng cấp','Degree'))}: ${tr(DEG[e.degree])}</div></div>
+      ${['school','uni','trade','grad'].includes(e.stage)&&!p.prison?`<button class="btn small" data-a="career" data-v="study">${tr(L('Học chăm hơn','Study harder'))}</button>`:''}${['uni','trade','grad'].includes(e.stage)?`<button class="btn small danger" data-a="career" data-v="dropuni">${tr(L('Bỏ học','Drop out'))}</button>`:''}</div>`;
+    b+=`<div class="sec">${tr(L('Công việc','Job'))}</div>`;
+    if(p.job){const j=JOBS[p.job.id],sal=j.base*F()*(1+.12*p.job.level);
+      b+=`<div class="card"><div class="row" style="justify-content:space-between"><div><div class="t" style="font-weight:800;font-size:17px">${tr(j.n)}</div><div class="muted" style="font-size:13px">${tr(RANKS[p.job.level])} · ${p.job.yrs} ${tr(L('năm','yrs'))}</div></div><div class="num" style="font-weight:700">${money(sal)}/${tr(L('năm','yr'))}</div></div>
+       <div class="stat" style="margin-top:10px"><span>${tr(L('Hiệu suất','Performance'))}</span><div class="bar"><i style="width:${p.job.perf}%;background:${barColor(p.job.perf)}"></i></div><span class="num">${p.job.perf}</span></div>
+       <div class="row" style="margin-top:12px"><button class="btn small" data-a="career" data-v="work">${tr(L('Làm chăm hơn','Work harder'))}</button><button class="btn small" data-a="career" data-v="raise">${tr(L('Xin tăng lương','Ask for a raise'))}</button>${p.age>=60?`<button class="btn small" data-a="career" data-v="retire">${tr(L('Nghỉ hưu','Retire'))}</button>`:''}<button class="btn small danger" data-a="career" data-v="quit">${tr(L('Nghỉ việc','Quit'))}</button></div></div>`}
+    else if(p.retired)b+=`<div class="item"><div class="grow"><div class="t">${tr(L('Đã nghỉ hưu','Retired'))}</div><div class="s">${tr(L('Lương hưu','Pension'))}: ${money(p.pension)}/${tr(L('năm','yr'))}</div></div></div>`;
+    else b+=`<div class="item"><div class="grow muted">${tr(L('Bạn đang thất nghiệp.','You are unemployed.'))}</div></div>`;
+    if(p.prison)b+=`<p class="muted">${tr(L('Bạn không thể đi làm khi đang ngồi tù.','You cannot work while in prison.'))}</p>`;
+    else if(p.age<18)b+=`<p class="muted">${tr(L('Đủ 18 tuổi mới được đi làm toàn thời gian.','You can work full time from age 18.'))}</p>`;
+    else{b+=`<div class="sec">${tr(L('Tin tuyển dụng năm nay','Job listings this year'))}</div><div class="list">`+listings().map(id=>{const j=JOBS[id],ok=p.edu.degree>=j.deg;
+      return`<div class="item"><div class="grow"><div class="t">${tr(j.n)}</div><div class="s"><span class="num">~${money(j.base*F())}</span> · ${tr(DEG[j.deg])}${j.sm?` · ${tr(L('Trí tuệ','Smarts'))} ${j.sm}+`:''}${j.lk?` · ${tr(L('Ngoại hình','Looks'))} ${j.lk}+`:''}</div></div><button class="btn small ${ok?'primary':''}" data-a="apply" data-v="${id}" ${ok?'':'disabled'}>${tr(L('Nộp đơn','Apply'))}</button></div>`}).join('')+'</div>'}
+    return sheetWrap(tr(L('Học & Nghề','Career')),b);
+  }
+  if(s==='money'){
+    const e=S.econ,nw=netWorth(p);
+    let b=`<div class="kpis"><div class="kpi"><span>${tr(L('Tiền mặt','Cash'))}</span><b>${money(p.money)}</b></div><div class="kpi"><span>${tr(L('Nợ','Debt'))}</span><b class="${p.debt>0?'down':''}">${money(p.debt)}</b></div><div class="kpi"><span>${tr(L('Tài sản ròng','Net worth'))}</span><b>${money(nw)}</b></div></div>
+      <div class="row" style="margin-top:10px"><span class="chip" style="color:${PH[e.phase].r>=0?'var(--good)':'var(--bad)'}">${tr(L('Kinh tế','Economy'))}: ${tr(PH[e.phase].n)}</span>${p.income?`<span class="chip">${tr(L('Thu nhập','Income'))} ${money(p.income)}/${tr(L('năm','yr'))}</span>`:''}</div>`;
+    if(p.age<18||p.prison){b+=`<p class="muted" style="margin-top:16px">${p.prison?tr(L('Tài khoản bị phong tỏa trong thời gian ngồi tù. Tài sản cũ vẫn sinh lời hoặc lỗ.','Accounts are frozen while you are in prison. Existing assets keep moving.')):tr(L('Tài chính mở khóa khi bạn đủ 18 tuổi.','Finances unlock at age 18.'))}</p>`;return sheetWrap(tr(L('Tài chính','Money')),b)}
+    b+=`<div class="sec">${tr(L('Đầu tư','Investments'))}</div><div class="list">`+ASSETS.map(a=>{const v=p.inv[a.id],r=p.lastRet[a.id];
+      return`<div class="item" style="flex-wrap:wrap"><div class="grow"><div class="t">${tr(a.n)}</div><div class="s">${tr(L('Rủi ro','Risk'))}: ${tr(a.risk)}${r!=null?` · ${tr(L('năm qua','last yr'))} <span class="${r>=0?'up':'down'} num">${pct(r)}</span>`:''}</div></div><div class="num" style="font-weight:700">${money(v)}</div>
+        <div class="row" style="width:100%"><button class="btn small" data-a="inv" data-v="${a.id}|1000">+${money(cost(1000))}</button><button class="btn small" data-a="inv" data-v="${a.id}|10000">+${money(cost(10000))}</button><button class="btn small" data-a="inv" data-v="${a.id}|q">+25% ${tr(L('tiền mặt','cash'))}</button>${v>0?`<button class="btn small danger" data-a="inv" data-v="${a.id}|sell">${tr(L('Bán hết','Sell all'))}</button>`:''}</div></div>`}).join('')+'</div>';
+    b+=`<div class="sec">${tr(L('Nhà đất','Real estate'))}</div><div class="list">`+p.houses.map(h=>`<div class="item"><div class="grow"><div class="t">${tr(h.kind)}</div><div class="s">${h.rented?tr(L('Đang cho thuê (~4,5%/năm)','Rented out (~4.5%/yr)')):tr(L('Để ở','Owner-occupied'))}</div></div><div class="num" style="font-weight:700">${money(h.value)}</div><button class="btn small" data-a="money" data-v="rent|${h.id}">${h.rented?tr(L('Thôi cho thuê','Stop renting')):tr(L('Cho thuê','Rent out'))}</button><button class="btn small danger" data-a="money" data-v="sellhouse|${h.id}">${tr(L('Bán','Sell'))}</button></div>`).join('')
+      +houseOffers().map(h=>`<div class="item" style="flex-wrap:wrap"><div class="grow"><div class="t">${tr(h.kind)} <span class="chip">${tr(L('Đang rao bán','For sale'))}</span></div><div class="s num">${money(h.value)}</div></div><div class="row"><button class="btn small primary" data-a="money" data-v="buyhouse|${h.id}">${tr(L('Mua đứt','Buy outright'))}</button><button class="btn small" data-a="money" data-v="mortgage|${h.id}">${tr(L('Trả góp, trả trước 20%','Mortgage, 20% down'))}</button></div></div>`).join('')+'</div>';
+    b+=`<div class="sec">${tr(L('Kinh doanh','Business'))}</div>`;
+    if(p.biz){const bz=p.biz;b+=`<div class="card"><div class="row" style="justify-content:space-between"><div><div style="font-weight:800;font-size:17px">${esc(bz.name)}</div><div class="muted" style="font-size:13px">${tr(BIZ[bz.type].n)} · ${bz.yrs} ${tr(L('năm','yrs'))}${bz.ipo?' · IPO':''}</div></div><div style="text-align:right"><div class="num" style="font-weight:700">${money(bz.value)}</div><div class="num ${bz.last>=0?'up':'down'}" style="font-size:12px">${bz.yrs?(bz.last>=0?'+':'')+money(bz.last):''}</div></div></div>
+      <div class="row" style="margin-top:12px"><button class="btn small" data-a="money" data-v="mkt|">${tr(L('Chạy quảng cáo (5% giá trị)','Run ads (5% of value)'))}</button><button class="btn small" data-a="money" data-v="inject|">${tr(L('Rót thêm 25% tiền mặt','Inject 25% of cash'))}</button><button class="btn small ${bz.evade?'danger':''}" data-a="money" data-v="evade|">${bz.evade?tr(L('Ngừng trốn thuế','Stop dodging taxes')):tr(L('Trốn thuế','Dodge taxes'))}</button><button class="btn small danger" data-a="money" data-v="sellbiz|">${tr(L('Bán công ty','Sell company'))}</button></div></div>`}
+    else b+=`<div class="list">`+Object.entries(BIZ).map(([k,t])=>`<div class="item"><div class="grow"><div class="t">${tr(t.n)}</div><div class="s">${tr(L('Vốn','Capital'))} <span class="num">${money(t.cap*F())}</span> · ${tr(L('rủi ro','risk'))} ${t.sd>=.4?tr(L('rất cao','very high')):t.sd>=.2?tr(L('cao','high')):tr(L('vừa','medium'))}</div></div><button class="btn small primary" data-a="money" data-v="open|${k}">${tr(L('Mở','Open'))}</button></div>`).join('')+'</div>';
+    b+=`<div class="sec">${tr(L('Ngân hàng','Bank'))}</div><div class="row"><button class="btn small" data-a="money" data-v="loan|">${tr(L('Vay','Borrow'))} ${money(Math.round(10000*F()+p.income*.5))}</button>${p.debt>0?`<button class="btn small" data-a="money" data-v="repay|">${tr(L('Trả nợ','Repay debt'))}</button>`:''}</div>`;
+    return sheetWrap(tr(L('Tài chính','Money')),b);
+  }
+  if(s==='people'){
+    const ppl=p.people.filter(x=>x.alive);
+    const b=ppl.length?`<div class="list">${ppl.map(x=>`<button class="item" data-a="person" data-v="${x.id}"><div class="grow"><div class="t">${esc(x.name)}</div><div class="s">${tr(roleName(x))} · ${x.age} ${tr(L('tuổi','yrs'))}</div></div><div style="width:90px"><div class="bar"><i style="width:${x.rel}%;background:${barColor(x.rel)}"></i></div></div></button>`).join('')}</div>`:`<p class="muted">${tr(L('Bạn không còn ai bên cạnh.','You have no one left.'))}</p>`;
+    return sheetWrap(tr(L('Quan hệ','People')),b+(p.age>=18&&!partner()?`<p class="muted" style="font-size:13px;margin-top:14px">${tr(L('Muốn có người yêu? Thử hộp đêm hoặc app hẹn hò trong tab Hoạt động.','Want a partner? Try clubbing or a dating app in Activities.'))}</p>`:''));
+  }
+  if(s&&s.startsWith('person:')){
+    const x=p.people.find(y=>y.id===s.slice(7));if(!x){U.sheet='people';return renderSheet()}
+    const info=`<div class="card"><div style="font-weight:800;font-size:18px">${esc(x.name)}</div><div class="muted" style="font-size:13px">${tr(roleName(x))} · ${x.age} ${tr(L('tuổi','yrs'))}${x.job?' · '+tr(x.job):''}${x.looks?` · ${tr(L('Ngoại hình','Looks'))} ${x.looks}`:''}</div>
+      <div class="stat" style="margin-top:10px"><span>${tr(L('Thân thiết','Closeness'))}</span><div class="bar"><i style="width:${x.rel}%;background:${barColor(x.rel)}"></i></div><span class="num">${x.rel}</span></div></div>`;
+    const acts=personActs(x).map(([k,l])=>`<button class="act" data-a="pact" data-v="${x.id}|${k}"${p.prison&&k!=='argue'?' disabled':''}><b>${esc(tr(l))}</b></button>`).join('');
+    return sheetWrap(`<button class="iconbtn" data-a="sheet" data-v="people" style="margin-right:8px">←</button>${esc(x.name.split(' ')[0])}`,info+`<div class="sec">${tr(L('Hành động','Actions'))}</div><div class="grid2">${acts}</div>`);
+  }
+  if(s==='acts'){
+    let b='';
+    if(p.prison){b+=`<p class="muted">${tr(L(`Bạn đang ngồi tù, còn ${p.prison} năm.`,`You are in prison with ${p.prison} years left.`))}</p><div class="grid2">`+ACTS.filter(a=>a.g==='prison').map(a=>actBtn(a)).join('')+'</div>';return sheetWrap(tr(L('Hoạt động','Activities')),b)}
+    for(const[g,gl] of ACT_GROUPS){const list=ACTS.filter(a=>a.g===g&&(!a.c||a.c(p)));if(!list.length)continue;
+      b+=`<div class="sec">${tr(gl)}${g==='party'||g==='love'?' · 18+':''}</div><div class="grid2">${list.map(a=>actBtn(a)).join('')}</div>`}
+    return sheetWrap(tr(L('Hoạt động','Activities')),b);
+  }
+  if(s==='menu'){
+    return sheetWrap(tr(L('Menu','Menu')),`<div class="list"><button class="item" data-a="newlife"><div class="grow"><div class="t">${tr(L('Bỏ đời này, bắt đầu đời mới','Abandon this life and start over'))}</div><div class="s">${tr(L('Đời hiện tại sẽ bị xóa','The current life will be deleted'))}</div></div></button>
+      <button class="item" data-a="birthcard"><div class="grow"><div class="t">${tr(L('Xem lại thẻ khai sinh','View your birth card'))}</div></div></button></div>`);
+  }
+  return'';
+}
+function actBtn(a){const p=P();const locked=p.age<a.age;const used=p.used[a.id];const d=typeof a.d==='function'?a.d():tr(a.d);
+  return`<button class="act" data-a="act" data-v="${a.id}"${locked||used?' disabled':''}><b>${esc(tr(a.l))}</b><span>${locked?tr(L(`Từ ${a.age} tuổi`,`From age ${a.age}`)):used?tr(L('Đã làm năm nay','Done this year')):esc(d)}</span></button>`}
+function showBirthCard(){
+  const p=P(),c=CTRY[p.country],mom=p.people.find(x=>x.role==='mother'),dad=p.people.find(x=>x.role==='father');
+  const share=(c.b/Object.values(CTRY).reduce((s,x)=>s+x.b,0)*100).toFixed(1);
+  modalOpen=true;
+  layer(`<div class="shade modal" role="dialog" aria-modal="true"><div class="box birth">
+    <div class="odds">${tr(L('Bạn là 1 trong 8 tỷ','You are 1 in 8 billion'))}</div>
+    <div class="big">${esc(fullName(p))}</div>
+    <div class="muted">${tr(L(`${p.g==='m'?'Bé trai':'Bé gái'} · ${c.vi}`,`${p.g==='m'?'Boy':'Girl'} · ${c.en}`))}</div>
+    <div class="facts">
+      <div><span>${tr(L('Gia cảnh','Family'))}</span>${tr(TIERS[p.tier])}</div>
+      <div><span>${tr(L('Tuổi thọ trung bình','Life expectancy'))}</span><b class="num">${c.le}</b></div>
+      <div><span>${tr(L('Mẹ','Mother'))}</span>${mom?esc(mom.name):'-'}</div>
+      <div><span>${tr(L('Bố','Father'))}</span>${dad?esc(dad.name):'-'}</div>
+      <div><span>${tr(L('GDP/người','GDP per person'))}</span><b class="num">${money(c.gdp)}</b></div>
+      <div><span>${tr(L('Tỉ lệ ca sinh toàn cầu*','Share of births*'))}</span><b class="num">${share}%</b></div>
+    </div>
+    <p class="muted" style="font-size:12px;margin:0 0 14px">${tr(L('*Trong 24 nước có trong bản demo.','*Among the 24 countries in this demo.'))}</p>
+    <button class="btn accent" data-a="okbirth" style="width:100%">${tr(L('Bắt đầu sống','Start living'))}</button></div></div>`);
+  layerEl().onclick=ev=>{if(ev.target.closest('[data-a="okbirth"]')){closeModal();render()}};
+}
+function renderDeath(){
+  const p=P(),c=CTRY[p.country],rb=RIBBONS[ribbonFor(p)],nw=netWorth(p);
+  const rows=[{me:1,name:fullName(p),code:p.country,death:p.age,note:p.job?tr(JOBS[p.job.id].n):p.retired?tr(L('Đã nghỉ hưu','Retired')):tr(DEG[p.edu.degree])}]
+    .concat(S.twins.map(t=>({name:t.name,code:t.code,death:t.death,note:t.job?tr(JOBS[t.job].n):t.death<18?tr(L('Mất khi còn nhỏ','Died young')):tr(TIERS[t.tier])})));
+  const ks=kids();
+  return`<div class="app"><div class="screen">
+   <div class="row" style="justify-content:flex-end">${langBtn()}</div>
+   <div class="stone"><div class="muted num" style="font-size:12px">${tr(L('Yên nghỉ','Rest in peace'))}</div><h2>${esc(fullName(p))}</h2>
+     <div class="muted" style="margin-top:4px">${tr(c)} · ${p.age} ${tr(L('tuổi','years old'))}</div>
+     <div style="margin-top:8px">${tr(L('Nguyên nhân','Cause'))}: ${tr(p.cause)}</div>
+     <div class="ribbon">${tr(rb.n)}</div><div class="muted" style="font-size:13px;margin-top:6px">${tr(rb.d)}</div></div>
+   <div class="kpis"><div class="kpi"><span>${tr(L('Tài sản','Net worth'))}</span><b>${money(nw)}</b></div><div class="kpi"><span>${tr(L('Con cái','Children'))}</span><b>${p.cnt.kids}</b></div><div class="kpi"><span>${tr(L('Năm trong tù','Years jailed'))}</span><b>${p.prisonTotal}</b></div></div>
+   <div class="card"><div class="sec" style="margin-top:0">${tr(L('5 người sinh cùng một giây','Five people born the same second'))}</div>
+    <div class="tablewrap"><table class="cmp"><thead><tr><th>${tr(L('Tên','Name'))}</th><th>${tr(L('Nước','Country'))}</th><th>${tr(L('Mất ở tuổi','Died at'))}</th><th>${tr(L('Ghi chú','Note'))}</th></tr></thead>
+    <tbody>${rows.map(r=>`<tr class="${r.me?'me':''}"><td>${esc(r.name)}${r.me?' ('+tr(L('bạn','you'))+')':''}</td><td>${esc(tr(CTRY[r.code]))}</td><td class="num">${r.death}</td><td>${esc(r.note)}</td></tr>`).join('')}</tbody></table></div>
+    <p class="muted" style="font-size:12.5px;margin:10px 0 0">${tr(L(`Tuổi thọ trung bình ở ${c.vi} là ${c.le}. Bạn sống ${p.age>=c.le?'lâu hơn':'ngắn hơn'} mức đó ${Math.abs(p.age-c.le)} năm.`,`Life expectancy in ${c.en} is ${c.le}. You lived ${Math.abs(p.age-c.le)} years ${p.age>=c.le?'longer':'shorter'} than that.`))}</p></div>
+   <button class="btn accent" data-a="tocreate" style="padding:15px;font-size:16px">${tr(L('Đời mới','New life'))}</button>
+   ${ks.length?`<div class="sec">${tr(L('Chơi tiếp bằng con (nhận 70% tài sản sau thuế)','Continue as a child (inherits 70% after tax)'))}</div><div class="list">${ks.map(k=>`<button class="item" data-a="heir" data-v="${k.id}"><div class="grow"><div class="t">${esc(k.name)}</div><div class="s">${tr(roleName(k))} · ${k.age} ${tr(L('tuổi','yrs'))}</div></div></button>`).join('')}</div>`:''}
+  </div></div>`;
+}
+function continueAsChild(id){
+  const old=P(),k=old.people.find(x=>x.id===id);if(!k)return;
+  const estate=Math.max(0,netWorth(old))*.7;
+  const p=makePerson({country:old.country,g:k.g,orient:R()<.9?'straight':pick(['gay','bi']),first:k.name.split(' ')[0],last:old.last,age:k.age,tier:clamp(estate>1e6?3:estate>2e5?2:1,0,3),money:estate,gen:old.gen+1,traits:R()<.5?[pick(Object.keys(TRAITS))]:[]});
+  if(k.age>=18)p.edu.degree=1;else if(k.age>=6)p.edu.stage='school';
+  p.people=old.people.filter(x=>x.role==='child'&&x.alive&&x.id!==id).map(x=>({...x,role:'sibling'}));
+  S={p,econ:S.econ,twins:makeTwins(),queue:[]};
+  log(L(`Bạn là ${k.name}, thế hệ thứ ${p.gen}. Bạn thừa kế ${money(estate)} từ ${old.g==='m'?'bố':'mẹ'}.`,`You are ${k.name}, generation ${p.gen}. You inherit ${money(estate)} from your ${old.g==='m'?'father':'mother'}.`));
+  U.screen='game';save();render();
+}
+
+/* ---------- toast, gate ---------- */
+let toastT=null;
+function toast(msg){let el=document.getElementById('toast');if(!el){el=document.createElement('div');el.id='toast';el.className='toast';el.setAttribute('role','status');document.body.appendChild(el)}
+  el.textContent=tr(msg);el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{el.hidden=true},2800)}
+function showGate(){
+  modalOpen=true;
+  layer(`<div class="shade modal gate" role="dialog" aria-modal="true"><div class="box"><div class="tag">18+</div>
+   <h2 style="font-size:24px;margin-top:6px">${tr(L('Nội dung dành cho người lớn','Adult content'))}</h2>
+   <p>${tr(L('Game có rượu, chất kích thích, tội phạm, cờ bạc, tình dục được ám chỉ và hài đen. Bạn xác nhận mình từ 18 tuổi trở lên?','This game includes alcohol, drugs, crime, gambling, implied sex and dark humor. Do you confirm you are 18 or older?'))}</p>
+   <div class="choices"><button class="btn accent" data-a="gateok">${tr(L('Tôi đủ 18 tuổi','I am 18 or older'))}</button><button class="btn" data-a="gateno">${tr(L('Chưa đủ tuổi','I am under 18'))}</button></div>
+   <div class="row" style="justify-content:center;margin-top:12px">${langBtn()}</div></div></div>`);
+  layerEl().onclick=ev=>{const a=ev.target.closest('[data-a]');if(!a)return;
+    if(a.dataset.a==='gateok'){store.set('motdoi_adult','1');U.gate=false;closeModal();render()}
+    else if(a.dataset.a==='gateno'){layerEl().querySelector('p').textContent=tr(L('Rất tiếc, game này chỉ dành cho người từ 18 tuổi.','Sorry, this game is only for people 18 and over.'))}
+    else if(a.dataset.a==='lang'){lang=lang==='vi'?'en':'vi';store.set('motdoi_lang',lang);showGate()}};
+}
+
+/* ---------- input ---------- */
+function readForm(){const f=U.form;return{first:f.first.trim()||undefined,last:f.last.trim()||undefined,g:f.g,orient:f.orient,country:f.country,tier:+f.tier,custom:true,
+  st:{health:+f.health,happy:+f.happy,smarts:+f.smarts,looks:+f.looks},karma:+f.karma,traits:f.traits.slice(0,2)}}
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.f&&U.form){U.form[t.dataset.f]=t.value;const v=document.getElementById('v-'+t.dataset.f);if(v)v.textContent=t.value;
+  if(t.dataset.f==='country'){const pool=NAMES[CTRY[t.value].pool];U.form.last=pick(pool.l);U.form.first=pick(U.form.g==='m'?pool.m:pool.f);render()}
+  if(t.dataset.f==='g'){const pool=NAMES[CTRY[U.form.country].pool];U.form.first=pick(t.value==='m'?pool.m:pool.f);render()}}});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset.trait&&U.form){const tl=U.form.traits;if(t.checked){if(tl.length>=2){t.checked=false;toast(L('Chỉ chọn tối đa 2 đặc điểm.','Pick up to 2 traits.'));return}tl.push(t.dataset.trait)}else U.form.traits=tl.filter(x=>x!==t.dataset.trait)}
+  else if(t.dataset.f&&U.form&&t.tagName==='SELECT')U.form[t.dataset.f]=t.value});
+document.addEventListener('click',e=>{
+  if(modalOpen&&e.target.closest('#layer .modal'))return;
+  const el=e.target.closest('[data-a]');
+  if(!el){return}
+  if(el.dataset.a==='closesheet'&&e.target.closest('[data-stop]')&&!e.target.closest('.iconbtn[data-a="closesheet"]'))return;
+  const a=el.dataset.a,v=el.dataset.v;
+  switch(a){
+   case'lang':lang=lang==='vi'?'en':'vi';store.set('motdoi_lang',lang);render();break;
+   case'tocreate':U.screen='create';U.form=U.form||defaultForm();layer('');modalOpen=false;render();break;
+   case'totitle':U.screen='title';render();break;
+   case'continue':U.screen='game';render();break;
+   case'mode':U.mode=v;render();break;
+   case'randform':{const codes=Object.keys(CTRY),code=pick(codes),pool=NAMES[CTRY[code].pool],g=R()<.5?'m':'f',r=()=>rint(15,95);
+     U.form={first:pick(g==='m'?pool.m:pool.f),last:pick(pool.l),g,orient:U.form.orient,country:code,tier:rint(0,3),health:r(),happy:r(),smarts:r(),looks:r(),karma:r(),traits:[pick(Object.keys(TRAITS))]};render();break}
+   case'destiny':{const codes=Object.keys(CTRY),code=wpick(codes,k=>CTRY[k].b),g=R()<.5?'m':'f',tier=tierFor(cf(code));
+     startLife({country:code,g,orient:U.form?U.form.orient:'straight',tier,traits:R()<.5?[pick(Object.keys(TRAITS))]:[]});break}
+   case'free':startLife(readForm());break;
+   case'age':ageUp();break;
+   case'sheet':U.sheet=v;layer(renderSheet());break;
+   case'closesheet':U.sheet=null;layer('');break;
+   case'menu':U.sheet='menu';layer(renderSheet());break;
+   case'newlife':store.del(KEY);S=null;U.sheet=null;U.screen='create';layer('');render();break;
+   case'birthcard':U.sheet=null;showBirthCard();break;
+   case'act':doAct(v);break;
+   case'person':U.sheet='person:'+v;layer(renderSheet());break;
+   case'pact':{const[id,k]=v.split('|');doPerson(id,k);break}
+   case'career':careerAct(v);break;
+   case'apply':applyJob(v);break;
+   case'inv':{const[id,h]=v.split('|');invest(id,h);break}
+   case'money':{const[k,x]=v.split('|');moneyAct(k,x);break}
+   case'heir':continueAsChild(v);break;
+  }
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&U.sheet&&!modalOpen){U.sheet=null;layer('')}});
+
+/* ---------- boot ---------- */
+function start(data){
+  if(data&&data.S){S=data.S;if(data.U)Object.assign(U,data.U)}
+  else{try{const s=store.get(KEY);S=s?JSON.parse(s):null}catch(e){S=null}}
+  if(S&&S.p&&!S.p.alive&&U.screen==='game')U.screen='death';
+  U.gate=store.get('motdoi_adult')!=='1';
+  render();
+}
+window.claude?.hot?.snapshot?.(()=>({S,U:{screen:U.screen,mode:U.mode,form:U.form}}));
+window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
+</script>

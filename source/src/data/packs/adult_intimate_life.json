@@ -1,0 +1,1811 @@
+{
+  "manifest": {
+    "id": "tien.adult_intimate_life",
+    "name": {
+      "vi": "Cuộc sống thân mật người lớn",
+      "en": "Adult Intimate Life"
+    },
+    "version": "1.0.0",
+    "rating": "25+",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  "events": [
+    {
+      "id": "intimate_first_time_nerves",
+      "category": "love",
+      "age": [
+        18,
+        30
+      ],
+      "weight": 7,
+      "once": true,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "age": 18
+        }
+      },
+      "text": {
+        "vi": "Đêm nay bạn và người yêu quyết định tiến thêm một bước. Cả hai đều hơi run.",
+        "en": "Tonight you and your partner decide to take the next step. Both of you are a little nervous."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đi chậm và nói chuyện",
+            "en": "Go slow and talk"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 15,
+                "rel_partner": 12,
+                "willpower": 5
+              },
+              "text": {
+                "vi": "Mọi thứ dịu dàng và đáng nhớ hơn bạn nghĩ.",
+                "en": "Everything feels gentle and more memorable than you expected."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": 5,
+                "rel_partner": 5
+              },
+              "text": {
+                "vi": "Hơi vụng về nhưng cả hai đều cười và ôm nhau sau đó.",
+                "en": "A bit awkward, but you both laugh and hold each other afterward."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Cứ để cảm xúc dẫn dắt",
+            "en": "Just let the moment lead"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": {
+                "happy": 18,
+                "rel_partner": 10
+              },
+              "text": {
+                "vi": "Cảm giác mãnh liệt và gắn kết hơn bao giờ hết.",
+                "en": "It feels intense and more connecting than ever."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": {
+                "happy": -5,
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Bạn hơi vội, khiến cả hai hơi thất vọng.",
+                "en": "You rush a little and leave both of you slightly disappointed."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_morning_after",
+      "category": "love",
+      "age": [
+        18,
+        55
+      ],
+      "weight": 6,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "flags": [
+          "recent_intimate"
+        ]
+      },
+      "text": {
+        "vi": "Sáng hôm sau bạn thức dậy cạnh người ấy, vẫn còn hơi lúng túng.",
+        "en": "The next morning you wake up next to them, still a bit shy."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Hôn nhẹ và thì thầm",
+            "en": "Kiss softly and whisper"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": 12,
+                "rel_partner": 8
+              },
+              "clearFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Họ mỉm cười và kéo bạn lại gần hơn.",
+                "en": "They smile and pull you closer."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "happy": 5
+              },
+              "clearFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Họ vẫn ngủ say, bạn chỉ ôm lấy họ.",
+                "en": "They're still deep asleep, so you just hold them."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Lẻn ra pha cà phê",
+            "en": "Sneak out for coffee"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": {
+                "happy": 8,
+                "rel_partner": 5
+              },
+              "clearFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Bạn mang cà phê vào và được thưởng bằng nụ cười.",
+                "en": "You bring coffee back and earn a grateful smile."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": {
+                "rel_partner": -4
+              },
+              "clearFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Họ thức dậy thấy giường trống và hơi buồn.",
+                "en": "They wake up to an empty bed and feel a little sad."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_partner_request",
+      "category": "love",
+      "age": [
+        20,
+        60
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "rel_partner": 40
+        }
+      },
+      "text": {
+        "vi": "Người yêu thì thầm một ý tưởng mới lạ khi cả hai đang âu yếm.",
+        "en": "Your partner whispers a new idea while you're being intimate."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Thử ngay với tò mò",
+            "en": "Try it with curiosity"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": {
+                "happy": 15,
+                "rel_partner": 12
+              },
+              "setFlags": [
+                "open_to_experiment"
+              ],
+              "text": {
+                "vi": "Cả hai đều thích và cười rạng rỡ sau đó.",
+                "en": "You both enjoy it and smile brightly afterward."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": {
+                "happy": 5,
+                "rel_partner": 3
+              },
+              "text": {
+                "vi": "Hơi lạ nhưng không tệ, bạn học được điều mới về nhau.",
+                "en": "A bit strange but not bad—you learn something new about each other."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nói chưa sẵn sàng",
+            "en": "Say you're not ready"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "rel_partner": 5,
+                "karma": 3
+              },
+              "text": {
+                "vi": "Họ hiểu và vẫn ôm bạn chặt hơn.",
+                "en": "They understand and hold you tighter."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "rel_partner": -6,
+                "happy": -4
+              },
+              "text": {
+                "vi": "Họ cố giấu thất vọng nhưng không hoàn toàn thành công.",
+                "en": "They try to hide the disappointment but don't quite succeed."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_long_distance_call",
+      "category": "love",
+      "age": [
+        18,
+        45
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "flags": [
+          "long_distance"
+        ]
+      },
+      "text": {
+        "vi": "Đêm khuya, cuộc gọi video với người yêu bắt đầu trở nên nóng bỏng.",
+        "en": "Late at night, the video call with your partner starts getting steamy."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Tham gia nhiệt tình",
+            "en": "Join in enthusiastically"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": {
+                "happy": 14,
+                "rel_partner": 10
+              },
+              "text": {
+                "vi": "Cảm giác gần gũi dù cách xa hàng nghìn kilomet.",
+                "en": "It feels close even across thousands of kilometers."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": {
+                "happy": 6
+              },
+              "text": {
+                "vi": "Hơi ngại trước camera nhưng vẫn vui.",
+                "en": "A little shy on camera but still fun."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Xin chuyển sang chỉ nói chuyện",
+            "en": "Ask to just talk instead"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": {
+                "rel_partner": 4,
+                "happy": 3
+              },
+              "text": {
+                "vi": "Họ hiểu và cả hai trò chuyện đến khuya.",
+                "en": "They understand and you both talk late into the night."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": {
+                "rel_partner": -5,
+                "happy": -3
+              },
+              "text": {
+                "vi": "Họ hơi thất vọng nhưng cố chấp nhận.",
+                "en": "They're a bit disappointed but try to accept it."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_after_argument",
+      "category": "love",
+      "age": [
+        22,
+        55
+      ],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "rel_partner": 30
+        }
+      },
+      "text": {
+        "vi": "Sau một cuộc cãi vã lớn, cả hai nhìn nhau và đột nhiên không thể kiềm chế.",
+        "en": "After a big argument, you look at each other and suddenly can't hold back."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Hòa giải bằng cơ thể",
+            "en": "Make up physically"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": {
+                "happy": 12,
+                "rel_partner": 15,
+                "willpower": -5
+              },
+              "text": {
+                "vi": "Cơn giận tan biến thành sự gần gũi mãnh liệt.",
+                "en": "The anger melts into intense closeness."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": {
+                "happy": 5,
+                "rel_partner": 5
+              },
+              "text": {
+                "vi": "Tạm thời tốt hơn, nhưng vấn đề vẫn còn đó.",
+                "en": "Temporarily better, but the real issue remains."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nói chuyện trước đã",
+            "en": "Talk it out first"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "rel_partner": 10,
+                "karma": 5,
+                "happy": 8
+              },
+              "text": {
+                "vi": "Cả hai hiểu nhau hơn và ôm nhau thật lâu.",
+                "en": "You understand each other better and hold each other for a long time."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": -4,
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Cuộc nói chuyện vẫn căng thẳng, không khí nặng nề.",
+                "en": "The conversation stays tense and the mood remains heavy."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_public_risk",
+      "category": "love",
+      "age": [
+        20,
+        40
+      ],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "risk": 40
+        }
+      },
+      "text": {
+        "vi": "Trong một nơi bán công cộng vắng vẻ, người yêu gợi ý thử điều liều lĩnh.",
+        "en": "In a quiet semi-public place, your partner suggests something risky."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý với nhịp tim đập mạnh",
+            "en": "Agree with a racing heart"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": {
+                "happy": 18,
+                "risk": 5,
+                "rel_partner": 10
+              },
+              "text": {
+                "vi": "Cảm giác nguy hiểm làm mọi thứ trở nên mãnh liệt hơn.",
+                "en": "The danger makes everything feel more intense."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": {
+                "happy": -8,
+                "karma": -5,
+                "fame": -5
+              },
+              "text": {
+                "vi": "Có người đi ngang và cả hai phải chạy biến.",
+                "en": "Someone walks by and you both have to bolt."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Từ chối vì quá nguy hiểm",
+            "en": "Refuse because it's too risky"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "rel_partner": 3,
+                "willpower": 5
+              },
+              "text": {
+                "vi": "Họ gật đầu và cả hai tìm chỗ riêng tư hơn.",
+                "en": "They nod and you both find a more private spot."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "rel_partner": -6
+              },
+              "text": {
+                "vi": "Họ hơi thất vọng vì bạn quá thận trọng.",
+                "en": "They're a bit disappointed that you're so careful."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_toy_discovery",
+      "category": "love",
+      "age": [
+        21,
+        50
+      ],
+      "weight": 4,
+      "once": true,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true
+      },
+      "text": {
+        "vi": "Bạn vô tình phát hiện người yêu đang giữ một món đồ chơi người lớn.",
+        "en": "You accidentally discover your partner has an adult toy."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Hỏi một cách cởi mở",
+            "en": "Ask openly about it"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 10,
+                "rel_partner": 12
+              },
+              "setFlags": [
+                "open_to_experiment"
+              ],
+              "text": {
+                "vi": "Họ đỏ mặt nhưng vui vì bạn không phán xét.",
+                "en": "They blush but are happy you don't judge."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": 4,
+                "rel_partner": 5
+              },
+              "text": {
+                "vi": "Cuộc nói chuyện hơi ngại nhưng cuối cùng cũng ổn.",
+                "en": "The talk is a bit awkward but ends okay."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Giả vờ không thấy",
+            "en": "Pretend you saw nothing"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": {
+                "happy": -3
+              },
+              "text": {
+                "vi": "Bạn vẫn nghĩ về nó cả tuần.",
+                "en": "You keep thinking about it all week."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": {
+                "rel_partner": -4
+              },
+              "text": {
+                "vi": "Họ nhận ra bạn biết và cảm thấy bị hiểu lầm.",
+                "en": "They realize you know and feel misunderstood."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_tired_night",
+      "category": "love",
+      "age": [
+        25,
+        60
+      ],
+      "weight": 7,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "married": true
+      },
+      "text": {
+        "vi": "Cả hai đều mệt sau một ngày dài, nhưng người yêu vẫn muốn gần gũi.",
+        "en": "You're both exhausted after a long day, yet your partner still wants closeness."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Cố gắng vì họ",
+            "en": "Try for their sake"
+          },
+          "outcomes": [
+            {
+              "chance": 0.5,
+              "effects": {
+                "happy": 8,
+                "rel_partner": 8
+              },
+              "text": {
+                "vi": "Dù mệt nhưng cảm giác vẫn ấm áp.",
+                "en": "Even tired, it still feels warm."
+              }
+            },
+            {
+              "chance": 0.5,
+              "effects": {
+                "happy": -4,
+                "health": -3
+              },
+              "text": {
+                "vi": "Bạn quá kiệt sức và không tận hưởng được.",
+                "en": "You're too drained and can't really enjoy it."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Xin ôm thôi tối nay",
+            "en": "Ask for just a hug tonight"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": {
+                "rel_partner": 6,
+                "happy": 5
+              },
+              "text": {
+                "vi": "Họ hiểu và ôm bạn rất lâu.",
+                "en": "They understand and hold you for a long time."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": {
+                "rel_partner": -5,
+                "happy": -3
+              },
+              "text": {
+                "vi": "Họ thở dài và quay lưng đi ngủ.",
+                "en": "They sigh and turn away to sleep."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_roleplay_idea",
+      "category": "love",
+      "age": [
+        22,
+        45
+      ],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "flags": [
+          "open_to_experiment"
+        ]
+      },
+      "text": {
+        "vi": "Người yêu đề nghị thử đóng vai một tối để làm mới cảm giác.",
+        "en": "Your partner suggests trying roleplay one night to freshen things up."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nhập vai hết mình",
+            "en": "Fully commit to the role"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 16,
+                "rel_partner": 12
+              },
+              "text": {
+                "vi": "Cả hai cười và tận hưởng hơn cả mong đợi.",
+                "en": "You both laugh and enjoy it more than expected."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": 6
+              },
+              "text": {
+                "vi": "Hơi ngượng nhưng vẫn vui và đáng nhớ.",
+                "en": "A bit awkward but still fun and memorable."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Đề nghị phiên bản nhẹ hơn",
+            "en": "Suggest a milder version"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": 10,
+                "rel_partner": 8
+              },
+              "text": {
+                "vi": "Họ đồng ý và cả hai tìm được mức vừa phải.",
+                "en": "They agree and you find a comfortable middle ground."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ hơi thất vọng vì bạn không dám thử hết.",
+                "en": "They're slightly disappointed you won't go all the way."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_jealousy_spark",
+      "category": "love",
+      "age": [
+        20,
+        50
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "hasPartner": true
+      },
+      "text": {
+        "vi": "Bạn thấy người yêu cười quá thân thiết với ai đó ở bữa tiệc.",
+        "en": "You notice your partner laughing a little too closely with someone at a party."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Kéo họ ra và hôn",
+            "en": "Pull them aside and kiss"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": {
+                "happy": 8,
+                "rel_partner": 6
+              },
+              "text": {
+                "vi": "Họ mỉm cười và nói chỉ có bạn thôi.",
+                "en": "They smile and say it's only you."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": {
+                "happy": -6,
+                "rel_partner": -8
+              },
+              "text": {
+                "vi": "Họ khó chịu vì bạn thể hiện sở hữu công khai.",
+                "en": "They're annoyed by the public display of possession."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Tin tưởng và để yên",
+            "en": "Trust them and leave it"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "rel_partner": 5,
+                "willpower": 4
+              },
+              "text": {
+                "vi": "Sau đó họ chủ động tìm bạn và ôm chặt.",
+                "en": "Later they seek you out and hold you tight."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": -8
+              },
+              "text": {
+                "vi": "Bạn vẫn ấm ức cả đêm dù không nói ra.",
+                "en": "You stay quietly resentful all night."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_spa_weekend",
+      "category": "love",
+      "age": [
+        25,
+        55
+      ],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "incomeTier": [
+          "mid",
+          "high"
+        ],
+        "min": {
+          "money": 50
+        }
+      },
+      "text": {
+        "vi": "Bạn và người yêu đặt một cuối tuần thư giãn chỉ có hai người.",
+        "en": "You and your partner book a private weekend getaway just for two."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Tận hưởng không gian riêng",
+            "en": "Enjoy the private space fully"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": 18,
+                "rel_partner": 14,
+                "health": 5,
+                "money": -80
+              },
+              "setFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Những ngày ấy trở thành kỷ niệm ngọt ngào nhất năm.",
+                "en": "Those days become the sweetest memory of the year."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "happy": 8,
+                "money": -80
+              },
+              "text": {
+                "vi": "Vẫn vui nhưng hơi mệt vì đi lại nhiều.",
+                "en": "Still nice, but a bit tiring from all the travel."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chỉ thư giãn nhẹ nhàng",
+            "en": "Keep it light and relaxing"
+          },
+          "outcomes": [
+            {
+              "chance": 0.9,
+              "effects": {
+                "happy": 12,
+                "rel_partner": 8,
+                "health": 8,
+                "money": -60
+              },
+              "text": {
+                "vi": "Cả hai về nhà sảng khoái và gần gũi hơn.",
+                "en": "You both return refreshed and closer."
+              }
+            },
+            {
+              "chance": 0.1,
+              "effects": {
+                "money": -60
+              },
+              "text": {
+                "vi": "Thời tiết xấu làm hỏng một phần kế hoạch.",
+                "en": "Bad weather ruins part of the plan."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_body_insecurity",
+      "category": "love",
+      "age": [
+        18,
+        50
+      ],
+      "weight": 6,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "max": {
+          "looks": 50
+        }
+      },
+      "text": {
+        "vi": "Khi cởi đồ, bạn chợt cảm thấy tự ti về cơ thể mình.",
+        "en": "As clothes come off, you suddenly feel insecure about your body."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nói ra nỗi lo",
+            "en": "Voice your worry"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": {
+                "happy": 10,
+                "rel_partner": 12,
+                "looks": 3
+              },
+              "text": {
+                "vi": "Họ hôn từng chỗ bạn tự ti và nói bạn đẹp với họ.",
+                "en": "They kiss every place you feel insecure and say you're beautiful to them."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": {
+                "happy": 4,
+                "rel_partner": 5
+              },
+              "text": {
+                "vi": "Họ cố an ủi nhưng bạn vẫn chưa hết ngại.",
+                "en": "They try to comfort you but you still feel shy."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Giữ im lặng và tiếp tục",
+            "en": "Stay quiet and continue"
+          },
+          "outcomes": [
+            {
+              "chance": 0.5,
+              "effects": {
+                "happy": 5
+              },
+              "text": {
+                "vi": "Bạn cố quên đi và vẫn tận hưởng được phần nào.",
+                "en": "You try to forget and still enjoy it somewhat."
+              }
+            },
+            {
+              "chance": 0.5,
+              "effects": {
+                "happy": -8,
+                "rel_partner": -4
+              },
+              "text": {
+                "vi": "Nỗi lo khiến bạn không thể thả lỏng.",
+                "en": "The worry keeps you from relaxing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_friend_with_benefits",
+      "category": "love",
+      "age": [
+        20,
+        40
+      ],
+      "weight": 5,
+      "once": true,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false,
+        "notFlags": [
+          "in_relationship"
+        ]
+      },
+      "text": {
+        "vi": "Một người bạn thân gợi ý thử quan hệ không ràng buộc.",
+        "en": "A close friend suggests trying a no-strings arrangement."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý rõ ràng điều khoản",
+            "en": "Agree with clear boundaries"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": {
+                "happy": 12,
+                "rel_friend": 5
+              },
+              "setFlags": [
+                "friends_with_benefits"
+              ],
+              "text": {
+                "vi": "Cả hai vui vẻ và giữ được tình bạn.",
+                "en": "You both enjoy it and keep the friendship intact."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": {
+                "happy": 8,
+                "rel_friend": -10
+              },
+              "setFlags": [
+                "friends_with_benefits"
+              ],
+              "text": {
+                "vi": "Bắt đầu có cảm xúc phức tạp từ một phía.",
+                "en": "Complicated feelings start appearing on one side."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Từ chối để giữ tình bạn",
+            "en": "Refuse to protect the friendship"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "rel_friend": 8,
+                "karma": 5
+              },
+              "text": {
+                "vi": "Họ tôn trọng và tình bạn vẫn vững.",
+                "en": "They respect it and the friendship stays strong."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "rel_friend": -6,
+                "happy": -4
+              },
+              "text": {
+                "vi": "Không khí trở nên hơi kỳ sau đó.",
+                "en": "Things feel a bit awkward afterward."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_fwb_catch_feelings",
+      "category": "love",
+      "age": [
+        20,
+        40
+      ],
+      "weight": 4,
+      "once": true,
+      "rating": "18+",
+      "requires": {
+        "flags": [
+          "friends_with_benefits"
+        ]
+      },
+      "text": {
+        "vi": "Bạn nhận ra mình đang có cảm xúc thật với người bạn 'không ràng buộc'.",
+        "en": "You realize you're catching real feelings for your 'no-strings' friend."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Thành thật nói ra",
+            "en": "Confess honestly"
+          },
+          "outcomes": [
+            {
+              "chance": 0.45,
+              "effects": {
+                "happy": 15,
+                "rel_friend": 15
+              },
+              "clearFlags": [
+                "friends_with_benefits"
+              ],
+              "setFlags": [
+                "in_relationship"
+              ],
+              "text": {
+                "vi": "Họ cũng vậy. Mọi thứ trở thành chính thức.",
+                "en": "They feel the same. It becomes official."
+              }
+            },
+            {
+              "chance": 0.55,
+              "effects": {
+                "happy": -12,
+                "rel_friend": -15
+              },
+              "clearFlags": [
+                "friends_with_benefits"
+              ],
+              "text": {
+                "vi": "Họ chỉ muốn giữ nguyên. Bạn phải dừng lại.",
+                "en": "They only want to keep it casual. You have to stop."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Giữ im lặng và tiếp tục",
+            "en": "Stay quiet and continue"
+          },
+          "outcomes": [
+            {
+              "chance": 0.4,
+              "effects": {
+                "happy": 5
+              },
+              "text": {
+                "vi": "Bạn cố kiểm soát cảm xúc thêm một thời gian.",
+                "en": "You manage to keep the feelings in check for a while."
+              }
+            },
+            {
+              "chance": 0.6,
+              "effects": {
+                "happy": -10,
+                "willpower": -8
+              },
+              "text": {
+                "vi": "Ngày càng đau khi phải giả vờ không quan tâm.",
+                "en": "It hurts more each time you pretend not to care."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_performance_anxiety",
+      "category": "love",
+      "age": [
+        18,
+        45
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true
+      },
+      "text": {
+        "vi": "Đêm nay cơ thể bạn không phản ứng như mong muốn dù bạn rất muốn.",
+        "en": "Tonight your body doesn't respond the way you want even though you really desire it."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nói thật và xin chuyển hướng",
+            "en": "Be honest and change direction"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": 6,
+                "rel_partner": 10
+              },
+              "text": {
+                "vi": "Họ hiểu và cả hai vẫn gần gũi theo cách khác.",
+                "en": "They understand and you stay close in other ways."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "happy": -5
+              },
+              "text": {
+                "vi": "Bạn vẫn cảm thấy xấu hổ dù họ không trách.",
+                "en": "You still feel embarrassed even though they don't blame you."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Cố gắng bất chấp",
+            "en": "Keep trying anyway"
+          },
+          "outcomes": [
+            {
+              "chance": 0.35,
+              "effects": {
+                "happy": 8
+              },
+              "text": {
+                "vi": "Cuối cùng cũng ổn, cả hai đều thở phào.",
+                "en": "It eventually works and you both feel relieved."
+              }
+            },
+            {
+              "chance": 0.65,
+              "effects": {
+                "happy": -10,
+                "rel_partner": -5
+              },
+              "text": {
+                "vi": "Càng cố càng tệ, không khí trở nên nặng nề.",
+                "en": "The more you force it, the worse it gets and the mood sinks."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_period_intimacy",
+      "category": "love",
+      "age": [
+        18,
+        50
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "gender": "female"
+      },
+      "text": {
+        "vi": "Bạn đang trong kỳ và người yêu hỏi liệu có muốn gần gũi không.",
+        "en": "You're on your period and your partner asks if you still want to be intimate."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý nếu họ không ngại",
+            "en": "Say yes if they're okay with it"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 12,
+                "rel_partner": 10
+              },
+              "text": {
+                "vi": "Họ hoàn toàn thoải mái và cả hai vẫn tận hưởng.",
+                "en": "They're completely fine with it and you both still enjoy yourselves."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": 5
+              },
+              "text": {
+                "vi": "Hơi bất tiện nhưng cảm giác vẫn ấm áp.",
+                "en": "A bit inconvenient but still feels warm."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Xin chỉ ôm và vuốt ve",
+            "en": "Ask for just cuddling and touching"
+          },
+          "outcomes": [
+            {
+              "chance": 0.85,
+              "effects": {
+                "happy": 8,
+                "rel_partner": 8
+              },
+              "text": {
+                "vi": "Họ vui vẻ đồng ý và cả hai rất gần gũi.",
+                "en": "They happily agree and you feel very close."
+              }
+            },
+            {
+              "chance": 0.15,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ hơi thất vọng nhưng không nói gì.",
+                "en": "They're a little disappointed but say nothing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_partner_period",
+      "category": "love",
+      "age": [
+        18,
+        60
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "partnerGender": "female"
+      },
+      "text": {
+        "vi": "Người yêu đang trong kỳ kinh nguyệt nhưng vẫn muốn gần gũi, và hỏi bạn có ngại không.",
+        "en": "Your partner is on their period but still wants to be intimate, and asks if you mind."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nói không ngại chút nào",
+            "en": "Say you don't mind at all"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 12,
+                "rel_partner": 12
+              },
+              "setFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Họ thở phào và cả hai vẫn tận hưởng.",
+                "en": "They relax and you both still enjoy yourselves."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": 5,
+                "rel_partner": 6
+              },
+              "setFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Hơi bất tiện nhưng cảm giác vẫn ấm áp.",
+                "en": "A bit inconvenient but still warm."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Đề nghị chỉ ôm và vuốt ve",
+            "en": "Suggest just cuddling and touching"
+          },
+          "outcomes": [
+            {
+              "chance": 0.85,
+              "effects": {
+                "happy": 8,
+                "rel_partner": 8
+              },
+              "text": {
+                "vi": "Họ vui vẻ đồng ý, cả hai cuộn tròn xem phim.",
+                "en": "They happily agree and you curl up with a film."
+              }
+            },
+            {
+              "chance": 0.15,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ hơi tủi thân nhưng không nói gì.",
+                "en": "They feel a little rejected but say nothing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_ex_temptation",
+      "category": "love",
+      "age": [
+        22,
+        45
+      ],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "notFlags": [
+          "recent_breakup"
+        ]
+      },
+      "text": {
+        "vi": "Người yêu cũ nhắn tin khuya với lời lẽ gợi nhớ những đêm xưa.",
+        "en": "An ex texts late at night with words that recall old nights together."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Xóa và chặn ngay",
+            "en": "Delete and block immediately"
+          },
+          "outcomes": [
+            {
+              "chance": 0.9,
+              "effects": {
+                "karma": 8,
+                "willpower": 10,
+                "rel_partner": 5
+              },
+              "text": {
+                "vi": "Bạn giữ được sự trung thành và cảm thấy nhẹ nhõm.",
+                "en": "You stay loyal and feel relieved."
+              }
+            },
+            {
+              "chance": 0.1,
+              "effects": {
+                "happy": -3
+              },
+              "text": {
+                "vi": "Vẫn hơi tò mò nhưng bạn không hối tiếc.",
+                "en": "Still a bit curious but you don't regret it."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Trả lời một tin",
+            "en": "Reply to one message"
+          },
+          "outcomes": [
+            {
+              "chance": 0.4,
+              "effects": {
+                "happy": 5,
+                "karma": -5
+              },
+              "text": {
+                "vi": "Chỉ trò chuyện ngắn rồi dừng lại.",
+                "en": "Just a short chat then you stop."
+              }
+            },
+            {
+              "chance": 0.6,
+              "effects": {
+                "karma": -12,
+                "rel_partner": -15,
+                "happy": -8
+              },
+              "setFlags": [
+                "cheated_emotionally"
+              ],
+              "text": {
+                "vi": "Cuộc trò chuyện kéo dài và bạn cảm thấy tội lỗi.",
+                "en": "The conversation drags on and guilt sets in."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_anniversary_night",
+      "category": "love",
+      "age": [
+        20,
+        60
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "rel_partner": 50
+        }
+      },
+      "text": {
+        "vi": "Đêm kỷ niệm, cả hai dành cả buổi tối chỉ để khám phá lẫn nhau.",
+        "en": "On your anniversary night, you spend the entire evening exploring each other."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Làm thật chậm và sâu",
+            "en": "Go slow and deep"
+          },
+          "outcomes": [
+            {
+              "chance": 0.85,
+              "effects": {
+                "happy": 20,
+                "rel_partner": 15
+              },
+              "setFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Đó là một trong những đêm gần gũi nhất bạn từng có.",
+                "en": "It's one of the closest nights you've ever shared."
+              }
+            },
+            {
+              "chance": 0.15,
+              "effects": {
+                "happy": 10,
+                "rel_partner": 8
+              },
+              "setFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Vẫn tuyệt vời dù hơi mệt về sau.",
+                "en": "Still wonderful even if you're a bit tired afterward."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Thử vài điều mới",
+            "en": "Try a few new things"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": {
+                "happy": 18,
+                "rel_partner": 12
+              },
+              "setFlags": [
+                "recent_intimate",
+                "open_to_experiment"
+              ],
+              "text": {
+                "vi": "Cả hai đều bất ngờ vì thích đến vậy.",
+                "en": "You're both surprised by how much you like it."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": {
+                "happy": 8,
+                "rel_partner": 5
+              },
+              "setFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Một số thứ hợp, một số thì không, nhưng vẫn vui.",
+                "en": "Some things work, some don't, but it's still fun."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_unexpected_visitor",
+      "category": "love",
+      "age": [
+        20,
+        45
+      ],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "flags": [
+          "recent_intimate"
+        ]
+      },
+      "text": {
+        "vi": "Đang âu yếm thì chuông cửa reo. Có người đến không báo trước.",
+        "en": "In the middle of being intimate, the doorbell rings. Someone unexpected arrives."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Im lặng giả vờ không có nhà",
+            "en": "Stay quiet and pretend no one's home"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 10,
+                "risk": 5
+              },
+              "text": {
+                "vi": "Họ đi mất. Cả hai cười thầm và tiếp tục.",
+                "en": "They leave. You both laugh quietly and continue."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": -8,
+                "fame": -5
+              },
+              "text": {
+                "vi": "Họ gọi điện và nghe thấy tiếng động lạ.",
+                "en": "They call and hear suspicious sounds."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Mặc đồ và mở cửa",
+            "en": "Get dressed and open the door"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": -5,
+                "rel_partner": 3
+              },
+              "clearFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Bạn xử lý nhanh và sau đó cả hai đều hơi tiếc.",
+                "en": "You handle it quickly and both feel a little regretful afterward."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "happy": -10
+              },
+              "clearFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Người đến ở lại khá lâu, phá hỏng cả đêm.",
+                "en": "The visitor stays quite a while and ruins the night."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intimate_morning_quickie",
+      "category": "love",
+      "age": [
+        22,
+        50
+      ],
+      "weight": 6,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "employed": true
+      },
+      "text": {
+        "vi": "Sáng sớm trước khi đi làm, người yêu kéo bạn lại giường với ánh mắt đầy ý.",
+        "en": "Early morning before work, your partner pulls you back to bed with a meaningful look."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Trễ làm một chút",
+            "en": "Be a little late for work"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": {
+                "happy": 14,
+                "rel_partner": 10,
+                "rel_boss": -3
+              },
+              "setFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Đáng giá từng phút. Bạn đến công ty với nụ cười.",
+                "en": "Worth every minute. You arrive at work smiling."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": {
+                "happy": 8,
+                "rel_boss": -8,
+                "money": -20
+              },
+              "setFlags": [
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Sếp nhận ra bạn đến muộn và không vui.",
+                "en": "Your boss notices you're late and isn't pleased."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Hẹn tối nay",
+            "en": "Promise tonight instead"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "rel_partner": 5,
+                "willpower": 5
+              },
+              "text": {
+                "vi": "Họ gật đầu và hôn tạm biệt ngọt ngào.",
+                "en": "They nod and give you a sweet goodbye kiss."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "rel_partner": -4,
+                "happy": -3
+              },
+              "text": {
+                "vi": "Họ phụng phịu và nói bạn lúc nào cũng bận.",
+                "en": "They pout a little and say you're always busy."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

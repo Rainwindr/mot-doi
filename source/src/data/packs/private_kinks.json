@@ -1,0 +1,1307 @@
+{
+  "manifest": {
+    "id": "tien.fetish_18plus",
+    "name": {
+      "vi": "Đêm đặc biệt & sở thích riêng",
+      "en": "Special Nights & Private Kinks"
+    },
+    "version": "1.0.0",
+    "rating": "25+",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  "events": [
+    {
+      "id": "fetish_lingerie_surprise",
+      "category": "love",
+      "age": [
+        20,
+        50
+      ],
+      "weight": 6,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "rel_partner": 40
+        }
+      },
+      "text": {
+        "vi": "Người yêu bất ngờ xuất hiện trong bộ đồ lót gợi cảm mới mua và hỏi bạn có muốn 'thử' không.",
+        "en": "Your partner surprises you in sexy new underwear and asks if you want to 'try it out'."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Khen và tiến lại gần",
+            "en": "Compliment and move closer"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": {
+                "happy": 16,
+                "rel_partner": 12
+              },
+              "setFlags": [
+                "lingerie_night",
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Cả hai dành cả tối khám phá và cười rất nhiều.",
+                "en": "You both spend the evening exploring and laughing a lot."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": {
+                "happy": 8,
+                "rel_partner": 6
+              },
+              "text": {
+                "vi": "Vẫn vui nhưng bạn hơi ngại hơn họ mong đợi.",
+                "en": "Still fun, but you're a bit shyer than they hoped."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nói hôm nay mệt",
+            "en": "Say you're tired tonight"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "rel_partner": 3
+              },
+              "text": {
+                "vi": "Họ hiểu và chỉ ôm bạn thay thế.",
+                "en": "They understand and just hold you instead."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "rel_partner": -5,
+                "happy": -4
+              },
+              "text": {
+                "vi": "Họ hơi thất vọng dù cố không nói ra.",
+                "en": "They're a little disappointed even while trying not to show it."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_roleplay_night",
+      "category": "love",
+      "age": [
+        21,
+        45
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "flags": [
+          "open_to_experiment"
+        ]
+      },
+      "text": {
+        "vi": "Người yêu đề nghị đóng vai một tối: một người là 'sếp', người kia là 'nhân viên ở lại muộn'.",
+        "en": "Your partner suggests roleplay for the night: one of you the 'boss', the other the 'employee staying late'."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nhập vai hết mình",
+            "en": "Fully commit to the roles"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 18,
+                "rel_partner": 14
+              },
+              "setFlags": [
+                "roleplay_done",
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Cả hai đều bất ngờ vì thích đến vậy và cười đến khuya.",
+                "en": "You're both surprised by how much you enjoy it and laugh late into the night."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": 9,
+                "rel_partner": 6
+              },
+              "text": {
+                "vi": "Hơi ngượng ở một vài chỗ nhưng vẫn đáng nhớ.",
+                "en": "A bit awkward in places but still memorable."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chỉ thử phiên bản nhẹ",
+            "en": "Try only a mild version"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": 11,
+                "rel_partner": 8
+              },
+              "text": {
+                "vi": "Vừa đủ thú vị mà không cảm thấy quá lạ.",
+                "en": "Just interesting enough without feeling too strange."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ hơi tiếc vì bạn không dám chơi lớn hơn.",
+                "en": "They're a little sorry you wouldn't go further."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_blindfold_play",
+      "category": "love",
+      "age": [
+        22,
+        50
+      ],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "rel_partner": 50
+        }
+      },
+      "text": {
+        "vi": "Người yêu lấy ra một chiếc khăn và hỏi liệu bạn có muốn bị bịt mắt trong lúc âu yếm không.",
+        "en": "Your partner takes out a scarf and asks if you'd like to be blindfolded during intimacy."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý và thư giãn",
+            "en": "Agree and relax into it"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 17,
+                "rel_partner": 13
+              },
+              "setFlags": [
+                "sensory_play",
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Mọi cảm giác trở nên sắc hơn. Cả hai đều thích.",
+                "en": "Every sensation feels sharper. You both love it."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": 7,
+                "rel_partner": 5
+              },
+              "text": {
+                "vi": "Hơi lo lắng lúc đầu nhưng dần dần thấy thú vị.",
+                "en": "A little nervous at first but it grows interesting."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Xin chỉ dùng tay che",
+            "en": "Ask to just use hands instead"
+          },
+          "outcomes": [
+            {
+              "chance": 0.85,
+              "effects": {
+                "happy": 9,
+                "rel_partner": 6
+              },
+              "text": {
+                "vi": "Họ hiểu ngay và vẫn tạo được không khí đặc biệt.",
+                "en": "They understand at once and still create a special mood."
+              }
+            },
+            {
+              "chance": 0.15,
+              "effects": {
+                "rel_partner": -4
+              },
+              "text": {
+                "vi": "Họ hơi thất vọng nhưng không ép.",
+                "en": "They're mildly disappointed but don't push."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_light_restraint",
+      "category": "love",
+      "age": [
+        23,
+        48
+      ],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "flags": [
+          "open_to_experiment"
+        ],
+        "min": {
+          "rel_partner": 55
+        }
+      },
+      "text": {
+        "vi": "Người yêu thì thầm muốn thử dùng dây lụa buộc nhẹ tay bạn trong lúc gần gũi, và nhấn mạnh sẽ dừng ngay khi bạn nói.",
+        "en": "Your partner whispers they'd like to try lightly tying your wrists with silk during intimacy, and stresses they'll stop the moment you say so."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý với từ an toàn",
+            "en": "Agree with a safe word"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": {
+                "happy": 15,
+                "rel_partner": 12,
+                "risk": 4
+              },
+              "setFlags": [
+                "restraint_play",
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Cảm giác mới lạ và cả hai kiểm soát rất tốt.",
+                "en": "It feels new and you both stay in excellent control."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": {
+                "happy": 6,
+                "rel_partner": 4
+              },
+              "text": {
+                "vi": "Không hẳn là sở thích của bạn nhưng cũng không tệ.",
+                "en": "Not exactly your thing but not bad either."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Từ chối nhẹ nhàng",
+            "en": "Decline gently"
+          },
+          "outcomes": [
+            {
+              "chance": 0.9,
+              "effects": {
+                "rel_partner": 5,
+                "karma": 3
+              },
+              "text": {
+                "vi": "Họ hôn bạn và nói không sao, vẫn còn nhiều cách khác.",
+                "en": "They kiss you and say it's fine, there are plenty of other ways."
+              }
+            },
+            {
+              "chance": 0.1,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ giấu được thất vọng nhưng bạn vẫn nhận ra.",
+                "en": "They hide the disappointment but you still notice."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_foot_attention",
+      "category": "love",
+      "age": [
+        20,
+        55
+      ],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true
+      },
+      "text": {
+        "vi": "Trong lúc âu yếm, người yêu bất ngờ chú ý nhiều đến chân bạn và hỏi bạn có khó chịu không.",
+        "en": "During intimacy your partner suddenly pays a lot of attention to your feet and asks if you're uncomfortable."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Để họ tiếp tục",
+            "en": "Let them continue"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": {
+                "happy": 12,
+                "rel_partner": 9
+              },
+              "setFlags": [
+                "foot_play",
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Bạn phát hiện ra mình cũng thấy dễ chịu hơn dự kiến.",
+                "en": "You discover you find it more pleasant than expected."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": {
+                "happy": 5,
+                "rel_partner": 4
+              },
+              "text": {
+                "vi": "Hơi lạ nhưng bạn không phản đối.",
+                "en": "A bit strange but you don't mind."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Xin chuyển sang chỗ khác",
+            "en": "Ask to move elsewhere"
+          },
+          "outcomes": [
+            {
+              "chance": 0.85,
+              "effects": {
+                "rel_partner": 4
+              },
+              "text": {
+                "vi": "Họ cười và chuyển hướng ngay, không làm to chuyện.",
+                "en": "They smile and switch focus at once without making a fuss."
+              }
+            },
+            {
+              "chance": 0.15,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ có vẻ hơi tiếc nhưng tôn trọng.",
+                "en": "They seem a little sorry but respect it."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_mirror_play",
+      "category": "love",
+      "age": [
+        21,
+        45
+      ],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "looks": 40
+        }
+      },
+      "text": {
+        "vi": "Người yêu kéo bạn đến trước gương lớn và thì thầm muốn cả hai nhìn trong lúc gần gũi.",
+        "en": "Your partner pulls you in front of a large mirror and whispers they want both of you to watch during intimacy."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nhìn và tận hưởng",
+            "en": "Watch and enjoy"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 15,
+                "looks": 3,
+                "rel_partner": 11
+              },
+              "setFlags": [
+                "mirror_night",
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Cảm giác vừa ngại vừa kích thích. Cả hai đều nhớ mãi.",
+                "en": "It feels both shy and thrilling. You both remember it."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": 7
+              },
+              "text": {
+                "vi": "Bạn nhìn được một lúc rồi phải quay đi vì quá ngại.",
+                "en": "You manage to look for a while then have to turn away from shyness."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Xin tắt đèn thay thế",
+            "en": "Ask for lights off instead"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": 8,
+                "rel_partner": 5
+              },
+              "text": {
+                "vi": "Họ đồng ý ngay và không khí vẫn rất gần gũi.",
+                "en": "They agree at once and the mood stays very close."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ hơi thất vọng vì mất đi ý tưởng.",
+                "en": "They're mildly disappointed to lose the idea."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_public_tease",
+      "category": "love",
+      "age": [
+        20,
+        40
+      ],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "risk": 40
+        }
+      },
+      "text": {
+        "vi": "Ở một nơi bán công cộng vắng vẻ, người yêu bắt đầu vuốt ve bạn dưới bàn và nhìn xem bạn chịu được đến đâu.",
+        "en": "In a quiet semi-public place, your partner starts touching you under the table and watches how far you can take it."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Cắn răng chịu và nhìn lại",
+            "en": "Grit your teeth and look back"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": {
+                "happy": 14,
+                "risk": 8,
+                "rel_partner": 10
+              },
+              "setFlags": [
+                "public_tease"
+              ],
+              "text": {
+                "vi": "Cảm giác nguy hiểm làm mọi thứ nóng hơn. Không ai phát hiện.",
+                "en": "The danger makes everything hotter. No one notices."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": {
+                "happy": -5,
+                "risk": 6,
+                "fame": -4
+              },
+              "text": {
+                "vi": "Có người đi ngang đúng lúc. Cả hai phải dừng gấp.",
+                "en": "Someone walks by at the wrong moment. You both have to stop fast."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nắm tay họ và bảo dừng",
+            "en": "Grab their hand and tell them to stop"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "rel_partner": 4,
+                "willpower": 4
+              },
+              "text": {
+                "vi": "Họ cười khẽ và dừng ngay, vẫn nắm tay bạn.",
+                "en": "They smile softly and stop at once, still holding your hand."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "rel_partner": -4
+              },
+              "text": {
+                "vi": "Họ phụng phịu vì mất hứng.",
+                "en": "They sulk a little at the lost mood."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_temperature_play",
+      "category": "love",
+      "age": [
+        22,
+        50
+      ],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "flags": [
+          "open_to_experiment"
+        ]
+      },
+      "text": {
+        "vi": "Người yêu lấy ra viên đá và một ly rượu, đề nghị thử cảm giác nóng lạnh trên da trong lúc âu yếm.",
+        "en": "Your partner brings out an ice cube and a glass of wine, suggesting trying hot-and-cold sensations on skin during intimacy."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Thử và nói cảm giác",
+            "en": "Try it and describe the feeling"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 14,
+                "rel_partner": 11
+              },
+              "setFlags": [
+                "temp_play",
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Cảm giác lạ lẫm và cả hai đều thích sự mới mẻ.",
+                "en": "The sensation is unfamiliar and you both enjoy the novelty."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": 6
+              },
+              "text": {
+                "vi": "Hơi quá lạnh ở vài chỗ nhưng vẫn thú vị.",
+                "en": "A bit too cold in places but still interesting."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chỉ dùng tay thôi",
+            "en": "Just use hands instead"
+          },
+          "outcomes": [
+            {
+              "chance": 0.85,
+              "effects": {
+                "happy": 8,
+                "rel_partner": 5
+              },
+              "text": {
+                "vi": "Họ gật đầu và vẫn tạo ra đêm đáng nhớ.",
+                "en": "They nod and still create a memorable night."
+              }
+            },
+            {
+              "chance": 0.15,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ hơi tiếc vì ý tưởng bị bỏ.",
+                "en": "They're a little sorry the idea was dropped."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_voice_control",
+      "category": "love",
+      "age": [
+        21,
+        45
+      ],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "rel_partner": 45
+        }
+      },
+      "text": {
+        "vi": "Người yêu thì thầm muốn bạn chỉ được nói khi họ cho phép trong lúc gần gũi tối nay.",
+        "en": "Your partner whispers they want you only to speak when they allow it during intimacy tonight."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý và giữ im",
+            "en": "Agree and stay quiet"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": {
+                "happy": 13,
+                "rel_partner": 12
+              },
+              "setFlags": [
+                "voice_play",
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Sự im lặng khiến mọi cử chỉ trở nên mạnh mẽ hơn.",
+                "en": "The silence makes every gesture feel more powerful."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": {
+                "happy": 6,
+                "rel_partner": 5
+              },
+              "text": {
+                "vi": "Bạn phá luật vài lần vì không nhịn được cười.",
+                "en": "You break the rule a few times because you can't stop laughing."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nói thích nói chuyện hơn",
+            "en": "Say you prefer talking"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "rel_partner": 4
+              },
+              "text": {
+                "vi": "Họ cười và bỏ ý tưởng, vẫn âu yếm bình thường.",
+                "en": "They laugh and drop the idea, staying affectionate as usual."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ hơi tiếc vì mất đi sự kịch tính.",
+                "en": "They're mildly sorry to lose the tension."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_clothing_control",
+      "category": "love",
+      "age": [
+        20,
+        45
+      ],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true
+      },
+      "text": {
+        "vi": "Người yêu đề nghị tối nay họ được chọn toàn bộ trang phục bạn mặc khi ra ngoài, kể cả đồ lót.",
+        "en": "Your partner suggests that tonight they get to choose every piece of clothing you wear when going out, including underwear."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Giao quyền cho họ",
+            "en": "Hand them full control"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": {
+                "happy": 12,
+                "rel_partner": 10,
+                "risk": 5
+              },
+              "setFlags": [
+                "clothing_control"
+              ],
+              "text": {
+                "vi": "Bạn cảm thấy vừa ngại vừa thích sự sắp đặt của họ.",
+                "en": "You feel both shy and turned on by their choices."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": {
+                "happy": 5,
+                "rel_partner": 4
+              },
+              "text": {
+                "vi": "Một số món hơi quá nhưng bạn vẫn mặc.",
+                "en": "Some pieces are a bit much but you still wear them."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chỉ để họ chọn đồ lót",
+            "en": "Only let them pick underwear"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": 9,
+                "rel_partner": 7
+              },
+              "text": {
+                "vi": "Họ hài lòng với thỏa thuận vừa phải đó.",
+                "en": "They're happy with that moderate compromise."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ muốn nhiều quyền hơn một chút.",
+                "en": "They wanted a bit more control."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_aftercare_check",
+      "category": "love",
+      "age": [
+        20,
+        55
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "flags": [
+          "restraint_play"
+        ]
+      },
+      "text": {
+        "vi": "Sau buổi chơi có ràng buộc, người yêu ôm bạn và hỏi đi hỏi lại xem bạn có ổn không.",
+        "en": "After the restrained play, your partner holds you and keeps checking whether you're okay."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nói thật cảm giác",
+            "en": "Tell them honestly how you feel"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": 12,
+                "rel_partner": 14
+              },
+              "clearFlags": [
+                "restraint_play"
+              ],
+              "text": {
+                "vi": "Họ lắng nghe và cả hai cảm thấy gần gũi hơn bao giờ hết.",
+                "en": "They listen and you both feel closer than ever."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "happy": 6,
+                "rel_partner": 6
+              },
+              "clearFlags": [
+                "restraint_play"
+              ],
+              "text": {
+                "vi": "Bạn vẫn hơi choáng nhưng được họ chăm sóc rất tận tình.",
+                "en": "You're still a bit overwhelmed but they care for you very attentively."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nói 'mình ổn' cho xong",
+            "en": "Just say 'I'm fine'"
+          },
+          "outcomes": [
+            {
+              "chance": 0.5,
+              "effects": {
+                "happy": 4
+              },
+              "clearFlags": [
+                "restraint_play"
+              ],
+              "text": {
+                "vi": "Họ có vẻ không hoàn toàn tin nhưng không ép.",
+                "en": "They don't fully believe it but don't push."
+              }
+            },
+            {
+              "chance": 0.5,
+              "effects": {
+                "happy": -5,
+                "rel_partner": -4
+              },
+              "clearFlags": [
+                "restraint_play"
+              ],
+              "text": {
+                "vi": "Về sau bạn hối hận vì đã không nói thật.",
+                "en": "Later you regret not being honest."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_new_toy_reveal",
+      "category": "love",
+      "age": [
+        21,
+        50
+      ],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true,
+        "flags": [
+          "open_to_experiment"
+        ]
+      },
+      "text": {
+        "vi": "Người yêu mở hộp một món đồ chơi mới mua và hỏi bạn có muốn thử cùng không.",
+        "en": "Your partner opens a box with a newly bought toy and asks if you want to try it together."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Tò mò và đồng ý",
+            "en": "Feel curious and agree"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": {
+                "happy": 15,
+                "rel_partner": 11
+              },
+              "setFlags": [
+                "toy_play",
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Cả hai vừa thử vừa cười, tìm ra cách dùng hợp nhất.",
+                "en": "You both try and laugh, finding the best way to use it."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": {
+                "happy": 7,
+                "rel_partner": 5
+              },
+              "text": {
+                "vi": "Hơi lạ lúc đầu nhưng dần trở nên thú vị.",
+                "en": "A bit odd at first but it grows interesting."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Xin để lần sau",
+            "en": "Ask to save it for later"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "rel_partner": 4
+              },
+              "text": {
+                "vi": "Họ gật đầu và cất đi, không ép buộc.",
+                "en": "They nod and put it away without pressure."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "rel_partner": -4
+              },
+              "text": {
+                "vi": "Họ hơi thất vọng vì đã chờ đợi.",
+                "en": "They're a little disappointed after looking forward to it."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_praise_kink",
+      "category": "love",
+      "age": [
+        20,
+        50
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": true
+      },
+      "text": {
+        "vi": "Trong lúc gần gũi, người yêu bắt đầu liên tục khen ngợi cơ thể và cách bạn phản ứng.",
+        "en": "During intimacy your partner starts continuously praising your body and the way you react."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Thưởng thức và đáp lại",
+            "en": "Enjoy it and respond"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": 14,
+                "looks": 4,
+                "rel_partner": 10
+              },
+              "setFlags": [
+                "praise_play",
+                "recent_intimate"
+              ],
+              "text": {
+                "vi": "Lời khen khiến bạn tự tin và thả lỏng hơn bao giờ hết.",
+                "en": "The praise makes you feel more confident and relaxed than ever."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "happy": 7
+              },
+              "text": {
+                "vi": "Bạn hơi ngại nhưng vẫn thấy dễ chịu.",
+                "en": "You're a bit shy but still find it pleasant."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Xin họ nói ít lại",
+            "en": "Ask them to talk less"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": {
+                "rel_partner": 3
+              },
+              "text": {
+                "vi": "Họ giảm ngay và chuyển sang dùng cử chỉ.",
+                "en": "They ease off at once and switch to gestures."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": {
+                "rel_partner": -3
+              },
+              "text": {
+                "vi": "Họ có vẻ mất một phần hứng thú.",
+                "en": "They seem to lose a bit of their enthusiasm."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_one_night_kink",
+      "category": "love",
+      "age": [
+        20,
+        40
+      ],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false
+      },
+      "text": {
+        "vi": "Người lạ bạn mới gặp trong đêm hỏi thẳng sở thích đặc biệt của bạn trước khi mọi thứ đi xa hơn.",
+        "en": "The stranger you just met tonight asks directly about your particular preferences before things go further."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nói thật một sở thích",
+            "en": "Honestly share one preference"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": {
+                "happy": 13,
+                "risk": 6
+              },
+              "setFlags": [
+                "kink_ons",
+                "ons_happened"
+              ],
+              "newContact": "one_night",
+              "text": {
+                "vi": "Họ thích thú và đêm ấy trở nên đúng ý cả hai.",
+                "en": "They're intrigued and the night turns out exactly to both your tastes."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": {
+                "happy": 5,
+                "risk": 4
+              },
+              "text": {
+                "vi": "Họ lịch sự nhưng không cùng sở thích. Cuộc gặp kết thúc sớm.",
+                "en": "They're polite but don't share the interest. The encounter ends early."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Giữ im và để tự nhiên",
+            "en": "Stay quiet and keep it natural"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": {
+                "happy": 8,
+                "risk": 3
+              },
+              "setFlags": [
+                "kink_ons",
+                "ons_happened"
+              ],
+              "text": {
+                "vi": "Mọi thứ diễn ra dễ chịu theo cách thông thường.",
+                "en": "Everything unfolds pleasantly in the usual way."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": {
+                "happy": 3
+              },
+              "text": {
+                "vi": "Họ có vẻ hơi thất vọng vì bạn không cởi mở.",
+                "en": "They seem mildly disappointed you weren't more open."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fetish_negotiation_talk",
+      "category": "love",
+      "age": [
+        22,
+        50
+      ],
+      "weight": 5,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "hasPartner": true,
+        "min": {
+          "rel_partner": 40
+        }
+      },
+      "text": {
+        "vi": "Một buổi tối yên tĩnh, người yêu đề nghị cả hai ngồi lại nói rõ những giới hạn và mong muốn trong chuyện giường.",
+        "en": "On a quiet evening your partner suggests sitting down to clearly discuss limits and desires in the bedroom."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nói thật và lắng nghe",
+            "en": "Speak honestly and listen"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": {
+                "happy": 11,
+                "rel_partner": 15,
+                "willpower": 5
+              },
+              "setFlags": [
+                "open_to_experiment"
+              ],
+              "text": {
+                "vi": "Cả hai hiểu nhau hơn và cảm thấy an toàn để thử những điều mới.",
+                "en": "You understand each other better and feel safer trying new things."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": {
+                "happy": 5,
+                "rel_partner": 6
+              },
+              "text": {
+                "vi": "Cuộc nói chuyện hơi ngại nhưng vẫn hữu ích.",
+                "en": "The talk is a bit awkward but still useful."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nói 'cứ tự nhiên là được'",
+            "en": "Say 'just keep it natural'"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": {
+                "rel_partner": 3
+              },
+              "text": {
+                "vi": "Họ chấp nhận nhưng bạn cảm thấy bỏ lỡ cơ hội hiểu nhau.",
+                "en": "They accept but you feel you missed a chance to understand each other."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": {
+                "rel_partner": -5,
+                "happy": -3
+              },
+              "text": {
+                "vi": "Họ có vẻ thất vọng vì bạn không chịu mở lòng.",
+                "en": "They seem disappointed you wouldn't open up."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

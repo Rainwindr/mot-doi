@@ -1,0 +1,1082 @@
+// Giao diện: dựng lại toàn bộ #app sau mỗi thao tác (đơn giản, đủ nhanh cho game dạng chữ).
+import { STRINGS, makeT } from './i18n.js';
+import { COUNTRIES, byCode, tierOf } from '../data/countries.js';
+import { careerById, ladderOf, COMPANIES } from '../data/careers.js';
+import { entryRank, entryBonus, salaryFor, nextRank, rankName, effExp } from '../engine/career.js';
+import {
+  makeGame, defaultSettings, refreshEvents, loadPackText, newLife, ageUpGame, currentEvent, chooseEvent, chooseModal, continueAsChild, BUILTIN,
+} from '../engine/game.js';
+import { normalizePack, validatePack } from '../engine/validate.js';
+import { STAT_KEYS, HIDDEN_KEYS, TRAITS, WEALTH, country, tier, personName, partner, people, addLog } from '../engine/life.js';
+import { ACTIVITIES } from '../engine/actions.js';
+import { profileLine } from '../engine/love.js';
+import { choiceLocked } from '../engine/events.js';
+import { availableActivities, doActivity, personActions, doPersonAction, jobOpenings, jobsLocked, applyJob, workAction, godApply, godRewind } from '../engine/actions.js';
+import { RIBBONS } from '../engine/year.js';
+import { PHASES, ASSETS, HOMES, CARS, INDUSTRIES, holdingValue, netWorth, savingsRate, homePrice, bizCapital, invest, divest, buyHome, sellHome, toggleRent, buyCar, sellCar, startBiz, bizAction } from '../engine/economy.js';
+import { majorById, tradeById } from '../data/majors.js';
+import { degreeName, stageLength } from '../engine/school.js';
+import { resolveEscape, resolveCasino, resolveOlympiad } from '../engine/minigames.js';
+import { SPECIALS, canJoin, specialAction, followersText } from '../engine/specials.js';
+import { GOALS, goalById, checkGoals, ACHIEVEMENTS, archiveLife, emptyProfile } from '../engine/goals.js';
+import { emigrate, emigrationOdds, emigrationCost, cobornName } from '../engine/crime.js';
+
+// ───────── Lưu trữ (an toàn khi trình duyệt chặn) ─────────
+const KEY = { gate: 'motdoi.gate', settings: 'motdoi.settings', save: 'motdoi.save', packs: 'motdoi.packs', profile: 'motdoi.profile' };
+const store = {
+  get(k, fallback) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fallback; } catch { return fallback; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* bỏ qua */ } },
+  del(k) { try { localStorage.removeItem(k); } catch { /* bỏ qua */ } },
+};
+
+// ───────── Trạng thái giao diện ─────────
+const ui = { mini: null, queue: [], newAch: null, freshFrom: Infinity, sub: null, view: 'gate', sheet: null, modal: null, result: null, toast: null, draft: null, god: null, resetArmed: false, packMsg: null, gateErr: null, birth: false };
+let settings = { ...defaultSettings(), ...store.get(KEY.settings, {}) };
+let customRaw = store.get(KEY.packs, []);
+let profile = { ...emptyProfile(), ...store.get(KEY.profile, {}) };
+const game = makeGame(settings, loadCustom(customRaw));
+const t = makeT(() => settings.lang);
+const tx = (o) => (o == null ? '' : typeof o === 'string' ? o : o[settings.lang] ?? o.vi);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const $app = document.getElementById('app');
+
+function loadCustom(list) {
+  const out = [];
+  for (const raw of list) if (!validatePack(raw).errors.length) out.push(normalizePack(raw));
+  return out;
+}
+
+function boot(data) {
+  const saved = data?.save ?? store.get(KEY.save, null);
+  if (saved && saved.v === 1) game.life = saved;
+  ui.view = store.get(KEY.gate, false) ? 'home' : 'gate';
+  if (data?.view && data.view !== 'gate' && store.get(KEY.gate, false)) ui.view = data.view;
+  if (ui.view === 'game' && !game.life) ui.view = 'home';
+  applyTheme();
+  render();
+}
+function persist() {
+  store.set(KEY.settings, settings);
+  if (game.life) store.set(KEY.save, game.life);
+}
+function applyTheme() { document.documentElement.lang = settings.lang; }
+
+// ───────── Định dạng ─────────
+function money(usd, life = game.life) {
+  const c = life ? country(life) : byCode.US;
+  const v = usd * c.rate;
+  const loc = settings.lang === 'vi' ? 'vi-VN' : 'en-US';
+  try {
+    return new Intl.NumberFormat(loc, { style: 'currency', currency: c.cur, notation: Math.abs(v) >= 1e6 ? 'compact' : 'standard', maximumFractionDigits: Math.abs(v) >= 1e6 ? 1 : 0 }).format(v);
+  } catch {
+    return `${Math.round(v).toLocaleString(loc)} ${c.cur}`;
+  }
+}
+function chipsHtml(changes = []) {
+  return changes.filter(([, v]) => v).map(([k, v]) => {
+    const label = k === 'money' ? money(Math.abs(v)) : k.startsWith('rel_') ? `${t('closeness')} · ${t('roles.' + k.slice(4))}` : t(k);
+    const val = k === 'money' ? '' : ` ${v > 0 ? '+' : ''}${Math.round(v)}`;
+    return `<span class="chip ${v > 0 ? 'up' : 'down'}">${k === 'money' ? (v > 0 ? '+' : '−') : ''}${esc(label)}${val}</span>`;
+  }).join('');
+}
+// ───────── Emoji, thanh mức độ, avatar ─────────
+const STAT_EM = { perf: '📈', salary: '💵', health: '❤️', happy: '😊', smarts: '🧠', looks: '✨', karma: '☯️', willpower: '💪', risk: '🎲', fame: '⭐', money: '💵' };
+const lvlCls = (v) => (v >= 66 ? 'hi' : v >= 33 ? 'mid' : 'lo');
+const lvl = (v, thin) => { const n = Math.max(0, Math.min(100, Math.round(v))); return `<div class="lvl${thin ? ' thin' : ''}"><i class="${lvlCls(n)}" style="width:${n}%"></i><span>${n}%</span></div>`; };
+const bar = (v) => lvl(v);
+const prog = (v) => `<div class="lvl thin"><i class="prog" style="width:${Math.max(4, Math.min(100, Math.round(v)))}%"></i></div>`;
+function face(gender, age, role, alive = true) {
+  if (role === 'pet') return '🐾';
+  if (!alive) return '🪦';
+  if (age < 3) return '👶';
+  const f = gender === 'female';
+  if (age < 18) return f ? '👧' : '👦';
+  if (age < 60) return f ? '👩' : '👨';
+  return f ? '👵' : '👴';
+}
+const CAT_EM = { childhood: '🧸', school: '🎒', teen: '🛹', love: '💘', work: '💼', money: '💰', health: '🩺', crime: '🚨', family: '👪', random: '🎲', old_age: '🧓' };
+const UID_EM = {
+  'sys/pregnancy': '🤰', 'sys/affair': '💔', 'sys/after_hs': '🎓', 'sys/tax': '🧾', 'sys/partner_proposes': '💍', 'sys/move_in': '🏡', 'sys/want_kids': '👶', 'sys/partner_cheats': '💔',
+  'act/ons': '🌙', 'act/intimate': '🔥', 'act/casino': '🎰', 'act/affair': '🤫', 'crime/court': '⚖️', 'prison/escape': '🏃',
+  'love/profile': '📲', 'love/app': '📲', 'love/blind': '💐', 'love/gift': '🎁', 'love/date': '🍷', 'love/intimate': '🔥', 'love/adopt': '🍼', 'love/propose': '💍', 'love/wedding_size': '💒', 'love/prenup': '📜', 'love/honeymoon': '🏝️', 'love/divorce': '⚖️', 'love/nomatch': '🤷', 'school/major': '🎓', 'sys/job_offers': '💼', 'sys/headhunt': '📞', 'school/trade': '🧰', 'school/grad': '📜',
+};
+const ARC_EM = { bestie: '🤜', rival: '😤', firstlove: '💌', mentor: '🎓', secret: '🗝️', pet: '🐾' };
+const evEmoji = (ev) => (!ev ? null : ev.big ? '🌟' : ev.arc ? ARC_EM[ev.arc] || '📖' : UID_EM[ev.uid] || CAT_EM[ev.category] || null);
+const GROUP_EM = { net: '📱', kid: '🧸', teen: '🎒', mind: '🧠', night: '🌃', love: '💘', crime: '🦹', prison: '⛓️' };
+const ACT_EM = {
+  cry: '😭', toys: '🧸', mischief: '😈', cartoons: '📺', friends: '🧑‍🤝‍🧑', art: '🎨', sleepover: '🛏️', swim: '🏊', tutor: '📚', sportclub: '⚽', band: '🎸', volunteer: '🤲', chores: '🧹', games: '🎮',
+  net_photo: '📸', net_video: '🎥', net_live: '📡', net_sponsor: '🤑', social: '📱', gym: '🏋️', library: '📖', meditate: '🧘', doctor: '🩺', vacation: '✈️', surgery: '💉', bar: '🍺', club: '🪩', casino: '🎰', lottery: '🎟️', date: '💐', app: '📲', hookup: '🔥', affair: '🤫',
+  prison_escape: '🏃', prison_parole: '📝', prison_work: '🔨', prison_riot: '🔥', crime_pickpocket: '👛', crime_shoplift: '🛍️', crime_burglary: '🏚️', crime_cartheft: '🚗', crime_fraud: '💳', crime_bank: '🏦',
+};
+const PA_EM = { talk: '💬', compliment: '🌹', flirt: '😘', gift: '🎁', date: '🍷', intimate: '🔥', baby: '👶', adopt: '🍼', askmoney: '💸', money: '💸', movein: '🏡', propose: '💍', wedding: '💒', vows: '💞', breakup: '💔', divorce: '⚖️', endaffair: '✋', argue: '😠', askout: '💐' };
+const DANGER_PA = ['breakup', 'divorce', 'argue', 'endaffair'];
+const JOB_EM = { fast_food: '🍔', delivery: '🛵', babysitter: '🍼', retail: '🛒', waiter: '🍽️', factory: '🏭', driver: '🚕', cleaner: '🧽', bartender: '🍸', model: '📸', office_clerk: '🗂️', sales: '🤝', police: '👮', nurse: '🩹', teacher: '🧑‍🏫', marketing: '📣', accountant: '🧮', engineer: '🛠️', developer: '💻', lawyer: '⚖️', doctor: '🩺', chef: '👨‍🍳', electrician: '⚡', mechanic: '🔧', hairdresser: '💇', it_tech: '🖥️', designer: '🎨', journalist: '📰', architect: '📐', analyst: '📈', pharmacist: '💊', psychologist: '🛋️', scientist: '🔬', professor: '🧑‍🏫' };
+const ASSET_EM = { savings: '🏦', index: '📊', gold: '🥇', tech: '💻', bank: '🏛️', energy: '⚡', crypto: '🪙' };
+const HOME_EM = { studio: '🛏️', apartment: '🏢', house: '🏠', villa: '🏰' };
+const CAR_EM = { scooter: '🛵', used: '🚙', family: '🚗', luxury: '🏎️' };
+const IND_EM = { food: '🍜', fashion: '👗', bar: '🍹', tech: '💻', realestate: '🏗️' };
+function toneOf(changes = []) {
+  const s = changes.reduce((a, [k, v]) => a + (k === 'money' || k === 'salary' ? Math.sign(v) * 3 : k === 'risk' ? 0 : v), 0);
+  return s > 4 ? 'good' : s < -4 ? 'bad' : '';
+}
+const li = (a, em, title, sub = '', o = {}) => `<button class="li${o.danger ? ' danger' : ''}" data-a="${a}" ${o.disabled ? 'disabled' : ''}><span class="em">${em}</span><span class="tx"><b>${title}</b>${sub ? `<small>${sub}</small>` : ''}</span><span class="chev">›</span></button>`;
+
+// ───────── Màn hình ─────────
+function viewGate() {
+  return `<main class="splash pad">
+    <div class="wordmark">Một<br>Đời<span>.</span></div>
+    <p class="tagline">${t('tagline')}</p>
+    <form class="section" data-form="gate" novalidate>
+      <h2>${t('gateTitle')}</h2>
+      <p class="muted">${t('gateBody')}</p>
+      <div class="field"><label for="dob">${t('dob')}</label><input id="dob" type="date" required max="${new Date().toISOString().slice(0, 10)}"></div>
+      ${ui.gateErr ? `<p class="err">${t(ui.gateErr)}</p>` : ''}
+      <div class="row"><button class="btn primary" type="submit">${t('enter')}</button>${langSwitch()}</div>
+    </form>
+  </main>`;
+}
+const langSwitch = () => `<button type="button" class="btn small" data-a="lang">${settings.lang === 'vi' ? 'English' : 'Tiếng Việt'}</button>`;
+
+function viewHome() {
+  const L = game.life;
+  const total = game.events.length;
+  const packsOn = game.packs.filter((p) => settings.packs[p.manifest.id] !== false).length;
+  return `<main class="splash pad">
+    <div class="wordmark">Một<br>Đời<span>.</span></div>
+    <p class="tagline">${t('tagline')}</p>
+    <div class="menu">
+      ${L && !L.dead ? `<button class="menu-card lead" data-a="continue"><span class="em">${face(L.gender, L.age)}</span><b>${t('continue')}</b><span class="muted">${esc(fullName(L))} · ${t('yearsOld', { n: L.age })} · ${country(L).flag} ${esc(tx(country(L).name))}</span></button>` : ''}
+      <button class="menu-card ${L && !L.dead ? '' : 'lead'}" data-a="fate"><span class="em">🎲</span><b>${t('fate')}</b><span class="muted">${t('fateSub')}</span></button>
+      <button class="menu-card" data-a="free"><span class="em">✏️</span><b>${t('free')}</b><span class="muted">${t('freeSub')}</span></button>
+    </div>
+    <div class="row"><button class="btn small" data-a="sheet:trophies">🏆 ${t('trophies')}</button><button class="btn small" data-a="sheet:graveyard">🪦 ${t('graveyard')}</button><button class="btn small" data-a="sheet:settings">⚙️ ${t('settings')}</button>${langSwitch()}</div>
+    <p class="muted" style="font-size:12.5px">${t('eventCount', { n: total, p: packsOn })} · ${t('homeNote')}</p>
+  </main>`;
+}
+const fullName = (life) => personName(life, { first: life.first, last: life.last });
+
+function blankDraft() {
+  const r = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  return {
+    first: '', last: '', gender: 'female', country: 'VN', wealth: 'middle', orientation: 'opposite', traits: [],
+    stats: { health: r(60, 100), happy: r(50, 100), smarts: r(10, 100), looks: r(10, 100), karma: r(40, 60), willpower: r(20, 80), risk: r(10, 60), fame: 0 },
+  };
+}
+function viewCreate() {
+  const d = ui.draft;
+  const opt = (v, cur, label) => `<option value="${v}" ${v === cur ? 'selected' : ''}>${esc(label)}</option>`;
+  const countries = [...COUNTRIES].sort((a, b) => tx(a.name).localeCompare(tx(b.name))).map((c) => opt(c.code, d.country, `${c.flag} ${tx(c.name)}`)).join('');
+  const slider = (k) => `<div class="slider"><span>${STAT_EM[k]}</span><label for="s-${k}">${t(k)}</label><input id="s-${k}" type="range" min="0" max="100" value="${d.stats[k]}" data-d="stats.${k}"><output class="mono">${d.stats[k]}</output></div>`;
+  return `<main class="splash pad" style="gap:20px">
+    <div class="row" style="justify-content:space-between"><h1 style="font-size:30px">${t('free')}</h1><button class="btn small" data-a="home">${t('back')}</button></div>
+    <div class="grid2">
+      <div class="field"><label for="c-last">${t('last')}</label><input id="c-last" value="${esc(d.last)}" data-d="last" placeholder="${t('random')}" maxlength="24"></div>
+      <div class="field"><label for="c-first">${t('first')}</label><input id="c-first" value="${esc(d.first)}" data-d="first" placeholder="${t('random')}" maxlength="24"></div>
+      <div class="field"><label for="c-gender">${t('gender')}</label><select id="c-gender" data-d="gender">${opt('female', d.gender, t('female'))}${opt('male', d.gender, t('male'))}</select></div>
+      <div class="field"><label for="c-orient">${t('orientation')}</label><select id="c-orient" data-d="orientation">${['opposite', 'same', 'both'].map((o) => opt(o, d.orientation, t(o))).join('')}</select></div>
+      <div class="field"><label for="c-country">${t('country')}</label><select id="c-country" data-d="country">${countries}</select></div>
+      <div class="field"><label for="c-wealth">${t('wealth')}</label><select id="c-wealth" data-d="wealth">${WEALTH.map((w) => opt(w, d.wealth, t(w))).join('')}</select></div>
+    </div>
+    <div class="section"><span class="lbl" style="font-size:13px;font-weight:600">${t('traits')}</span>
+      <div class="traits">${Object.entries(TRAITS).map(([k, v]) => `<label><input type="checkbox" data-trait="${k}" ${d.traits.includes(k) ? 'checked' : ''} ${!d.traits.includes(k) && d.traits.length >= 2 ? 'disabled' : ''}>${esc(tx(v.name))}</label>`).join('')}</div>
+    </div>
+    <div class="section"><div class="row" style="justify-content:space-between"><h3>${t('stats')}</h3><button class="btn small" data-a="draft-random">${t('randomAll')}</button></div>
+      ${STAT_KEYS.map(slider).join('')}
+      <h3 style="margin-top:6px">${t('hidden')}</h3>${HIDDEN_KEYS.map(slider).join('')}
+    </div>
+    <p class="note">${t('godNote').split('.')[0]}.</p>
+    <button class="btn primary" data-a="create-free">${t('start')}</button>
+  </main>`;
+}
+
+function viewGame() {
+  const L = game.life;
+  const c = country(L);
+  const ev = !L.dead && !ui.modal && !ui.result && !ui.mini ? currentEvent(game) : null;
+  const blocked = L.dead || !!ev || !!ui.modal || !!ui.result || !!ui.mini;
+  const dl = ui.deltas || {};
+  const stats = STAT_KEYS.map((k) => `<div class="stat"><span class="em">${STAT_EM[k]}</span><span class="nm"><span>${t(k)}</span>${dl[k] ? `<span class="delta ${dl[k] > 0 ? 'up' : 'down'}">${dl[k] > 0 ? '+' : ''}${dl[k]}</span>` : ''}</span>${lvl(L.stats[k])}</div>`).join('');
+  const roleLine = L.prison ? `${t('prison')} · ${t('prisonLeft', { n: L.prison.years - L.prison.served })}` : L.fugitive ? t('fugitive') : L.special ? `${SPECIALS[L.special.id].em} ${tx(SPECIALS[L.special.id].levels[L.special.level])}` : L.job ? `${tx(rankName(L.job))}` : L.edu.stage ? stageLine(L) : L.age < 6 ? '' : L.pension ? (settings.lang === 'vi' ? 'Nghỉ hưu' : 'Retired') : t('noJob').replace('.', '');
+  const shownYears = L.log.slice(-60);
+  let idx = L.log.slice(0, L.log.length - shownYears.length).reduce((n, y) => n + y.items.length, 0);
+  const years = shownYears.map((y) => {
+    const lis = y.items.map((i) => {
+      const fresh = idx++ >= ui.freshFrom;
+      if (!i.text) return '';
+      return `<li class="${i.tone || ''}${fresh ? ' fresh' : ''}">${i.title ? `<b class="act-title">${esc(tx(i.title))}:</b>` : ''}${esc(tx(i.text))}</li>`;
+    }).join('');
+    return `<section class="year"><div class="yr">${t('ageHead', { n: y.age })}</div><ul>${lis || `<li class="quiet">${t('quietYear')}</li>`}</ul></section>`;
+  }).join('');
+  return `<header class="topbar pad">
+      <button class="avatar" data-a="sheet:self" aria-label="${t('openSelf')}">${face(L.gender, L.age, null, !L.dead)}<span class="fl">${c.flag}</span></button>
+      <button class="who" data-a="sheet:self" title="${t('openSelf')}"><h1>${esc(fullName(L))}</h1><div class="sub"><span class="agechip${ui.ageTick ? ' tick' : ''}">${t('yearsOld', { n: L.age })}</span>${roleLine ? ` · ${esc(roleLine)}` : ''}${L.goals ? ` · 🎯${goalCount(L)}/3` : ''}${L.customized ? ` <span class="tag">${t('customized')}</span>` : ''}</div></button>
+      <div class="purse"><small>${t('balance')}</small><b class="${L.money < 0 ? 'neg' : ''}">${money(L.money)}</b></div>
+      <div class="tools">${settings.godEnabled ? `<button class="iconbtn" data-a="sheet:god" aria-label="${t('god')}" title="${t('god')}">⚡</button>` : ''}<button class="iconbtn" data-a="sheet:settings" aria-label="${t('settings')}" title="${t('settings')}">⚙️</button></div>
+    </header>
+    <div class="ledger pad" id="ledger">${years}</div>
+    <nav class="dock pad">
+      <button class="tab t-work" data-a="sheet:work"><span class="ic">💼</span>${t('tabWorkShort')}</button>
+      <button class="tab t-assets" data-a="sheet:assets"><span class="ic">🏠</span>${t('tabAssetsShort')}</button>
+      <button class="agebtn" data-a="ageup" ${blocked ? 'disabled' : ''} aria-label="${t('ageUp')}"><div><b>+</b><span>${t('ageBtn')}</span></div></button>
+      <button class="tab t-people" data-a="sheet:people"><span class="ic">❤️</span>${t('tabPeopleShort')}</button>
+      <button class="tab t-acts" data-a="sheet:acts"><span class="ic">⭐</span>${t('tabActsShort')}</button>
+    </nav>
+    <section class="stats pad">${stats}</section>
+    ${overlays(ev)}`;
+}
+
+function resultCard(r) {
+  const fx = (r.changes || []).filter(([, v]) => Math.round(v)).map(([k, v]) => {
+    const name = k === 'money' ? t('money') : k.startsWith('rel_') ? `${t('closeness')} · ${t('roles.' + k.slice(4))}` : t(k);
+    const em = STAT_EM[k] || (k.startsWith('rel_') ? '🤝' : '•');
+    const val = k === 'money' || k === 'salary' ? `${v > 0 ? '+' : '−'}${money(Math.abs(v))}` : `${v > 0 ? '+' : ''}${Math.round(v)}`;
+    return `<li class="${v > 0 ? 'up' : 'down'}"><span>${em} ${esc(name)}</span><span class="v">${val}</span></li>`;
+  }).join('');
+  return `<div class="overlay center" data-a="result-ok"><div class="card result ${r.tone || ''}" role="dialog" aria-modal="true">
+    <div class="hero">${r.emoji || (r.tone === 'bad' ? '😕' : r.tone === 'good' ? '🎉' : '📌')}</div>
+    ${r.title ? `<div class="eyebrow">${esc(tx(r.title))}</div>` : ''}
+    <p class="q">${esc(tx(r.text))}</p>
+    ${fx ? `<ul class="fx">${fx}</ul>` : ''}
+    <button class="btn primary" data-a="result-ok">${t('okBtn')}</button></div></div>`;
+}
+
+function sheetBody() {
+  return ({ work: sheetWork, people: sheetPeople, acts: sheetActs, self: sheetSelf, god: sheetGod, settings: sheetSettings, assets: sheetAssets, trophies: sheetTrophies, graveyard: sheetGraveyard }[ui.sheet] || (() => sheetPerson(ui.sheet.slice(7))))();
+}
+
+function overlays(ev) {
+  const L = game.life;
+  if (ui.view !== 'game' && ui.sheet) return sheetWrap(sheetBody());
+  if (!L) return '';
+  if (ui.birth) return centerCard(birthCard());
+  if (ui.result) return (ui.sheet ? sheetWrap(sheetBody()) : '') + resultCard(ui.result);
+  if (ui.mini) return `<div class="overlay center"><div class="card mini" role="dialog" aria-modal="true">${miniCard(ui.mini)}</div></div>`;
+  if (L.dead && !['god', 'settings', 'trophies', 'graveyard'].includes(ui.sheet)) return centerCard(deathCard());
+  if (L.dead && ui.sheet) return sheetWrap(sheetBody());
+  const shown = ui.modal ? ui.modal.ev : ev;
+  if (shown) {
+    const eyebrow = ui.modal && ui.modal.title ? tx(ui.modal.title) : shown.arc ? `${tx(shown.tag)} · ${shown.npcName}` : shown.big ? t('bigMoment') : t('ageHead', { n: L.age });
+    if (shown.big && ui.lastBig !== shown.uid) { ui.lastBig = shown.uid; try { navigator.vibrate && navigator.vibrate([60, 40, 120]); } catch { /* bỏ qua */ } }
+    const btns = shown.choices.map((c, i) => {
+      const locked = choiceLocked(L, c);
+      const need = locked ? Object.entries(c.requires.min || {}).map(([k, v]) => `${k === 'money' ? t('money') : t(k)} ≥ ${k === 'money' ? money(v * country(L).gdp / 100) : v}`).join(', ') : '';
+      return `<button class="choice${locked ? ' locked' : ''}" data-a="choose:${i}" ${locked ? 'disabled' : ''}>${locked ? '🔒 ' : ''}${esc(tx(c.label))}${locked ? `<small>${t('needs')}: ${esc(need)}</small>` : ''}</button>`;
+    }).join('');
+    const kind = shown.big ? ' big' : shown.arc ? ' arc' : '';
+    const em = evEmoji(shown) || (ui.modal && ui.modal.emoji) || '📌';
+    return `<div class="overlay center"><div class="card${kind}" role="dialog" aria-modal="true"><div class="hero">${em}</div><div class="eyebrow">${esc(eyebrow)}</div><p class="q">${esc(tx(shown.text))}</p><div class="choices">${btns}</div></div></div>`;
+  }
+  if (!ui.sheet) return '';
+  return sheetWrap(sheetBody());
+}
+const centerCard = (inner) => `<div class="overlay center"><div class="card" role="dialog" aria-modal="true">${inner}</div></div>`;
+const sheetWrap = (inner) => `<div class="overlay" data-a="close-bg"><div class="sheet pad" role="dialog" aria-modal="true">${inner}</div></div>`;
+const head = (title, color = 'var(--sky)', back = null) => `<div class="sheet-head" style="--hd:${color}">${back != null ? `<button class="bk" data-a="${back}" aria-label="${t('back')}">‹</button>` : ''}<h2>${title}</h2><button class="x" data-a="close" aria-label="${t('close')}">✕</button></div>`;
+
+function birthCard() {
+  const L = game.life;
+  const c = country(L);
+  const mom = people(L, 'mother')[0];
+  const dad = people(L, 'father')[0];
+  const sibs = people(L, 'sibling').length;
+  return `<div class="hero">👶</div><div class="eyebrow">${t('oneIn')}</div>
+    <div class="passport">
+      <div class="row"><span class="flag" style="font-size:40px;line-height:1">${c.flag}</span><div><div class="big">${esc(fullName(L))}</div><div class="muted">${esc(tx(c.name))} · ${t(L.gender)}</div></div></div>
+      <dl class="kv">
+        <dt>💰 ${t('wealth')}</dt><dd>${t(L.wealth)}</dd>
+        <dt>👩 ${t('roles.mother')}</dt><dd>${mom ? `${esc(personName(L, mom))}, ${mom.age}` : '—'}</dd>
+        <dt>👨 ${t('roles.father')}</dt><dd>${dad ? `${esc(personName(L, dad))}, ${dad.age}` : '—'}</dd>
+        <dt>🧒 ${t('roles.sibling')}</dt><dd>${sibs}</dd>
+        <dt>⏳ ${t('lifeExp')}</dt><dd class="mono">${c.life}</dd>
+        <dt>🌍 ${t('incomeTier')}</dt><dd>${t('tiers.' + tierOf(c))}</dd>
+      </dl>
+    </div>
+    ${L.goals ? `<div class="section"><h3>🎯 ${t('goals')}</h3>${goalsBlock(L, true)}</div>` : ''}
+    <button class="btn primary" data-a="birth-ok">${t('start')}</button>`;
+}
+
+function deathCard() {
+  const L = game.life;
+  const c = country(L);
+  const kids = people(L, 'child');
+  const max = Math.max(L.age, c.life) + 5;
+  const ribs = (L.ribbons || []).map((r) => `<div class="rib"><b>${esc(tx(RIBBONS[r].name))}</b><small>${esc(tx(RIBBONS[r].why))}</small></div>`).join('');
+  const canRewind = settings.godEnabled && L.snapshots.length && L.counts.rewinds < 3;
+  return `<div class="tomb">
+      <div class="stone">🪦</div>
+      <h2>${esc(fullName(L))}</h2>
+      <div class="years">${c.flag} ${t('diedAt', { age: L.age })} · ${esc(tx(L.cause))}</div>
+      ${L.customized ? `<span class="tag">${t('customized')}</span>` : ''}
+      <div class="lifebar"><span class="muted">${t('vsAvg', { c: esc(tx(c.name)) })}: ${L.age} / ${c.life} ${t('years')}</span>
+        <div class="track"><div class="you" style="width:${(L.age / max) * 100}%"></div><div class="avg" style="left:${(c.life / max) * 100}%"></div></div></div>
+      <dl class="kv" style="width:100%">
+        <dt>${t('eduLevel')}</dt><dd>${t(EDU_LBL[L.edu.level])}</dd>
+        <dt>${t('netWorth')}</dt><dd class="mono">${money(netWorth(L))}</dd>
+        <dt>${t('kids')}</dt><dd>${L.counts.children}</dd>
+        <dt>${t('partners')}</dt><dd>${L.counts.partners}</dd>
+      </dl>
+      ${L.goals ? `<div style="width:100%;text-align:left">${goalsBlock(L)}</div>` : ''}
+      ${ui.newAch && ui.newAch.length ? `<div class="box newach" style="width:100%"><b>🏆 ${t('newAch')}</b>${ui.newAch.map((a) => `<div class="row" style="justify-content:center"><span style="font-size:22px">${a.em}</span><b>${esc(tx(a.name))}</b></div>`).join('')}</div>` : ''}
+      <div class="eyebrow">${t('ribbons')}</div>
+      <div class="stamps">${ribs}</div>
+      ${lifeChart(L)}
+      ${milesBlock(L)}
+      <div style="width:100%;text-align:left">${cobornBlock(L)}</div>
+      <div class="choices" style="width:100%">
+        <button class="btn primary" data-a="fate">${t('newLife')}</button>
+        ${kids.filter((k) => k.alive).map((k) => `<button class="btn" data-a="heir:${k.id}">${t('heir')}: ${esc(personName(L, k))} (${k.age})</button>`).join('')}
+        ${canRewind ? `<button class="btn" data-a="rewind">⚡ ${t('rewind')} (${t('rewindLeft', { n: 3 - L.counts.rewinds })})</button>` : ''}
+        <div class="row" style="justify-content:center"><button class="btn small" data-a="sheet:graveyard">🪦 ${t('graveyard')}</button><button class="btn small" data-a="sheet:trophies">🏆 ${t('trophies')}</button><button class="btn small" data-a="home">${t('menu')}</button></div>
+      </div>
+    </div>`;
+}
+
+/** Biểu đồ sức khỏe và hạnh phúc qua từng năm, chấm dấu mốc ở dải dưới. */
+function lifeChart(L) {
+  const h = (L.hist || []).filter((p) => p && typeof p.age === 'number');
+  if (h.length < 3) return '';
+  const W = 360, H = 190, x0 = 26, x1 = W - 84, y0 = 12, y1 = H - 44;
+  const maxAge = Math.max(10, h[h.length - 1].age);
+  const X = (a) => x0 + (a / maxAge) * (x1 - x0);
+  const Y = (v) => y1 - (v / 100) * (y1 - y0);
+  const line = (k) => h.map((p, i) => `${i ? 'L' : 'M'}${X(p.age).toFixed(1)} ${Y(p[k]).toFixed(1)}`).join('');
+  const step = maxAge > 60 ? 20 : 10;
+  const ticks = [];
+  for (let a = 0; a <= maxAge; a += step) ticks.push(a);
+  const last = h[h.length - 1];
+  let ly = { health: Y(last.health), happy: Y(last.happy) };
+  if (Math.abs(ly.health - ly.happy) < 15) { const mid = (ly.health + ly.happy) / 2; const up = ly.health < ly.happy ? 'health' : 'happy'; ly[up] = mid - 7; ly[up === 'health' ? 'happy' : 'health'] = mid + 7; }
+  const miles = (L.miles || []).map((m) => `<g><circle cx="${X(m.age).toFixed(1)}" cy="${H - 22}" r="4.5" fill="${m.tone === 'bad' ? 'var(--muted)' : 'var(--ink)'}" stroke="var(--sheet)" stroke-width="2"/><title>${m.age}: ${esc(tx(m.text))}</title></g>`).join('');
+  const hits = h.map((p) => `<rect x="${(X(p.age) - (x1 - x0) / maxAge / 2).toFixed(1)}" y="${y0}" width="${Math.max(2, (x1 - x0) / maxAge).toFixed(1)}" height="${y1 - y0}" fill="transparent"><title>${t('age')} ${p.age} · ${t('health')} ${p.health} · ${t('happy')} ${p.happy}</title></rect>`).join('');
+  return `<figure class="lifechart">
+    <figcaption><span class="eyebrow">${t('lifeChart')}</span><span class="legend"><i style="background:var(--chart-health)"></i>${t('health')}<i style="background:var(--chart-happy)"></i>${t('happy')}<i class="dot"></i>${t('milestones')}</span></figcaption>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${t('lifeChart')}">
+      ${[25, 50, 75].map((v) => `<line x1="${x0}" x2="${x1}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--rule)" stroke-width="1"/><text x="${x0 - 6}" y="${Y(v) + 4}" text-anchor="end" class="ax">${v}</text>`).join('')}
+      <line x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}" stroke="var(--rule)" stroke-width="1.5"/>
+      ${ticks.map((a) => `<text x="${X(a)}" y="${y1 + 16}" text-anchor="middle" class="ax">${a}</text>`).join('')}
+      <line x1="${x0}" x2="${x1}" y1="${H - 22}" y2="${H - 22}" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 4"/>
+      <path d="${line('happy')}" fill="none" stroke="var(--chart-happy)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="${line('health')}" fill="none" stroke="var(--chart-health)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="${X(last.age)}" cy="${Y(last.health)}" r="4" fill="var(--chart-health)" stroke="var(--sheet)" stroke-width="2"/>
+      <circle cx="${X(last.age)}" cy="${Y(last.happy)}" r="4" fill="var(--chart-happy)" stroke="var(--sheet)" stroke-width="2"/>
+      <text x="${x1 + 10}" y="${ly.health + 4}" class="lbl">${t('health')} ${last.health}</text>
+      <text x="${x1 + 10}" y="${ly.happy + 4}" class="lbl">${t('happy')} ${last.happy}</text>
+      ${hits}${miles}
+    </svg></figure>`;
+}
+function milesBlock(L) {
+  const m = L.miles || [];
+  if (!m.length) return '';
+  return `<div class="section" style="width:100%;text-align:left"><h3>${t('milestones')}</h3><ol class="miles">${m.map((x) => `<li class="${x.tone || ''}"><span class="mono">${x.age}</span>${esc(tx(x.text))}</li>`).join('')}</ol></div>`;
+}
+
+// ───────── Trò chơi nhỏ ─────────
+const MZ = 11; // ô vuông 11×11 (5×5 phòng)
+function makeMaze(guards, extraMoves) {
+  const g = Array.from({ length: MZ }, () => Array(MZ).fill(1));
+  const stack = [[1, MZ - 2]];
+  g[MZ - 2][1] = 0;
+  while (stack.length) {
+    const [x, y] = stack[stack.length - 1];
+    const nb = [[2, 0], [-2, 0], [0, 2], [0, -2]].map(([dx, dy]) => [x + dx, y + dy, dx, dy]).filter(([nx, ny]) => nx > 0 && ny > 0 && nx < MZ - 1 && ny < MZ - 1 && g[ny][nx] === 1);
+    if (!nb.length) { stack.pop(); continue; }
+    const [nx, ny, dx, dy] = nb[Math.floor(Math.random() * nb.length)];
+    g[y + dy / 2][x + dx / 2] = 0; g[ny][nx] = 0; stack.push([nx, ny]);
+  }
+  for (let i = 0; i < 9; i++) { const x = 1 + Math.floor(Math.random() * (MZ - 2)), y = 1 + Math.floor(Math.random() * (MZ - 2)); if ((x + y) % 2 === 1) g[y][x] = 0; }
+  const exit = [MZ - 2, 1];
+  const dist = bfs(g, exit);
+  const start = [1, MZ - 2];
+  const gs = [];
+  const cands = [];
+  for (let y = 1; y < MZ - 1; y++) for (let x = 1; x < MZ - 1; x++) if (!g[y][x] && Math.abs(x - start[0]) + Math.abs(y - start[1]) > 7 && !(x === exit[0] && y === exit[1])) cands.push([x, y]);
+  for (let i = 0; i < guards && cands.length; i++) gs.push(cands.splice(Math.floor(Math.random() * cands.length), 1)[0]);
+  return { kind: 'maze', g, p: start, exit, guards: gs, left: (dist[start[1]][start[0]] || 20) + extraMoves, msg: null };
+}
+function bfs(g, [sx, sy]) {
+  const d = g.map((r) => r.map(() => null));
+  d[sy][sx] = 0;
+  const q = [[sx, sy]];
+  while (q.length) {
+    const [x, y] = q.shift();
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+      const nx = x + dx, ny = y + dy;
+      if (g[ny] && g[ny][nx] === 0 && d[ny][nx] == null) { d[ny][nx] = d[y][x] + 1; q.push([nx, ny]); }
+    }
+  }
+  return d;
+}
+function mazeMove(m, dir) {
+  const [dx, dy] = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }[dir];
+  const nx = m.p[0] + dx, ny = m.p[1] + dy;
+  if (m.g[ny]?.[nx] !== 0) return null;
+  m.p = [nx, ny];
+  m.left--;
+  if (nx === m.exit[0] && ny === m.exit[1]) return 'win';
+  const toP = bfs(m.g, m.p);
+  for (const gd of m.guards) {
+    if (gd[0] === nx && gd[1] === ny) return 'caught';
+    if (Math.random() < 0.55) {
+      const opts = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([a, b]) => [gd[0] + a, gd[1] + b]).filter(([x, y]) => m.g[y]?.[x] === 0);
+      opts.sort((a, b) => (toP[a[1]][a[0]] ?? 99) - (toP[b[1]][b[0]] ?? 99));
+      const pickIt = Math.random() < 0.8 ? opts[0] : opts[Math.floor(Math.random() * opts.length)];
+      if (pickIt) { gd[0] = pickIt[0]; gd[1] = pickIt[1]; }
+    }
+    if (gd[0] === nx && gd[1] === ny) return 'caught';
+  }
+  if (m.left <= 0) return 'caught';
+  return null;
+}
+const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+const SUITS = ['♠', '♥', '♦', '♣'];
+const drawCard = () => ({ v: 1 + Math.floor(Math.random() * 13), s: SUITS[Math.floor(Math.random() * 4)] });
+function makeQuiz(total, level) {
+  const qs = [];
+  const r = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  for (let i = 0; i < total; i++) {
+    let q, a;
+    const k = level === 0 ? r(0, 1) : level === 1 ? r(0, 2) : r(1, 3);
+    if (k === 0) { const x = r(level ? 12 : 2, level ? 89 : 12), y = r(level ? 11 : 1, level ? 59 : 9); q = `${x} + ${y}`; a = x + y; }
+    else if (k === 1) { const x = r(level ? 30 : 8, level ? 99 : 20), y = r(level ? 11 : 1, x - 1); q = `${x} − ${y}`; a = x - y; }
+    else if (k === 2) { const x = r(3, level > 1 ? 19 : 9), y = r(3, 9); q = `${x} × ${y}`; a = x * y; }
+    else { const y = r(3, 12), a0 = r(3, 15); q = `${a0 * y} ÷ ${y}`; a = a0; }
+    const opts = new Set([a]);
+    while (opts.size < 4) opts.add(Math.max(0, a + r(-10, 10) || a + opts.size));
+    qs.push({ q, a, opts: [...opts].sort(() => Math.random() - 0.5) });
+  }
+  return { kind: 'quiz', qs, i: 0, score: 0, t: 8, total, last: null };
+}
+let quizTimer = null;
+function startQuizTimer() {
+  clearInterval(quizTimer);
+  quizTimer = setInterval(() => {
+    const m = ui.mini;
+    if (!m || m.kind !== 'quiz') { clearInterval(quizTimer); return; }
+    m.t--;
+    const el = document.querySelector('.mg-timer');
+    if (el) { el.textContent = `⏱ ${m.t}s`; el.classList.toggle('hot', m.t <= 3); }
+    if (m.t <= 0) quizAnswer(null);
+  }, 1000);
+}
+function quizAnswer(v) {
+  const m = ui.mini;
+  const q = m.qs[m.i];
+  const ok = v === q.a;
+  if (ok) m.score++;
+  m.last = ok ? 'ok' : 'no';
+  m.i++;
+  m.t = 8;
+  if (m.i >= m.qs.length) { clearInterval(quizTimer); finishMini(resolveOlympiad(game.life, m.score, m.total)); }
+  persist();
+  render();
+}
+function initMini(spec, title, emoji) {
+  if (spec.kind === 'maze') return { ...makeMaze(spec.guards || 1, 10), title, emoji: emoji || '🏃' };
+  if (spec.kind === 'cards') return { kind: 'cards', bets: spec.bets, bet: null, card: null, pot: 0, streak: 0, msg: null, title, emoji: emoji || '🎰' };
+  if (spec.kind === 'quiz') { const m = { ...makeQuiz(spec.total, spec.level), title, emoji: emoji || '🏆' }; setTimeout(startQuizTimer, 0); return m; }
+  return null;
+}
+function finishMini(r) {
+  const m = ui.mini;
+  ui.mini = null;
+  clearInterval(quizTimer);
+  if (r) record(r, m.title, false, m.emoji);
+}
+function mgClick(a, b) {
+  const m = ui.mini;
+  const L = game.life;
+  if (!m) return;
+  if (a === 'quit') {
+    if (m.kind === 'maze') { finishMini({ text: { vi: 'Bạn lặng lẽ quay về phòng giam trước khi ai đó phát hiện.', en: 'You quietly slip back to your cell before anyone notices.' }, changes: [], tone: '' }); return; }
+    if (m.kind === 'cards' && m.bet) { finishMini(resolveCasino(L, m.bet, m.pot)); return; }
+    finishMini(null); return;
+  }
+  if (m.kind === 'maze') {
+    const out = mazeMove(m, a);
+    if (out === 'win') finishMini(resolveEscape(L, true));
+    else if (out === 'caught') finishMini(resolveEscape(L, false));
+  } else if (m.kind === 'cards') {
+    if (a === 'bet') {
+      const u = Number(b);
+      if (L.money < u * country(L).gdp / 100) { m.msg = { vi: 'Bạn không đủ tiền cho mức cược này.', en: "You can't cover that bet." }; return; }
+      m.bet = u; m.pot = u; m.card = drawCard(); m.msg = null; return;
+    }
+    if (a === 'cash') { finishMini(resolveCasino(L, m.bet, m.pot)); return; }
+    const next = drawCard();
+    if (next.v === m.card.v) { m.card = next; m.msg = { vi: 'Bằng nhau! Rút lá khác.', en: 'A tie! Draw again.' }; return; }
+    const ok = a === 'hi' ? next.v > m.card.v : next.v < m.card.v;
+    m.prev = m.card; m.card = next;
+    if (!ok) { m.pot = 0; m.lost = true; finishMini(resolveCasino(L, m.bet, 0)); return; }
+    m.pot *= 2; m.streak++; m.msg = { vi: `Đúng! Tiền cược nhân đôi.`, en: 'Correct! Pot doubled.' };
+    if (m.streak >= 5) finishMini(resolveCasino(L, m.bet, m.pot));
+  } else if (m.kind === 'quiz' && a === 'ans') {
+    quizAnswer(Number(b));
+  }
+}
+function miniCard(m) {
+  const L = game.life;
+  const unitMoney = (u) => money(u * country(L).gdp / 100);
+  if (m.kind === 'maze') {
+    const cells = [];
+    for (let y = 0; y < MZ; y++) for (let x = 0; x < MZ; x++) {
+      const isP = m.p[0] === x && m.p[1] === y;
+      const isG = m.guards.some((g) => g[0] === x && g[1] === y);
+      const isE = m.exit[0] === x && m.exit[1] === y;
+      cells.push(`<i class="${m.g[y][x] ? 'w' : ''}">${isP ? '🧍' : isG ? '👮' : isE ? '🚪' : ''}</i>`);
+    }
+    return `<div class="hero">🏃</div><div class="eyebrow">${t('mgMaze')}</div><p class="q small">${t('mgMazeHelp')}</p>
+      <div class="mg-top"><span>👣 ${t('mgMoves', { n: m.left })}</span><span>👮 ×${m.guards.length}</span></div>
+      <div class="maze" style="--n:${MZ}">${cells.join('')}</div>
+      <div class="pad4"><span></span><button class="kbtn" data-a="mg:up" aria-label="up">⬆️</button><span></span><button class="kbtn" data-a="mg:left" aria-label="left">⬅️</button><button class="kbtn" data-a="mg:down" aria-label="down">⬇️</button><button class="kbtn" data-a="mg:right" aria-label="right">➡️</button></div>
+      <button class="btn small" data-a="mg:quit">${t('mgGiveUp')}</button>`;
+  }
+  if (m.kind === 'cards') {
+    const card = (c) => c ? `<div class="pcard ${c.s === '♥' || c.s === '♦' ? 'red' : ''}"><b>${RANKS[c.v - 1]}</b><span>${c.s}</span></div>` : '';
+    if (!m.bet) return `<div class="hero">🎰</div><div class="eyebrow">${t('mgCards')}</div><p class="q small">${t('mgCardsHelp')}</p>${m.msg ? `<p class="err" style="text-align:center;margin:0">${esc(tx(m.msg))}</p>` : ''}
+      <div class="choices">${m.bets.map((u, i) => `<button class="choice" data-a="mg:bet:${u}">${i ? '💰💰' : '💰'} ${t('mgBet')} ${unitMoney(u)}</button>`).join('')}<button class="btn small" data-a="mg:quit">${t('mgLeave')}</button></div>`;
+    return `<div class="eyebrow">${t('mgCards')}</div>
+      <div class="mg-top"><span>${t('mgPot')}: <b class="mono">${unitMoney(m.pot)}</b></span><span>🔥 ×${m.streak}</span></div>
+      <div class="cardrow">${m.prev ? `<div class="ghost">${card(m.prev)}</div>` : ''}${card(m.card)}</div>
+      ${m.msg ? `<p class="q small" style="color:var(--good)">${esc(tx(m.msg))}</p>` : `<p class="q small">${t('mgNext')}</p>`}
+      <div class="grid2"><button class="choice" data-a="mg:hi">⬆️ ${t('mgHi')}</button><button class="choice" data-a="mg:lo">⬇️ ${t('mgLo')}</button></div>
+      ${m.streak ? `<button class="btn primary" data-a="mg:cash">💵 ${t('mgCash')} ${unitMoney(m.pot)}</button>` : ''}`;
+  }
+  if (m.kind === 'quiz') {
+    const q = m.qs[Math.min(m.i, m.qs.length - 1)];
+    return `<div class="hero">🏆</div><div class="eyebrow">${t('mgQuiz')}</div>
+      <div class="mg-top"><span>${t('mgQ', { n: m.i + 1, m: m.total })} · ✅ ${m.score}</span><span class="mg-timer${m.t <= 3 ? ' hot' : ''}">⏱ ${m.t}s</span></div>
+      ${m.last ? `<p class="q small" style="color:${m.last === 'ok' ? 'var(--good)' : 'var(--bad)'}">${m.last === 'ok' ? '✅' : '❌'}</p>` : ''}
+      <p class="quizq mono">${q.q} = ?</p>
+      <div class="grid2">${q.opts.map((o) => `<button class="choice mono" data-a="mg:ans:${o}">${o}</button>`).join('')}</div>`;
+  }
+  return '';
+}
+
+// ───────── Mục tiêu, thành tựu, nghĩa trang ─────────
+function goalsBlock(L, compact) {
+  if (!L.goals) return '';
+  const rows = L.goals.map((g) => { const d = goalById[g.id]; return d ? `<li class="${g.done != null ? 'done' : ''}"><span class="gem">${g.done != null ? '✅' : d.em}</span><span>${esc(tx(d.name))}${g.done != null ? ` <small class="muted">· ${t('age')} ${g.done}</small>` : ''}</span></li>` : ''; }).join('');
+  return `<div class="${compact ? 'goals compact' : 'box'}">${compact ? '' : `<b>🎯 ${t('goals')}</b>`}<ul class="goallist">${rows}</ul></div>`;
+}
+const goalCount = (L) => (L.goals || []).filter((g) => g.done != null).length;
+function sheetTrophies() {
+  const got = Object.keys(profile.ach).length;
+  const ribIds = Object.keys(RIBBONS);
+  const ribGot = ribIds.filter((r) => profile.ribbons[r]).length;
+  const ach = ACHIEVEMENTS.map((a) => { const on = !!profile.ach[a.id]; return `<div class="item ${on ? '' : 'dead'}"><span class="avatar sm">${on ? a.em : '🔒'}</span><div class="main"><b>${esc(tx(a.name))}</b><small>${esc(tx(a.why))}</small></div></div>`; }).join('');
+  const ribs = ribIds.map((r) => { const n = profile.ribbons[r] || 0; return `<div class="rib ${n ? '' : 'off'}"><b>${n ? esc(tx(RIBBONS[r].name)) : '???'}</b><small>${n ? `${esc(tx(RIBBONS[r].why))} · ×${n}` : esc(tx(RIBBONS[r].why))}</small></div>`; }).join('');
+  return `${head(`🏆 ${t('trophies')}`, '#a16207')}
+    <dl class="kv"><dt>🪦</dt><dd>${t('livesLived', { n: profile.lives.length })}</dd><dt>🌍</dt><dd>${t('countriesBorn', { n: profile.countries.length })}</dd><dt>🎯</dt><dd>${t('goalsTotal', { n: profile.goalsDone })}</dd><dt>🏆</dt><dd>${t('achCount', { n: got, m: ACHIEVEMENTS.length })}</dd></dl>
+    <div class="section"><h3>🏆 ${t('trophies')}</h3><div class="list">${ach}</div></div>
+    <div class="section"><h3>🎀 ${t('ribbonBook')} · ${t('ribbonCount', { n: ribGot, m: ribIds.length })}</h3><div class="stamps">${ribs}</div></div>`;
+}
+function sheetGraveyard() {
+  if (!profile.lives.length) return head(`🪦 ${t('graveyard')}`, '#475569') + `<p class="note">${t('noGraves')}</p>`;
+  const rows = profile.lives.map((x) => {
+    const c = byCode[x.country] || byCode.US;
+    const rib = (x.ribbons || []).slice(0, 3).map((r) => (RIBBONS[r] ? tx(RIBBONS[r].name) : '')).filter(Boolean).join(', ');
+    return `<div class="item"><span class="avatar sm">🪦<span class="fl" style="font-size:14px">${c.flag}</span></span><div class="main"><b>${esc(`${x.last} ${x.first}`.trim())}</b><small>${t('diedAt', { age: x.age })} · ${esc(tx(x.cause))}${rib ? ` · 🎀 ${esc(rib)}` : ''}${x.custom ? ` · ${t('customized')}` : ''}</small></div><div class="side"><span class="mono">${x.goals}/3 🎯</span>${(x.gen || 1) > 1 ? `<span>${t('gen', { n: x.gen })}</span>` : ''}</div></div>`;
+  }).join('');
+  return `${head(`🪦 ${t('graveyard')}`, '#475569')}<p class="muted" style="margin:0">${t('livesLived', { n: profile.lives.length })}</p><div class="list">${rows}</div>`;
+}
+
+// ───────── Bảng trượt ─────────
+const EDU_LBL = { none: 'eduNone', highschool: 'eduHs', bachelor: 'eduBa', master: 'eduMa', phd: 'eduPhd' };
+const STAGE_EM = { primary: '🏫', secondary: '🏫', uni: '🎓', grad: '🎓', trade: '🧰' };
+function stageLine(L) {
+  const e = L.edu;
+  if (e.stage === 'uni') return `${majorById[e.major]?.em || '🎓'} ${tx(majorById[e.major]?.name) || t('uni')}`;
+  if (e.stage === 'grad') return `${majorById[e.major]?.em || '🎓'} ${t(e.gradLevel === 'phd' ? 'eduPhd' : 'eduMa')} · ${tx(majorById[e.major]?.name)}`;
+  if (e.stage === 'trade') return `${tradeById[e.trade]?.em || '🧰'} ${tx(tradeById[e.trade]?.name)}`;
+  return e.stage ? t(e.stage) : '';
+}
+function needText(m) {
+  if (m.trade) return t('needTrade', { x: tx(tradeById[m.trade].name) });
+  const lvl = t(EDU_LBL[m.level]);
+  const majors = m.major ? m.major.slice(0, 2).map((x) => tx(majorById[x].name)).join(' / ') : t('anyMajor');
+  return t('needDegree', { x: `${lvl} ${majors}` });
+}
+function sheetWork() {
+  const L = game.life;
+  const e = L.edu;
+  let html = head(`💼 ${t('tabWork')}`, 'var(--b-work)');
+  if (L.prison) return html + `<dl class="kv"><dt>⛓️ ${t('prison')}</dt><dd>${t('prisonLeft', { n: L.prison.years - L.prison.served })}</dd><dt>${t('cause')}</dt><dd>${esc(tx(L.prison.crime))}</dd></dl><p class="note">${t('prisonNote')}</p>`;
+  // Hồ sơ học tập
+  const degs = (e.degrees || []).map((d) => `<li>🎓 ${esc(tx(degreeName(d)))}${d.honors ? ` <span class="tag">${t('honors')}</span>` : ''}</li>`).concat((e.trades || []).map((x) => `<li>${tradeById[x].em} ${t('trade')}: ${esc(tx(tradeById[x].name))}</li>`)).join('');
+  html += `<dl class="kv"><dt>🎓 ${t('eduLevel')}</dt><dd>${t(EDU_LBL[e.level])}</dd>
+    ${e.stage ? `<dt>${STAGE_EM[e.stage]} ${t('school')}</dt><dd>${esc(stageLine(L))}</dd>` : ''}
+    ${['uni', 'grad', 'trade'].includes(e.stage) ? `<dt>⏳ ${t('yearOf', { n: e.years + 1, m: stageLength(L) })}</dt><dd>${prog(((e.years + 0.5) / stageLength(L)) * 100)}</dd>` : ''}
+    ${e.stage && e.stage !== 'trade' ? `<dt>📝 ${t('gpa')}</dt><dd>${lvl(e.gpa)}</dd>` : ''}
+    ${e.scholarship ? `<dt>🏅</dt><dd>${t('scholarship')}</dd>` : ''}${e.intern ? `<dt>🗂️</dt><dd>${t('internTag')}</dd>` : ''}</dl>
+    ${degs ? `<div class="box"><b>${t('degrees')}</b><ul class="degs">${degs}</ul></div>` : ''}`;
+  if (e.stage === 'primary' || e.stage === 'secondary') {
+    html += `<div class="section"><h3>${t('school')}</h3><div class="list">${li('w:study', '📚', t('study'))}${li('w:skip', '🛹', t('skip'))}${e.stage === 'secondary' ? li('w:olympiad', '🏆', t('olympiad')) : ''}${L.age >= 16 ? li('w:dropout', '🚪', t('dropout'), '', { danger: true }) : ''}</div></div>`;
+  } else if (e.stage === 'uni' || e.stage === 'grad') {
+    html += `<div class="section"><h3>${t('student')}</h3><div class="list">${li('w:study', '📚', t('study'))}${li('w:skip', '🛌', t('skip'))}${li('w:club', '🎭', t('club'))}${li('w:parttime', '☕', t('parttime'))}${!e.scholarship ? li('w:scholar', '🏅', t('scholar')) : ''}${e.stage === 'uni' && !e.exchanged ? li('w:exchange', '✈️', t('exchange')) : ''}${e.years + 1 >= stageLength(L) - 1 ? li('w:intern', '🗂️', t('intern')) : ''}${e.stage === 'uni' ? li('w:switch', '🔀', t('switchMajor')) : ''}${li('w:dropout', '🚪', t('dropout'), '', { danger: true })}</div></div>`;
+  } else if (e.stage === 'trade') {
+    html += `<div class="section"><h3>${t('trade')}</h3><div class="list">${li('w:study', '🧰', t('study'))}${li('w:parttime', '☕', t('parttime'))}${li('w:dropout', '🚪', t('dropout'), '', { danger: true })}</div></div>`;
+  } else if (L.age >= 17 && e.level !== 'none') {
+    html += `<div class="section"><h3>${t('studyOptions')}</h3><div class="list">${li('w:uni', '🎓', t('enrolUni'), t('uniSub'))}${li('w:trade', '🧰', t('enrolTrade'), t('tradeSub'))}${['bachelor', 'master', 'phd'].includes(e.level) ? li('w:grad', '📜', t('enrolGrad'), t('gradSub')) : ''}</div></div>`;
+  }
+  if (L.job) html += jobBlock(L);
+  html += specialBlock(L);
+  if (L.age < 15) return html + `<p class="note">${t('tooYoung')}</p>`;
+  if (!L.job) {
+    const list = jobOpenings(L).map((c) => {
+      const req = Object.entries(c.min).map(([k, v]) => `${STAT_EM[k] || ''}${v}+`).join(' ');
+      const rk = entryRank(L, c.id, entryBonus(L, c.id));
+      const pay = salaryFor(L, c.id, rk, 'mid', false);
+      return li(`job:${c.id}`, JOB_EM[c.id] || '💼', esc(tx(ladderOf(c.id)[rk].name)), `${esc(tx(c.title))} · ${money(pay)}${req ? ` · ${t('needs')}: ${req}` : ''}`);
+    }).join('');
+    html += `<div class="section"><h3>${t('openings')}</h3><div class="list">${list}</div></div>`;
+    const locked = jobsLocked(L);
+    if (locked.length) html += `<div class="section"><h3>🔒 ${t('lockedJobs')}</h3><div class="list">${locked.map(([c, m]) => li('noop', JOB_EM[c.id] || '💼', esc(tx(c.title)), `${money(c.pay * country(L).gdp)} · ${esc(needText(m))}`, { disabled: true })).join('')}</div></div>`;
+  }
+  return html;
+}
+
+function jobBlock(L) {
+  const j = L.job;
+  const c = careerById[j.id];
+  const lad = ladderOf(j.id);
+  const co = COMPANIES[j.company || 'mid'];
+  const nx = nextRank(L);
+  const ok = (b) => (b ? '✅' : '⬜');
+  const next = nx.top ? `<p class="note" style="margin:0">🏔️ ${t('topRank')}</p>` : `<div class="box"><b>⬆️ ${t('nextRank')}: ${esc(tx(nx.rank.name))}</b>
+      <ul class="goallist"><li><span class="gem">${ok(nx.yearsHave >= nx.yearsNeed)}</span><span>⏳ ${t('needYears', { a: nx.yearsHave, b: nx.yearsNeed })}</span></li>
+      <li><span class="gem">${ok(j.perf >= nx.perfNeed)}</span><span>📈 ${t('needPerf', { n: nx.perfNeed })}</span></li>
+      ${nx.rank.need ? `<li><span class="gem">${ok(!nx.need)}</span><span>🎓 ${nx.rank.need.edu ? t(nx.rank.need.edu === 'phd' ? 'eduPhd' : 'eduMa') : `${STAT_EM[Object.keys(nx.rank.need)[0]]} ${Object.values(nx.rank.need)[0]}+`}</span></li>` : ''}</ul></div>`;
+  const steps = lad.map((r, i) => `<li class="${i < j.level ? 'done' : i === j.level ? 'cur' : ''}"><span class="gem">${i < j.level ? '✅' : i === j.level ? '📍' : '🔒'}</span><span>${esc(tx(r.name))}<small class="muted"> · ${r.y ? t('yrsShort', { n: r.y }) : t('entry')} · ×${r.m}</small></span></li>`).join('');
+  return `<div class="section"><h3>${t('job')}</h3>
+    <div class="profile"><span class="avatar">${JOB_EM[j.id] || '💼'}</span><div class="tx"><b>${esc(tx(rankName(j)))}</b><small class="muted">${esc(tx(c.title))} · ${co.em} ${esc(tx(co.name))}</small><small class="muted">💵 ${money(j.salary)}/${t('yearWord')} · ⏳ ${t('expYears', { n: effExp(L, j.id) })}</small></div></div>
+    <dl class="kv"><dt>📈 ${t('perf')}</dt><dd>${lvl(j.perf)}</dd></dl>
+    ${next}
+    <div class="list">${li('w:hard', '💪', t('workHard'))}${!nx.top ? li('w:promote', '⬆️', t('promoteAsk'), nx.eligible ? t('promoteReady') : '') : ''}${li('w:raise', '💰', t('raise'))}${li('w:quit', '🚪', t('quit'), '', { danger: true })}</div>
+    <details class="box"><summary><b>🪜 ${t('ladder')}</b></summary><ul class="goallist ladder">${steps}</ul></details></div>`;
+}
+function specialBlock(L) {
+  const sp = L.special;
+  if (sp) {
+    const s = SPECIALS[sp.id];
+    return `<div class="section"><h3>🌟 ${t('special')}</h3>
+      <div class="profile"><span class="avatar">${s.em}</span><div class="tx"><b>${esc(tx(s.levels[sp.level]))}</b><small class="muted">${esc(tx(s.name))} · ${t('levelOf', { n: sp.level + 1, m: s.levels.length })} · ~${money(s.pay[sp.level] * country(L).gdp)}</small></div></div>
+      <dl class="kv"><dt>📈 ${t('perf')}</dt><dd>${lvl(sp.perf)}</dd><dt>⭐ ${t('fame')}</dt><dd>${lvl(L.stats.fame)}</dd></dl>
+      <div class="list">${li('sp:big', '🚀', esc(tx(s.big)))}${li('sp:train', '🏋️', esc(tx(s.train)))}${li('sp:promo', '🎙️', esc(tx(s.promo)))}${li('sp:quit', '🚪', t('quitSpecial'), '', { danger: true })}</div></div>`;
+  }
+  if (L.age < 14 || L.prison) return '';
+  const rows = Object.entries(SPECIALS).map(([id, s]) => li(`sp:join:${id}`, s.em, esc(tx(s.join)), `${esc(tx(s.name))} · ${STAT_EM[s.stat]} ${s.req}+ · ${t('ageRange', { a: s.minAge, b: s.maxAge })}`, { disabled: !canJoin(L, id) })).join('');
+  return `<div class="section"><h3>🌟 ${t('special')}</h3><div class="list">${rows}</div></div>`;
+}
+function personRow(L, p) {
+  return `<button class="item ${p.alive ? '' : 'dead'}" data-a="person:${p.id}"><span class="avatar sm">${face(p.gender, p.age, p.role, p.alive)}</span><div class="main"><b>${esc(personName(L, p))}</b><small>${t('roles.' + p.role)} · ${p.age}${p.alive ? '' : ' †'}</small></div><div class="side">${p.alive ? lvl(p.closeness) : ''}</div></button>`;
+}
+function sheetPeople() {
+  const L = game.life;
+  const groups = [
+    ['love', '💘', ['spouse', 'partner', 'lover']],
+    ['family', '👪', ['mother', 'father', 'sibling', 'half', 'pet']],
+    ['children', '🧒', ['child']],
+    ['friends', '🤝', ['bestie', 'friend']],
+    ['others', '👥', ['mentor', 'rival', 'contact', 'ex']],
+  ];
+  let html = head(`❤️ ${t('tabPeople')}`, 'var(--b-people)');
+  for (const [g, em, roles] of groups) {
+    const list = L.people.filter((p) => roles.includes(p.role) && (p.alive || g !== 'others')).sort((a, b) => roles.indexOf(a.role) - roles.indexOf(b.role));
+    if (!list.length && g !== 'love') continue;
+    html += `<div class="section"><h3>${em} ${t(g)}</h3>${list.length ? `<div class="list">${list.slice(-12).map((p) => personRow(L, p)).join('')}</div>` : `<p class="note">${t('alone')}</p>`}</div>`;
+  }
+  return html;
+}
+function sheetPerson(id) {
+  const L = game.life;
+  const p = L.people.find((x) => x.id === id);
+  if (!p) return head('—');
+  const acts = personActions(L, p).map(([k, label]) => li(`pa:${p.id}:${k}`, PA_EM[k] || '•', esc(tx(label)), '', { danger: DANGER_PA.includes(k) })).join('');
+  const romantic = ['partner', 'spouse', 'lover'].includes(p.role);
+  const status = p.role === 'spouse' ? `${t('married')}${L.marriage && L.marriage.spouseId === p.id && L.marriage.prenup ? ` · ${t('prenupYes')}` : ''}` : p.engaged ? t('engaged') : p.cohab ? t('cohab') : '';
+  return `${head(esc(personName(L, p)), 'var(--b-people)', 'sheet:people')}
+    <div class="profile"><span class="avatar lg">${face(p.gender, p.age, p.role, p.alive)}</span><div class="tx"><b>${esc(personName(L, p))}</b><small class="muted">${t('roles.' + p.role)} · ${t(p.gender)} · ${p.age}${p.alive ? '' : ' †'}</small>${status ? `<span class="tag">${status}</span>` : ''}</div></div>
+    <dl class="kv"><dt>🤝 ${t('closeness')}</dt><dd>${lvl(p.closeness)}</dd><dt>✨ ${t('looks')}</dt><dd>${lvl(p.looks)}</dd><dt>🧠 ${t('smarts')}</dt><dd>${lvl(p.smarts)}</dd>
+    ${p.age >= 18 ? `<dt>💼 ${t('job')}</dt><dd>${p.job ? esc(tx(p.job)) : t('unemployed')}</dd>${p.income ? `<dt>💵 ${t('salary')}</dt><dd class="mono">${money(p.income)}</dd>` : ''}${p.wealth ? `<dt>💰 ${t('netWorth')}</dt><dd class="mono">${money(p.wealth)}</dd>` : ''}` : ''}
+    ${romantic ? `<dt>⏳ ${t('together')}</dt><dd>${p.years || 0} ${t('years')}</dd>` : ''}</dl>
+    ${acts ? `<div class="list">${acts}</div>` : ''}`;
+}
+const ACT_GROUPS = ['prison', 'kid', 'teen', 'mind', 'net', 'night', 'love', 'crime'];
+function sheetActs() {
+  const L = game.life;
+  const acts = availableActivities(L);
+  const groups = ACT_GROUPS.filter((g) => acts.some((a) => a.group === g));
+  const g = groups.includes(ui.sub) ? ui.sub : groups.length === 1 ? groups[0] : null;
+  if (!g) {
+    let html = head(`⭐ ${t('tabActs')}`, 'var(--b-acts)');
+    html += `<div class="list">${groups.map((x) => {
+      const list = acts.filter((a) => a.group === x);
+      const sub = x === 'net' ? `${followersText(L.social?.followers)} ${t('followers')}` : list.slice(0, 3).map((a) => tx(a.label)).join(', ') + (list.length > 3 ? '…' : '');
+      return li(`sub:${x}`, GROUP_EM[x], t('actGroups.' + x), esc(sub));
+    }).join('')}</div>`;
+    return html;
+  }
+  let html = head(`${GROUP_EM[g]} ${t('actGroups.' + g)}`, 'var(--b-acts)', groups.length > 1 ? 'sub:' : null);
+  if (L.prison) html += `<p class="note">${t('prisonNote')}</p>`;
+  if (g === 'net') html += `<div class="profile"><span class="avatar">📱</span><div class="tx"><b>${followersText(L.social?.followers)} ${t('followers')}</b><small class="muted">${t('netHelp')}</small></div></div>`;
+  html += `<div class="list">${acts.filter((a) => a.group === g).map((a) => li(`act:${a.id}`, ACT_EM[a.id] || GROUP_EM[g], esc(tx(a.label)), a.units ? `${t('cost')}: ${money(a.units * country(L).gdp / 100)}` : '')).join('')}</div>`;
+  return html;
+}
+function sheetSelf() {
+  const L = game.life;
+  const c = country(L);
+  const showHidden = settings.godEnabled;
+  const row = (k) => `<div class="stat"><span class="em">${STAT_EM[k]}</span><span class="nm">${t(k)}</span>${lvl(L.stats[k])}</div>`;
+  return `${head(`${face(L.gender, L.age)} ${t('tabSelf')}`, '#475569')}
+    <div class="profile"><span class="avatar lg">${face(L.gender, L.age)}<span class="fl">${c.flag}</span></span><div class="tx"><b>${esc(fullName(L))}</b><small class="muted">${t('yearsOld', { n: L.age })} · ${t(L.gender)} · ${esc(tx(c.name))}</small></div></div>
+    ${goalsBlock(L)}
+    <div class="box">${STAT_KEYS.map(row).join('')}</div>
+    <div class="section"><h3>${t('hidden')}</h3>${showHidden ? `<div class="box">${HIDDEN_KEYS.map(row).join('')}</div>` : `<p class="note">${t('hiddenNote')}</p>`}</div>
+    <dl class="kv">
+      <dt>🌍 ${t('country')}</dt><dd>${c.flag} ${esc(tx(c.name))}</dd>
+      <dt>⏳ ${t('lifeExp')}</dt><dd class="mono">${c.life}</dd>
+      <dt>📊 ${t('incomeTier')}</dt><dd>${t('tiers.' + tierOf(c))}</dd>
+      <dt>💰 ${t('wealth')}</dt><dd>${t(L.wealth)}</dd>
+      <dt>💘 ${t('orientation')}</dt><dd>${t(L.orientation)}</dd>
+      <dt>🧬 ${t('traits')}</dt><dd>${L.traits.length ? L.traits.map((k) => esc(tx(TRAITS[k].name))).join(', ') : t('traitsNone')}</dd>
+      ${L.pregnancy && L.pregnancy.carrier === 'self' ? `<dt>🤰 ${t('pregnant')}</dt><dd>✓</dd>` : ''}
+      ${L.ill ? `<dt>🤒 ${t('ill')}</dt><dd>${esc(tx(L.ill.name))}</dd>` : ''}
+      ${L.record ? `<dt>📁 ${t('record')}</dt><dd>✓</dd>` : ''}
+    </dl>
+    ${L.age >= 18 && !L.prison ? emigrateBlock(L) : ''}
+    ${cobornBlock(L)}`;
+}
+function emigrateBlock(L) {
+  const sel = ui.emig && ui.emig !== L.country ? ui.emig : COUNTRIES.find((c) => c.code !== L.country).code;
+  ui.emig = sel;
+  const opts = [...COUNTRIES].filter((c) => c.code !== L.country).sort((a, b) => tx(a.name).localeCompare(tx(b.name))).map((c) => `<option value="${c.code}" ${c.code === sel ? 'selected' : ''}>${c.flag} ${esc(tx(c.name))}</option>`).join('');
+  return `<div class="section"><h3>✈️ ${t('emigrate')}</h3><div class="box">
+    <div class="field"><label for="emig">${t('emigrateTo')}</label><select id="emig" data-emig="1">${opts}</select></div>
+    <dl class="kv" style="box-shadow:none;padding:0"><dt>${t('odds')}</dt><dd class="mono">${Math.round(emigrationOdds(L, sel) * 100)}%</dd><dt>${t('feeLbl')}</dt><dd class="mono">${money(emigrationCost(sel))}</dd><dt>${t('lifeExp')}</dt><dd class="mono">${byCode[sel].life}</dd><dt>${t('incomeTier')}</dt><dd>${t('tiers.' + tierOf(byCode[sel]))}</dd></dl>
+    <button class="btn primary" data-a="emigrate">✈️ ${t('emigrate')}</button></div></div>`;
+}
+function cobornBlock(L) {
+  if (!L.coborns || !L.coborns.length) return '';
+  return `<div class="section"><h3>👥 ${t('coborns')}</h3><div class="list">${L.coborns.map((cb) => {
+    const c = byCode[cb.country];
+    const last = cb.notes.length ? tx(cb.notes[cb.notes.length - 1]) : '';
+    return `<div class="item ${cb.alive ? '' : 'dead'}"><span class="avatar sm">${face(cb.gender, cb.age, null, cb.alive)}<span class="fl" style="font-size:14px">${c.flag}</span></span><div class="main"><b>${esc(cobornName(cb))}</b><small>${esc(tx(c.name))} · ${cb.alive ? `${cb.age} · ${t('cbAlive')}` : t('cbDead')}${last ? ` · ${esc(last)}` : ''}</small></div><div class="side">${cb.kids ? `${cb.kids} ${t('kids').toLowerCase()}` : ''}</div></div>`;
+  }).join('')}</div></div>`;
+}
+
+function sheetAssets() {
+  const L = game.life;
+  const e = L.econ;
+  const gdp = country(L).gdp;
+  const ph = PHASES[e.phase];
+  const PH_EM = { growth: '📈', peak: '⛰️', recession: '📉', crisis: '🔥' };
+  const top = (back) => head(`🏠 ${t('tabAssets')}`, 'var(--b-assets)', back);
+  const summary = `<dl class="kv"><dt>💵 ${t('cash')}</dt><dd class="mono">${money(L.money)}</dd><dt>💰 ${t('netWorth2')}</dt><dd class="mono">${money(netWorth(L))}</dd><dt>${PH_EM[e.phase] || '🌍'} ${t('economy')}</dt><dd style="color:${e.phase === 'growth' ? 'var(--good)' : e.phase === 'crisis' || e.phase === 'recession' ? 'var(--bad)' : 'var(--gold)'}">${esc(tx(ph.name))}</dd></dl>`;
+  if (L.age < 18) return top() + summary + `<p class="note">${t('minorAssets')}</p>`;
+  const sub = ['inv', 'homes', 'cars', 'biz'].includes(ui.sub) ? ui.sub : null;
+  const item = (em, title, small, btns) => `<div class="item stack"><span class="em" style="width:40px;height:40px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:22px;flex:none">${em}</span><div class="main"><b>${title}</b><small>${small}</small></div><div class="row" style="flex-wrap:nowrap">${btns}</div></div>`;
+  if (!sub) {
+    const invTotal = Object.keys(ASSETS).reduce((s, k) => s + holdingValue(L, k), 0);
+    const b = L.biz;
+    return top() + summary + `<div class="list">
+      ${li('sub:inv', '📈', t('invest'), invTotal > 0 ? t('holdTotal', { v: money(invTotal) }) : t('noneYet'))}
+      ${li('sub:homes', '🏠', t('homes'), L.homes.length ? t('owned', { n: L.homes.length }) : t('noneYet'))}
+      ${li('sub:cars', '🚗', t('cars'), L.cars.length ? t('owned', { n: L.cars.length }) : t('noneYet'))}
+      ${li('sub:biz', '🏢', t('business'), b ? `${esc(tx(INDUSTRIES.find((x) => x.id === b.ind).name))} · ${money(b.value)}` : t('noneYet'))}
+    </div>`;
+  }
+  let html = head(`${{ inv: '📈', homes: '🏠', cars: '🚗', biz: '🏢' }[sub]} ${t({ inv: 'invest', homes: 'homes', cars: 'cars', biz: 'business' }[sub])}`, 'var(--b-assets)', 'sub:') + `<dl class="kv"><dt>💵 ${t('cash')}</dt><dd class="mono">${money(L.money)}</dd></dl>`;
+  if (sub === 'inv') {
+    html += `<div class="list">${Object.entries(ASSETS).map(([k, a]) => {
+      const v = holdingValue(L, k);
+      const sub2 = k === 'savings' ? t('rate', { r: Math.round(savingsRate(L) * 100) }) : `${esc(tx(a.risk))} · ${Math.round(e.prices[k])}`;
+      return item(ASSET_EM[k] || '📈', esc(tx(a.name)), `${sub2}${v > 0 ? ` · ${t('holding')} <span class="mono">${money(v)}</span>` : ''}`, `<button class="btn small" data-a="inv:${k}:0.1">${t('buy10')}</button><button class="btn small" data-a="inv:${k}:0.5">${t('buy50')}</button>${v > 0 ? `<button class="btn small danger" data-a="div:${k}">${t('sellAll')}</button>` : ''}`);
+    }).join('')}</div>`;
+  } else if (sub === 'homes') {
+    const owned = L.homes.map((h, i) => {
+      const d = HOMES.find((x) => x.id === h.id);
+      return item(HOME_EM[h.id] || '🏠', `${esc(tx(d.name))} ✓`, `<span class="mono">${money(h.value)}</span>${h.debt > 0 ? ` · ${t('debt')} <span class="mono">${money(h.debt)}</span>` : ''} · ${h.rented ? t('rented') : t('living')}`, `<button class="btn small" data-a="home-rent:${i}">${h.rented ? t('moveIn') : t('rentOut')}</button><button class="btn small danger" data-a="home-sell:${i}">${t('sell')}</button>`);
+    }).join('');
+    const market = HOMES.map((h) => item(HOME_EM[h.id] || '🏠', esc(tx(h.name)), `<span class="mono">${money(homePrice(L, h))}</span>`, `<button class="btn small" data-a="home-buy:${h.id}:0">${t('buyCash')}</button><button class="btn small" data-a="home-buy:${h.id}:1">${t('buyLoan')}</button>`)).join('');
+    if (owned) html += `<div class="list">${owned}</div>`;
+    html += `<div class="list">${market}</div>`;
+  } else if (sub === 'cars') {
+    const owned = L.cars.map((c, i) => item(CAR_EM[c.id] || '🚗', `${esc(tx(CARS.find((x) => x.id === c.id).name))} ✓`, `<span class="mono">${money(c.value)}</span>`, `<button class="btn small danger" data-a="car-sell:${i}">${t('sell')}</button>`)).join('');
+    if (owned) html += `<div class="list">${owned}</div>`;
+    html += `<div class="list">${CARS.map((c) => item(CAR_EM[c.id] || '🚗', esc(tx(c.name)), `<span class="mono">${money(c.x * gdp)}</span>`, `<button class="btn small" data-a="car-buy:${c.id}">${t('buyCash')}</button>`)).join('')}</div>`;
+  } else if (L.biz) {
+    const b = L.biz;
+    const ind = INDUSTRIES.find((x) => x.id === b.ind);
+    html += `<div class="profile"><span class="avatar">${IND_EM[b.ind] || '🏢'}</span><div class="tx"><b>${esc(tx(ind.name))}</b>${b.evade ? `<small style="color:var(--bad)">${t('evading')}</small>` : ''}</div></div>
+      <dl class="kv"><dt>🏷️ ${t('bizValue')}</dt><dd class="mono">${money(b.value)}</dd><dt>📊 ${t('lastProfit')}</dt><dd class="mono" style="color:${b.lastProfit >= 0 ? 'var(--good)' : 'var(--bad)'}">${money(b.lastProfit)}</dd></dl>
+      <div class="list">${li('biz:invest', '💸', t('bizInvest'))}${li('biz:marketing', '📣', t('marketing'))}${li('biz:evade', '🧾', b.evade ? t('evadeOff') : t('evadeOn'))}${li('biz:sell', '🤝', t('bizSell'))}${li('biz:close', '🔒', t('bizClose'), '', { danger: true })}</div>`;
+  } else {
+    html += `<div class="list">${INDUSTRIES.map((ind) => li(`biz-start:${ind.id}`, IND_EM[ind.id] || '🏢', esc(tx(ind.name)), `${t('capital')}: <span class="mono">${money(bizCapital(L, ind))}</span>`)).join('')}</div>`;
+  }
+  return html;
+}
+function sheetGod() {
+  const L = game.life;
+  if (!settings.godEnabled) return head(`⚡ ${t('god')}`, '#a16207') + `<p class="note">${t('godOff')}</p>`;
+  const g = ui.god;
+  const c = country(L);
+  const slider = (k) => `<div class="slider"><span>${STAT_EM[k]}</span><label for="g-${k}">${t(k)}</label><input id="g-${k}" type="range" min="0" max="100" value="${g.stats[k]}" data-g="${k}"><output class="mono">${g.stats[k]}</output></div>`;
+  const countries = [...COUNTRIES].sort((a, b) => tx(a.name).localeCompare(tx(b.name))).map((x) => `<option value="${x.code}" ${x.code === L.country ? 'selected' : ''}>${x.flag} ${esc(tx(x.name))}</option>`).join('');
+  return `${head(`⚡ ${t('god')}`, '#a16207')}
+    <p class="note">${t('godNote')}</p>
+    ${L.dead ? '' : `<div class="box">${STAT_KEYS.map(slider).join('')}</div><div class="section"><h3>${t('hidden')}</h3><div class="box">${HIDDEN_KEYS.map(slider).join('')}</div></div>
+    <div class="box"><div class="field"><label for="g-money">💵 ${t('money')} (${c.cur})</label><input id="g-money" type="number" step="1" value="${Math.round(g.money)}" data-gm="1"></div></div>
+    <button class="btn primary" data-a="god-apply">${t('godApply')}</button>
+    <div class="list">${li('god-cure', '💊', t('cure'))}${li('god-debt', '🧾', t('clearDebt'))}</div>
+    <div class="box"><div class="field"><label for="g-country">🌍 ${t('moveCountry')}</label><div class="row" style="flex-wrap:nowrap"><select id="g-country" style="flex:1;min-width:0">${countries}</select><button class="btn small" data-a="god-move">${t('confirm')}</button></div></div></div>`}
+    <button class="btn" data-a="rewind" ${L.snapshots.length && L.counts.rewinds < 3 ? '' : 'disabled'}>⏪ ${t('rewind')} · ${t('rewindLeft', { n: 3 - L.counts.rewinds })}</button>`;
+}
+function sheetSettings() {
+  const tog = (k, title, sub) => `<label class="toggle" for="set-${k}"><span><b>${title}</b><small>${sub}</small></span><input id="set-${k}" type="checkbox" data-set="${k}" ${settings[k] ? 'checked' : ''}></label>`;
+  const packs = game.packs.map((p) => `<div class="item"><div class="main"><b>${esc(tx(p.manifest.name))}</b><small>${p.events.length} ${t('events')} · ${p.manifest.rating} · ${p.builtin ? t('builtin') : t('custom')}</small></div>${p.builtin ? '' : `<button class="btn small danger" data-a="pack-del:${esc(p.manifest.id)}">${t('removePack')}</button>`}<input type="checkbox" aria-label="${esc(tx(p.manifest.name))}" data-pack="${esc(p.manifest.id)}" ${settings.packs[p.manifest.id] !== false ? 'checked' : ''} style="width:22px;height:22px;accent-color:var(--b-age-d)"></div>`).join('');
+  const m = ui.packMsg;
+  return `${head(`⚙️ ${t('settings')}`, '#475569')}
+    <div class="toggle"><span><b>🌐 ${t('lang')}</b></span>${langSwitch()}</div>
+    ${tog('adult25', `🔞 ${t('adult25')}`, t('adult25Sub'))}
+    ${tog('alwaysProtect', `🛡️ ${t('protect')}`, t('protectSub'))}
+    ${tog('godEnabled', `⚡ ${t('godToggle')}`, t('godToggleSub'))}
+    <div class="section"><h3>📦 ${t('packs')}</h3><div class="list">${packs}</div>
+      <div class="box"><div class="field"><label for="packfile">${t('loadPack')}</label><input id="packfile" type="file" accept=".json,.txt,application/json"></div>
+      ${m ? (m.ok ? `<p style="color:var(--good);font-weight:700;margin:0">${esc(m.ok)}</p>` : `<p class="err" style="margin:0">${t('packErr')}</p><div class="errors">${esc(m.errors.slice(0, 30).join('\n'))}</div>`) : ''}</div>
+    </div>
+    ${game.life ? `<button class="btn danger" data-a="reset">🗑️ ${ui.resetArmed ? t('resetConfirm') : t('resetSave')}</button>` : ''}`;
+}
+
+// ───────── Vẽ lại ─────────
+let lastLogKey = '';
+function render() {
+  const body = ui.view === 'gate' ? viewGate() : ui.view === 'home' ? viewHome() + overlays() : ui.view === 'create' ? viewCreate() : viewGame();
+  $app.innerHTML = body;
+  const led = document.getElementById('ledger');
+  if (led) {
+    const key = `${game.life.age}:${game.life.log.at(-1)?.items.length}`;
+    if (key !== lastLogKey) { led.scrollTop = led.scrollHeight; lastLogKey = key; }
+    else led.scrollTop = ui.scroll ?? led.scrollHeight;
+  }
+}
+// Mỗi hành động thành một dòng trong nhật ký. Hành động không đổi gì (thiếu tiền, hết lượt…) chỉ báo ngay trong bảng.
+const itemCount = (life) => (life ? life.log.reduce((n, y) => n + y.items.length, 0) : 0);
+const fingerprint = (life) => (life ? JSON.stringify({ ...life, yearActs: 0, snapshots: 0, rng: 0, log: 0 }) + itemCount(life) : '');
+let before = { fp: '', n: 0 };
+function annotateLast(changes, title) {
+  const y = game.life.log.at(-1);
+  const it = y && y.items.at(-1);
+  if (!it) return;
+  const ch = (changes || []).filter(([, v]) => v).map(([k, v]) => [k, Math.round(v)]);
+  if (ch.length) it.changes = ch;
+  if (title) it.title = title;
+}
+// Kết quả mọi hành động hiện thành hộp giữa màn hình (chạm là tắt), đồng thời ghi vào nhật ký.
+function record(r, title, keepSheet, emoji) {
+  if (!r) return;
+  const L = game.life;
+  if (r.event) { ui.sheet = null; ui.modal = { ev: r.event, title, emoji }; return; }
+  if (r.mini) { ui.sheet = null; ui.mini = initMini(r.mini, title, emoji); return; }
+  if (fingerprint(L) === before.fp) { ui.result = { text: r.text, tone: r.tone || 'bad', title, emoji: r.tone === 'good' ? emoji : '🙅' }; return; }
+  if (itemCount(L) === before.n) addLog(L, r.text, r.tone);
+  annotateLast(r.changes, title);
+  ui.result = { text: r.text, changes: r.changes, tone: r.tone || toneOf(r.changes), title, emoji };
+  if (!keepSheet) ui.sheet = null;
+}
+const W_LABEL = { promote: 'promoteAsk', study: 'study', skip: 'skip', dropout: 'dropout', uni: 'enrolUni', trade: 'enrolTrade', grad: 'enrolGrad', switch: 'switchMajor', club: 'club', parttime: 'parttime', scholar: 'scholar', exchange: 'exchange', intern: 'intern', olympiad: 'olympiad', hard: 'workHard', raise: 'raise', quit: 'quit' };
+
+// ───────── Sự kiện người dùng ─────────
+$app.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-a]');
+  if (!el) return;
+  const a = el.dataset.a;
+  if (a === 'close-bg') { if (e.target === el) { ui.sheet = null; render(); } return; }
+  const led = document.getElementById('ledger');
+  ui.scroll = led ? led.scrollTop : null;
+  const [cmd, arg, arg2] = a.split(':');
+  const L = game.life;
+  const UI_ONLY = ['sheet', 'close', 'person', 'lang', 'home', 'result-ok', 'sub'];
+  if (L && !UI_ONLY.includes(cmd)) { before = { fp: fingerprint(L), n: itemCount(L), stats: { ...L.stats }, life: L, age: L.age }; ui.freshFrom = before.n; }
+  ui.ageTick = false;
+  switch (cmd) {
+    case 'lang': settings.lang = settings.lang === 'vi' ? 'en' : 'vi'; applyTheme(); break;
+    case 'home': ui.view = 'home'; ui.sheet = null; break;
+    case 'continue': ui.view = 'game'; break;
+    case 'fate': newLife(game, { mode: 'fate' }); ui.view = 'game'; ui.birth = true; ui.sheet = null; ui.modal = null; ui.result = null; ui.queue = []; ui.freshFrom = 0; break;
+    case 'free': ui.draft = blankDraft(); ui.view = 'create'; break;
+    case 'draft-random': { const d = blankDraft(); ui.draft.stats = d.stats; break; }
+    case 'create-free': newLife(game, { mode: 'free', ...ui.draft, first: ui.draft.first.trim() || undefined, last: ui.draft.last.trim() || undefined }); ui.view = 'game'; ui.birth = true; break;
+    case 'birth-ok': ui.birth = false; break;
+    case 'result-ok': ui.result = ui.queue.shift() || null; break;
+    case 'mg': mgClick(arg, arg2); break;
+    case 'sp': record(specialAction(L, arg, arg2), { vi: STRINGS.vi.special, en: STRINGS.en.special }, true, arg2 ? SPECIALS[arg2]?.em : L.special ? SPECIALS[L.special.id].em : '🌟'); break;
+    case 'sub': ui.sub = arg || null; break;
+    case 'ageup': ui.sheet = null; ageUpGame(game); break;
+    case 'choose': {
+      const idx = Number(arg);
+      if (ui.modal) {
+        const m = ui.modal;
+        const r = chooseModal(game, m.ev, idx);
+        if (itemCount(L) > before.n) annotateLast(r.changes, m.title);
+        ui.modal = r.next ? { ev: r.next, title: m.title, emoji: m.emoji } : null;
+        if (!r.next && r.outcome.text) ui.result = { text: r.outcome.text, changes: r.changes, tone: toneOf(r.changes), title: m.title, emoji: evEmoji(m.ev) || m.emoji };
+      } else {
+        const r = chooseEvent(game, idx);
+        if (r) {
+          const title = r.event.arc ? { vi: `${r.event.tag.vi} · ${r.event.npcName}`, en: `${r.event.tag.en} · ${r.event.npcName}` } : r.event.big ? { vi: STRINGS.vi.bigMoment, en: STRINGS.en.bigMoment } : null;
+          annotateLast(r.changes, title);
+          if (r.outcome.text) ui.result = { text: r.outcome.text, changes: r.changes, tone: toneOf(r.changes), title, emoji: evEmoji(r.event) };
+        }
+      }
+      break;
+    }
+    case 'sheet':
+      ui.sheet = arg; ui.resetArmed = false; ui.packMsg = null; ui.sub = null;
+      if (arg === 'god' && L) ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate };
+      break;
+    case 'close': ui.sheet = null; break;
+    case 'person': ui.sheet = `person:${arg}`; break;
+    case 'pa': {
+      const p = L.people.find((x) => x.id === arg);
+      const lab = p && personActions(L, p).find(([k]) => k === arg2);
+      record(doPersonAction(L, settings, arg, arg2), lab ? { vi: `${lab[1].vi} · ${personName(L, p)}`, en: `${lab[1].en} · ${personName(L, p)}` } : null, true, PA_EM[arg2]);
+      break;
+    }
+    case 'act': record(doActivity(L, settings, arg), ACTIVITIES.find((x) => x.id === arg)?.label, false, ACT_EM[arg]); break;
+    case 'job': record(applyJob(L, arg), { vi: `${STRINGS.vi.apply}: ${careerById[arg].title.vi}`, en: `${STRINGS.en.apply}: ${careerById[arg].title.en}` }, false, JOB_EM[arg]); break;
+    case 'w': record(workAction(L, arg), { vi: STRINGS.vi[W_LABEL[arg]], en: STRINGS.en[W_LABEL[arg]] }, false, { promote: '⬆️', study: '📚', skip: '🛹', dropout: '🚪', uni: '🎓', trade: '🧰', grad: '📜', switch: '🔀', club: '🎭', parttime: '☕', scholar: '🏅', exchange: '✈️', intern: '🗂️', olympiad: '🏆', hard: '💪', raise: '💰', quit: '🚪' }[arg]); break;
+    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
+    case 'god-cure': godApply(L, { cure: true }); ui.god.stats = { ...L.stats }; ui.result = { text: t('cure'), tone: 'good', emoji: '💊' }; break;
+    case 'god-debt': godApply(L, { clearDebt: true }); ui.god.money = L.money * country(L).rate; ui.result = { text: t('clearDebt'), tone: 'good', emoji: '🧾' }; break;
+    case 'god-move': { const v = document.getElementById('g-country').value; godApply(L, { country: v }); ui.god.money = L.money * country(L).rate; ui.result = { text: `${byCode[v].flag} ${tx(byCode[v].name)}`, tone: 'good', emoji: '🌍' }; break; }
+    case 'rewind': { const prev = godRewind(L); if (prev) { game.life = prev; ui.sheet = null; ui.modal = null; ui.result = null; addLog(prev, { vi: '⚡ Quay lại 1 năm.', en: '⚡ Rewound one year.' }); ui.freshFrom = itemCount(prev) - 1; } break; }
+    case 'heir': continueAsChild(game, arg); ui.sheet = null; ui.result = null; break;
+    case 'inv': record(invest(L, arg, Math.max(0, L.money) * Number(arg2)), { vi: STRINGS.vi.invest, en: STRINGS.en.invest }, true, ASSET_EM[arg]); break;
+    case 'div': record(divest(L, arg), { vi: STRINGS.vi.invest, en: STRINGS.en.invest }, true, ASSET_EM[arg]); break;
+    case 'home-buy': record(buyHome(L, arg, arg2 === '1'), { vi: STRINGS.vi.homes, en: STRINGS.en.homes }, true, HOME_EM[arg] || '🏠'); break;
+    case 'home-sell': record(sellHome(L, Number(arg)), { vi: STRINGS.vi.homes, en: STRINGS.en.homes }, true, '🏷️'); break;
+    case 'home-rent': record(toggleRent(L, Number(arg)), { vi: STRINGS.vi.homes, en: STRINGS.en.homes }, true, '🔑'); break;
+    case 'car-buy': record(buyCar(L, arg), { vi: STRINGS.vi.cars, en: STRINGS.en.cars }, true, CAR_EM[arg] || '🚗'); break;
+    case 'car-sell': record(sellCar(L, Number(arg)), { vi: STRINGS.vi.cars, en: STRINGS.en.cars }, true, '🏷️'); break;
+    case 'biz-start': record(startBiz(L, arg), { vi: STRINGS.vi.business, en: STRINGS.en.business }, true, IND_EM[arg] || '🏢'); break;
+    case 'biz': record(bizAction(L, arg), { vi: STRINGS.vi.business, en: STRINGS.en.business }, true, '🏢'); break;
+    case 'emigrate': record(emigrate(L, ui.emig), { vi: STRINGS.vi.emigrate, en: STRINGS.en.emigrate }, false, '✈️'); break;
+    case 'pack-del':
+      customRaw = customRaw.filter((p) => p.manifest.id !== arg);
+      store.set(KEY.packs, customRaw);
+      game.packs = game.packs.filter((p) => p.builtin || p.manifest.id !== arg);
+      refreshEvents(game);
+      break;
+    case 'reset':
+      if (!ui.resetArmed) { ui.resetArmed = true; break; }
+      game.life = null; store.del(KEY.save); ui.resetArmed = false; ui.sheet = null; ui.view = 'home';
+      break;
+  }
+  if (before.life && before.life === game.life && before.stats && !UI_ONLY.includes(cmd)) {
+    const d = {};
+    for (const k of STAT_KEYS) { const v = game.life.stats[k] - before.stats[k]; if (v) d[k] = v; }
+    ui.deltas = d;
+    ui.ageTick = game.life.age !== before.age;
+    before.stats = null;
+  } else if (!['sheet', 'close', 'person', 'result-ok', 'sub'].includes(cmd)) ui.deltas = null;
+  afterAction(cmd);
+  persist();
+  render();
+});
+function afterAction(cmd) {
+  const L = game.life;
+  if (!L || ui.view !== 'game' || ui.birth) return;
+  const fresh = cmd === 'result-ok' ? [] : checkGoals(L);
+  if (fresh.length) {
+    const pop = { emoji: '🎯', title: { vi: STRINGS.vi.goalDone, en: STRINGS.en.goalDone }, text: { vi: fresh.map((g) => `${g.em} ${g.name.vi}`).join('\n'), en: fresh.map((g) => `${g.em} ${g.name.en}`).join('\n') }, tone: 'good' };
+    if (ui.result) ui.queue.push(pop); else ui.result = pop;
+  }
+  if (L.dead && !L.archived) {
+    L.archived = true;
+    ui.newAch = archiveLife(profile, L);
+    store.set(KEY.profile, profile);
+  } else if (!L.dead) ui.newAch = null;
+}
+
+$app.addEventListener('input', (e) => {
+  const el = e.target;
+  if (el.dataset.d) {
+    const path = el.dataset.d.split('.');
+    if (path[0] === 'stats') { ui.draft.stats[path[1]] = Number(el.value); el.nextElementSibling.textContent = el.value; }
+    else ui.draft[path[0]] = el.value;
+  } else if (el.dataset.g) {
+    ui.god.stats[el.dataset.g] = Number(el.value);
+    el.nextElementSibling.textContent = el.value;
+  } else if (el.dataset.gm) {
+    ui.god.money = Number(el.value) || 0;
+  }
+});
+
+$app.addEventListener('change', (e) => {
+  const el = e.target;
+  if (el.dataset.trait) {
+    const k = el.dataset.trait;
+    ui.draft.traits = el.checked ? [...new Set([...ui.draft.traits, k])].slice(0, 2) : ui.draft.traits.filter((x) => x !== k);
+    render();
+  } else if (el.dataset.set) {
+    settings[el.dataset.set] = el.checked;
+    persist();
+    render();
+  } else if (el.dataset.pack) {
+    settings.packs[el.dataset.pack] = el.checked;
+    refreshEvents(game);
+    persist();
+    render();
+  } else if (el.id === 'packfile' && el.files[0]) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const r = loadPackText(game, String(reader.result));
+      if (r.errors) ui.packMsg = { errors: r.errors };
+      else {
+        customRaw = customRaw.filter((p) => p.manifest.id !== r.raw.manifest.id).concat(r.raw);
+        store.set(KEY.packs, customRaw);
+        settings.packs[r.pack.manifest.id] = true;
+        refreshEvents(game);
+        ui.packMsg = { ok: t('packOk', { name: tx(r.pack.manifest.name), n: r.pack.events.length }) };
+      }
+      persist();
+      render();
+    };
+    reader.readAsText(el.files[0]);
+  } else if (el.dataset.emig) {
+    ui.emig = el.value;
+    render();
+  } else if (el.dataset.d) {
+    ui.draft[el.dataset.d] = el.value;
+  }
+});
+
+$app.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (e.target.dataset.form !== 'gate') return;
+  const v = document.getElementById('dob').value;
+  const d = new Date(v);
+  if (!v || Number.isNaN(d.getTime()) || d.getFullYear() < 1900) { ui.gateErr = 'gateBad'; render(); return; }
+  const now = new Date();
+  let age = now.getFullYear() - d.getFullYear();
+  if (now.getMonth() < d.getMonth() || (now.getMonth() === d.getMonth() && now.getDate() < d.getDate())) age--;
+  if (age < 25) { ui.gateErr = 'gateNo'; render(); return; }
+  store.set(KEY.gate, true);
+  ui.gateErr = null;
+  ui.view = 'home';
+  render();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && e.target.matches && e.target.matches('[role="button"][data-a]')) { e.target.click(); return; }
+  if (ui.mini && ui.mini.kind === 'maze') { const d = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' }[e.key]; if (d) { e.preventDefault(); before = { fp: fingerprint(game.life), n: itemCount(game.life) }; mgClick(d); persist(); render(); return; } }
+  if (e.key === 'Escape' && ui.result) { ui.result = null; render(); return; }
+  if (e.key === 'Escape' && ui.sheet) { ui.sheet = null; render(); }
+});
+
+// Giữ ván đang chơi khi trang được cập nhật
+window.claude?.hot?.snapshot?.(() => ({ save: game.life, view: ui.view }));
+if (window.claude?.hot?.ready) window.claude.hot.ready(boot);
+else boot(window.claude?.hot?.data ?? {});
+
+export { STRINGS, BUILTIN, partner, tier };

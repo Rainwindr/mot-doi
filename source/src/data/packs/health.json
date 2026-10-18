@@ -1,0 +1,1207 @@
+{
+ "manifest": {
+  "id": "core.health",
+  "name": {
+   "vi": "Gói gốc: sức khỏe",
+   "en": "Core: health"
+  },
+  "version": "1.0.0",
+  "rating": "all",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "hl_annual_checkup",
+   "category": "health",
+   "age": [
+    30,
+    90
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Kết quả khám sức khỏe định kỳ có vài chỉ số màu đỏ.",
+    "en": "Your annual check-up has a few numbers in red."
+   },
+   "requires": {
+    "ill": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đổi lối sống ngay",
+      "en": "Change your lifestyle now"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "health": 6,
+        "happy": -2,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Bỏ trà sữa, đi bộ mỗi tối. Lần khám sau chỉ số xanh trở lại.",
+        "en": "No more bubble tea, walks every evening. Next time the numbers are green."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "health": 2,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bạn cố được ba tuần.",
+        "en": "You last three weeks."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hẹn năm sau tính",
+      "en": "Deal with it next year"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Năm sau, chỉ số đỏ hơn.",
+        "en": "Next year, the numbers are redder."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "illness": "hypertension",
+        "happy": -4
+       },
+       "text": {
+        "vi": "Bác sĩ gọi lại: bạn bị cao huyết áp.",
+        "en": "The doctor calls back: high blood pressure."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_back",
+   "category": "health",
+   "age": [
+    28,
+    85
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn cúi xuống nhặt cái bút và lưng kêu một tiếng 'rắc'.",
+    "en": "You bend to pick up a pen and your back goes 'crack'."
+   },
+   "requires": {
+    "ill": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nằm nghỉ vài ngày",
+      "en": "Rest a few days"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "health": -2
+       },
+       "text": {
+        "vi": "Đỡ dần. Bạn bắt đầu nhặt đồ bằng cách ngồi xổm.",
+        "en": "It eases off. You now pick things up by squatting."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "illness": "back",
+        "happy": -3
+       },
+       "text": {
+        "vi": "Cơn đau ở lại như một người bạn cùng phòng khó chịu.",
+        "en": "The pain moves in like an annoying roommate."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đi vật lý trị liệu",
+      "en": "See a physio"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 3,
+        "money": -3
+       },
+       "text": {
+        "vi": "Chuyên gia chỉ bạn bài tập. Bạn làm được hai tuần, nhưng thấy khác hẳn.",
+        "en": "You get exercises. You manage two weeks, but it helps a lot."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_insomnia",
+   "category": "health",
+   "age": [
+    20,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Ba giờ sáng, bạn vẫn nhìn trần nhà và nghĩ về một câu nói ngớ ngẩn từ năm 2009.",
+    "en": "3am. You're still staring at the ceiling, replaying something silly you said years ago."
+   },
+   "requires": {
+    "ill": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bỏ điện thoại ra khỏi phòng ngủ",
+      "en": "Ban your phone from the bedroom"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "health": 3,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Sau một tuần bạn ngủ như trẻ con.",
+        "en": "After a week you sleep like a baby."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn nằm nghĩ về cái điện thoại.",
+        "en": "Now you lie awake thinking about the phone."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Kệ, thức luôn",
+      "en": "Give up and stay up"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "health": -3,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn xem hết một mùa phim tài liệu về cá mập.",
+        "en": "You watch an entire season of shark documentaries."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "illness": "insomnia"
+       },
+       "text": {
+        "vi": "Đêm nào cũng thế.",
+        "en": "Every night is the same."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_food_poison",
+   "category": "health",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Món ăn đường phố tối qua rất ngon. Sáng nay thì không.",
+    "en": "Last night's street food was delicious. This morning, less so."
+   },
+   "effects": {
+    "health": -6,
+    "happy": -4
+   }
+  },
+  {
+   "id": "hl_sports_injury",
+   "category": "health",
+   "age": [
+    16,
+    60
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn chơi thể thao với đồng nghiệp và quên mất mình không còn 18 tuổi.",
+    "en": "Playing sport with colleagues, you forget you're not 18 anymore."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi chụp phim",
+      "en": "Get an X-ray"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "health": -4,
+        "money": -2
+       },
+       "text": {
+        "vi": "Chỉ bong gân. Bạn chống nạng một tuần cho có chuyện kể.",
+        "en": "Just a sprain. You use crutches for a week for the story."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -10,
+        "money": -5
+       },
+       "text": {
+        "vi": "Rạn xương. Ba tuần bó bột.",
+        "en": "A hairline fracture. Three weeks in a cast."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xoa dầu rồi đi tiếp",
+      "en": "Rub on balm and carry on"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "health": -3
+       },
+       "text": {
+        "vi": "Ổn. May mắn.",
+        "en": "Fine. Lucky."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "health": -8,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Sáng hôm sau chân sưng như cái bánh mì.",
+        "en": "Next morning your ankle is the size of a loaf."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_diabetes_warn",
+   "category": "health",
+   "age": [
+    35,
+    90
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bác sĩ nói đường huyết của bạn đang ở ngưỡng tiền tiểu đường.",
+    "en": "The doctor says your blood sugar is in the pre-diabetic range."
+   },
+   "requires": {
+    "ill": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bỏ đồ ngọt nghiêm túc",
+      "en": "Seriously cut sugar"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "health": 5,
+        "happy": -3,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Sáu tháng sau, chỉ số về bình thường.",
+        "en": "Six months later, back to normal."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "illness": "diabetes"
+       },
+       "text": {
+        "vi": "Bạn đã cố, nhưng gen di truyền cũng có tiếng nói.",
+        "en": "You tried, but genetics had a say."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ăn ít đi một chút",
+      "en": "Eat a bit less"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "health": 1
+       },
+       "text": {
+        "vi": "Chỉ số đứng yên.",
+        "en": "The numbers stay put."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "illness": "diabetes",
+        "happy": -3
+       },
+       "text": {
+        "vi": "Một năm sau, chẩn đoán chính thức.",
+        "en": "A year later, it's official."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_heart_scare",
+   "category": "health",
+   "age": [
+    45,
+    95
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đang leo cầu thang, bạn thấy tức ngực và khó thở.",
+    "en": "Climbing the stairs, your chest tightens and you can't breathe."
+   },
+   "requires": {
+    "ill": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi cấp cứu ngay",
+      "en": "Go to the ER now"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "health": -3,
+        "money": -8
+       },
+       "text": {
+        "vi": "Bác sĩ bảo bạn đến kịp lúc. Bạn được đặt stent và về nhà sau ba ngày.",
+        "en": "The doctor says you came just in time. A stent, home in three days."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "money": -4,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Chỉ là căng cơ do mang vác. Bạn xấu hổ nhưng nhẹ nhõm.",
+        "en": "Just a strained muscle. Embarrassed but relieved."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ngồi nghỉ rồi đi tiếp",
+      "en": "Sit down and carry on"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "health": -2
+       },
+       "text": {
+        "vi": "Nó qua đi. Lần này.",
+        "en": "It passes. This time."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "health": -14,
+        "illness": "heart"
+       },
+       "text": {
+        "vi": "Đêm đó bạn phải nhập viện.",
+        "en": "That night you're hospitalised."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_cancer_screen",
+   "category": "health",
+   "age": [
+    40,
+    95
+   ],
+   "weight": 2,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn phát hiện một khối u nhỏ khi tắm.",
+    "en": "You find a small lump in the shower."
+   },
+   "requires": {
+    "ill": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi khám ngay tuần này",
+      "en": "Get it checked this week"
+     },
+     "outcomes": [
+      {
+       "chance": 0.75,
+       "effects": {
+        "money": -3,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Lành tính. Bác sĩ khen bạn đi khám sớm.",
+        "en": "Benign. The doctor praises you for coming early."
+       }
+      },
+      {
+       "chance": 0.25,
+       "effects": {
+        "money": -10,
+        "health": -8,
+        "illness": "cancer"
+       },
+       "text": {
+        "vi": "Kết quả không tốt, nhưng được phát hiện sớm. Bạn bắt đầu điều trị.",
+        "en": "Bad news, but caught early. You begin treatment."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chờ xem có to lên không",
+      "en": "Wait and see"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Nó biến mất sau vài tuần. Bạn thề lần sau sẽ đi khám.",
+        "en": "It goes away after a few weeks. You swear you'll go next time."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "health": -12,
+        "illness": "cancer",
+        "happy": -10
+       },
+       "text": {
+        "vi": "Khi bạn đi khám thì đã muộn hơn bạn mong.",
+        "en": "By the time you go, it's later than you'd hoped."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_treatment_choice",
+   "category": "health",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 8,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bác sĩ đưa ra hai phác đồ điều trị: một loại mới rất đắt, một loại cũ rẻ hơn.",
+    "en": "Your doctor offers two treatments: a new, very expensive one, or an older, cheaper one."
+   },
+   "requires": {
+    "ill": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dùng thuốc mới",
+      "en": "The new one"
+     },
+     "outcomes": [
+      {
+       "chance": 0.65,
+       "effects": {
+        "money": -40,
+        "cure": true,
+        "happy": 10
+       },
+       "text": {
+        "vi": "Thuốc có hiệu quả. Bạn khỏi bệnh.",
+        "en": "It works. You're cured."
+       }
+      },
+      {
+       "chance": 0.35,
+       "effects": {
+        "money": -40,
+        "health": 3
+       },
+       "text": {
+        "vi": "Tốn kém nhưng chỉ đỡ hơn một chút.",
+        "en": "Expensive, and only a little better."
+       }
+      }
+     ],
+     "requires": {
+      "min": {
+       "money": 40
+      }
+     }
+    },
+    {
+     "label": {
+      "vi": "Dùng thuốc cũ",
+      "en": "The older one"
+     },
+     "outcomes": [
+      {
+       "chance": 0.35,
+       "effects": {
+        "money": -8,
+        "cure": true,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Rẻ mà hiệu quả. Bác sĩ cũng bất ngờ.",
+        "en": "Cheap and effective. Even the doctor is surprised."
+       }
+      },
+      {
+       "chance": 0.65,
+       "effects": {
+        "money": -8,
+        "health": 2
+       },
+       "text": {
+        "vi": "Bệnh được kiểm soát, chưa khỏi.",
+        "en": "Under control, not cured."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thử thuốc dân gian của hàng xóm",
+      "en": "Try the neighbour's folk remedy"
+     },
+     "outcomes": [
+      {
+       "chance": 0.1,
+       "effects": {
+        "cure": true,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Không ai giải thích được, nhưng bạn khỏi.",
+        "en": "Nobody can explain it, but you're better."
+       }
+      },
+      {
+       "chance": 0.9,
+       "effects": {
+        "health": -4,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Thuốc có vị như bùn và tác dụng như bùn.",
+        "en": "It tastes like mud and works like mud."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_therapy",
+   "category": "health",
+   "age": [
+    16,
+    95
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Dạo này bạn thấy mệt mỏi, mất hứng thú với mọi thứ kéo dài nhiều tuần.",
+    "en": "For weeks you've felt drained and uninterested in everything."
+   },
+   "requires": {
+    "max": {
+     "happy": 35
+    },
+    "ill": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi gặp chuyên gia tâm lý",
+      "en": "See a mental health professional"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "willpower": 4,
+        "money": -4
+       },
+       "text": {
+        "vi": "Nói ra được với người hiểu chuyện giúp bạn nhẹ đi rất nhiều.",
+        "en": "Talking to someone who understands lifts a real weight."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nói chuyện với người thân",
+      "en": "Talk to someone close"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 6,
+        "rel_friend": 4
+       },
+       "text": {
+        "vi": "Họ lắng nghe, không phán xét. Bạn thấy bớt cô đơn.",
+        "en": "They listen without judging. You feel less alone."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Họ bảo 'cố lên'. Có ý tốt, nhưng chưa đủ.",
+        "en": "They say 'cheer up'. Well meant, not enough."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tự chịu đựng",
+      "en": "Keep it to yourself"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Mọi thứ cứ nặng dần.",
+        "en": "Things keep getting heavier."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -6,
+        "illness": "depression"
+       },
+       "text": {
+        "vi": "Bác sĩ đa khoa nhận ra trước bạn: bạn bị trầm cảm.",
+        "en": "Your GP notices before you do: it's depression."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_quit_smoking",
+   "category": "health",
+   "age": [
+    18,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn quyết định thử bỏ một thói quen xấu đã theo bạn nhiều năm.",
+    "en": "You decide to try quitting a bad habit you've had for years."
+   },
+   "requires": {
+    "min": {
+     "risk": 40
+    }
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bỏ ngay lập tức",
+      "en": "Cold turkey"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "health": 8,
+        "willpower": 6,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Ngày thứ 30. Bạn ăn mừng bằng một quả táo.",
+        "en": "Day 30. You celebrate with an apple."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Ngày thứ 4, bạn cáu với cả cái ghế.",
+        "en": "Day 4, you're angry at a chair."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giảm dần",
+      "en": "Taper off"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "health": 5,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Chậm nhưng bạn làm được.",
+        "en": "Slow, but you do it."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "health": 1
+       },
+       "text": {
+        "vi": "Bạn giảm được một nửa, rồi dừng ở đó.",
+        "en": "You cut it in half, then stall."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_marathon",
+   "category": "health",
+   "age": [
+    20,
+    70
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn bè rủ đăng ký chạy bán marathon trong ba tháng nữa.",
+    "en": "Friends want you to sign up for a half marathon in three months."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đăng ký và tập",
+      "en": "Sign up and train"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "health": 10,
+        "happy": 10,
+        "willpower": 5
+       },
+       "text": {
+        "vi": "Bạn về đích, chân run, mặt cười, ảnh xấu.",
+        "en": "You finish. Shaky legs, big smile, terrible photo."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -4,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bạn bị chuột rút ở cây số thứ 8 và lên xe cứu thương... để ngồi nhờ về.",
+        "en": "Cramp at kilometre 8. You ride back in the ambulance, just for a lift."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đến cổ vũ thôi",
+      "en": "Just cheer them on"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Bạn cầm biển 'Chạy đi, wifi ở vạch đích'.",
+        "en": "You hold a sign: 'Run! Free wifi at the finish.'"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_glasses",
+   "category": "health",
+   "age": [
+    38,
+    70
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn phải đưa điện thoại ra xa mới đọc được tin nhắn.",
+    "en": "You have to hold your phone at arm's length to read."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi đo mắt",
+      "en": "Get your eyes tested"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 2,
+        "money": -2,
+        "looks": 1
+       },
+       "text": {
+        "vi": "Kính mới. Thế giới sắc nét trở lại. Bạn thấy rõ cả bụi trên TV.",
+        "en": "New glasses. The world is sharp again, including the dust on the TV."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tay dài thêm là được",
+      "en": "Just get longer arms"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -1
+       },
+       "text": {
+        "vi": "Bạn bắt đầu phóng to chữ lên 200%.",
+        "en": "You set the font to 200%."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_flu_season",
+   "category": "health",
+   "age": [
+    5,
+    100
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Mùa cúm. Nửa văn phòng đang ho.",
+    "en": "Flu season. Half the office is coughing."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tiêm phòng",
+      "en": "Get the jab"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 2,
+        "money": -1
+       },
+       "text": {
+        "vi": "Bạn là người duy nhất không nghỉ ốm. Ai cũng nhìn bạn như siêu nhân.",
+        "en": "You're the only one who doesn't get sick. They look at you like a superhero."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Rửa tay và cầu may",
+      "en": "Wash hands and hope"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "health": 0
+       },
+       "text": {
+        "vi": "May mắn đứng về phía bạn.",
+        "en": "Luck is on your side."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "health": -6,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bạn nằm bẹp một tuần với hộp khăn giấy.",
+        "en": "A week in bed with a box of tissues."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_dentist",
+   "category": "health",
+   "age": [
+    12,
+    90
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Một chiếc răng âm ỉ đau suốt ba ngày.",
+    "en": "A tooth has been aching for three days."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi nha sĩ",
+      "en": "See the dentist"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "money": -3,
+        "health": 2
+       },
+       "text": {
+        "vi": "Trám một lỗ sâu. Nha sĩ hỏi bạn nhiều câu khi miệng bạn đang mở.",
+        "en": "One filling. The dentist asks you questions while your mouth is open."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "money": -8,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Phải chữa tủy. Hai buổi, ba lần muốn bỏ chạy.",
+        "en": "Root canal. Two sessions, three urges to flee."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhai bên kia",
+      "en": "Chew on the other side"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -3,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bây giờ cả hai bên đều đau.",
+        "en": "Now both sides hurt."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hl_recovered",
+   "category": "health",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 2,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Sau thời gian dài điều trị, bác sĩ báo tin bạn đã ổn định.",
+    "en": "After a long treatment, your doctor says you're stable."
+   },
+   "requires": {
+    "ill": true
+   },
+   "effects": {
+    "happy": 10,
+    "health": 6,
+    "cure": true
+   }
+  },
+  {
+   "id": "hl_sleep_apnea",
+   "category": "health",
+   "age": [
+    35,
+    90
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Người nhà than bạn ngáy như máy kéo, có lúc như ngừng thở.",
+    "en": "Your family says you snore like a tractor, and sometimes seem to stop breathing."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi khám giấc ngủ",
+      "en": "Get a sleep study"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 5,
+        "happy": 4,
+        "money": -4
+       },
+       "text": {
+        "vi": "Có máy hỗ trợ thở khi ngủ. Bạn và cả nhà đều ngủ ngon.",
+        "en": "A breathing machine for nights. Everyone sleeps better."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chối là mình không ngáy",
+      "en": "Deny you snore"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -3,
+        "rel_partner": -3
+       },
+       "text": {
+        "vi": "Họ ghi âm lại làm bằng chứng. Bạn vẫn chối.",
+        "en": "They record it as evidence. You still deny it."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

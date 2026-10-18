@@ -1,0 +1,1362 @@
+{
+  "manifest": {
+    "id": "tien.university_life",
+    "name": {
+      "vi": "Cuộc sống đại học",
+      "en": "University Life"
+    },
+    "version": "1.0.0",
+    "rating": "25+",
+    "languages": ["vi", "en"]
+  },
+  "events": [
+    {
+      "id": "uni_first_dorm_night",
+      "category": "school",
+      "age": [18, 22],
+      "weight": 8,
+      "once": true,
+      "rating": "all",
+      "requires": {
+        "inSchool": true
+      },
+      "text": {
+        "vi": "Đêm đầu tiên ở ký túc xá, bạn nằm nghe tiếng cười nói từ hành lang và cảm thấy vừa hào hứng vừa lạc lõng.",
+        "en": "Your first night in the dorm, you lie awake listening to laughter in the hallway, feeling both excited and lost."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Ra ngoài làm quen",
+            "en": "Go out and introduce yourself"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 12, "rel_friend": 8 },
+              "setFlags": ["uni_social"],
+              "text": {
+                "vi": "Bạn kết bạn với vài người cùng tầng ngay đêm đó.",
+                "en": "You make friends with a few people on your floor that very night."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": 4 },
+              "text": {
+                "vi": "Họ lịch sự nhưng đã có nhóm riêng. Bạn trở về phòng sớm.",
+                "en": "They're polite but already have their group. You head back early."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Ở trong và nghỉ ngơi",
+            "en": "Stay in and rest"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "health": 5, "willpower": 3 },
+              "text": {
+                "vi": "Bạn ngủ ngon và sẵn sàng cho ngày đầu tiên.",
+                "en": "You sleep well and feel ready for the first day."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": -4 },
+              "text": {
+                "vi": "Tiếng ồn khiến bạn mất ngủ đến tận sáng.",
+                "en": "The noise keeps you awake until morning."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_party_invitation",
+      "category": "school",
+      "age": [18, 25],
+      "weight": 7,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "inSchool": true
+      },
+      "text": {
+        "vi": "Một người cùng lớp mời bạn đến buổi tiệc cuối tuần ở nhà trọ gần trường.",
+        "en": "A classmate invites you to a weekend party at a shared house near campus."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đi và hòa nhập",
+            "en": "Go and mingle"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "happy": 14, "rel_friend": 6, "risk": 5 },
+              "setFlags": ["uni_party_met"],
+              "text": {
+                "vi": "Bạn gặp nhiều người mới và đêm đó khá vui.",
+                "en": "You meet many new people and have a solid night."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "happy": 6, "health": -5, "risk": 4 },
+              "setFlags": ["uni_party_met"],
+              "text": {
+                "vi": "Vui nhưng bạn uống hơi nhiều và sáng sau đau đầu.",
+                "en": "Fun, but you drink a bit too much and wake up with a headache."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Ở nhà ôn bài",
+            "en": "Stay home and study"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": { "smarts": 6, "willpower": 5 },
+              "text": {
+                "vi": "Bạn tiến bộ rõ rệt trước kỳ kiểm tra sắp tới.",
+                "en": "You make clear progress before the upcoming test."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": { "happy": -5 },
+              "text": {
+                "vi": "Bạn thấy FOMO khi xem ảnh tiệc trên mạng.",
+                "en": "You feel FOMO scrolling through party photos online."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_party_one_night",
+      "category": "love",
+      "age": [18, 25],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "inSchool": true,
+        "hasPartner": false,
+        "flags": ["uni_party_met"]
+      },
+      "text": {
+        "vi": "Trong buổi tiệc, bạn và một người cùng trường nhìn nhau quá lâu. Họ hỏi liệu bạn muốn ra ngoài một chút.",
+        "en": "At the party, you and another student hold eye contact too long. They ask if you want to step outside for a bit."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đi theo và gần gũi",
+            "en": "Follow and get close"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": { "happy": 14, "risk": 6 },
+              "setFlags": ["uni_ons"],
+              "newContact": "one_night",
+              "text": {
+                "vi": "Cả hai tìm chỗ riêng tư. Đêm ấy nóng bỏng và đồng thuận.",
+                "en": "You both find a private spot. The night is intense and fully mutual."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": { "happy": 6, "risk": 4 },
+              "setFlags": ["uni_ons"],
+              "text": {
+                "vi": "Hơi vội và vụng về, nhưng vẫn thú vị.",
+                "en": "A bit rushed and clumsy, but still fun."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chỉ trò chuyện thôi",
+            "en": "Just keep talking"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 6, "rel_friend": 5 },
+              "text": {
+                "vi": "Các bạn nói chuyện đến tận khuya và trở thành bạn bè.",
+                "en": "You talk until late and become friends."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -3 },
+              "text": {
+                "vi": "Họ có vẻ thất vọng và quay lại đám đông.",
+                "en": "They seem disappointed and head back to the crowd."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_ons_morning",
+      "category": "love",
+      "age": [18, 26],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "flags": ["uni_ons"]
+      },
+      "text": {
+        "vi": "Sáng hôm sau trong ký túc xá hoặc nhà trọ, cả hai nhìn nhau hơi lúng túng.",
+        "en": "The next morning in the dorm or shared house, you both look at each other a little awkwardly."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Cười và chào tạm biệt",
+            "en": "Smile and say goodbye"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 5, "willpower": 3 },
+              "clearFlags": ["uni_ons"],
+              "text": {
+                "vi": "Kết thúc sạch sẽ. Không ai nợ ai điều gì.",
+                "en": "A clean ending. No one owes anyone anything."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -4 },
+              "clearFlags": ["uni_ons"],
+              "text": {
+                "vi": "Họ tránh mặt bạn mấy ngày sau ở trường.",
+                "en": "They avoid you on campus for the next few days."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Hỏi có muốn gặp lại",
+            "en": "Ask if they want to meet again"
+          },
+          "outcomes": [
+            {
+              "chance": 0.45,
+              "effects": { "happy": 10, "rel_friend": 6 },
+              "clearFlags": ["uni_ons"],
+              "setFlags": ["uni_maybe_more"],
+              "text": {
+                "vi": "Họ mỉm cười và đồng ý trao đổi thông tin liên lạc.",
+                "en": "They smile and agree to exchange contact info."
+              }
+            },
+            {
+              "chance": 0.55,
+              "effects": { "happy": -6 },
+              "clearFlags": ["uni_ons"],
+              "text": {
+                "vi": "Họ lịch sự nói chỉ muốn một đêm thôi.",
+                "en": "They politely say they only wanted one night."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_exam_pressure",
+      "category": "school",
+      "age": [18, 25],
+      "weight": 8,
+      "once": false,
+      "rating": "all",
+      "requires": {
+        "inSchool": true
+      },
+      "text": {
+        "vi": "Kỳ thi cuối kỳ đến gần, bạn cảm thấy áp lực đè nặng lên vai.",
+        "en": "Final exams are approaching and the pressure feels heavy on your shoulders."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Học nhóm xuyên đêm",
+            "en": "All-night group study"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": { "smarts": 10, "rel_friend": 5, "health": -6 },
+              "text": {
+                "vi": "Kiến thức ngấm nhanh hơn và bạn thấy tự tin hơn.",
+                "en": "The material sinks in faster and you feel more confident."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": { "smarts": 4, "health": -10, "happy": -4 },
+              "text": {
+                "vi": "Cả nhóm kiệt sức và hiệu quả giảm dần về sáng.",
+                "en": "The whole group burns out and efficiency drops by morning."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Tự ôn theo kế hoạch",
+            "en": "Stick to your own plan"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "smarts": 8, "willpower": 6 },
+              "text": {
+                "vi": "Bạn giữ được nhịp và không bị phân tâm.",
+                "en": "You keep your rhythm and avoid distractions."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "smarts": 3, "happy": -5 },
+              "text": {
+                "vi": "Cô đơn khiến bạn dễ nản và lướt mạng nhiều hơn.",
+                "en": "Loneliness makes you more easily discouraged and you scroll more."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_professor_crush",
+      "category": "love",
+      "age": [19, 24],
+      "weight": 3,
+      "once": true,
+      "rating": "18+",
+      "requires": {
+        "inSchool": true
+      },
+      "text": {
+        "vi": "Bạn nhận ra mình đang để ý thái quá đến một giảng viên trẻ và hấp dẫn.",
+        "en": "You realize you've developed a strong crush on a young, attractive lecturer."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Giữ khoảng cách chuyên nghiệp",
+            "en": "Keep professional distance"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "willpower": 8, "smarts": 3 },
+              "text": {
+                "vi": "Bạn tập trung vào bài học và cảm xúc dần nguội.",
+                "en": "You focus on the coursework and the feelings slowly fade."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": -5 },
+              "text": {
+                "vi": "Vẫn thoáng nghĩ đến họ mỗi giờ lên lớp.",
+                "en": "You still think about them every class session."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Tìm cớ nói chuyện riêng",
+            "en": "Find an excuse to talk privately"
+          },
+          "outcomes": [
+            {
+              "chance": 0.3,
+              "effects": { "happy": 8, "risk": 5 },
+              "setFlags": ["uni_prof_notice"],
+              "text": {
+                "vi": "Họ thân thiện và khen bạn có tư duy tốt.",
+                "en": "They're friendly and praise your thinking."
+              }
+            },
+            {
+              "chance": 0.7,
+              "effects": { "happy": -6, "karma": -3 },
+              "text": {
+                "vi": "Họ lịch sự nhưng rõ ràng giữ ranh giới nghề nghiệp.",
+                "en": "They're polite but clearly maintain professional boundaries."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_library_allnighter",
+      "category": "school",
+      "age": [18, 25],
+      "weight": 6,
+      "once": false,
+      "rating": "all",
+      "requires": {
+        "inSchool": true
+      },
+      "text": {
+        "vi": "Bạn quyết định thức trắng ở thư viện để hoàn thành bài luận quan trọng.",
+        "en": "You decide to pull an all-nighter in the library to finish an important paper."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Cố viết đến sáng",
+            "en": "Push through until morning"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": { "smarts": 8, "health": -8, "willpower": 4 },
+              "text": {
+                "vi": "Bài nộp đúng hạn và điểm khá ổn.",
+                "en": "You submit on time and the grade is decent."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": { "smarts": 3, "health": -12, "happy": -6 },
+              "text": {
+                "vi": "Bạn kiệt sức và bài viết có nhiều lỗi ngớ ngẩn.",
+                "en": "You burn out and the paper has many silly mistakes."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Về ngủ và dậy sớm",
+            "en": "Go sleep and wake early"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "health": 5, "smarts": 5 },
+              "text": {
+                "vi": "Đầu óc tỉnh táo hơn và bạn viết nhanh hơn dự kiến.",
+                "en": "Your mind is clearer and you write faster than expected."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -4, "smarts": 2 },
+              "text": {
+                "vi": "Bạn ngủ quên và phải nộp sát giờ.",
+                "en": "You oversleep and have to submit at the last minute."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_roommate_conflict",
+      "category": "school",
+      "age": [18, 23],
+      "weight": 6,
+      "once": false,
+      "rating": "all",
+      "requires": {
+        "inSchool": true
+      },
+      "text": {
+        "vi": "Bạn cùng phòng để đồ đạc lung tung và mở nhạc lớn vào lúc bạn cần yên tĩnh.",
+        "en": "Your roommate leaves stuff everywhere and blasts music when you need quiet."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nói chuyện trực tiếp",
+            "en": "Talk to them directly"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "rel_friend": 6, "willpower": 4 },
+              "text": {
+                "vi": "Họ xin lỗi và cả hai đặt ra nội quy phòng rõ ràng.",
+                "en": "They apologize and you both set clear room rules."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "rel_friend": -8, "happy": -5 },
+              "setFlags": ["uni_roommate_tense"],
+              "text": {
+                "vi": "Họ phản ứng phòng thủ và không khí trở nên căng.",
+                "en": "They get defensive and the atmosphere turns tense."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Phàn nàn với quản lý",
+            "en": "Complain to the manager"
+          },
+          "outcomes": [
+            {
+              "chance": 0.5,
+              "effects": { "happy": 5 },
+              "text": {
+                "vi": "Được hỗ trợ chuyển phòng hoặc nhắc nhở.",
+                "en": "You get help transferring rooms or a warning is issued."
+              }
+            },
+            {
+              "chance": 0.5,
+              "effects": { "rel_friend": -12, "happy": -6 },
+              "setFlags": ["uni_roommate_tense"],
+              "text": {
+                "vi": "Họ biết bạn báo cáo và thù bạn suốt học kỳ.",
+                "en": "They find out you reported them and resent you all semester."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_group_project_slacker",
+      "category": "school",
+      "age": [18, 25],
+      "weight": 7,
+      "once": false,
+      "rating": "all",
+      "requires": {
+        "inSchool": true
+      },
+      "text": {
+        "vi": "Trong dự án nhóm, một thành viên gần như không làm gì trong khi hạn nộp đến gần.",
+        "en": "In a group project, one member has done almost nothing while the deadline approaches."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Làm thay để điểm cao",
+            "en": "Cover for them for a good grade"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "smarts": 5, "happy": -6, "karma": -4 },
+              "text": {
+                "vi": "Nhóm được điểm tốt nhưng bạn thấy bị lợi dụng.",
+                "en": "The group gets a good grade but you feel used."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "smarts": 3, "health": -5, "happy": -8 },
+              "text": {
+                "vi": "Bạn kiệt sức và vẫn ấm ức sau đó.",
+                "en": "You burn out and still feel resentful afterward."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Báo cáo với giảng viên",
+            "en": "Report to the lecturer"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": { "karma": 5, "willpower": 4 },
+              "text": {
+                "vi": "Giảng viên điều chỉnh điểm cá nhân công bằng hơn.",
+                "en": "The lecturer adjusts individual grades more fairly."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": { "rel_friend": -10, "happy": -5 },
+              "text": {
+                "vi": "Thành viên đó và vài người khác xa lánh bạn.",
+                "en": "That member and a few others start avoiding you."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_campus_date",
+      "category": "love",
+      "age": [18, 24],
+      "weight": 5,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "inSchool": true,
+        "hasPartner": false,
+        "flags": ["uni_maybe_more"]
+      },
+      "text": {
+        "vi": "Người bạn từng có đêm cùng nhau đề nghị đi uống cà phê ở quán gần trường.",
+        "en": "The person you shared a night with suggests getting coffee at a café near campus."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý và thử",
+            "en": "Agree and give it a try"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": { "happy": 12, "rel_friend": 8 },
+              "setFlags": ["uni_dating"],
+              "clearFlags": ["uni_maybe_more"],
+              "text": {
+                "vi": "Cuộc trò chuyện dễ chịu. Có vẻ cả hai đều muốn tiến thêm.",
+                "en": "The conversation is easy. It seems you both want to take it further."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": { "happy": 4 },
+              "clearFlags": ["uni_maybe_more"],
+              "text": {
+                "vi": "Vui nhưng hóa ra chỉ là bạn bè. Không khí hơi ngượng.",
+                "en": "Nice, but it turns out they just want friendship. Slightly awkward."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Từ chối nhẹ nhàng",
+            "en": "Decline gently"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "willpower": 4 },
+              "clearFlags": ["uni_maybe_more"],
+              "text": {
+                "vi": "Họ hiểu và vẫn chào bạn khi gặp ở trường.",
+                "en": "They understand and still say hi when you pass on campus."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": -3 },
+              "clearFlags": ["uni_maybe_more"],
+              "text": {
+                "vi": "Họ có vẻ thất vọng và ít nói chuyện hơn.",
+                "en": "They seem disappointed and talk less afterward."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_dorm_intimate",
+      "category": "love",
+      "age": [18, 24],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "inSchool": true,
+        "hasPartner": true,
+        "min": { "rel_partner": 40 }
+      },
+      "text": {
+        "vi": "Bạn cùng phòng đi về quê cuối tuần. Người yêu đến chơi và cả hai ở lại qua đêm.",
+        "en": "Your roommate goes home for the weekend. Your partner comes over and you both stay overnight."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Dùng biện pháp",
+            "en": "Use protection"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "happy": 16, "rel_partner": 10, "pregnancyChance": 0.02 },
+              "setFlags": ["uni_intimate"],
+              "text": {
+                "vi": "Đêm ấy dịu dàng và gần gũi trong không gian riêng tư hiếm hoi.",
+                "en": "The night is tender and close in the rare private space."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": 8, "rel_partner": 5, "pregnancyChance": 0.02 },
+              "setFlags": ["uni_intimate"],
+              "text": {
+                "vi": "Vẫn vui nhưng bạn hơi lo bị phát hiện.",
+                "en": "Still nice, but you worry a little about being discovered."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Không dùng biện pháp",
+            "en": "Skip protection"
+          },
+          "outcomes": [
+            {
+              "chance": 0.5,
+              "effects": { "happy": 14, "rel_partner": 8, "risk": 8, "pregnancyChance": 0.18 },
+              "setFlags": ["uni_intimate"],
+              "text": {
+                "vi": "Cảm giác mãnh liệt hơn nhưng bạn không khỏi lo sau đó.",
+                "en": "It feels more intense, yet you can't help worrying afterward."
+              }
+            },
+            {
+              "chance": 0.5,
+              "effects": { "happy": 6, "risk": 10, "pregnancyChance": 0.18 },
+              "setFlags": ["uni_intimate"],
+              "text": {
+                "vi": "Vui nhưng sáng hôm sau bạn hối hận vì thiếu cẩn thận.",
+                "en": "Fun, but the next morning you regret the lack of caution."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_scholarship_chance",
+      "category": "school",
+      "age": [18, 23],
+      "weight": 4,
+      "once": true,
+      "rating": "all",
+      "requires": {
+        "inSchool": true,
+        "min": { "smarts": 60 }
+      },
+      "text": {
+        "vi": "Nhà trường thông báo có suất học bổng cạnh tranh dựa trên thành tích và bài luận.",
+        "en": "The university announces a competitive scholarship based on grades and an essay."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Dành cả tuần viết luận",
+            "en": "Spend the week on the essay"
+          },
+          "outcomes": [
+            {
+              "chance": 0.5,
+              "effects": { "smarts": 5, "money": 120, "happy": 12 },
+              "text": {
+                "vi": "Bạn thắng suất học bổng. Gánh nặng tài chính nhẹ hơn rõ rệt.",
+                "en": "You win the scholarship. The financial burden eases significantly."
+              }
+            },
+            {
+              "chance": 0.5,
+              "effects": { "smarts": 3, "happy": -4 },
+              "text": {
+                "vi": "Không đạt nhưng bài luận giúp bạn hiểu bản thân hơn.",
+                "en": "You don't get it, but the essay helps you understand yourself better."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nộp bài tạm đủ",
+            "en": "Submit a decent enough version"
+          },
+          "outcomes": [
+            {
+              "chance": 0.3,
+              "effects": { "money": 80, "happy": 6 },
+              "text": {
+                "vi": "May mắn được chọn. Bạn thở phào.",
+                "en": "Luckily selected. You breathe a sigh of relief."
+              }
+            },
+            {
+              "chance": 0.7,
+              "effects": { "happy": -3 },
+              "text": {
+                "vi": "Không đủ cạnh tranh. Cơ hội trôi qua.",
+                "en": "Not competitive enough. The chance slips away."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_part_time_job",
+      "category": "money",
+      "age": [18, 25],
+      "weight": 6,
+      "once": false,
+      "rating": "all",
+      "requires": {
+        "inSchool": true,
+        "incomeTier": ["low", "mid"]
+      },
+      "text": {
+        "vi": "Bạn nhận việc bán thời gian ở quán gần trường để trang trải chi phí.",
+        "en": "You take a part-time job at a café near campus to cover expenses."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Làm nhiều ca để có tiền",
+            "en": "Take many shifts for money"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "money": 60, "health": -6, "smarts": -3 },
+              "text": {
+                "vi": "Túi tiền ổn hơn nhưng điểm số bắt đầu giảm nhẹ.",
+                "en": "Your wallet improves but grades start to dip slightly."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "money": 40, "health": -10, "happy": -5 },
+              "text": {
+                "vi": "Bạn kiệt sức và suýt ngủ gật trong giờ học.",
+                "en": "You burn out and nearly fall asleep in class."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chỉ làm vừa đủ",
+            "en": "Work just enough"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "money": 30, "willpower": 3 },
+              "text": {
+                "vi": "Cân bằng ổn. Vẫn còn thời gian học và nghỉ.",
+                "en": "Decent balance. You still have time to study and rest."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "money": 15, "happy": -3 },
+              "text": {
+                "vi": "Tiền vẫn hơi thiếu và bạn phải chi tiêu dè sẻn.",
+                "en": "Money is still tight and you have to budget carefully."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_cheating_temptation",
+      "category": "school",
+      "age": [18, 25],
+      "weight": 4,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "inSchool": true,
+        "max": { "smarts": 55 }
+      },
+      "text": {
+        "vi": "Trong giờ kiểm tra, bạn thấy đáp án của người bên cạnh lộ rõ và rất dễ nhìn.",
+        "en": "During a test, you notice the answers of the person next to you are clearly visible."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nhìn và chép",
+            "en": "Look and copy"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": { "smarts": 5, "karma": -10, "risk": 8 },
+              "text": {
+                "vi": "Bạn được điểm cao hơn nhưng cảm thấy tội lỗi.",
+                "en": "You score higher but feel guilty."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": { "smarts": -5, "karma": -12, "risk": 10, "happy": -8 },
+              "setFlags": ["uni_caught_cheat"],
+              "text": {
+                "vi": "Giám thị phát hiện. Bạn bị lập biên bản.",
+                "en": "The invigilator notices. You're written up."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Tự làm bài của mình",
+            "en": "Do your own work"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": { "karma": 6, "willpower": 5 },
+              "text": {
+                "vi": "Điểm không cao nhưng bạn ngủ ngon vì lương tâm sạch.",
+                "en": "The grade isn't high but you sleep well with a clear conscience."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": { "happy": -4, "smarts": -2 },
+              "text": {
+                "vi": "Bạn hối tiếc vì có lẽ đã có thể điểm cao hơn.",
+                "en": "You regret that you might have scored higher."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_caught_cheat_fallout",
+      "category": "school",
+      "age": [18, 25],
+      "weight": 3,
+      "once": true,
+      "rating": "all",
+      "requires": {
+        "flags": ["uni_caught_cheat"]
+      },
+      "text": {
+        "vi": "Nhà trường gọi bạn lên làm việc về vụ gian lận trong kỳ thi.",
+        "en": "The administration calls you in about the cheating incident."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Thừa nhận và xin lỗi",
+            "en": "Admit and apologize"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "karma": 5, "happy": -8, "smarts": -5 },
+              "clearFlags": ["uni_caught_cheat"],
+              "text": {
+                "vi": "Bạn bị cảnh cáo và điểm môn đó bằng không, nhưng được ở lại.",
+                "en": "You receive a warning and a zero on the exam, but stay enrolled."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -15, "smarts": -10 },
+              "clearFlags": ["uni_caught_cheat"],
+              "text": {
+                "vi": "Hình thức kỷ luật nặng hơn bạn nghĩ. Học kỳ bị ảnh hưởng lớn.",
+                "en": "The discipline is harsher than expected. The semester takes a big hit."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chối và bào chữa",
+            "en": "Deny and make excuses"
+          },
+          "outcomes": [
+            {
+              "chance": 0.35,
+              "effects": { "karma": -8, "happy": -6 },
+              "clearFlags": ["uni_caught_cheat"],
+              "text": {
+                "vi": "Họ không đủ bằng chứng và chỉ nhắc nhở.",
+                "en": "They lack solid proof and only give a warning."
+              }
+            },
+            {
+              "chance": 0.65,
+              "effects": { "karma": -15, "happy": -12, "smarts": -8 },
+              "clearFlags": ["uni_caught_cheat"],
+              "setFlags": ["uni_academic_probation"],
+              "text": {
+                "vi": "Bằng chứng rõ ràng. Bạn bị đưa vào diện cảnh cáo học vụ.",
+                "en": "Evidence is clear. You're placed on academic probation."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_sports_tryout",
+      "category": "school",
+      "age": [18, 23],
+      "weight": 5,
+      "once": true,
+      "rating": "all",
+      "requires": {
+        "inSchool": true,
+        "min": { "health": 50 }
+      },
+      "text": {
+        "vi": "Câu lạc bộ thể thao của trường mở đăng ký thử việc cho thành viên mới.",
+        "en": "The university sports club opens tryouts for new members."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đăng ký và cố hết sức",
+            "en": "Sign up and give it your all"
+          },
+          "outcomes": [
+            {
+              "chance": 0.5,
+              "effects": { "health": 8, "looks": 4, "rel_friend": 6, "happy": 10 },
+              "setFlags": ["uni_athlete"],
+              "text": {
+                "vi": "Bạn được chọn. Tập luyện trở thành thói quen mới.",
+                "en": "You make the team. Training becomes a new routine."
+              }
+            },
+            {
+              "chance": 0.5,
+              "effects": { "health": 4, "happy": -3 },
+              "text": {
+                "vi": "Không được chọn nhưng bạn vẫn thấy khỏe hơn.",
+                "en": "You don't make it but still feel fitter."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chỉ đến xem",
+            "en": "Just go watch"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "happy": 3 },
+              "text": {
+                "vi": "Không khí vui và bạn cổ vũ từ ngoài.",
+                "en": "The atmosphere is fun and you cheer from the sidelines."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": -2 },
+              "text": {
+                "vi": "Bạn hơi tiếc vì không thử.",
+                "en": "You mildly regret not trying."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_graduation_approach",
+      "category": "school",
+      "age": [21, 26],
+      "weight": 5,
+      "once": true,
+      "rating": "all",
+      "requires": {
+        "inSchool": true
+      },
+      "text": {
+        "vi": "Năm cuối đến gần. Bạn bắt đầu nghĩ về việc sẽ làm sau khi ra trường.",
+        "en": "Final year approaches. You start thinking about what comes after graduation."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nộp hồ sơ thực tập sớm",
+            "en": "Apply for internships early"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "smarts": 5, "money": 40, "happy": 8 },
+              "setFlags": ["uni_internship"],
+              "text": {
+                "vi": "Bạn nhận được lời mời thực tập có trả lương.",
+                "en": "You land a paid internship offer."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "happy": -4, "willpower": 3 },
+              "text": {
+                "vi": "Bị từ chối vài nơi nhưng bạn rút kinh nghiệm.",
+                "en": "Rejected by a few places but you gain experience."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Tận hưởng năm cuối đã",
+            "en": "Just enjoy the final year"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 10, "rel_friend": 6 },
+              "text": {
+                "vi": "Những kỷ niệm đẹp được tạo thêm trước khi chia tay.",
+                "en": "More good memories are made before everyone parts ways."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": 4, "smarts": -3 },
+              "text": {
+                "vi": "Vui nhưng bạn bắt đầu lo lắng vì chưa có kế hoạch rõ.",
+                "en": "Fun, but you start worrying because you lack a clear plan."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_friend_with_benefits",
+      "category": "love",
+      "age": [19, 24],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "inSchool": true,
+        "hasPartner": false,
+        "flags": ["uni_social"]
+      },
+      "text": {
+        "vi": "Một người bạn thân ở trường gợi ý thử quan hệ không ràng buộc để giải tỏa.",
+        "en": "A close campus friend suggests trying a no-strings arrangement for stress relief."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý với điều khoản rõ",
+            "en": "Agree with clear terms"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": { "happy": 12, "rel_friend": 4 },
+              "setFlags": ["uni_fwb"],
+              "text": {
+                "vi": "Cả hai vui vẻ và vẫn giữ được tình bạn một thời gian.",
+                "en": "You both enjoy it and keep the friendship intact for a while."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": { "happy": 6, "rel_friend": -8 },
+              "setFlags": ["uni_fwb"],
+              "text": {
+                "vi": "Bắt đầu có cảm xúc lệch pha từ một phía.",
+                "en": "Uneven feelings start appearing on one side."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Từ chối để giữ bạn",
+            "en": "Refuse to keep the friendship"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "rel_friend": 6, "karma": 4 },
+              "text": {
+                "vi": "Họ tôn trọng và tình bạn vẫn vững vàng.",
+                "en": "They respect it and the friendship stays strong."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "rel_friend": -5, "happy": -3 },
+              "text": {
+                "vi": "Không khí hơi kỳ vài tuần sau đó.",
+                "en": "Things feel a bit awkward for a few weeks."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_fwb_complication",
+      "category": "love",
+      "age": [19, 25],
+      "weight": 3,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "flags": ["uni_fwb"]
+      },
+      "text": {
+        "vi": "Bạn nhận ra mình đang thích thật người bạn 'không ràng buộc' hơn mức dự định.",
+        "en": "You realize you're catching real feelings for your 'no-strings' campus friend."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nói ra sự thật",
+            "en": "Tell the truth"
+          },
+          "outcomes": [
+            {
+              "chance": 0.4,
+              "effects": { "happy": 14, "rel_friend": 12 },
+              "clearFlags": ["uni_fwb"],
+              "setFlags": ["uni_dating"],
+              "text": {
+                "vi": "Họ cũng vậy. Mọi thứ chuyển thành chính thức.",
+                "en": "They feel the same. Things become official."
+              }
+            },
+            {
+              "chance": 0.6,
+              "effects": { "happy": -12, "rel_friend": -12 },
+              "clearFlags": ["uni_fwb"],
+              "text": {
+                "vi": "Họ chỉ muốn giữ nguyên. Bạn buộc phải dừng.",
+                "en": "They only want to keep it casual. You have to stop."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Giữ im lặng",
+            "en": "Stay silent"
+          },
+          "outcomes": [
+            {
+              "chance": 0.45,
+              "effects": { "happy": 4, "willpower": -5 },
+              "text": {
+                "vi": "Bạn cố kiểm soát thêm một thời gian.",
+                "en": "You manage to keep it under control for a while longer."
+              }
+            },
+            {
+              "chance": 0.55,
+              "effects": { "happy": -10, "willpower": -8 },
+              "text": {
+                "vi": "Càng giả vờ càng đau mỗi lần gặp mặt.",
+                "en": "The pretense hurts more each time you meet."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uni_final_party",
+      "category": "school",
+      "age": [21, 26],
+      "weight": 5,
+      "once": true,
+      "rating": "18+",
+      "requires": {
+        "inSchool": true
+      },
+      "text": {
+        "vi": "Buổi tiệc cuối cùng trước khi tốt nghiệp. Mọi người ôm nhau và hứa sẽ giữ liên lạc.",
+        "en": "The last party before graduation. Everyone hugs and promises to stay in touch."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Tận hưởng đến cùng",
+            "en": "Enjoy it to the fullest"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 16, "rel_friend": 10 },
+              "text": {
+                "vi": "Một đêm đáng nhớ. Bạn cảm thấy biết ơn vì những năm tháng này.",
+                "en": "A memorable night. You feel grateful for these years."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": 8, "health": -5 },
+              "text": {
+                "vi": "Vui nhưng sáng sau hơi tiếc vì uống quá chén.",
+                "en": "Fun, but the next morning you mildly regret overdoing the drinks."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nói lời tạm biệt sớm",
+            "en": "Say goodbyes early"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": { "happy": 8, "willpower": 4 },
+              "text": {
+                "vi": "Bạn giữ được khoảnh khắc dịu dàng và về nghỉ ngơi.",
+                "en": "You keep a gentle moment and head home to rest."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": { "happy": -4 },
+              "text": {
+                "vi": "Bạn hơi tiếc vì bỏ lỡ phần còn lại của đêm.",
+                "en": "You mildly regret missing the rest of the night."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

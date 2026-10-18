@@ -1,0 +1,1370 @@
+{
+ "manifest": {
+  "id": "core.weird",
+  "name": {
+   "vi": "Gói gốc: chuyện đời dở khóc dở cười",
+   "en": "Core: life's absurd moments"
+  },
+  "version": "1.0.0",
+  "rating": "all",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "w_goose",
+   "category": "random",
+   "age": [
+    4,
+    80
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một con ngỗng đuổi theo bạn suốt hai dãy phố, không rõ lý do.",
+    "en": "A goose chases you for two blocks. No reason given."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chạy",
+      "en": "Run"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "health": 2,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn thoát. Con ngỗng nhìn theo như thể chuyện này chưa kết thúc.",
+        "en": "You escape. The goose watches you leave like this isn't over."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -3,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Nó nhanh hơn bạn tưởng. Bạn bị mổ vào mông.",
+        "en": "It's faster than you thought. You get pecked on the backside."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đứng lại đối mặt",
+      "en": "Stand your ground"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "willpower": 4,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Con ngỗng lùi lại. Bạn cảm thấy mình là vua.",
+        "en": "The goose backs off. You feel like royalty."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -5,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Con ngỗng thắng. Có người quay video.",
+        "en": "The goose wins. Someone filmed it."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_wrong_funeral",
+   "category": "random",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn dự đám tang và nhận ra mình đi nhầm. Không ai ở đây bạn quen.",
+    "en": "You're at a funeral and realise it's the wrong one. You know nobody here."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lặng lẽ rời đi",
+      "en": "Quietly leave"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -1
+       },
+       "text": {
+        "vi": "Bạn rời đi. Một cụ ông nháy mắt với bạn như thể hiểu chuyện.",
+        "en": "You slip out. An old man winks like he gets it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở lại ăn cỗ",
+      "en": "Stay for the food"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 5,
+        "karma": -2
+       },
+       "text": {
+        "vi": "Bạn còn được mời phát biểu. Bạn nói người đã khuất 'rất yêu cuộc sống'. Mọi người khóc.",
+        "en": "You're even asked to speak. You say the deceased 'loved life'. Everyone cries."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -4,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Họ hỏi bạn quen người đã khuất thế nào. Bạn nói 'qua mạng'.",
+        "en": "They ask how you knew the deceased. You say 'online'."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_cat_judge",
+   "category": "random",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con mèo hàng xóm ngồi trên tường nhìn bạn mỗi sáng. Hôm nay nó lắc đầu.",
+    "en": "The neighbour's cat watches you from the wall every morning. Today it shakes its head."
+   },
+   "effects": {
+    "happy": -2,
+    "willpower": 1
+   }
+  },
+  {
+   "id": "w_fortune",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một bà thầy bói ven đường nắm tay bạn và nói 'Năm nay con sẽ gặp một chữ cái quan trọng'.",
+    "en": "A street fortune teller grabs your hand: 'This year you will meet an important letter.'"
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Trả tiền nghe tiếp",
+      "en": "Pay to hear more"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "money": -1,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Bà nói chữ đó là 'M'. Hoặc 'N'. Có thể là 'W' lộn ngược.",
+        "en": "She says it's 'M'. Or 'N'. Possibly an upside-down 'W'."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "money": -1,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bà nói bạn sẽ sống đến 103 tuổi rồi đòi thêm tiền 'giải hạn'.",
+        "en": "She says you'll live to 103, then charges extra to 'remove the curse'."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Rút tay lại đi tiếp",
+      "en": "Pull away and keep walking"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bà nói với theo 'Chữ đó là chữ C!' Bạn không ngoái lại.",
+        "en": "She shouts 'It's the letter C!' You don't look back."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_elevator",
+   "category": "random",
+   "age": [
+    12,
+    90
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn kẹt thang máy cùng một người lạ suốt 40 phút.",
+    "en": "You're stuck in a lift with a stranger for 40 minutes."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bắt chuyện",
+      "en": "Make conversation"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 5,
+        "rel_friend": 5
+       },
+       "text": {
+        "vi": "Đến lúc cửa mở, hai người đã biết tên thú cưng thời thơ ấu của nhau.",
+        "en": "By the time the doors open, you know each other's childhood pets."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Họ là người kể chuyện chán nhất bạn từng gặp. 40 phút như 40 năm.",
+        "en": "The most boring storyteller alive. 40 minutes feel like 40 years."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Im lặng nhìn số tầng",
+      "en": "Stare at the floor numbers"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Một sự im lặng có tổ chức. Cả hai cùng vượt qua.",
+        "en": "An organised silence. You both survive."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_pigeon",
+   "category": "random",
+   "age": [
+    5,
+    90
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một con chim bồ câu đậu lên đầu bạn và từ chối rời đi.",
+    "en": "A pigeon lands on your head and refuses to leave."
+   },
+   "effects": {
+    "happy": 3,
+    "fame": 1
+   }
+  },
+  {
+   "id": "w_typo_tattoo",
+   "category": "random",
+   "age": [
+    18,
+    60
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn đi xăm một câu tiếng Anh truyền cảm hứng. Thợ xăm viết sai chính tả.",
+    "en": "You get an inspirational tattoo. The artist misspells it."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đòi xóa",
+      "en": "Demand removal"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -8,
+        "health": -1,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Xóa xăm đau gấp ba lần xăm và đắt gấp năm.",
+        "en": "Removal hurts three times more and costs five times as much."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Coi đó là cá tính",
+      "en": "Call it personality"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "looks": -1,
+        "fame": 1
+       },
+       "text": {
+        "vi": "'No pain, no gian.' Bạn bảo ai hỏi là ẩn ý triết học.",
+        "en": "'No pain, no gian.' You tell people it's a philosophical statement."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_karaoke",
+   "category": "random",
+   "age": [
+    16,
+    80
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Ở quán karaoke, micro được dúi vào tay bạn đúng lúc bài khó nhất bắt đầu.",
+    "en": "At karaoke, the mic is shoved into your hand right as the hardest song starts."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hát hết mình",
+      "en": "Belt it out"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 10,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Cả phòng im lặng, rồi vỗ tay. Máy chấm 98 điểm.",
+        "en": "Silence, then applause. The machine gives you 98."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 4,
+        "looks": -1
+       },
+       "text": {
+        "vi": "Máy chấm 12 điểm. Bạn bè vẫn đòi hát lại vì quá buồn cười.",
+        "en": "The machine gives you 12. Your friends demand an encore because it was hilarious."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giả vờ micro hỏng",
+      "en": "Pretend the mic is broken"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Bạn gõ gõ micro rất thuyết phục và chuyền đi.",
+        "en": "You tap the mic very convincingly and pass it on."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_reply_all",
+   "category": "work",
+   "age": [
+    20,
+    65
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn lỡ bấm 'Trả lời tất cả' với một email than phiền về sếp.",
+    "en": "You accidentally hit 'Reply all' on an email complaining about your boss."
+   },
+   "requires": {
+    "employed": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gửi email xin lỗi toàn công ty",
+      "en": "Send a company-wide apology"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "karma": 2,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Email xin lỗi còn được chia sẻ nhiều hơn email gốc.",
+        "en": "The apology gets forwarded more than the original."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -8
+       },
+       "text": {
+        "vi": "Sếp trả lời bằng một chữ: 'Phòng tôi.'",
+        "en": "Your boss replies with two words: 'My office.'"
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giả vờ bị hack",
+      "en": "Claim you were hacked"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 3,
+        "karma": -3
+       },
+       "text": {
+        "vi": "Phòng IT đổi mật khẩu của bạn. Mọi người tin.",
+        "en": "IT resets your password. Everyone believes it."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -6,
+        "karma": -3
+       },
+       "text": {
+        "vi": "Bộ phận IT nói không có dấu hiệu bị hack. Họ nói to.",
+        "en": "IT says there's no sign of a hack. Loudly."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_meeting_email",
+   "category": "work",
+   "age": [
+    20,
+    65
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Cuộc họp kéo dài hai tiếng lẽ ra chỉ cần một email.",
+    "en": "A two-hour meeting that should have been an email."
+   },
+   "requires": {
+    "employed": true
+   },
+   "effects": {
+    "happy": -3,
+    "willpower": 1
+   }
+  },
+  {
+   "id": "w_office_fridge",
+   "category": "work",
+   "age": [
+    20,
+    65
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Ai đó ăn mất hộp cơm có dán tên bạn trong tủ lạnh công ty.",
+    "en": "Someone ate your labelled lunch from the office fridge."
+   },
+   "requires": {
+    "employed": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dán giấy cảnh báo",
+      "en": "Leave a passive-aggressive note"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Hôm sau có người dán giấy trả lời bên dưới. Chiến tranh bắt đầu.",
+        "en": "Next day someone sticks a reply underneath. War begins."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Điều tra như thám tử",
+      "en": "Investigate like a detective"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 6,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Thủ phạm là phó giám đốc. Bạn giữ bí mật này như át chủ bài.",
+        "en": "It was the deputy director. You keep this as leverage."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn nghi oan thực tập sinh. Họ khóc.",
+        "en": "You wrongly accuse the intern. They cry."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_gym_selfie",
+   "category": "random",
+   "age": [
+    18,
+    60
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn chụp ảnh tự sướng ở phòng gym và vô tình chụp cả một người đang ngã khỏi máy chạy.",
+    "en": "You take a gym selfie and accidentally capture someone flying off a treadmill."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đăng lên",
+      "en": "Post it"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "fame": 5,
+        "karma": -3,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Ảnh lan khắp mạng. Người ngã cũng chia sẻ và tag bạn.",
+        "en": "It goes viral. The person who fell shares it and tags you."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "fame": 2,
+        "karma": -4,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Họ nhận ra mình trong ảnh. Họ là chủ phòng gym.",
+        "en": "They recognise themselves. They own the gym."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xóa đi",
+      "en": "Delete it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2
+       },
+       "text": {
+        "vi": "Bạn giúp họ đứng dậy. Họ cho bạn tập miễn phí một tháng.",
+        "en": "You help them up. They give you a free month."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_auto_correct",
+   "category": "random",
+   "age": [
+    14,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bàn phím tự sửa 'yêu' thành 'nợ' trong tin nhắn bạn gửi cho mẹ.",
+    "en": "Autocorrect changes 'love you' to 'owe you' in a message to your mum."
+   },
+   "effects": {
+    "happy": 2,
+    "rel_mother": 2
+   }
+  },
+  {
+   "id": "w_tourist_photo",
+   "category": "random",
+   "age": [
+    12,
+    90
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một nhóm du khách nhờ bạn chụp ảnh. Họ đưa bạn 4 chiếc điện thoại.",
+    "en": "Tourists ask you to take their photo. They hand you four phones."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chụp tận tình",
+      "en": "Do it properly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bạn chụp 87 tấm. Họ mời bạn về nước họ chơi.",
+        "en": "You take 87 photos. They invite you to visit their country."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chụp một tấm cho nhanh",
+      "en": "One quick shot"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Trong tấm duy nhất, ai cũng đang nhắm mắt.",
+        "en": "In the only shot, everyone's eyes are closed."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_bee",
+   "category": "health",
+   "age": [
+    3,
+    90
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một con ong bay vào áo bạn.",
+    "en": "A bee flies into your shirt."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đứng yên tuyệt đối",
+      "en": "Freeze completely"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Con ong bò ra, như thể chỉ đi tham quan.",
+        "en": "The bee crawls out, like it was just sightseeing."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -3,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Nó đốt. Đứng yên không giúp gì cả.",
+        "en": "It stings. Freezing didn't help."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhảy loạn xạ",
+      "en": "Flail wildly"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -1,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Con ong thoát ra. Mười người xung quanh nghĩ bạn bị lên đồng.",
+        "en": "The bee escapes. Ten bystanders think you're possessed."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "health": -4,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Ba nốt đốt. Con ong có lẽ cũng đã kể cho bạn bè nó.",
+        "en": "Three stings. The bee probably told its friends."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_long_lost_twin",
+   "category": "random",
+   "age": [
+    18,
+    80
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một người lạ giống bạn đến mức đáng sợ ngồi đối diện bạn trên tàu.",
+    "en": "A stranger who looks terrifyingly like you sits opposite you on the train."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bắt chuyện",
+      "en": "Talk to them"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 6,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Không có họ hàng gì. Hai người chụp ảnh chung và nó lên báo mạng.",
+        "en": "No relation. You take a photo together and it hits the news."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Họ nói bạn trông giống em họ của họ. Rồi họ xuống tàu.",
+        "en": "They say you look like their cousin. Then they get off."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giả vờ ngủ",
+      "en": "Pretend to sleep"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -1
+       },
+       "text": {
+        "vi": "Bạn hé mắt. Họ cũng đang giả vờ ngủ.",
+        "en": "You peek. They're pretending to sleep too."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_grandma_tech",
+   "category": "family",
+   "age": [
+    14,
+    50
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bà gọi video cho bạn, nhưng chỉ thấy trần nhà và một nửa tai bà.",
+    "en": "Grandma video-calls you. You only see the ceiling and half her ear."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Kiên nhẫn hướng dẫn",
+      "en": "Patiently guide her"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "karma": 3,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Sau 25 phút bà thấy mặt bạn và khóc vì vui.",
+        "en": "After 25 minutes she sees your face and cries with joy."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bà vô tình đổi ngôn ngữ điện thoại sang tiếng Phần Lan.",
+        "en": "She accidentally switches her phone to Finnish."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nói chuyện với cái trần nhà",
+      "en": "Just talk to the ceiling"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Cuộc gọi vẫn rất ấm áp. Cái trần nhà nhà bà rất đẹp.",
+        "en": "Still a lovely call. Grandma has a nice ceiling."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_parking",
+   "category": "random",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn đậu xe xong và quên mất mình đậu ở đâu.",
+    "en": "You park and immediately forget where."
+   },
+   "effects": {
+    "happy": -2,
+    "health": 1
+   }
+  },
+  {
+   "id": "w_mystery_package",
+   "category": "random",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một gói hàng không ai đặt được giao đến nhà bạn. Bên trong là 40 đôi tất giống hệt nhau.",
+    "en": "A package nobody ordered arrives. Inside: 40 identical pairs of socks."
+   },
+   "effects": {
+    "happy": 4
+   }
+  },
+  {
+   "id": "w_ghost",
+   "category": "random",
+   "age": [
+    8,
+    90
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đêm qua bạn nghe tiếng bước chân trên gác, dù nhà bạn không có gác.",
+    "en": "Last night you heard footsteps upstairs. You don't have an upstairs."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi kiểm tra",
+      "en": "Investigate"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Đó là con chuột. Một con chuột rất tự tin.",
+        "en": "It's a rat. A very confident rat."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "happy": -6,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Không có gì cả. Bạn ngủ với đèn bật suốt một tháng.",
+        "en": "Nothing there. You sleep with the lights on for a month."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Trùm chăn",
+      "en": "Hide under the duvet"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Chăn là lá chắn mạnh nhất loài người từng phát minh.",
+        "en": "The duvet is humanity's strongest shield."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_wrong_name",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một người chào bạn nhiệt tình bằng một cái tên không phải tên bạn.",
+    "en": "Someone greets you warmly using a name that isn't yours."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đóng vai luôn",
+      "en": "Play along"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 5,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Bạn nói chuyện 10 phút về 'kỷ niệm chung'. Họ rất vui.",
+        "en": "You chat for 10 minutes about 'old times'. They're delighted."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Họ hỏi thăm 'vợ con anh/chị'. Bạn bịa ra hai đứa trẻ.",
+        "en": "They ask about 'your spouse and kids'. You invent two children."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Sửa lại cho đúng",
+      "en": "Correct them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2
+       },
+       "text": {
+        "vi": "Cả hai cười ngượng. Họ thề là bạn giống hệt người đó.",
+        "en": "Awkward laughs. They swear you look exactly like them."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_viral_recipe",
+   "category": "random",
+   "age": [
+    16,
+    80
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn thử nấu một món ăn đang hot trên mạng.",
+    "en": "You try a recipe that's trending online."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Làm đúng công thức",
+      "en": "Follow it exactly"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 5,
+        "health": 1
+       },
+       "text": {
+        "vi": "Ngon bất ngờ. Bạn chụp ảnh với góc độ của đầu bếp chuyên nghiệp.",
+        "en": "Surprisingly good. You photograph it like a pro chef."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3,
+        "health": -2
+       },
+       "text": {
+        "vi": "Trông như ảnh minh họa, vị như đế giày.",
+        "en": "Looks like the picture. Tastes like a shoe sole."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Sáng tạo thêm",
+      "en": "Improvise"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 8,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Phiên bản của bạn còn hot hơn bản gốc.",
+        "en": "Your version goes more viral than the original."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "health": -3,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn phát minh ra một mùi mới. Hàng xóm đóng cửa sổ.",
+        "en": "You invent a new smell. The neighbours shut their windows."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_kid_question",
+   "category": "childhood",
+   "age": [
+    4,
+    8
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn hỏi bố mẹ 'Con từ đâu ra?' ngay giữa bữa cơm có khách.",
+    "en": "You ask 'Where do babies come from?' at dinner with guests."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hỏi tiếp cho đến khi có câu trả lời",
+      "en": "Keep asking until answered"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Bố bảo bạn được tặng kèm khi mua tủ lạnh. Bạn tin đến năm 9 tuổi.",
+        "en": "Dad says you came free with the fridge. You believe it until age 9."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chuyển sang hỏi về khủng long",
+      "en": "Switch to dinosaurs"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Cả bàn thở phào và nói về khủng long rất nhiệt tình.",
+        "en": "The table sighs with relief and discusses dinosaurs with great enthusiasm."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_kid_haircut",
+   "category": "childhood",
+   "age": [
+    4,
+    10
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn tự cắt tóc mái bằng kéo thủ công.",
+    "en": "You cut your own fringe with craft scissors."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Khoe với mẹ",
+      "en": "Show Mum"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "looks": -3,
+        "happy": 3,
+        "rel_mother": -2
+       },
+       "text": {
+        "vi": "Mẹ nhìn rất lâu, rồi chụp ảnh lại 'để sau này cho con xem'.",
+        "en": "Mum stares for a long time, then takes a photo 'to show you when you're older'."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đội mũ cả tuần",
+      "en": "Wear a hat all week"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "looks": -1,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Không ai biết. Trừ ảnh thẻ học sinh năm đó.",
+        "en": "Nobody knows. Except that year's school photo."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "w_teen_sleep",
+   "category": "teen",
+   "age": [
+    13,
+    17
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn ngủ 14 tiếng liền. Bố mẹ vào kiểm tra xem bạn còn thở không.",
+    "en": "You sleep 14 hours straight. Your parents check you're still breathing."
+   },
+   "effects": {
+    "health": 2,
+    "happy": 3
+   }
+  },
+  {
+   "id": "w_old_phone",
+   "category": "old_age",
+   "age": [
+    60,
+    100
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con cháu dạy bạn dùng điện thoại thông minh. Bạn vô tình gửi 40 sticker hoa sen vào nhóm gia đình.",
+    "en": "Your grandkids teach you a smartphone. You accidentally send 40 lotus stickers to the family chat."
+   },
+   "effects": {
+    "happy": 5,
+    "rel_child": 3
+   }
+  },
+  {
+   "id": "w_old_sayings",
+   "category": "old_age",
+   "age": [
+    65,
+    100
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn bắt đầu kể 'hồi xưa' ở mọi câu chuyện, kể cả chuyện thời tiết.",
+    "en": "You start every story with 'back in my day', even about the weather."
+   },
+   "effects": {
+    "happy": 3,
+    "fame": -1
+   }
+  }
+ ]
+}

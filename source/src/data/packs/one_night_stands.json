@@ -1,0 +1,1388 @@
+{
+  "manifest": {
+    "id": "tien.one_night_stands",
+    "name": {
+      "vi": "Tình một đêm",
+      "en": "One-Night Stands"
+    },
+    "version": "1.0.0",
+    "rating": "25+",
+    "languages": ["vi", "en"]
+  },
+  "events": [
+    {
+      "id": "ons_bar_eye_contact",
+      "category": "love",
+      "age": [21, 45],
+      "weight": 8,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false
+      },
+      "text": {
+        "vi": "Trong quán đông người, ánh mắt bạn chạm với một người lạ quyến rũ. Họ mỉm cười và gật đầu.",
+        "en": "In a crowded bar, your eyes lock with an attractive stranger. They smile and nod."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Lại gần làm quen",
+            "en": "Go over and introduce"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": { "happy": 10, "risk": 5 },
+              "setFlags": ["ons_potential"],
+              "text": {
+                "vi": "Cuộc trò chuyện trôi chảy và họ rõ ràng quan tâm.",
+                "en": "The conversation flows and they're clearly interested."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": { "happy": -4 },
+              "text": {
+                "vi": "Họ lịch sự nhưng đã có người đi cùng.",
+                "en": "They're polite but already here with someone."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chỉ mỉm cười rồi bỏ",
+            "en": "Just smile and move on"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "willpower": 5 },
+              "text": {
+                "vi": "Bạn giữ khoảng cách và tiếp tục đêm của mình.",
+                "en": "You keep your distance and continue your night."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -3 },
+              "text": {
+                "vi": "Họ quay đi và bạn hơi tiếc.",
+                "en": "They turn away and you feel a mild regret."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_invite_home",
+      "category": "love",
+      "age": [21, 45],
+      "weight": 7,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false,
+        "flags": ["ons_potential"]
+      },
+      "text": {
+        "vi": "Sau vài ly, người lạ thì thầm hỏi liệu bạn có muốn về chỗ họ không.",
+        "en": "After a few drinks, the stranger leans in and asks if you want to go back to their place."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý ngay",
+            "en": "Say yes right away"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 15, "risk": 8 },
+              "setFlags": ["ons_happened"],
+              "clearFlags": ["ons_potential"],
+              "text": {
+                "vi": "Đêm ấy nóng bỏng và cả hai đều biết đây chỉ là một lần.",
+                "en": "The night is intense and you both know it's just for one time."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": 5, "risk": 5 },
+              "setFlags": ["ons_awkward"],
+              "clearFlags": ["ons_potential"],
+              "text": {
+                "vi": "Hóa ra họ hơi vụng về, nhưng vẫn ổn.",
+                "en": "Turns out they're a bit clumsy, but still fine."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Xin số rồi về",
+            "en": "Get their number and leave"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": { "happy": 6, "willpower": 5 },
+              "clearFlags": ["ons_potential"],
+              "text": {
+                "vi": "Họ vui vẻ đưa số. Có lẽ lần sau.",
+                "en": "They happily give their number. Maybe next time."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": { "happy": -5 },
+              "clearFlags": ["ons_potential"],
+              "text": {
+                "vi": "Họ nhún vai và biến mất vào đám đông.",
+                "en": "They shrug and disappear into the crowd."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_morning_after",
+      "category": "love",
+      "age": [21, 50],
+      "weight": 6,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "flags": ["ons_happened"]
+      },
+      "text": {
+        "vi": "Sáng hôm sau bạn thức dậy trên giường lạ, người bên cạnh vẫn đang ngủ.",
+        "en": "The next morning you wake up in a strange bed, the person beside you still asleep."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Lẻn ra trước khi họ dậy",
+            "en": "Sneak out before they wake"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": { "happy": 5, "willpower": 3 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Bạn mặc đồ và đi mà không ai hay biết.",
+                "en": "You get dressed and leave without anyone noticing."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": { "happy": -6, "karma": -3 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Họ mở mắt đúng lúc bạn đang rón rén ra cửa.",
+                "en": "They open their eyes just as you're tiptoeing to the door."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Ở lại chào buổi sáng",
+            "en": "Stay and say good morning"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "happy": 10, "rel_friend": 5 },
+              "clearFlags": ["ons_happened"],
+              "setFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Họ cười và mời bạn uống cà phê. Không khí dễ chịu.",
+                "en": "They smile and offer coffee. The atmosphere is easy."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "happy": -4 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Họ lịch sự nhưng rõ ràng muốn bạn đi sớm.",
+                "en": "They're polite but clearly want you gone soon."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_app_match",
+      "category": "love",
+      "age": [20, 40],
+      "weight": 7,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false
+      },
+      "text": {
+        "vi": "Ứng dụng hẹn hò báo một người phù hợp cao. Tin nhắn của họ rất thẳng thắn về ý định.",
+        "en": "A dating app shows a high match. Their message is very direct about intentions."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý gặp tối nay",
+            "en": "Agree to meet tonight"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "happy": 12, "risk": 6 },
+              "setFlags": ["ons_happened"],
+              "text": {
+                "vi": "Cả hai hiểu rõ và đêm ấy thỏa mãn đúng như mong đợi.",
+                "en": "You both understand and the night delivers exactly what was promised."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "happy": -5, "risk": 4 },
+              "text": {
+                "vi": "Họ không giống ảnh lắm và cuộc gặp hơi thất vọng.",
+                "en": "They don't quite match the photos and the meetup feels underwhelming."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chỉ trò chuyện thêm",
+            "en": "Just keep chatting"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 4 },
+              "text": {
+                "vi": "Cuộc trò chuyện vui nhưng không đi đến đâu.",
+                "en": "The chat is fun but leads nowhere."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -3 },
+              "text": {
+                "vi": "Họ mất hứng và ngừng trả lời.",
+                "en": "They lose interest and stop replying."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_regret_wave",
+      "category": "love",
+      "age": [21, 45],
+      "weight": 5,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "flags": ["ons_happened"]
+      },
+      "text": {
+        "vi": "Vài ngày sau, bạn đột nhiên cảm thấy trống rỗng về đêm đó.",
+        "en": "A few days later, you suddenly feel empty about that night."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Chấp nhận và quên",
+            "en": "Accept and move on"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "willpower": 8, "happy": 5 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Bạn nhắc mình rằng đó chỉ là vui vẻ tạm thời.",
+                "en": "You remind yourself it was only temporary fun."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -6 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Cảm giác vẫn thoáng qua dù bạn cố quên.",
+                "en": "The feeling still lingers even as you try to forget."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nhắn tin hỏi thăm",
+            "en": "Text to check in"
+          },
+          "outcomes": [
+            {
+              "chance": 0.4,
+              "effects": { "happy": 8 },
+              "setFlags": ["ons_maybe_again"],
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Họ trả lời thân thiện và gợi ý gặp lại.",
+                "en": "They reply warmly and hint at meeting again."
+              }
+            },
+            {
+              "chance": 0.6,
+              "effects": { "happy": -8 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Tin nhắn bị đọc nhưng không có phản hồi.",
+                "en": "The message is read but never answered."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_party_bathroom",
+      "category": "love",
+      "age": [20, 35],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false,
+        "min": { "risk": 30 }
+      },
+      "text": {
+        "vi": "Trong bữa tiệc ồn ào, một người lạ kéo bạn vào phòng tắm và khóa cửa.",
+        "en": "At a loud party, a stranger pulls you into the bathroom and locks the door."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý và tận hưởng",
+            "en": "Go along and enjoy"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "happy": 14, "risk": 10 },
+              "setFlags": ["ons_happened"],
+              "text": {
+                "vi": "Nhanh, nóng và đầy adrenaline. Cả hai ra ngoài như không có gì.",
+                "en": "Quick, hot, and full of adrenaline. You both walk out like nothing happened."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "happy": 5, "risk": 8, "fame": -5 },
+              "setFlags": ["ons_happened"],
+              "text": {
+                "vi": "Có tiếng gõ cửa. Cả hai phải vội vàng chỉnh lại quần áo.",
+                "en": "Someone knocks. You both scramble to fix your clothes."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Từ chối và ra ngoài",
+            "en": "Refuse and leave"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "willpower": 6, "karma": 4 },
+              "text": {
+                "vi": "Họ nhún vai và bạn trở lại đám đông an toàn.",
+                "en": "They shrug and you return to the crowd safely."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": -4 },
+              "text": {
+                "vi": "Họ có vẻ thất vọng và tránh bạn cả đêm.",
+                "en": "They look disappointed and avoid you the rest of the night."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_coworker_after_drinks",
+      "category": "work",
+      "age": [22, 45],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "employed": true,
+        "hasPartner": false
+      },
+      "text": {
+        "vi": "Sau buổi nhậu công ty, một đồng nghiệp gợi ý 'tiếp tục' ở chỗ bạn.",
+        "en": "After work drinks, a coworker suggests 'continuing' at your place."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý dù biết rủi ro",
+            "en": "Agree despite the risk"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": { "happy": 12, "risk": 8 },
+              "setFlags": ["ons_happened", "ons_coworker"],
+              "text": {
+                "vi": "Đêm ấy thỏa mãn, nhưng sáng hôm sau cả hai đều hơi ngại.",
+                "en": "The night is satisfying, but the next morning both of you feel awkward."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": { "happy": 6, "rel_boss": -5, "risk": 6 },
+              "setFlags": ["ons_happened", "ons_coworker"],
+              "text": {
+                "vi": "Vui vẻ nhưng tin đồn bắt đầu lan trong văn phòng.",
+                "en": "Fun, but rumors start circulating around the office."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Từ chối lịch sự",
+            "en": "Politely decline"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": { "willpower": 5, "karma": 3 },
+              "text": {
+                "vi": "Họ hiểu và vẫn giữ thái độ chuyên nghiệp.",
+                "en": "They understand and keep things professional."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": { "happy": -3 },
+              "text": {
+                "vi": "Không khí làm việc hơi kỳ vài ngày sau.",
+                "en": "The work atmosphere feels a bit odd for a few days."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_coworker_awkward",
+      "category": "work",
+      "age": [22, 45],
+      "weight": 4,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "employed": true,
+        "flags": ["ons_coworker"]
+      },
+      "text": {
+        "vi": "Ngày đầu tiên gặp lại đồng nghiệp sau đêm đó, cả hai đều tránh ánh mắt.",
+        "en": "The first day back seeing that coworker after the night, you both avoid eye contact."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nói chuyện thẳng thắn",
+            "en": "Talk about it openly"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "happy": 8, "willpower": 5 },
+              "clearFlags": ["ons_coworker"],
+              "text": {
+                "vi": "Cả hai đồng ý quên đi và giữ quan hệ đồng nghiệp.",
+                "en": "You both agree to forget it and stay collegial."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "happy": -6, "rel_boss": -4 },
+              "clearFlags": ["ons_coworker"],
+              "text": {
+                "vi": "Cuộc nói chuyện trở nên căng và không khí tệ hơn.",
+                "en": "The talk turns tense and the atmosphere gets worse."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Giả vờ không có gì",
+            "en": "Pretend nothing happened"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": { "willpower": 3 },
+              "clearFlags": ["ons_coworker"],
+              "text": {
+                "vi": "Thời gian trôi và mọi thứ dần trở lại bình thường.",
+                "en": "Time passes and things slowly return to normal."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": { "happy": -5 },
+              "text": {
+                "vi": "Mỗi lần gặp mặt vẫn thấy ngại ngùng.",
+                "en": "Every meeting still feels awkward."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_travel_stranger",
+      "category": "random",
+      "age": [22, 50],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false
+      },
+      "text": {
+        "vi": "Trong chuyến đi ngắn ngày, bạn gặp một người cùng khách sạn và cả hai đều cô đơn.",
+        "en": "On a short trip, you meet someone at the same hotel and both of you are lonely."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Mời họ lên phòng",
+            "en": "Invite them to your room"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 16, "risk": 5 },
+              "setFlags": ["ons_happened"],
+              "text": {
+                "vi": "Một đêm không tên, chỉ có tiếng mưa và hơi thở.",
+                "en": "A nameless night of rain sounds and shared breath."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": 4, "risk": 4 },
+              "text": {
+                "vi": "Họ đổi ý giữa chừng và xin lỗi.",
+                "en": "They change their mind halfway and apologize."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Chỉ uống cà phê sáng",
+            "en": "Just share morning coffee"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "happy": 6, "karma": 3 },
+              "text": {
+                "vi": "Buổi sáng dễ chịu và bạn có thêm một kỷ niệm đẹp.",
+                "en": "A pleasant morning and you gain a nice memory."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": -2 },
+              "text": {
+                "vi": "Họ bận và cuộc nói chuyện kết thúc nhanh.",
+                "en": "They're busy and the conversation ends quickly."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_std_scare",
+      "category": "health",
+      "age": [20, 50],
+      "weight": 4,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "flags": ["ons_happened"]
+      },
+      "text": {
+        "vi": "Vài tuần sau một đêm ngẫu hứng, bạn bắt đầu lo lắng về sức khỏe.",
+        "en": "A few weeks after a spontaneous night, you start worrying about your health."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đi kiểm tra ngay",
+            "en": "Get checked right away"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "health": 5, "happy": 8, "willpower": 5, "money": -30 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Kết quả ổn. Bạn thở phào và hứa cẩn thận hơn.",
+                "en": "Results are fine. You sigh in relief and promise to be more careful."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "health": -10, "happy": -12, "money": -50 },
+              "clearFlags": ["ons_happened"],
+              "setFlags": ["health_concern"],
+              "text": {
+                "vi": "Có vấn đề nhỏ cần điều trị. Bạn học được bài học.",
+                "en": "A minor issue needs treatment. You learn your lesson."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Tự theo dõi thêm",
+            "en": "Just monitor yourself"
+          },
+          "outcomes": [
+            {
+              "chance": 0.5,
+              "effects": { "happy": -5 },
+              "text": {
+                "vi": "Lo lắng âm ỉ nhưng cuối cùng không có gì xảy ra.",
+                "en": "Low-level anxiety lingers but nothing happens in the end."
+              }
+            },
+            {
+              "chance": 0.5,
+              "effects": { "health": -8, "happy": -10 },
+              "setFlags": ["health_concern"],
+              "text": {
+                "vi": "Triệu chứng xuất hiện và bạn buộc phải đi khám muộn.",
+                "en": "Symptoms appear and you're forced to get checked late."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_feelings_creep",
+      "category": "love",
+      "age": [21, 40],
+      "weight": 5,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "flags": ["ons_maybe_again"]
+      },
+      "text": {
+        "vi": "Bạn gặp lại người ấy lần nữa và nhận ra mình đang muốn nhiều hơn một đêm.",
+        "en": "You meet them again and realize you want more than just one night."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nói rõ cảm xúc",
+            "en": "Speak your feelings"
+          },
+          "outcomes": [
+            {
+              "chance": 0.4,
+              "effects": { "happy": 15, "rel_friend": 10 },
+              "clearFlags": ["ons_maybe_again"],
+              "setFlags": ["in_relationship"],
+              "text": {
+                "vi": "Họ cũng vậy. Mọi thứ bắt đầu theo hướng mới.",
+                "en": "They feel the same. Things start moving in a new direction."
+              }
+            },
+            {
+              "chance": 0.6,
+              "effects": { "happy": -12, "willpower": -5 },
+              "clearFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Họ chỉ muốn giữ nguyên kiểu cũ. Bạn phải chấp nhận.",
+                "en": "They only want to keep it casual. You have to accept it."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Giữ khoảng cách",
+            "en": "Keep your distance"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "willpower": 8, "happy": 3 },
+              "clearFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Bạn bảo vệ trái tim mình và dần quên được.",
+                "en": "You protect your heart and slowly move on."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -6 },
+              "text": {
+                "vi": "Vẫn nghĩ về họ dù cố không liên lạc.",
+                "en": "You still think about them even while avoiding contact."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_friends_dare",
+      "category": "random",
+      "age": [20, 35],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false
+      },
+      "text": {
+        "vi": "Nhóm bạn thách bạn tán tỉnh người lạ đẹp nhất trong quán tối nay.",
+        "en": "Your friends dare you to hit on the most attractive stranger in the place tonight."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Nhận lời thách thức",
+            "en": "Take the dare"
+          },
+          "outcomes": [
+            {
+              "chance": 0.5,
+              "effects": { "happy": 12, "looks": 3, "risk": 5 },
+              "setFlags": ["ons_potential"],
+              "text": {
+                "vi": "Họ cười và đồng ý uống chung. Nhóm bạn hoan hô.",
+                "en": "They laugh and agree to a drink. Your friends cheer."
+              }
+            },
+            {
+              "chance": 0.5,
+              "effects": { "happy": -6, "looks": -2 },
+              "text": {
+                "vi": "Họ lịch sự từ chối. Bạn trở về ghế với mặt đỏ.",
+                "en": "They politely decline. You return to your seat red-faced."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Từ chối thách đố",
+            "en": "Refuse the dare"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "willpower": 4 },
+              "text": {
+                "vi": "Bạn chọn giữ sĩ diện và nhóm bạn cười đùa rồi thôi.",
+                "en": "You keep your dignity and your friends laugh it off."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": -3 },
+              "text": {
+                "vi": "Họ trêu bạn cả đêm vì quá nhát.",
+                "en": "They tease you all night for being too shy."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_ex_rebound",
+      "category": "love",
+      "age": [22, 45],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false,
+        "flags": ["recent_breakup"]
+      },
+      "text": {
+        "vi": "Vừa mới chia tay, bạn gặp một người sẵn sàng giúp bạn 'quên' người cũ một đêm.",
+        "en": "Fresh off a breakup, you meet someone willing to help you 'forget' your ex for a night."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý để giải tỏa",
+            "en": "Agree for the release"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "happy": 10, "willpower": -5 },
+              "setFlags": ["ons_happened"],
+              "text": {
+                "vi": "Tạm thời quên được, nhưng sáng sau vẫn nhớ người cũ.",
+                "en": "You forget temporarily, but the next morning you still miss your ex."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "happy": 5, "karma": -4 },
+              "setFlags": ["ons_happened"],
+              "text": {
+                "vi": "Cảm giác trống rỗng hơn trước khi bắt đầu.",
+                "en": "You feel emptier than before it started."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Từ chối và ở nhà",
+            "en": "Refuse and stay home"
+          },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": { "willpower": 8, "happy": 3 },
+              "text": {
+                "vi": "Bạn chọn thời gian để chữa lành đúng cách.",
+                "en": "You choose time to heal properly instead."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": { "happy": -5 },
+              "text": {
+                "vi": "Đêm ấy bạn vẫn cô đơn và lướt mạng đến khuya.",
+                "en": "That night you still feel lonely and scroll until late."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_public_risk_again",
+      "category": "love",
+      "age": [21, 40],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false,
+        "min": { "risk": 50 }
+      },
+      "text": {
+        "vi": "Trong xe hơi đậu nơi vắng, cả hai không thể chờ đến khi về nhà.",
+        "en": "In a parked car in a quiet spot, neither of you can wait until home."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Tiếp tục bất chấp",
+            "en": "Continue anyway"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": { "happy": 15, "risk": 10 },
+              "setFlags": ["ons_happened"],
+              "text": {
+                "vi": "Nhanh, mạnh và đầy hồi hộp. Không ai phát hiện.",
+                "en": "Fast, intense, and thrilling. No one notices."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": { "happy": -8, "risk": 8, "fame": -8, "money": -40 },
+              "setFlags": ["ons_happened"],
+              "text": {
+                "vi": "Có người gõ kính xe. Cả hai phải giải thích lúng túng.",
+                "en": "Someone knocks on the window. You both have to explain awkwardly."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Bảo đợi về nhà",
+            "en": "Insist on waiting for home"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 8, "willpower": 4 },
+              "setFlags": ["ons_potential"],
+              "text": {
+                "vi": "Họ đồng ý và cả hai về trong không khí nóng bỏng.",
+                "en": "They agree and you both head back in a charged mood."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -4 },
+              "text": {
+                "vi": "Họ mất hứng và đêm kết thúc sớm.",
+                "en": "They lose the mood and the night ends early."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_ghosted_after",
+      "category": "love",
+      "age": [20, 40],
+      "weight": 6,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "flags": ["ons_maybe_again"]
+      },
+      "text": {
+        "vi": "Bạn nhắn tin hỏi thăm sau đêm đó nhưng chỉ thấy trạng thái 'đã xem'.",
+        "en": "You text to check in after that night but only see 'seen'."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Xóa số và quên",
+            "en": "Delete the number and forget"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "willpower": 7, "happy": 4 },
+              "clearFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Bạn chọn không tự làm khổ mình thêm.",
+                "en": "You choose not to torture yourself further."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": -4 },
+              "clearFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Vẫn thỉnh thoảng kiểm tra liệu họ có nhắn lại không.",
+                "en": "You still occasionally check if they replied."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nhắn thêm một lần",
+            "en": "Send one more message"
+          },
+          "outcomes": [
+            {
+              "chance": 0.25,
+              "effects": { "happy": 6 },
+              "text": {
+                "vi": "Họ xin lỗi vì bận và trả lời ngắn.",
+                "en": "They apologize for being busy and reply briefly."
+              }
+            },
+            {
+              "chance": 0.75,
+              "effects": { "happy": -10, "willpower": -5 },
+              "clearFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Vẫn im lặng. Bạn cảm thấy bị xem thường.",
+                "en": "Still silence. You feel dismissed."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_double_standard",
+      "category": "random",
+      "age": [22, 45],
+      "weight": 4,
+      "once": false,
+      "rating": "18+",
+      "requires": {
+        "flags": ["ons_happened"]
+      },
+      "text": {
+        "vi": "Bạn nghe một người bạn kể khoác về đêm của họ, trong khi chính bạn bị đánh giá khác.",
+        "en": "You hear a friend brag about their night while you're judged differently for the same thing."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Phớt lờ và sống tiếp",
+            "en": "Ignore and live on"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "willpower": 6, "happy": 3 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Bạn không để dư luận định nghĩa mình.",
+                "en": "You refuse to let gossip define you."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -5 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Vẫn hơi khó chịu dù cố không quan tâm.",
+                "en": "It still stings even as you try not to care."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nói thẳng sự giả dối",
+            "en": "Call out the hypocrisy"
+          },
+          "outcomes": [
+            {
+              "chance": 0.5,
+              "effects": { "karma": 5, "happy": 5 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Vài người im lặng. Không khí trở nên thật hơn.",
+                "en": "A few people go quiet. The air becomes more honest."
+              }
+            },
+            {
+              "chance": 0.5,
+              "effects": { "happy": -6, "rel_friend": -8 },
+              "clearFlags": ["ons_happened"],
+              "text": {
+                "vi": "Họ phản bác và bạn bị xem là quá nhạy cảm.",
+                "en": "They push back and you're seen as too sensitive."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_morning_coffee_offer",
+      "category": "love",
+      "age": [21, 45],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "flags": ["ons_awkward"]
+      },
+      "text": {
+        "vi": "Người ấy tỉnh dậy, nhìn bạn và hỏi có muốn ở lại ăn sáng không.",
+        "en": "They wake up, look at you, and ask if you want to stay for breakfast."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Ở lại thêm chút",
+            "en": "Stay a little longer"
+          },
+          "outcomes": [
+            {
+              "chance": 0.65,
+              "effects": { "happy": 10 },
+              "clearFlags": ["ons_awkward"],
+              "setFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Bữa sáng bất ngờ dễ chịu và cả hai cười nhiều hơn.",
+                "en": "The unexpected breakfast is pleasant and you both laugh more."
+              }
+            },
+            {
+              "chance": 0.35,
+              "effects": { "happy": 3 },
+              "clearFlags": ["ons_awkward"],
+              "text": {
+                "vi": "Lịch sự nhưng cả hai đều biết sẽ không gặp lại.",
+                "en": "Polite, but you both know you won't meet again."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Cảm ơn rồi đi",
+            "en": "Thank them and leave"
+          },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "willpower": 4 },
+              "clearFlags": ["ons_awkward"],
+              "text": {
+                "vi": "Kết thúc sạch sẽ, không ai nợ ai điều gì.",
+                "en": "A clean ending with no one owing anyone anything."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": -3 },
+              "clearFlags": ["ons_awkward"],
+              "text": {
+                "vi": "Họ có vẻ hơi thất vọng khi bạn từ chối.",
+                "en": "They seem a bit disappointed when you decline."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_protection_talk",
+      "category": "health",
+      "age": [18, 50],
+      "weight": 6,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "flags": ["ons_potential"]
+      },
+      "text": {
+        "vi": "Trước khi mọi thứ tiến xa hơn, bạn dừng lại và hỏi về biện pháp an toàn.",
+        "en": "Before things go further, you pause and bring up protection."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Khăng khăng phải có",
+            "en": "Insist on using it"
+          },
+          "outcomes": [
+            {
+              "chance": 0.85,
+              "effects": { "health": 5, "willpower": 6, "karma": 4 },
+              "setFlags": ["ons_happened"],
+              "clearFlags": ["ons_potential"],
+              "text": {
+                "vi": "Họ đồng ý. Cả hai vẫn tận hưởng mà không lo lắng.",
+                "en": "They agree. You both still enjoy yourselves without the worry."
+              }
+            },
+            {
+              "chance": 0.15,
+              "effects": { "happy": -5 },
+              "clearFlags": ["ons_potential"],
+              "text": {
+                "vi": "Họ mất hứng và đêm kết thúc ở đó.",
+                "en": "They lose interest and the night ends there."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Tin lời họ lần này",
+            "en": "Trust them this time"
+          },
+          "outcomes": [
+            {
+              "chance": 0.4,
+              "effects": { "happy": 10, "risk": 10 },
+              "setFlags": ["ons_happened"],
+              "clearFlags": ["ons_potential"],
+              "text": {
+                "vi": "Mọi thứ suôn sẻ và bạn cố không nghĩ đến hậu quả.",
+                "en": "Everything goes smoothly and you try not to think about consequences."
+              }
+            },
+            {
+              "chance": 0.6,
+              "effects": { "happy": 5, "risk": 12, "health": -5 },
+              "setFlags": ["ons_happened", "health_concern"],
+              "clearFlags": ["ons_potential"],
+              "text": {
+                "vi": "Về sau bạn hối hận vì đã không kiên quyết hơn.",
+                "en": "Later you regret not being more firm."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_repeat_offer",
+      "category": "love",
+      "age": [21, 45],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "flags": ["ons_maybe_again"]
+      },
+      "text": {
+        "vi": "Họ nhắn tin hỏi liệu bạn có muốn 'lặp lại' đêm đó không.",
+        "en": "They text asking if you'd like to 'repeat' that night."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Đồng ý gặp lại",
+            "en": "Agree to meet again"
+          },
+          "outcomes": [
+            {
+              "chance": 0.6,
+              "effects": { "happy": 12, "risk": 4 },
+              "setFlags": ["ons_happened"],
+              "clearFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Lần này quen thuộc hơn và vẫn chỉ là vui vẻ.",
+                "en": "This time it feels more familiar and still just for fun."
+              }
+            },
+            {
+              "chance": 0.4,
+              "effects": { "happy": 6 },
+              "setFlags": ["ons_happened"],
+              "clearFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Vẫn ổn nhưng bạn bắt đầu thấy thiếu gì đó.",
+                "en": "Still fine, but you start feeling something is missing."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Nói chỉ một lần thôi",
+            "en": "Say it was only once"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "willpower": 6, "karma": 3 },
+              "clearFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Họ hiểu và không làm phiền thêm.",
+                "en": "They understand and don't bother you again."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -4 },
+              "clearFlags": ["ons_maybe_again"],
+              "text": {
+                "vi": "Họ có vẻ thất vọng nhưng tôn trọng quyết định.",
+                "en": "They seem disappointed but respect the decision."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ons_lonely_night_choice",
+      "category": "love",
+      "age": [25, 55],
+      "weight": 6,
+      "once": false,
+      "rating": "25+",
+      "requires": {
+        "hasPartner": false,
+        "max": { "happy": 40 }
+      },
+      "text": {
+        "vi": "Đêm khuya cô đơn, bạn mở ứng dụng và thấy vài tin nhắn gợi ý gặp ngay.",
+        "en": "A lonely late night, you open the app and see a few messages suggesting meeting now."
+      },
+      "choices": [
+        {
+          "label": {
+            "vi": "Chọn một người và đi",
+            "en": "Pick one and go"
+          },
+          "outcomes": [
+            {
+              "chance": 0.55,
+              "effects": { "happy": 12, "risk": 7 },
+              "setFlags": ["ons_happened"],
+              "text": {
+                "vi": "Tạm thời lấp đầy khoảng trống. Sáng sau bạn thấy nhẹ hơn.",
+                "en": "It temporarily fills the void. The next morning you feel lighter."
+              }
+            },
+            {
+              "chance": 0.45,
+              "effects": { "happy": -6, "risk": 5 },
+              "setFlags": ["ons_happened"],
+              "text": {
+                "vi": "Cảm giác trống rỗng trở lại ngay khi cửa đóng.",
+                "en": "The emptiness returns the moment the door closes."
+              }
+            }
+          ]
+        },
+        {
+          "label": {
+            "vi": "Tắt điện thoại và ngủ",
+            "en": "Turn off the phone and sleep"
+          },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "willpower": 8, "health": 3 },
+              "text": {
+                "vi": "Bạn chọn bản thân thay vì giải pháp tạm thời.",
+                "en": "You choose yourself over a temporary fix."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": -4 },
+              "text": {
+                "vi": "Vẫn thao thức và nghĩ về những lựa chọn khác.",
+                "en": "You still lie awake thinking of other choices."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1131 @@
+{
+ "manifest": {
+  "id": "core.old",
+  "name": {
+   "vi": "Gói gốc: tuổi già",
+   "en": "Core: later life"
+  },
+  "version": "1.0.0",
+  "rating": "all",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "old_first_monday",
+   "category": "old_age",
+   "age": [
+    55,
+    80
+   ],
+   "weight": 10,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Thứ Hai đầu tiên sau khi nghỉ hưu. Bạn vẫn dậy lúc 6 giờ, mặc áo sơ mi, rồi ngồi xuống không biết làm gì.",
+    "en": "Your first Monday of retirement. You still wake at 6, put on a shirt, then sit down with nothing to do."
+   },
+   "requires": {
+    "retired": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lập thời gian biểu mới",
+      "en": "Make a new routine"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Sáng tập thể dục, chiều đọc sách, tối xem thời sự và bình luận to.",
+        "en": "Morning exercise, afternoon reading, evening news with loud commentary."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ngủ tiếp",
+      "en": "Go back to bed"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 5,
+        "health": 1
+       },
+       "text": {
+        "vi": "Lần đầu tiên sau 40 năm, không ai chờ bạn.",
+        "en": "For the first time in 40 years, nobody is waiting for you."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Đến trưa bạn thấy trống rỗng lạ lùng.",
+        "en": "By noon you feel oddly empty."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_hobby",
+   "category": "old_age",
+   "age": [
+    58,
+    95
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Có lớp học buổi sáng cho người cao tuổi ở nhà văn hóa gần nhà.",
+    "en": "There are morning classes for seniors at the community centre."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Học vẽ tranh",
+      "en": "Painting"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 8,
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Tranh của bạn được treo ở hành lang. Hơi lệch, nhưng được treo.",
+        "en": "Your painting goes up in the hallway. Slightly crooked, but up."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Thầy dạy nhẹ nhàng gợi ý bạn 'thử phong cách trừu tượng'.",
+        "en": "The teacher gently suggests you 'try abstract'."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Học nhảy",
+      "en": "Dancing"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 8,
+        "health": 4
+       },
+       "text": {
+        "vi": "Bạn thành ngôi sao của lớp. Có cụ ông xin số điện thoại.",
+        "en": "You're the star of the class. Someone asks for your number."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -3,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Bạn xoay một vòng quá nhiệt tình và đau lưng ba ngày.",
+        "en": "One spin too enthusiastic. Three days of back pain."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Học tin học",
+      "en": "Computer class"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 3,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Bạn học được cách gửi ảnh. Từ nay nhóm gia đình không còn yên tĩnh.",
+        "en": "You learn to send photos. The family chat will never be quiet again."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_friend_passes",
+   "category": "old_age",
+   "age": [
+    60,
+    100
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Người bạn thân thời trẻ của bạn vừa qua đời.",
+    "en": "Your closest friend from youth has passed away."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đến dự tang lễ, kể chuyện xưa",
+      "en": "Attend and share old stories"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -8,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Bạn kể chuyện hai đứa trốn học. Cả hội trường vừa khóc vừa cười.",
+        "en": "You tell the story of skipping school together. The room laughs through tears."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở nhà một mình",
+      "en": "Stay home alone"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -12
+       },
+       "text": {
+        "vi": "Bạn lấy album ảnh cũ ra xem đến khuya.",
+        "en": "You look through old photo albums until late."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_care_home",
+   "category": "family",
+   "age": [
+    72,
+    100
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con cái bàn chuyện đưa bạn vào viện dưỡng lão 'cho tiện chăm sóc'.",
+    "en": "Your children discuss moving you to a care home 'so you're looked after'."
+   },
+   "requires": {
+    "hasChildren": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đồng ý thử",
+      "en": "Agree to try it"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 4,
+        "health": 4
+       },
+       "text": {
+        "vi": "Ở đó có bạn chơi cờ, có y tá, có cả một cụ bà hay mời kẹo.",
+        "en": "There's a chess partner, a nurse, and a lady who always offers sweets."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -8
+       },
+       "text": {
+        "vi": "Phòng sạch sẽ nhưng bạn nhớ cái ghế quen ở nhà.",
+        "en": "The room is clean, but you miss your old chair."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhất quyết ở nhà",
+      "en": "Insist on staying home"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 5,
+        "rel_child": -3
+       },
+       "text": {
+        "vi": "Bạn ở lại. Con cái thay nhau ghé thăm.",
+        "en": "You stay. Your kids take turns visiting."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "health": -6,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bạn trượt ngã trong bếp nhưng không ai biết đến tận chiều.",
+        "en": "You fall in the kitchen and nobody knows until evening."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Dọn về ở với con",
+      "en": "Move in with a child"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 8,
+        "rel_child": 5
+       },
+       "text": {
+        "vi": "Bạn được bế cháu mỗi ngày.",
+        "en": "You get to hold your grandchildren every day."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -3,
+        "rel_child": -4
+       },
+       "text": {
+        "vi": "Hai thế hệ, một cái điều khiển TV. Chiến tranh lạnh bắt đầu.",
+        "en": "Two generations, one TV remote. A cold war begins."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_will",
+   "category": "family",
+   "age": [
+    60,
+    100
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn nghĩ đến chuyện viết di chúc.",
+    "en": "You think about writing a will."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chia đều cho các con",
+      "en": "Split it evenly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "happy": 3,
+        "rel_child": 3
+       },
+       "text": {
+        "vi": "Mọi thứ rõ ràng. Bạn thấy nhẹ lòng.",
+        "en": "Everything is clear. You feel lighter."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Để lại cho từ thiện",
+      "en": "Leave it to charity"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "karma": 10,
+        "rel_child": -6
+       },
+       "text": {
+        "vi": "Các con hơi sốc nhưng tôn trọng quyết định.",
+        "en": "Your children are shocked but respect it."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "karma": 10,
+        "rel_child": -12
+       },
+       "text": {
+        "vi": "Bữa cơm gia đình tuần đó rất im lặng.",
+        "en": "That week's family dinner is very quiet."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chưa vội",
+      "en": "No rush"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Bạn tự nhủ mình còn khỏe chán.",
+        "en": "You tell yourself you've got plenty of time."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_inheritance_fight",
+   "category": "family",
+   "age": [
+    65,
+    100
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Các con bắt đầu cãi nhau về căn nhà, dù bạn vẫn đang sống trong đó.",
+    "en": "Your children start fighting over the house. You still live in it."
+   },
+   "requires": {
+    "hasChildren": true,
+    "ownsHome": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gọi tất cả về nói chuyện",
+      "en": "Call a family meeting"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "karma": 3,
+        "rel_child": 4
+       },
+       "text": {
+        "vi": "Bạn đập bàn một lần. Mọi người ngồi im nghe.",
+        "en": "You bang the table once. Everyone listens."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -6,
+        "rel_child": -4
+       },
+       "text": {
+        "vi": "Cuộc họp biến thành ba cuộc cãi nhau song song.",
+        "en": "The meeting turns into three arguments at once."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bán nhà đi du lịch",
+      "en": "Sell the house and travel"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "rel_child": -8,
+        "money": 40
+       },
+       "text": {
+        "vi": "Không còn gì để cãi. Bạn gửi ảnh từ bãi biển.",
+        "en": "Nothing left to fight over. You send photos from the beach."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_memory_slip",
+   "category": "health",
+   "age": [
+    68,
+    105
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn đứng giữa bếp và không nhớ mình vào đây để làm gì.",
+    "en": "You stand in the kitchen with no idea why you came in."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cười cho qua",
+      "en": "Laugh it off"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Chuyện thường thôi. Hai phút sau bạn nhớ ra: lấy kính, đang đeo trên đầu.",
+        "en": "It happens. Two minutes later you remember: your glasses, which are on your head."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "smarts": -3,
+        "illness": "memory"
+       },
+       "text": {
+        "vi": "Chuyện này xảy ra ngày càng nhiều.",
+        "en": "It's happening more and more often."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đi khám",
+      "en": "See a doctor"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 2,
+        "money": -3
+       },
+       "text": {
+        "vi": "Bác sĩ khuyên chơi cờ, đọc sách và ngủ đủ.",
+        "en": "The doctor recommends chess, books and proper sleep."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_grand_secret",
+   "category": "family",
+   "age": [
+    60,
+    100
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Đứa cháu lén kể cho bạn một bí mật và dặn không được nói với bố mẹ nó.",
+    "en": "Your grandchild tells you a secret and makes you promise not to tell their parents."
+   },
+   "requires": {
+    "hasChildren": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Giữ lời hứa",
+      "en": "Keep the promise"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Bạn thành người lớn đáng tin nhất của nó.",
+        "en": "You become its most trusted grown-up."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "happy": -4,
+        "rel_child": -3
+       },
+       "text": {
+        "vi": "Bí mật là nó đã cạo lông mày con mèo. Con bạn phát hiện và trách bạn.",
+        "en": "The secret was shaving the cat's eyebrows. Your child finds out and blames you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nói khéo với con mình",
+      "en": "Gently tell your child"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 3,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Cháu giận bạn ba ngày rồi quên.",
+        "en": "Your grandkid sulks for three days, then forgets."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_scam_target",
+   "category": "money",
+   "age": [
+    65,
+    100
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một 'nhân viên ngân hàng' gọi, nói tài khoản của bạn bị khóa và cần mã xác nhận.",
+    "en": "A 'bank officer' calls saying your account is frozen and they need the code."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đọc mã",
+      "en": "Read out the code"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -40,
+        "happy": -10
+       },
+       "text": {
+        "vi": "Tiền tiết kiệm bốc hơi trong năm phút.",
+        "en": "Your savings vanish in five minutes."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cúp máy, gọi con hỏi",
+      "en": "Hang up and call your child"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 3,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Con bạn nói đó là lừa đảo, rồi cài chế độ chặn số lạ cho bạn.",
+        "en": "Your child says it's a scam and sets up call blocking for you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giả vờ nghe rồi đọc số tầm bậy",
+      "en": "Play along with nonsense numbers"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Kẻ lừa đảo mất 20 phút với bạn rồi tự cúp máy.",
+        "en": "The scammer wastes 20 minutes on you, then hangs up."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_romance",
+   "category": "love",
+   "age": [
+    65,
+    100
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Ở công viên buổi sáng, một người cùng tuổi hay tập dưỡng sinh cạnh bạn mời bạn đi uống trà.",
+    "en": "At the park, someone your age who exercises next to you invites you for tea."
+   },
+   "requires": {
+    "hasPartner": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận lời",
+      "en": "Say yes"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 10
+       },
+       "text": {
+        "vi": "Hai người nói chuyện như đã quen từ lâu.",
+        "en": "You talk like old friends."
+       },
+       "setFlags": [
+        "in_relationship"
+       ]
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Họ chủ yếu muốn kể về cháu nội. Cũng vui.",
+        "en": "Mostly they want to talk about grandkids. Still nice."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Từ chối khéo",
+      "en": "Politely decline"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Bạn vẫn gật đầu chào mỗi sáng.",
+        "en": "You still nod hello every morning."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_birthday_80",
+   "category": "old_age",
+   "age": [
+    80,
+    80
+   ],
+   "weight": 10,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Sinh nhật lần thứ 80. Bánh kem không đủ chỗ cắm nến.",
+    "en": "Your 80th birthday. There's no room on the cake for all the candles."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Phát biểu một câu",
+      "en": "Give a one-line speech"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 10
+       },
+       "text": {
+        "vi": "Bạn nói 'Ăn đi, nguội bây giờ'. Cả nhà vỗ tay.",
+        "en": "You say 'Eat, it's getting cold.' Everyone applauds."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_birthday_100",
+   "category": "old_age",
+   "age": [
+    100,
+    100
+   ],
+   "weight": 10,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn tròn 100 tuổi. Phóng viên địa phương đến hỏi bí quyết sống lâu.",
+    "en": "You turn 100. A local reporter asks your secret."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nói thật",
+      "en": "Tell the truth"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "fame": 5
+       },
+       "text": {
+        "vi": "Bạn bảo bí quyết là không bao giờ cãi nhau với người nấu cơm.",
+        "en": "You say the secret is never arguing with whoever cooks."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bịa ra cho vui",
+      "en": "Make something up"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "fame": 6
+       },
+       "text": {
+        "vi": "Bạn bảo mỗi sáng ăn một tép tỏi sống. Cả nước đi mua tỏi.",
+        "en": "You say one raw garlic clove every morning. The whole country buys garlic."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_garden",
+   "category": "old_age",
+   "age": [
+    60,
+    100
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn trồng một khu vườn nhỏ. Năm nay quả cà chua đầu tiên đã chín.",
+    "en": "You've planted a small garden. This year's first tomato is ripe."
+   },
+   "effects": {
+    "happy": 6,
+    "health": 2
+   }
+  },
+  {
+   "id": "old_reunion",
+   "category": "old_age",
+   "age": [
+    60,
+    90
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lớp cũ tổ chức họp mặt 50 năm. Nửa lớp không nhận ra nhau.",
+    "en": "Your class holds a 50-year reunion. Half of you don't recognise each other."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi",
+      "en": "Go"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "happy": 10
+       },
+       "text": {
+        "vi": "Cô bạn ngày xưa ngồi bàn đầu vẫn hát dở như cũ.",
+        "en": "The girl from the front row still sings terribly."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Cả buổi ai cũng khoe cháu và kể bệnh.",
+        "en": "Everyone spends the evening comparing grandkids and illnesses."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở nhà",
+      "en": "Stay home"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -1
+       },
+       "text": {
+        "vi": "Bạn xem ảnh họ đăng lên mạng và bình luận 'đẹp lão quá'.",
+        "en": "You see their photos online and comment 'looking great'."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_teach_young",
+   "category": "old_age",
+   "age": [
+    62,
+    100
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Hàng xóm trẻ nhờ bạn chỉ cách sửa một cái vòi nước.",
+    "en": "A young neighbour asks you how to fix a leaky tap."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chỉ tận tình",
+      "en": "Show them properly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Họ gọi bạn là 'sư phụ'. Bạn giả vờ không thích.",
+        "en": "They call you 'master'. You pretend not to love it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Kể chuyện thời trẻ trước",
+      "en": "Tell a story from your youth first"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Một tiếng sau vòi nước vẫn rỉ, nhưng họ biết hết đời bạn.",
+        "en": "An hour later the tap still drips, but they know your whole life story."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_last_words",
+   "category": "old_age",
+   "age": [
+    85,
+    120
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đêm nay bạn thấy lòng bình yên lạ. Bạn muốn nói vài lời với gia đình.",
+    "en": "Tonight you feel a strange calm. You want to say something to your family."
+   },
+   "requires": {
+    "max": {
+     "health": 30
+    }
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gọi cả nhà lại",
+      "en": "Gather the family"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 10,
+        "karma": 2,
+        "rel_child": 5
+       },
+       "text": {
+        "vi": "Bạn nói những điều chưa từng nói. Mọi người ngồi nghe rất lâu.",
+        "en": "You say things you never said. Everyone listens for a long time."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Viết một lá thư",
+      "en": "Write a letter"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Lá thư được cất trong ngăn kéo, gấp làm tư.",
+        "en": "The letter goes in a drawer, folded in four."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "old_pension_short",
+   "category": "money",
+   "age": [
+    62,
+    100
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Lương hưu không đủ tiêu như bạn tính.",
+    "en": "Your pension doesn't stretch as far as you planned."
+   },
+   "requires": {
+    "retired": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi làm bán thời gian",
+      "en": "Take a part-time job"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "money": 10,
+        "happy": 2,
+        "health": -1
+       },
+       "text": {
+        "vi": "Bạn làm bảo vệ ở thư viện. Được đọc sách miễn phí.",
+        "en": "You guard a library. Free books."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "money": 6,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bạn làm ở siêu thị. Ai cũng hỏi bạn chỗ để giấy vệ sinh.",
+        "en": "A supermarket job. Everyone asks you where the toilet roll is."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cắt giảm chi tiêu",
+      "en": "Cut back"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -4,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Bạn bỏ cà phê ngoài quán. Đó là hy sinh lớn.",
+        "en": "You give up café coffee. A huge sacrifice."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

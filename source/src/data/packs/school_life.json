@@ -1,0 +1,2684 @@
+{
+ "manifest": {
+  "id": "core.school",
+  "name": {
+   "vi": "Gói gốc: trường học & chuyên ngành",
+   "en": "Core: school & majors"
+  },
+  "version": "1.0.0",
+  "rating": "all",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "sch_dog_homework",
+   "category": "school",
+   "age": [
+    6,
+    11
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn quên làm bài tập về nhà. Cô giáo đang đi dọc từng bàn.",
+    "en": "You forgot your homework. The teacher is walking down the rows."
+   },
+   "requires": {
+    "eduStage": [
+     "primary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nói con chó ăn mất",
+      "en": "Say the dog ate it"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Cô tin. Bạn bắt đầu nghi ngờ hệ thống giáo dục.",
+        "en": "She believes you. You start doubting the education system."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": -4,
+        "karma": -2
+       },
+       "text": {
+        "vi": "Cô hỏi nhà bạn nuôi chó giống gì. Nhà bạn không nuôi chó.",
+        "en": "She asks what breed your dog is. You don't have a dog."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhận lỗi",
+      "en": "Own up"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Cô phạt bạn chép bài, nhưng gật đầu rất nhẹ.",
+        "en": "You get lines to copy, but she gives you a small nod."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_class_hamster",
+   "category": "school",
+   "age": [
+    6,
+    10
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đến lượt bạn mang con chuột hamster của lớp về nhà cuối tuần.",
+    "en": "It's your turn to take the class hamster home for the weekend."
+   },
+   "requires": {
+    "eduStage": [
+     "primary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chăm sóc tận tình",
+      "en": "Look after it properly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Nó chạy vòng quay cả đêm. Bạn thấy mình là phụ huynh có trách nhiệm.",
+        "en": "It runs on its wheel all night. You feel like a responsible parent."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cho nó ăn bim bim",
+      "en": "Feed it crisps"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Nó béo lên trông thấy và có vẻ rất hạnh phúc.",
+        "en": "It gets visibly rounder and seems delighted."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -6,
+        "karma": -4,
+        "risk": 3
+       },
+       "text": {
+        "vi": "Thứ Hai bạn trả lại lớp một con hamster khác màu. Không ai để ý.",
+        "en": "On Monday you return a hamster of a slightly different colour. Nobody notices."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_lice",
+   "category": "school",
+   "age": [
+    6,
+    10
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Cả lớp bị chấy. Mẹ gội đầu cho bạn bằng một thứ có mùi như xăng.",
+    "en": "The whole class has lice. Your mum washes your hair with something that smells like petrol."
+   },
+   "requires": {
+    "eduStage": [
+     "primary"
+    ]
+   },
+   "effects": {
+    "happy": -3,
+    "looks": -1
+   }
+  },
+  {
+   "id": "sch_lunch_trade",
+   "category": "school",
+   "age": [
+    6,
+    11
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn cùng bàn đề nghị đổi hộp cơm của bạn lấy hai cái kẹo dẻo.",
+    "en": "Your deskmate offers two gummy sweets for your whole lunch."
+   },
+   "requires": {
+    "eduStage": [
+     "primary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đổi",
+      "en": "Deal"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 5,
+        "health": -1
+       },
+       "text": {
+        "vi": "Một buổi chiều đói nhưng ngọt ngào.",
+        "en": "A hungry but sweet afternoon."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Kẹo đã bị liếm qua một lần. Bạn biết quá muộn.",
+        "en": "The sweets had been licked once already. You find out too late."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mặc cả lên ba cái",
+      "en": "Haggle for three"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 6,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Bạn thắng thương vụ đầu đời.",
+        "en": "Your first business win."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -1
+       },
+       "text": {
+        "vi": "Bạn ấy bỏ đi. Thị trường tàn nhẫn quá.",
+        "en": "They walk away. The market is cruel."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_zoo_trip",
+   "category": "school",
+   "age": [
+    7,
+    11
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lớp đi tham quan sở thú. Một con khỉ nhìn bạn như thể quen biết.",
+    "en": "The class visits the zoo. A monkey looks at you like it knows you."
+   },
+   "requires": {
+    "eduStage": [
+     "primary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Vẫy tay chào",
+      "en": "Wave"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Nó vẫy lại. Đây là tình bạn đẹp nhất năm nay.",
+        "en": "It waves back. Best friendship of the year."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3,
+        "looks": -1
+       },
+       "text": {
+        "vi": "Nó ném một thứ không phải chuối vào bạn.",
+        "en": "It throws something that is not a banana at you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lén cho nó ăn bánh",
+      "en": "Sneak it a biscuit"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 4,
+        "risk": 2
+       },
+       "text": {
+        "vi": "Nhân viên sở thú không thấy. Con khỉ thấy.",
+        "en": "The keeper doesn't see. The monkey does."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -4,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Nhân viên sở thú thổi còi. Cả lớp quay lại nhìn.",
+        "en": "A keeper blows a whistle. The whole class turns around."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_spelling",
+   "category": "school",
+   "age": [
+    7,
+    11
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Lớp tổ chức thi viết chính tả. Từ cuối cùng dài mười bốn chữ cái.",
+    "en": "There's a spelling contest. The last word has fourteen letters."
+   },
+   "requires": {
+    "eduStage": [
+     "primary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cố giành giải",
+      "en": "Go for the win"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 8,
+        "smarts": 2,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Bạn viết đúng và được dán sao vàng lên áo.",
+        "en": "You nail it and get a gold star on your shirt."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bạn sai đúng một chữ. Cả đời bạn sẽ nhớ chữ đó.",
+        "en": "One letter wrong. You'll remember that letter forever."
+       }
+      }
+     ],
+     "requires": {
+      "min": {
+       "smarts": 45
+      }
+     }
+    },
+    {
+     "label": {
+      "vi": "Viết bừa cho xong",
+      "en": "Just scribble"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Bạn về chót nhưng được về sớm.",
+        "en": "You come last but get to leave early."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_cheat_sheet",
+   "category": "school",
+   "age": [
+    12,
+    17
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Đang thi thì bạn cùng bàn lặng lẽ đẩy một tờ phao sang.",
+    "en": "Mid-exam, your deskmate quietly slides you a cheat sheet."
+   },
+   "requires": {
+    "eduStage": [
+     "secondary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chép",
+      "en": "Copy it"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 3,
+        "karma": -4
+       },
+       "text": {
+        "vi": "Điểm cao. Lương tâm hơi thấp.",
+        "en": "High score. Slightly lower conscience."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -10,
+        "karma": -5
+       },
+       "text": {
+        "vi": "Thầy giám thị đứng sau lưng bạn từ lúc nào không biết.",
+        "en": "The invigilator had been standing behind you the whole time."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đẩy trả lại",
+      "en": "Slide it back"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bạn tự làm bài. Điểm bình thường, lưng thẳng.",
+        "en": "You do it yourself. Average mark, clean conscience."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giơ tay báo thầy",
+      "en": "Tell the teacher"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2,
+        "rel_friend": -12,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Thầy khen bạn trung thực. Cả lớp gọi bạn là 'camera' suốt ba năm.",
+        "en": "The teacher praises your honesty. The class calls you 'the camera' for three years."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_teacher_nickname",
+   "category": "school",
+   "age": [
+    12,
+    17
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn đặt cho thầy dạy toán một biệt danh. Nó lan khắp trường trong một tuần.",
+    "en": "You give the maths teacher a nickname. It spreads through the whole school in a week."
+   },
+   "requires": {
+    "eduStage": [
+     "secondary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tự hào nhận là tác giả",
+      "en": "Proudly claim credit"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "fame": 3,
+        "happy": 5
+       },
+       "text": {
+        "vi": "Bạn thành huyền thoại tầng 3.",
+        "en": "You become a third-floor legend."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -6,
+        "smarts": -1
+       },
+       "text": {
+        "vi": "Thầy cũng biết. Bài kiểm tra tuần sau khó bất thường.",
+        "en": "The teacher hears too. Next week's test is unusually hard."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giả vờ không biết",
+      "en": "Play dumb"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": -1,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Biệt danh sống lâu hơn cả thầy ở trường.",
+        "en": "The nickname outlasts the teacher's time at the school."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_group_chat",
+   "category": "school",
+   "age": [
+    12,
+    17
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Ai đó chụp màn hình nhóm chat lớp, trong đó có tin nhắn bạn nói xấu cô chủ nhiệm.",
+    "en": "Someone screenshots the class group chat, including your message trashing the form teacher."
+   },
+   "requires": {
+    "eduStage": [
+     "secondary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Xin lỗi cô",
+      "en": "Apologise to her"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "karma": 3,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Cô nhận lời xin lỗi. Bạn được ngồi bàn đầu cả năm 'để cô tiện để ý'.",
+        "en": "She accepts. You sit in the front row all year 'so she can keep an eye on you'."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "Cô gọi phụ huynh. Bố bạn đọc tin nhắn to cả nhà nghe.",
+        "en": "She calls your parents. Your dad reads the message out loud to the family."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Truy tìm kẻ chụp màn hình",
+      "en": "Hunt down the leaker"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 4,
+        "risk": 3
+       },
+       "text": {
+        "vi": "Bạn tìm ra kẻ phản bội. Nhóm chat mới được lập, ít người hơn.",
+        "en": "You find the traitor. A new, smaller group chat is born."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -4,
+        "rel_friend": -6
+       },
+       "text": {
+        "vi": "Bạn nghi nhầm bạn thân. Không khí rất lạnh.",
+        "en": "You accuse your best friend. Wrongly. It's frosty."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_pe_run",
+   "category": "school",
+   "age": [
+    11,
+    17
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Tiết thể dục hôm nay chạy 1500 mét dưới trời nắng.",
+    "en": "PE today: 1500 metres in blazing sun."
+   },
+   "requires": {
+    "eduStage": [
+     "secondary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chạy hết sức",
+      "en": "Give it everything"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "health": 4,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bạn về đích, chân run nhưng mặt rạng rỡ.",
+        "en": "You finish shaky but glowing."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -3,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Vòng thứ ba bạn nằm xuống bãi cỏ và ngắm mây.",
+        "en": "On lap three you lie down on the grass and watch the clouds."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xin nghỉ vì 'đau bụng'",
+      "en": "Claim a 'stomach ache'"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 3,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Bạn ngồi bóng mát cổ vũ rất nhiệt tình.",
+        "en": "You cheer enthusiastically from the shade."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Thầy bảo bạn chạy chậm thôi cũng được. Thầy đứng cạnh suốt.",
+        "en": "The teacher says you can jog slowly. He jogs right beside you."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_dyed_hair",
+   "category": "school",
+   "age": [
+    13,
+    17
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn nhuộm tóc màu xanh dương. Thầy giám thị đứng chờ ở cổng trường.",
+    "en": "You've dyed your hair blue. The discipline teacher is waiting at the gate."
+   },
+   "requires": {
+    "eduStage": [
+     "secondary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đội mũ lén vào",
+      "en": "Sneak in under a hat"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 5,
+        "risk": 2
+       },
+       "text": {
+        "vi": "Bạn sống sót đến hết ngày. Đầu bạn hơi nóng.",
+        "en": "You survive the day. Your head is very warm."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Gió thổi bay mũ đúng lúc chào cờ.",
+        "en": "The wind takes your hat during assembly."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đi thẳng vào, tự tin",
+      "en": "Walk straight in, confident"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "looks": 3,
+        "fame": 2,
+        "happy": 5
+       },
+       "text": {
+        "vi": "Thầy ngớ người. Bạn được cả trường biết tên.",
+        "en": "He's stunned. The whole school learns your name."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -5,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bạn bị ghi tên và phải nhuộm đen lại trong ngày.",
+        "en": "You're written up and told to dye it back by tonight."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_parent_meeting",
+   "category": "school",
+   "age": [
+    11,
+    17
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bố mẹ đi họp phụ huynh về. Mặt không cảm xúc. Không ai nói gì.",
+    "en": "Your parents come back from parents' evening. Blank faces. Nobody speaks."
+   },
+   "requires": {
+    "eduStage": [
+     "secondary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hỏi thẳng",
+      "en": "Ask directly"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Cô khen bạn ngoan. Bố mẹ chỉ đang mệt.",
+        "en": "The teacher said you're lovely. They're just tired."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -5,
+        "rel_mother": -3
+       },
+       "text": {
+        "vi": "Cô kể về vụ biệt danh, vụ trốn tiết và vụ hamster.",
+        "en": "She mentioned the nickname, the skipped classes and the hamster."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lặng lẽ về phòng học bài",
+      "en": "Quietly go study"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2,
+        "rel_father": 2
+       },
+       "text": {
+        "vi": "Một chiến thuật phòng thủ cổ điển. Hiệu quả.",
+        "en": "A classic defensive play. It works."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_chem_lab",
+   "category": "school",
+   "age": [
+    13,
+    17
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Giờ thí nghiệm hóa học. Ống nghiệm của bạn đang sủi bọt nhiều hơn mức cần thiết.",
+    "en": "Chemistry lab. Your test tube is fizzing more than it should."
+   },
+   "requires": {
+    "eduStage": [
+     "secondary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thêm một chút nữa xem sao",
+      "en": "Add a bit more"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "smarts": 2,
+        "happy": 5
+       },
+       "text": {
+        "vi": "Một đám khói màu tím tuyệt đẹp. Cả lớp vỗ tay.",
+        "en": "A gorgeous purple cloud. The class applauds."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "looks": -3,
+        "happy": -2,
+        "health": -1
+       },
+       "text": {
+        "vi": "Bạn mất một bên lông mày. Nó mọc lại sau hai tháng.",
+        "en": "You lose an eyebrow. It grows back in two months."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gọi cô giáo",
+      "en": "Call the teacher"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 1,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Cô xử lý gọn gàng và kể cho bạn nghe tại sao nó sủi.",
+        "en": "She handles it and explains why it fizzed."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_detention",
+   "category": "school",
+   "age": [
+    12,
+    17
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn bị phạt ở lại sau giờ học cùng ba người bạn chưa từng nói chuyện.",
+    "en": "You get detention with three kids you've never spoken to."
+   },
+   "requires": {
+    "eduStage": [
+     "secondary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bắt chuyện",
+      "en": "Strike up a conversation"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 6,
+        "rel_friend": 8
+       },
+       "text": {
+        "vi": "Đến cuối giờ cả bốn đã có chung một bí mật.",
+        "en": "By the end, the four of you share a secret."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Họ chỉ muốn ngủ. Bạn cũng ngủ.",
+        "en": "They just want to nap. You nap too."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Làm bài tập",
+      "en": "Do homework"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Một tiếng yên tĩnh hiếm hoi.",
+        "en": "A rare quiet hour."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sch_final_exams",
+   "category": "school",
+   "age": [
+    17,
+    17
+   ],
+   "weight": 9,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Kỳ thi tốt nghiệp trung học bắt đầu sáng mai.",
+    "en": "The final high-school exams start tomorrow morning."
+   },
+   "requires": {
+    "eduStage": [
+     "secondary"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thức trắng ôn bài",
+      "en": "Pull an all-nighter"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "smarts": 3,
+        "health": -3
+       },
+       "text": {
+        "vi": "Bạn nhớ hết công thức, quên mất tên mình trong năm phút.",
+        "en": "You remember every formula and forget your own name for five minutes."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "health": -4,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Bạn ngủ gục ngay câu đầu tiên.",
+        "en": "You fall asleep on question one."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ngủ sớm, tin vào bản thân",
+      "en": "Sleep early, trust yourself"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 2,
+        "happy": 3,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bạn bước vào phòng thi tỉnh táo hơn tất cả mọi người.",
+        "en": "You walk in more awake than everyone else."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_registration",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Cổng đăng ký môn học mở lúc 0 giờ. Lúc 0 giờ 01 nó sập.",
+    "en": "Course registration opens at midnight. At 00:01 the site crashes."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bấm F5 liên tục",
+      "en": "Mash refresh"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Bạn giành được lớp có giảng viên dễ tính nhất trường.",
+        "en": "You land the easiest lecturer in the university."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -5
+       },
+       "text": {
+        "vi": "Bạn còn đúng lớp 7 giờ sáng thứ Bảy.",
+        "en": "All that's left is the 7am Saturday class."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đi ngủ, mai tính",
+      "en": "Sleep, deal with it tomorrow"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2,
+        "health": 2
+       },
+       "text": {
+        "vi": "Sáng ra bạn bị xếp vào môn 'Lịch sử nghệ thuật gốm cổ đại'.",
+        "en": "You wake up enrolled in 'Ancient Pottery Art History'."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_8am",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Lớp 7 giờ sáng. Trời mưa. Chăn ấm.",
+    "en": "7am lecture. It's raining. The duvet is warm."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dậy đi học",
+      "en": "Get up and go"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2,
+        "willpower": 3,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn là một trong năm người có mặt. Giảng viên nhớ mặt bạn.",
+        "en": "You're one of five people there. The lecturer remembers your face."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhờ bạn điểm danh hộ",
+      "en": "Get a friend to sign you in"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 4,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Ngủ ngon. Danh dự hơi mỏng.",
+        "en": "Great sleep. Slightly thinner integrity."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "Hôm đó thầy điểm danh bằng cách gọi từng người đứng lên.",
+        "en": "That day he takes attendance by making everyone stand up."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_free_pizza",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Có hội thảo 'Định hướng nghề nghiệp', kèm pizza miễn phí.",
+    "en": "There's a 'Career Pathways' seminar. Free pizza."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đến vì pizza",
+      "en": "Go for the pizza"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 4,
+        "health": -1
+       },
+       "text": {
+        "vi": "Pizza nguội nhưng miễn phí. Bạn cầm về ba miếng.",
+        "en": "Cold but free. You take three slices home."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 3,
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Bạn đến vì pizza, về với một ý tưởng nghề nghiệp thật.",
+        "en": "You came for pizza and left with an actual career idea."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_lecture_sleep",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn ngủ gật trong giảng đường và tỉnh dậy khi cả lớp đang nhìn bạn.",
+    "en": "You doze off in a lecture and wake up to the whole room looking at you."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Giả vờ đang suy nghĩ sâu sắc",
+      "en": "Pretend you were thinking deeply"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 3,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Bạn nói 'Em đồng ý với ý kiến vừa rồi'. Nó hợp lý một cách kỳ diệu.",
+        "en": "You say 'I agree with that last point.' It miraculously fits."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Thầy hỏi bạn đồng ý với điều gì. Im lặng kéo dài mười giây.",
+        "en": "He asks what exactly you agree with. Ten seconds of silence."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xin lỗi và lau nước miếng",
+      "en": "Apologise and wipe the drool"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 1,
+        "happy": -1
+       },
+       "text": {
+        "vi": "Thầy cười. Cả lớp cười. Bạn cũng cười, ít hơn.",
+        "en": "He laughs. The class laughs. You laugh, less."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_thesis",
+   "category": "school",
+   "age": [
+    21,
+    32
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Hạn nộp khóa luận tốt nghiệp còn hai tuần. Bạn mới có tên đề tài.",
+    "en": "Your thesis is due in two weeks. You have a title."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bế quan viết ngày đêm",
+      "en": "Lock in and write"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "smarts": 4,
+        "health": -3,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Bạn nộp đúng hạn. Hội đồng gật gù.",
+        "en": "You submit on time. The panel nods."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -5,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Bạn nộp đúng hạn, rồi ngủ 19 tiếng.",
+        "en": "You submit on time, then sleep for 19 hours."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xin gia hạn",
+      "en": "Ask for an extension"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Giảng viên đồng ý. Bạn dùng thời gian thêm để... lo lắng.",
+        "en": "Granted. You use the extra time to worry."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "Giảng viên kể rằng hồi xưa thầy viết khóa luận bằng tay.",
+        "en": "Your supervisor tells you he wrote his by hand."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_loan_letter",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Một lá thư về khoản vay sinh viên. Phong bì mỏng, con số dày.",
+    "en": "A letter about your student loan. Thin envelope, thick number."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mở ra đọc",
+      "en": "Open it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -4,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bạn đọc, hít thở sâu, rồi lập bảng chi tiêu đầu tiên trong đời.",
+        "en": "You read it, breathe, and make your first ever budget."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cất vào ngăn kéo",
+      "en": "Put it in a drawer"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2,
+        "risk": 2
+       },
+       "text": {
+        "vi": "Ngăn kéo đó giờ có ba lá thư giống hệt.",
+        "en": "That drawer now holds three identical letters."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_hackathon",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Câu lạc bộ rủ bạn thi hackathon 36 tiếng.",
+    "en": "Your club invites you to a 36-hour hackathon."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "cs",
+     "engineering"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tham gia, code xuyên đêm",
+      "en": "Join and code all night"
+     },
+     "outcomes": [
+      {
+       "chance": 0.35,
+       "effects": {
+        "happy": 12,
+        "fame": 4,
+        "smarts": 3,
+        "money": 20
+       },
+       "text": {
+        "vi": "Đội bạn đoạt giải nhất với một ứng dụng chạy được đúng lúc demo.",
+        "en": "Your team wins first prize with an app that works exactly once, during the demo."
+       }
+      },
+      {
+       "chance": 0.65,
+       "effects": {
+        "smarts": 3,
+        "health": -3,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Không đoạt giải, nhưng bạn học được nhiều hơn cả học kỳ.",
+        "en": "No prize, but you learn more than a whole semester."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở nhà ngủ",
+      "en": "Stay home and sleep"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 2
+       },
+       "text": {
+        "vi": "Bạn ngủ đủ 8 tiếng. Hiếm có lập trình viên nào làm được.",
+        "en": "You get 8 hours. Few programmers ever do."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_night_shift",
+   "category": "school",
+   "age": [
+    19,
+    32
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Ca trực đêm đầu tiên ở bệnh viện. Bác sĩ trưởng ca bảo bạn 'xử lý giường số 7'.",
+    "en": "Your first hospital night shift. The senior says 'handle bed 7'."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "medicine",
+     "nursing"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tự tin xử lý",
+      "en": "Handle it confidently"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "smarts": 4,
+        "willpower": 3,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Bạn làm đúng từng bước. Bệnh nhân cảm ơn bạn bằng một quả quýt.",
+        "en": "You get every step right. The patient thanks you with a tangerine."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -6,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bạn làm rối tung. May mà y tá trực đêm đã thấy hết và cứu bạn.",
+        "en": "You fumble. Luckily the night nurse saw everything and saves you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hỏi lại cho chắc",
+      "en": "Ask to double-check"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Hỏi không xấu. Giường số 7 chỉ cần thêm chăn.",
+        "en": "Asking is fine. Bed 7 just needed a blanket."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_moot_court",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn được chọn tranh tụng trong phiên tòa giả định của khoa.",
+    "en": "You're picked to argue in the faculty moot court."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "law"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chuẩn bị kỹ",
+      "en": "Prepare thoroughly"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "smarts": 3,
+        "fame": 2,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bạn thắng. Một luật sư thật trong ban giám khảo xin số điện thoại của bạn.",
+        "en": "You win. A real lawyer on the panel asks for your number."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "smarts": 2,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Đối thủ trích dẫn một án lệ bạn chưa nghe bao giờ.",
+        "en": "Your opponent cites a precedent you've never heard of."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ứng biến tại chỗ",
+      "en": "Improvise on the day"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "fame": 3,
+        "happy": 10
+       },
+       "text": {
+        "vi": "Bạn nói như phim. Cả phòng vỗ tay.",
+        "en": "You speak like a movie lawyer. Applause."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "Bạn gọi thẩm phán là 'cô ơi'.",
+        "en": "You call the judge 'miss'."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_pitch",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Cuộc thi khởi nghiệp sinh viên. Ban giám khảo là ba nhà đầu tư mặc vest.",
+    "en": "Student startup competition. Judged by three investors in suits."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "business",
+     "finance"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thuyết trình ý tưởng của bạn",
+      "en": "Pitch your idea"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "money": 40,
+        "happy": 12,
+        "fame": 3
+       },
+       "text": {
+        "vi": "Một nhà đầu tư rót vốn hạt giống. Bạn chưa biết vốn hạt giống là gì, nhưng đã nhận.",
+        "en": "An investor gives you seed money. You don't know what seed money is, but you take it."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "smarts": 2,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Họ hỏi về mô hình doanh thu. Bạn nói 'quảng cáo'.",
+        "en": "They ask about your revenue model. You say 'ads'."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chỉ đến xem",
+      "en": "Just watch"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Bạn học được rằng ai cũng nói 'tiềm năng thị trường'.",
+        "en": "You learn that everyone says 'market potential'."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_exhibition",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Triển lãm cuối khóa. Một người lạ đứng trước tác phẩm của bạn rất lâu.",
+    "en": "Graduation exhibition. A stranger stands in front of your piece for a long time."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "arts",
+     "architecture"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bắt chuyện",
+      "en": "Talk to them"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "money": 15,
+        "happy": 12,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Họ mua nó. Lần đầu tiên nghệ thuật trả tiền cho bạn.",
+        "en": "They buy it. Art pays you for the first time."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Họ hỏi nhà vệ sinh ở đâu.",
+        "en": "They ask where the toilets are."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đứng xa quan sát",
+      "en": "Watch from afar"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Họ chụp ảnh tác phẩm. Bạn coi như được công nhận.",
+        "en": "They take a photo. You count that as recognition."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_practicum",
+   "category": "school",
+   "age": [
+    19,
+    30
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Buổi kiến tập dạy học đầu tiên. Một học sinh giơ tay hỏi câu bạn không biết.",
+    "en": "Your first teaching practicum. A pupil asks something you don't know."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "education"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thành thật nói không biết",
+      "en": "Admit you don't know"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "smarts": 2,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Bạn hẹn tuần sau trả lời. Cả lớp tôn trọng bạn hơn.",
+        "en": "You promise an answer next week. The class respects you more."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chém gió tự tin",
+      "en": "Bluff confidently"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Không ai phát hiện. Bạn về tra lại và hơi xấu hổ.",
+        "en": "Nobody notices. You look it up later and feel a bit ashamed."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -5,
+        "fame": -1
+       },
+       "text": {
+        "vi": "Học sinh đó là con của giáo viên hướng dẫn.",
+        "en": "That pupil is your supervisor's kid."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_psych_experiment",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn cần người tham gia thí nghiệm tâm lý. Bạn cùng phòng là ứng viên gần nhất.",
+    "en": "You need participants for a psychology study. Your roommate is the nearest candidate."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "psychology"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thí nghiệm trên bạn cùng phòng",
+      "en": "Experiment on your roommate"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "smarts": 3,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Kết quả thú vị. Bạn cùng phòng giờ khóa cửa khi ngủ.",
+        "en": "Fascinating results. Your roommate now locks their door at night."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Họ phát hiện ra và chuyển phòng.",
+        "en": "They find out and move out."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Làm đúng quy trình đạo đức",
+      "en": "Follow the ethics process"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Ba tuần giấy tờ, nhưng dữ liệu sạch.",
+        "en": "Three weeks of forms, but clean data."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_campus_paper",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn phỏng vấn một người nổi tiếng cho báo trường. Họ nói một câu rất dễ gây tranh cãi.",
+    "en": "You interview a celebrity for the student paper. They say something wildly controversial."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "comms"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đăng nguyên văn",
+      "en": "Publish it word for word"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "fame": 8,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bài báo được chia sẻ khắp mạng. Báo lớn trích dẫn bạn.",
+        "en": "It goes viral. Major outlets quote you."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "fame": 3,
+        "happy": -4,
+        "karma": -2
+       },
+       "text": {
+        "vi": "Người quản lý của họ gửi thư đe dọa kiện.",
+        "en": "Their manager sends a legal threat."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hỏi lại họ có muốn đính chính",
+      "en": "Offer them a chance to clarify"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Họ cảm ơn bạn và hứa cho bạn phỏng vấn độc quyền lần sau.",
+        "en": "They thank you and promise you an exclusive next time."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_lab_result",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Thí nghiệm của bạn cho ra kết quả trái ngược hoàn toàn với sách giáo khoa.",
+    "en": "Your experiment gives the exact opposite result to the textbook."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "science",
+     "engineering"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Làm lại năm lần",
+      "en": "Repeat it five times"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "smarts": 3,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Hóa ra bạn cắm nhầm dây. Sách vẫn đúng.",
+        "en": "Turns out you plugged in the wrong cable. The textbook survives."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "smarts": 6,
+        "fame": 5,
+        "happy": 12
+       },
+       "text": {
+        "vi": "Kết quả lặp lại. Giáo sư im lặng rất lâu rồi nói 'Viết bài báo đi.'",
+        "en": "It replicates. Your professor goes quiet, then says 'Write it up.'"
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Sửa số cho khớp",
+      "en": "Fudge the numbers"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": -6,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Báo cáo đẹp. Bạn mất ngủ hai đêm.",
+        "en": "Pretty report. Two sleepless nights."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_stock_game",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Khoa tổ chức cuộc thi đầu tư chứng khoán ảo.",
+    "en": "Your faculty runs a virtual stock-trading contest."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "finance",
+     "business"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "All-in một mã",
+      "en": "Go all in on one stock"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 10,
+        "fame": 3,
+        "risk": 3
+       },
+       "text": {
+        "vi": "Bạn thắng giải nhất. Tiền ảo, nhưng sự kiêu ngạo là thật.",
+        "en": "First place. Fake money, real arrogance."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": -4,
+        "risk": 2
+       },
+       "text": {
+        "vi": "Danh mục của bạn về 0 trong tuần đầu.",
+        "en": "Your portfolio hits zero in week one."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đa dạng hóa",
+      "en": "Diversify"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 3
+       },
+       "text": {
+        "vi": "Lãi đều, chán, và đúng sách.",
+        "en": "Steady gains. Boring. Textbook."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_injection",
+   "category": "school",
+   "age": [
+    19,
+    30
+   ],
+   "weight": 7,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Buổi thực hành tiêm đầu tiên. Người tình nguyện là bạn cùng nhóm.",
+    "en": "First injection practice. Your volunteer is your lab partner."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "nursing",
+     "medicine"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tập trung, làm thật chuẩn",
+      "en": "Focus, do it right"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "smarts": 2,
+        "willpower": 2,
+        "happy": 5
+       },
+       "text": {
+        "vi": "Một phát ăn ngay. Bạn cùng nhóm thở phào.",
+        "en": "First try. Your partner exhales."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -4,
+        "rel_friend": -4
+       },
+       "text": {
+        "vi": "Lần thứ ba mới được. Bạn cùng nhóm sẽ nhớ chuyện này.",
+        "en": "Third attempt. Your partner will remember this."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uni_drafting_allnighter",
+   "category": "school",
+   "age": [
+    18,
+    30
+   ],
+   "weight": 7,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đồ án kiến trúc nộp sáng mai. Mô hình bằng giấy bìa vẫn còn thiếu mái.",
+    "en": "Your architecture model is due tomorrow. The cardboard building has no roof."
+   },
+   "requires": {
+    "eduStage": [
+     "uni"
+    ],
+    "major": [
+     "architecture"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thức trắng dựng nốt",
+      "en": "All-nighter to finish"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "smarts": 3,
+        "health": -3,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Hoàn thành lúc 6 giờ sáng. Keo dán dính đầy tóc.",
+        "en": "Done at 6am. Glue in your hair."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -4,
+        "happy": -5
+       },
+       "text": {
+        "vi": "Bạn làm đổ cà phê lên tòa nhà. Giờ nó là 'kiến trúc tái chế'.",
+        "en": "You spill coffee on it. It's now 'reclaimed architecture'."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "grad_ghost_advisor",
+   "category": "school",
+   "age": [
+    22,
+    40
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Giáo sư hướng dẫn của bạn không trả lời email suốt ba tháng.",
+    "en": "Your supervisor hasn't answered emails in three months."
+   },
+   "requires": {
+    "eduStage": [
+     "grad"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đến tận văn phòng chờ",
+      "en": "Camp outside their office"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "willpower": 3,
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Họ xuất hiện, ngạc nhiên vì bạn vẫn còn học.",
+        "en": "They appear, surprised you're still enrolled."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Bạn chờ cả ngày. Họ đang dự hội nghị ở nước khác.",
+        "en": "You wait all day. They're at a conference abroad."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tự làm tiếp",
+      "en": "Just keep going alone"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 3,
+        "happy": -2,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bạn tự học mọi thứ. Đây có lẽ là mục đích thật của sau đại học.",
+        "en": "You teach yourself everything. Maybe that's the real point of grad school."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "grad_reviewer2",
+   "category": "school",
+   "age": [
+    22,
+    40
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bài báo đầu tay bị từ chối. Người phản biện số 2 viết 'tác giả có vẻ chưa hiểu lĩnh vực'.",
+    "en": "Your first paper is rejected. Reviewer 2 writes 'the author does not appear to understand the field'."
+   },
+   "requires": {
+    "eduStage": [
+     "grad"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Sửa và nộp lại",
+      "en": "Revise and resubmit"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "smarts": 4,
+        "happy": 8,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Lần hai được nhận. Bạn in trang đầu ra dán tường.",
+        "en": "Accepted on the second try. You print the first page and frame it."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -6,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Lại từ chối. Lại người phản biện số 2.",
+        "en": "Rejected again. Reviewer 2 again."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Viết thư phản bác gay gắt",
+      "en": "Write a furious rebuttal"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3,
+        "karma": -2
+       },
+       "text": {
+        "vi": "Bạn thấy nhẹ người. Biên tập viên thì không.",
+        "en": "You feel lighter. The editor does not."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "grad_conference",
+   "category": "school",
+   "age": [
+    22,
+    40
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn được mời trình bày ở một hội nghị quốc tế.",
+    "en": "You're invited to present at an international conference."
+   },
+   "requires": {
+    "eduStage": [
+     "grad"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi trình bày",
+      "en": "Go and present"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "fame": 4,
+        "smarts": 3,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bài trình bày suôn sẻ. Ba người xin hợp tác.",
+        "en": "It goes well. Three people want to collaborate."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -3,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Máy chiếu hỏng. Bạn trình bày bằng tay và lòng dũng cảm.",
+        "en": "The projector dies. You present with hand gestures and courage."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "trade_first_customer",
+   "category": "school",
+   "age": [
+    16,
+    40
+   ],
+   "weight": 8,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Buổi thực hành đầu tiên với khách thật.",
+    "en": "Your first practice session with a real customer."
+   },
+   "requires": {
+    "eduStage": [
+     "trade"
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Làm cẩn thận từng bước",
+      "en": "Go step by step"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "willpower": 3,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Khách hài lòng và còn để lại tiền boa.",
+        "en": "The customer is happy and even leaves a tip."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Có một sự cố nhỏ. Thầy sửa lại trong 30 giây và nhìn bạn đầy ẩn ý.",
+        "en": "A small mishap. Your instructor fixes it in 30 seconds and gives you a look."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Làm nhanh để gây ấn tượng",
+      "en": "Go fast to impress"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 8,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Nhanh và đẹp. Thầy gật đầu.",
+        "en": "Fast and clean. A nod from the instructor."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -6,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Nhanh, và sai. Khách được làm lại miễn phí.",
+        "en": "Fast, and wrong. The customer gets a free redo."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "trade_master_praise",
+   "category": "school",
+   "age": [
+    16,
+    40
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Thầy dạy nghề nói bạn có 'đôi tay vàng'.",
+    "en": "Your instructor says you have 'golden hands'."
+   },
+   "requires": {
+    "eduStage": [
+     "trade"
+    ]
+   },
+   "effects": {
+    "happy": 8,
+    "willpower": 3
+   }
+  }
+ ]
+}

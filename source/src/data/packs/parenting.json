@@ -1,0 +1,1730 @@
+{
+ "manifest": {
+  "id": "core.parent",
+  "name": {
+   "vi": "Gói gốc: làm cha mẹ",
+   "en": "Core: parenthood"
+  },
+  "version": "1.0.0",
+  "rating": "all",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "par_newborn_night",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 8,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Em bé khóc lúc 3 giờ sáng. Đêm thứ 11 liên tiếp.",
+    "en": "The baby cries at 3am. Eleventh night in a row."
+   },
+   "requires": {
+    "childAge": [
+     0,
+     1
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dậy bế, hát ru",
+      "en": "Get up, rock and sing"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": -2,
+        "health": -2,
+        "rel_child": 5
+       },
+       "text": {
+        "vi": "Bé ngủ trên vai bạn. Bạn ngủ đứng.",
+        "en": "The baby sleeps on your shoulder. You sleep standing up."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -4,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Bé chỉ ngủ khi bạn đi bộ. Bạn đi 6 cây số trong phòng khách.",
+        "en": "The baby only sleeps while you walk. You do 6 km around the living room."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đến lượt người kia",
+      "en": "It's the other parent's turn"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "health": 2
+       },
+       "text": {
+        "vi": "Bạn được ngủ thêm hai tiếng. Thiên đường.",
+        "en": "Two extra hours of sleep. Paradise."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "rel_partner": -5,
+        "happy": -2
+       },
+       "text": {
+        "vi": "'Đêm qua cũng là lượt anh/chị đấy.' Cuộc tranh luận kéo dài đến sáng.",
+        "en": "'You said that last night.' The debate lasts till dawn."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_first_steps",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 9,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con bạn tự đứng dậy và bước những bước đầu tiên.",
+    "en": "Your child stands up and takes their first steps."
+   },
+   "requires": {
+    "childAge": [
+     0,
+     2
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Quay video",
+      "en": "Film it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 10,
+        "rel_child": 4
+       },
+       "text": {
+        "vi": "Video rung, mờ, và là video quý nhất trong điện thoại bạn.",
+        "en": "Shaky, blurry, and the most precious video on your phone."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Dang tay đón",
+      "en": "Hold out your arms"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "rel_child": 6
+       },
+       "text": {
+        "vi": "Bé ngã vào lòng bạn và cười khanh khách.",
+        "en": "They tumble into your arms, giggling."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_first_word",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con bạn nói từ đầu tiên. Đó là tên con chó nhà hàng xóm.",
+    "en": "Your child says their first word. It's the neighbour's dog's name."
+   },
+   "requires": {
+    "childAge": [
+     1,
+     2
+    ]
+   },
+   "effects": {
+    "happy": 6,
+    "rel_child": 3
+   }
+  },
+  {
+   "id": "par_daycare",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đến lúc gửi con đi nhà trẻ. Bé bám chân bạn không rời.",
+    "en": "Time for daycare. Your toddler clings to your leg."
+   },
+   "requires": {
+    "childAge": [
+     2,
+     4
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dứt khoát đi luôn",
+      "en": "Leave quickly"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": -3,
+        "rel_child": -1
+       },
+       "text": {
+        "vi": "Năm phút sau cô giáo gửi ảnh: bé đang vui vẻ ăn bánh.",
+        "en": "Five minutes later the teacher sends a photo: happily eating a biscuit."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "Bé khóc cả tuần. Bạn cũng vậy, trong xe.",
+        "en": "They cry all week. So do you, in the car."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở lại cùng bé buổi đầu",
+      "en": "Stay the first morning"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 4,
+        "jobPerf": -3
+       },
+       "text": {
+        "vi": "Bé yên tâm hơn. Sếp thì không.",
+        "en": "Your child settles. Your boss doesn't."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_tantrum",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Con bạn nằm lăn ra giữa siêu thị gào khóc vì một gói kẹo.",
+    "en": "Your child throws a full tantrum on the supermarket floor over sweets."
+   },
+   "requires": {
+    "childAge": [
+     2,
+     6
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mua cho xong",
+      "en": "Just buy them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2,
+        "rel_child": 2
+       },
+       "text": {
+        "vi": "Yên lặng trở lại. Bé đã học được một bài học. Không phải bài bạn muốn.",
+        "en": "Peace returns. They've learned a lesson. Not the one you wanted."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bình tĩnh chờ",
+      "en": "Wait it out calmly"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "willpower": 4,
+        "rel_child": 1
+       },
+       "text": {
+        "vi": "Ba phút sau bé tự đứng dậy như chưa có gì.",
+        "en": "Three minutes later they get up like nothing happened."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -4,
+        "fame": -1
+       },
+       "text": {
+        "vi": "Có người quay video. Bình luận chia làm hai phe.",
+        "en": "Someone films it. The comments split into two camps."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nằm xuống khóc cùng",
+      "en": "Lie down and cry too"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Bé ngừng khóc, nhìn bạn đầy bối rối. Chiến thuật hiệu quả.",
+        "en": "They stop, deeply confused. It works."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_why_phase",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con bạn bước vào giai đoạn hỏi 'tại sao' 400 lần mỗi ngày.",
+    "en": "Your child enters the 'why?' phase. 400 times a day."
+   },
+   "requires": {
+    "childAge": [
+     3,
+     6
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Trả lời thật kiên nhẫn",
+      "en": "Answer patiently"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 5,
+        "smarts": 1,
+        "happy": -1
+       },
+       "text": {
+        "vi": "Đến câu thứ 37, bạn đang giải thích về hố đen.",
+        "en": "By question 37 you're explaining black holes."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "'Vì mẹ/bố bảo thế'",
+      "en": "'Because I said so'"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2,
+        "rel_child": -2
+       },
+       "text": {
+        "vi": "Câu trả lời cổ điển, được truyền qua nhiều thế hệ.",
+        "en": "A classic, passed down through generations."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_school_bully",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Con bạn về nhà buồn bã. Một bạn cùng lớp hay bắt nạt con.",
+    "en": "Your child comes home upset. A classmate keeps picking on them."
+   },
+   "requires": {
+    "childAge": [
+     6,
+     14
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gặp giáo viên",
+      "en": "Talk to the teacher"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_child": 5,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Nhà trường can thiệp. Con bạn cười trở lại.",
+        "en": "The school steps in. Your child smiles again."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_child": 2,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Giáo viên hứa 'sẽ để ý'. Chẳng có gì thay đổi.",
+        "en": "The teacher promises to 'keep an eye on it'. Nothing changes."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Dạy con cách tự tin",
+      "en": "Help them build confidence"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_child": 6,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Lần sau con bạn đứng thẳng và nói 'Thôi đi'. Nó có tác dụng.",
+        "en": "Next time your child stands tall and says 'Stop.' It works."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "rel_child": 3
+       },
+       "text": {
+        "vi": "Chậm, nhưng con dần cứng cỏi hơn.",
+        "en": "Slowly, they grow tougher."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gặp thẳng phụ huynh bên kia",
+      "en": "Confront the other parent"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "rel_child": 4
+       },
+       "text": {
+        "vi": "Phụ huynh kia xin lỗi. Hóa ra con họ cũng đang gặp chuyện.",
+        "en": "They apologise. Turns out their kid is struggling too."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -5,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Hai phụ huynh cãi nhau ở cổng trường. Cả hai đứa trẻ xấu hổ.",
+        "en": "Two parents argue at the school gate. Both kids are mortified."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_homework_war",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bài tập toán lớp 4 của con khó hơn bạn nhớ.",
+    "en": "Your child's maths homework is harder than you remember."
+   },
+   "requires": {
+    "childAge": [
+     7,
+     12
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ngồi giải cùng con",
+      "en": "Work it out together"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_child": 4,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Hai người cùng tìm ra đáp án. Ăn mừng bằng kem.",
+        "en": "You crack it together. Ice cream to celebrate."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bạn giải sai. Cô giáo đánh dấu đỏ, ghi 'phụ huynh cần xem lại'.",
+        "en": "You get it wrong. The teacher writes 'parent please review'."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tra mạng",
+      "en": "Look it up"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 1
+       },
+       "text": {
+        "vi": "Con bạn hỏi 'Sao bố/mẹ không tự biết?'. Câu hỏi đau lòng.",
+        "en": "'Why don't you just know?' A painful question."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thuê gia sư",
+      "en": "Hire a tutor"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -5,
+        "rel_child": 1
+       },
+       "text": {
+        "vi": "Gia sư giỏi. Bạn rảnh tay nhưng hơi buồn.",
+        "en": "Great tutor. You're free, but a little sad."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_school_play",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con bạn được đóng vai 'cái cây thứ ba' trong vở kịch của trường.",
+    "en": "Your child is cast as 'Tree number three' in the school play."
+   },
+   "requires": {
+    "childAge": [
+     5,
+     11
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi xem, vỗ tay to nhất",
+      "en": "Go and cheer loudest"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "rel_child": 6
+       },
+       "text": {
+        "vi": "Cái cây thứ ba lay động nghệ thuật nhất từng có.",
+        "en": "The most artistic swaying tree in history."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bận việc, không đi được",
+      "en": "Too busy to go"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": -8,
+        "jobPerf": 3
+       },
+       "text": {
+        "vi": "Con bạn tìm mặt bạn trong khán phòng suốt buổi.",
+        "en": "Your child scans the audience for you the whole time."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_pet_request",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con bạn năn nỉ nuôi chó, hứa tự chăm.",
+    "en": "Your child begs for a dog and promises to look after it."
+   },
+   "requires": {
+    "childAge": [
+     5,
+     12
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đồng ý",
+      "en": "Say yes"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "rel_child": 6,
+        "money": -3
+       },
+       "text": {
+        "vi": "Con bạn chăm chó được đúng ba tuần. Sau đó là bạn.",
+        "en": "Your child looks after it for exactly three weeks. Then it's you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nuôi cá trước đã",
+      "en": "Start with a fish"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 2
+       },
+       "text": {
+        "vi": "Con cá tên là 'Chó'.",
+        "en": "The fish is named 'Dog'."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_teen_door",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Con bạn tuổi teen đóng sầm cửa phòng sau một câu hỏi bình thường.",
+    "en": "Your teen slams their door after a perfectly normal question."
+   },
+   "requires": {
+    "childAge": [
+     13,
+     17
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gõ cửa nói chuyện",
+      "en": "Knock and talk"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_child": 5
+       },
+       "text": {
+        "vi": "Họ mở cửa sau 10 phút. Có chuyện ở trường, giờ họ muốn kể.",
+        "en": "They open up after 10 minutes. Something happened at school."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_child": -2
+       },
+       "text": {
+        "vi": "'Bố/mẹ không hiểu đâu.' Cửa vẫn đóng.",
+        "en": "'You wouldn't understand.' The door stays shut."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Để con yên",
+      "en": "Give them space"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 2,
+        "happy": -1
+       },
+       "text": {
+        "vi": "Bữa tối con ra ăn và nói chuyện như chưa có gì.",
+        "en": "At dinner they come out and chat like nothing happened."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_teen_party",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con bạn 16 tuổi xin đi dự tiệc qua đêm ở nhà bạn.",
+    "en": "Your 16-year-old asks to stay overnight at a friend's party."
+   },
+   "requires": {
+    "childAge": [
+     15,
+     17
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cho đi, dặn kỹ",
+      "en": "Let them go with rules"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_child": 5
+       },
+       "text": {
+        "vi": "Con về đúng giờ, kể chuyện vui. Niềm tin tăng lên.",
+        "en": "They come home on time with funny stories. Trust grows."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_child": 2,
+        "happy": -5
+       },
+       "text": {
+        "vi": "Nửa đêm con gọi nhờ bạn đến đón. Bạn đến ngay, không hỏi nhiều.",
+        "en": "At midnight they call for a lift. You go straight away, no lecture."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cấm",
+      "en": "Say no"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_child": -5
+       },
+       "text": {
+        "vi": "Con giận bạn cả tuần.",
+        "en": "They don't speak to you for a week."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "rel_child": -8,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Con trốn đi. Bạn phát hiện lúc 1 giờ sáng.",
+        "en": "They sneak out. You find out at 1am."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_teen_grades",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Học bạ của con có điểm thấp ở hầu hết các môn.",
+    "en": "Your teen's report card is low across the board."
+   },
+   "requires": {
+    "childAge": [
+     12,
+     17
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ngồi tìm hiểu nguyên nhân",
+      "en": "Find out what's wrong"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_child": 6
+       },
+       "text": {
+        "vi": "Con thừa nhận đang mất tập trung vì chuyện bạn bè. Hai người cùng lập kế hoạch.",
+        "en": "They admit friend drama is distracting them. You make a plan together."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_child": 2
+       },
+       "text": {
+        "vi": "Con không nói gì nhiều, nhưng biết bạn quan tâm.",
+        "en": "They don't say much, but they know you care."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tịch thu điện thoại",
+      "en": "Confiscate the phone"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_child": -4
+       },
+       "text": {
+        "vi": "Điểm có khá hơn. Quan hệ thì không.",
+        "en": "Grades improve. The relationship doesn't."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_child": -6
+       },
+       "text": {
+        "vi": "Con có điện thoại thứ hai. Bạn không biết.",
+        "en": "They have a second phone. You don't know."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_driving_lesson",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn dạy con lái xe lần đầu.",
+    "en": "You give your teen their first driving lesson."
+   },
+   "requires": {
+    "childAge": [
+     16,
+     19
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Giữ bình tĩnh tuyệt đối",
+      "en": "Stay perfectly calm"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_child": 6,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Con lái được một vòng quanh khu phố. Hai người đập tay.",
+        "en": "They make it round the block. High five."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3,
+        "health": -1
+       },
+       "text": {
+        "vi": "Bạn bám tay nắm cửa đến trắng bệch nhưng không nói gì.",
+        "en": "You grip the handle white-knuckled but say nothing."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hét 'PHANH!' mỗi 10 giây",
+      "en": "Yell 'BRAKE!' every 10 seconds"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": -4,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Con quyết định học ở trường dạy lái.",
+        "en": "They decide to use a driving school."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_college_choice",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con muốn học một ngành bạn thấy 'không có tương lai'.",
+    "en": "Your child wants to study something you think has 'no future'."
+   },
+   "requires": {
+    "childAge": [
+     17,
+     19
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ủng hộ con",
+      "en": "Support them"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_child": 8,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Con học với niềm đam mê thật sự.",
+        "en": "They study with real passion."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_child": 6,
+        "money": -5
+       },
+       "text": {
+        "vi": "Con đổi ngành hai lần. Bạn vẫn ủng hộ, và vẫn đóng học phí.",
+        "en": "They switch majors twice. You still support them, and still pay."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ép con học ngành 'ổn định'",
+      "en": "Push for a 'safe' degree"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_child": -6
+       },
+       "text": {
+        "vi": "Con học, nhưng không vui.",
+        "en": "They do it, but they're unhappy."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_child": -12,
+        "happy": -5
+       },
+       "text": {
+        "vi": "Con bỏ ngang năm hai và không nói chuyện với bạn một thời gian.",
+        "en": "They drop out in second year and stop talking to you for a while."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_empty_nest",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con dọn ra ở riêng. Căn phòng của con bỗng yên tĩnh đến lạ.",
+    "en": "Your child moves out. Their room is suddenly strangely quiet."
+   },
+   "requires": {
+    "childAge": [
+     18,
+     26
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Biến phòng thành phòng tập",
+      "en": "Turn it into a home gym"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "health": 2
+       },
+       "text": {
+        "vi": "Máy chạy bộ dùng được hai tuần, sau đó thành chỗ phơi đồ.",
+        "en": "The treadmill gets two weeks of use, then becomes a clothes rack."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ nguyên như cũ",
+      "en": "Keep it exactly as it was"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -3,
+        "rel_child": 3
+       },
+       "text": {
+        "vi": "Thỉnh thoảng bạn vào ngồi một lúc.",
+        "en": "Sometimes you go in and just sit."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_adult_money",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con trưởng thành xin bạn một khoản lớn để mua nhà.",
+    "en": "Your adult child asks for a big sum to buy a home."
+   },
+   "requires": {
+    "childAge": [
+     23,
+     45
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cho luôn",
+      "en": "Give it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -60,
+        "rel_child": 10,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Con khóc khi nhận chìa khóa. Bạn thấy đáng.",
+        "en": "They cry getting the keys. Worth it."
+       }
+      }
+     ],
+     "requires": {
+      "min": {
+       "money": 60
+      }
+     }
+    },
+    {
+     "label": {
+      "vi": "Cho vay, có giấy tờ",
+      "en": "Lend it, in writing"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "money": -40,
+        "rel_child": 4
+       },
+       "text": {
+        "vi": "Con trả đúng hạn, từng đồng.",
+        "en": "They repay on time, every penny."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "money": -40,
+        "rel_child": -2
+       },
+       "text": {
+        "vi": "Khoản vay dần trở thành 'chủ đề không nhắc đến'.",
+        "en": "The loan becomes 'something we don't mention'."
+       }
+      }
+     ],
+     "requires": {
+      "min": {
+       "money": 40
+      }
+     }
+    },
+    {
+     "label": {
+      "vi": "Từ chối",
+      "en": "Say no"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": -6
+       },
+       "text": {
+        "vi": "Con hiểu, nhưng hơi buồn.",
+        "en": "They understand, but they're hurt."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_grandchild_news",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con báo tin bạn sắp lên chức ông/bà.",
+    "en": "Your child tells you you're going to be a grandparent."
+   },
+   "requires": {
+    "childAge": [
+     22,
+     50
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Khóc vì vui",
+      "en": "Cry with joy"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 15,
+        "rel_child": 6
+       },
+       "text": {
+        "vi": "Bạn mua đồ sơ sinh ngay chiều hôm đó, đủ cho ba đứa.",
+        "en": "You buy baby clothes that afternoon. Enough for three."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "'Mình già thế rồi sao?'",
+      "en": "'Am I really that old?'"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "looks": -1
+       },
+       "text": {
+        "vi": "Bạn soi gương lâu hơn mọi ngày.",
+        "en": "You look in the mirror longer than usual."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_child_success",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con bạn đạt thành tích lớn và cảm ơn bạn trong bài phát biểu.",
+    "en": "Your child achieves something big and thanks you in their speech."
+   },
+   "requires": {
+    "childAge": [
+     18,
+     60
+    ]
+   },
+   "effects": {
+    "happy": 15,
+    "rel_child": 5,
+    "fame": 2
+   }
+  },
+  {
+   "id": "par_child_trouble",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con trưởng thành gọi điện lúc nửa đêm: họ đang gặp rắc rối với nợ nần.",
+    "en": "Your adult child calls at midnight: they're in trouble with debt."
+   },
+   "requires": {
+    "childAge": [
+     20,
+     50
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Trả nợ giúp",
+      "en": "Pay it off"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "money": -30,
+        "rel_child": 8
+       },
+       "text": {
+        "vi": "Con hứa sẽ thay đổi. Lần này có vẻ thật.",
+        "en": "They promise to change. This time it seems real."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "money": -30,
+        "rel_child": 3,
+        "happy": -5
+       },
+       "text": {
+        "vi": "Sáu tháng sau, cuộc gọi tương tự.",
+        "en": "Six months later, the same call."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giúp con lập kế hoạch trả nợ",
+      "en": "Help them make a repayment plan"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 5,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Con tự trả được trong hai năm. Họ tự hào về bản thân.",
+        "en": "They clear it themselves in two years, proud of it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Để con tự chịu",
+      "en": "Let them handle it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": -8,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Con tự xoay xở, nhưng nhớ lần đó.",
+        "en": "They manage, but they remember."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_family_trip",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Cả nhà đi du lịch. Đứa nhỏ hỏi 'sắp đến chưa' lần thứ 31 khi mới đi được 20 phút.",
+    "en": "Family road trip. The kids ask 'are we there yet?' for the 31st time, 20 minutes in."
+   },
+   "requires": {
+    "childAge": [
+     4,
+     14
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bày trò chơi đoán chữ",
+      "en": "Start a word game"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 6,
+        "rel_child": 5
+       },
+       "text": {
+        "vi": "Chuyến đi thành kỷ niệm cả nhà còn nhắc mãi.",
+        "en": "The trip becomes a story the family tells forever."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Hai đứa cãi nhau xem ai thắng suốt quãng đường còn lại.",
+        "en": "The kids argue about who won for the rest of the drive."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đưa điện thoại cho tụi nhỏ",
+      "en": "Hand over the phones"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Yên lặng tuyệt đối. Chẳng ai nhìn ra cửa sổ.",
+        "en": "Total silence. Nobody looks out the window."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_sibling_fight",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Hai đứa con đánh nhau vì cái điều khiển TV.",
+    "en": "Your kids fight over the TV remote."
+   },
+   "requires": {
+    "childAge": [
+     4,
+     15
+    ],
+    "hasChildren": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Làm trọng tài công bằng",
+      "en": "Referee fairly"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_child": 3,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Lịch xem TV chia đều. Hòa bình tạm thời.",
+        "en": "A fair TV rota. Temporary peace."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Cả hai đứa cho rằng bạn thiên vị đứa kia.",
+        "en": "Both kids think you favour the other."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cất điều khiển đi",
+      "en": "Confiscate the remote"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2,
+        "rel_child": -1
+       },
+       "text": {
+        "vi": "Hai đứa liên minh chống lại bạn. Ít ra chúng hòa thuận.",
+        "en": "They unite against you. At least they get along."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_lie_caught",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn phát hiện con nói dối về việc làm bài tập.",
+    "en": "You catch your child lying about doing homework."
+   },
+   "requires": {
+    "childAge": [
+     6,
+     15
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nói chuyện về sự trung thực",
+      "en": "Talk about honesty"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_child": 3,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Con xin lỗi. Bạn kể chuyện hồi nhỏ mình cũng từng như thế.",
+        "en": "They apologise. You admit you did the same as a kid."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_child": 1
+       },
+       "text": {
+        "vi": "Con gật gù, rồi lần sau nói dối khéo hơn.",
+        "en": "They nod, then lie more skilfully next time."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Phạt nặng",
+      "en": "Punish harshly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": -5
+       },
+       "text": {
+        "vi": "Con không dám nói dối nữa. Và cũng không dám kể gì với bạn nữa.",
+        "en": "They stop lying. They also stop telling you things."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "par_late_talk",
+   "category": "family",
+   "age": [
+    18,
+    100
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Con trưởng thành ghé chơi và hỏi: 'Hồi đó bố/mẹ có hạnh phúc không?'",
+    "en": "Your grown child visits and asks: 'Were you happy back then?'"
+   },
+   "requires": {
+    "childAge": [
+     25,
+     60
+    ]
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nói thật mọi chuyện",
+      "en": "Tell the honest truth"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 8,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Hai người nói chuyện đến khuya, như hai người bạn.",
+        "en": "You talk late into the night, like friends."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "'Có con là hạnh phúc rồi'",
+      "en": "'Having you was enough'"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 5,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Con ôm bạn lâu hơn mọi lần.",
+        "en": "They hug you longer than usual."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
