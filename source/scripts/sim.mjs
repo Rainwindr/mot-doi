@@ -11,6 +11,9 @@ import { choiceLocked } from '../src/engine/events.js';
 import { autoPlay } from '../src/engine/minigames.js';
 import { SPECIALS, specialAction, canJoin, socialAction } from '../src/engine/specials.js';
 import { checkGoals, archiveLife, emptyProfile } from '../src/engine/goals.js';
+import { ATT, KINKS, FAMILY, ROM, attOf } from '../src/engine/intimacy.js';
+let ruleErr = 0; const ixStat = { pos: 0, tried: 0, babies: 0, groups: 0, funeral: 0, memoir: 0, rom: 0, care: 0 };
+const ribbonsSeen = {};
 const profile = emptyProfile(); let goalsHit = 0;
 const pickOpen = (life, ev) => { const ok = ev.choices.map((c, i) => [c, i]).filter(([c]) => !choiceLocked(life, c)); return ok.length ? R(ok)[1] : 0; };
 let specTop = 0, maxFollow = 0; const arcDone = {}; let stuck = 0; const degs = {}; const jobs = {};
@@ -29,7 +32,17 @@ for (let i = 0; i < N; i++) {
   const life = newLife(game, { mode: 'fate', seed: i + 1 });
   try {
     let guard = 0;
+    const fam = new Set();
+    const check = () => {
+      for (const p of life.people) {
+        if (FAMILY.includes(p.role) && p.role !== 'pet') fam.add(p.id);
+        if (ROM.includes(p.role) && (fam.has(p.id) || p.age < 18)) { ruleErr++; if (ruleErr < 4) console.error('RULE romance', p.role, p.age, fam.has(p.id)); }
+        if (FAMILY.includes(p.role) && ATT[attOf(p)].rom) { ruleErr++; if (ruleErr < 4) console.error('RULE att', p.role, p.att); }
+        if (p.age < 18 && p.att && ATT[p.att].rom) { ruleErr++; if (ruleErr < 4) console.error('RULE att minor', p.age, p.att); }
+      }
+    };
     while (!life.dead && guard++ < 200) {
+      check();
       ageUpGame(game);
       let ev, g2 = 0;
       while ((ev = currentEvent(game)) && g2++ < 10) {
@@ -48,12 +61,12 @@ for (let i = 0; i < N; i++) {
         const ppl = life.people.filter((x) => x.alive && !x.cut);
         if (!ppl.length) break;
         const q = R(ppl);
-        const acts2 = personActions(life, q);
+        const acts2 = personActions(life, q, st);
         if (!acts2.length) continue;
         const r2 = doPersonAction(life, st, q.id, R(acts2)[0]);
         if (r2 && r2.event) { let rr = r2, g = 0; while (rr && rr.event && g++ < 5) { const m = chooseModal(game, rr.event, Math.floor(Math.random() * rr.event.choices.length)); rr = m.next ? { event: m.next } : null; } }
         if (r2 && r2.mini) autoPlay(life, r2.mini);
-        if (Math.random() < 0.02) godPerson(life, q.id, { poly: 90, fert: 90, skill: 80, size: 70 });
+        if (Math.random() < 0.03) godPerson(life, q.id, { poly: 90, fert: 90, skill: 80, size: 70, firm: R([0, 50, 100]), att: R(Object.keys(ATT)), chem: 80, fire: 85, kinks: Object.fromEntries(KINKS.map((k) => [k.id, R(['want', 'never', ''])])), reveal: Math.random() < 0.5, fav: R(['', 3, 30]) });
       }
       if (life.job && Math.random() < 0.3) workAction(life, R(['overtime', 'bossdrinks', 'transfer', 'leave', 'strike', 'whistle']));
       if (!life.dead && life.age >= 14) {
@@ -61,7 +74,7 @@ for (let i = 0; i < N; i++) {
         if (life.special) specialAction(life, R(['train', 'big', 'promo', 'train', 'big']));
         if (Math.random() < 0.3) socialAction(life, R(['photo', 'video', 'live', 'sponsor']));
       }
-      const acts = availableActivities(life);
+      const acts = availableActivities(life, st);
       if (life.age >= 18 && !life.dead) {
         const roll = Math.random();
         if (roll < 0.15) invest(life, R(Object.keys(ASSETS)), Math.max(0, life.money) * 0.3);
@@ -89,10 +102,14 @@ for (let i = 0; i < N; i++) {
       for (let k = 0; k < 2 && acts.length; k++) {
         const r = doActivity(life, st, acts[Math.floor(Math.random() * acts.length)].id);
         if (r && r.mini) autoPlay(life, r.mini);
-        if (r && r.event) chooseModal(game, r.event, Math.floor(Math.random() * r.event.choices.length));
+        if (r && r.event) { let rr = r, g = 0; while (rr && rr.event && g++ < 6) { const m = chooseModal(game, rr.event, Math.floor(Math.random() * rr.event.choices.length)); rr = m.next ? { event: m.next } : null; } }
       }
     }
+    check();
     if (!life.dead) stuck++;
+    if (life.ix) { ixStat.pos = Math.max(ixStat.pos, life.ix.pos.length); ixStat.tried = Math.max(ixStat.tried, life.ix.tried.length); ixStat.babies += life.ix.babies; ixStat.groups += life.ix.groups; ixStat.memoir += life.ix.memoir ? 1 : 0; ixStat.care += life.ix.care; }
+    if (life.funeral && life.funeral.length) ixStat.funeral++;
+    for (const r of life.ribbons || []) ribbonsSeen[r] = (ribbonsSeen[r] || 0) + 1;
     archiveLife(profile, life);
     for (const [k, v] of Object.entries(life.arcs || {})) if (v.done) arcDone[k] = (arcDone[k] || 0) + 1;
     const c = country(life).code;
@@ -121,6 +138,9 @@ for (let i = 0; i < N; i++) {
   }
 }
 const total = game.events.length;
+console.log('RULE VIOLATIONS', ruleErr, '· ix', JSON.stringify(ixStat));
+console.log('ribbons', JSON.stringify(ribbonsSeen));
+console.log('ix events', [...seen].filter((u) => u.includes('ix')).sort().join(' '));
 console.log('degrees', JSON.stringify(degs));
 console.log('max followers', maxFollow);
 console.log('goals hit', goalsHit, 'of', N * 3, '· achievements', Object.keys(profile.ach).join(','), '· ribbons', Object.keys(profile.ribbons).length);

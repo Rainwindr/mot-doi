@@ -329,3 +329,10 @@ details.box summary::after { content: ' ▾'; color: var(--muted); }
 .lane i { position: absolute; bottom: 0; font-style: normal; font-size: 24px; transform: scaleX(-1); transition: left .12s linear; }
 .pcard.sm { width: 64px; height: 90px; } .pcard.sm b { font-size: 26px; } .pcard.sm span { font-size: 20px; }
 .pcard.back { width: 64px; height: 90px; background: repeating-linear-gradient(45deg, #2563eb, #2563eb 6px, #1d4ed8 6px, #1d4ed8 12px); color: #fff; }
+
+/* God Mode: sở thích & giới hạn */
+.kgrp { margin-top: 10px; display: grid; gap: 6px; }
+.kgrp > b { font-size: 13px; color: var(--muted); }
+.krow { display: grid; grid-template-columns: 1fr 132px; gap: 8px; align-items: center; font-size: 13.5px; }
+.krow select { border: 1.5px solid var(--rule); background: var(--sheet); color: inherit; border-radius: 8px; padding: 6px 8px; min-width: 0; width: 100%; }
+.box.funeral { background: var(--soft); }

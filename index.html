@@ -355,6 +355,13 @@ details.box summary::after { content: ' ▾'; color: var(--muted); }
 .pcard.sm { width: 64px; height: 90px; } .pcard.sm b { font-size: 26px; } .pcard.sm span { font-size: 20px; }
 .pcard.back { width: 64px; height: 90px; background: repeating-linear-gradient(45deg, #2563eb, #2563eb 6px, #1d4ed8 6px, #1d4ed8 12px); color: #fff; }
 
+/* God Mode: sở thích & giới hạn */
+.kgrp { margin-top: 10px; display: grid; gap: 6px; }
+.kgrp > b { font-size: 13px; color: var(--muted); }
+.krow { display: grid; grid-template-columns: 1fr 132px; gap: 8px; align-items: center; font-size: 13.5px; }
+.krow select { border: 1.5px solid var(--rule); background: var(--sheet); color: inherit; border-radius: 8px; padding: 6px 8px; min-width: 0; width: 100%; }
+.box.funeral { background: var(--soft); }
+
 </style>
 <div id="app"></div>
 <script>
@@ -403,7 +410,7 @@ const STRINGS = {
     closeness: 'Thân thiết', alone: 'Chưa có ai ở đây.',
     roles: { mother: 'Mẹ', father: 'Bố', sibling: 'Anh chị em', partner: 'Người yêu', spouse: 'Vợ/chồng', child: 'Con', friend: 'Bạn', contact: 'Người quen', ex: 'Người cũ', lover: 'Người tình', bestie: 'Bạn thân', rival: 'Đối thủ', mentor: 'Thầy cô', half: 'Anh chị em cùng cha/mẹ khác', pet: 'Thú cưng', loverPoly: 'Người yêu phụ', coworker: 'Đồng nghiệp', neighbor: 'Hàng xóm' },
     bigMoment: 'Biến cố lớn', lifeChart: 'Cuộc đời qua từng năm', milestones: 'Dấu mốc',
-    actGroups: { fun: 'Giải trí', shop: 'Mua sắm', life: 'Đời sống', pet: 'Thú cưng', money: 'Tài chính', net: 'Mạng xã hội', kid: 'Vui chơi', teen: 'Học hỏi & rèn luyện', mind: 'Trí óc & cơ thể', night: 'Ăn chơi', love: 'Tình yêu', crime: 'Phạm tội', prison: 'Trại giam' },
+    actGroups: { fun: 'Giải trí', shop: 'Mua sắm', life: 'Đời sống', pet: 'Thú cưng', money: 'Tài chính', net: 'Mạng xã hội', kid: 'Vui chơi', teen: 'Học hỏi & rèn luyện', mind: 'Trí óc & cơ thể', night: 'Ăn chơi', love: 'Tình yêu', adult: 'Người lớn 25+', crime: 'Phạm tội', prison: 'Trại giam' },
     cost: 'Chi phí',
     traitsNone: 'Không có đặc điểm đặc biệt',
     lifeExp: 'Tuổi thọ trung bình', incomeTier: 'Mức thu nhập quốc gia', tiers: { low: 'Thấp', mid: 'Trung bình', high: 'Cao' },
@@ -440,6 +447,7 @@ const STRINGS = {
     mgRace: 'Đua ngựa', mgRaceHelp: 'Chọn mức cược rồi chọn ngựa. Tỷ lệ cược càng cao, ngựa càng khó thắng.', mgPickHorse: 'Chọn ngựa:', mgOdds: 'tỷ lệ', mgBJ: 'Xì dách', mgBJHelp: 'Gần 21 nhất mà không quá 21 thì thắng. Nhà cái rút đến 17.', mgDealer: 'Nhà cái', mgYou: 'Bạn', mgHit: 'Rút', mgStand: 'Dừng', mgInterview: 'Phỏng vấn xin việc', mgExam: 'Luyện thi đại học', examPrep: 'Luyện thi đại học', examPrepSub: 'Làm bài tốt sẽ tăng khả năng đỗ ngành',
     overtime: 'Làm thêm giờ', bossdrinks: 'Đi nhậu với sếp', transfer: 'Xin chuyển phòng ban', leaveWork: 'Xin nghỉ phép', strike: 'Tham gia đình công', whistle: 'Tố cáo sai phạm của sếp', renamePrompt: 'Tên mới của bạn:', loanLeft: 'Nợ vay còn lại', insHealth: 'Có bảo hiểm sức khỏe', insLife: 'Có bảo hiểm nhân thọ',
     godPerson: 'Chỉnh nhân vật này (God Mode)', godPersonSub: 'Thân thiết, ngoại hình, trí tuệ và chỉ số thân mật', godPersonNote: 'Không chỉnh được tuổi. Chỉ số thân mật chỉ áp dụng với người từ 18 tuổi khi bật 25+.', intimateStats: 'Chỉ số thân mật', poly: 'Chấp nhận đa ái', skill: 'Kỹ năng chăn gối', fert: 'Khả năng sinh sản', size: 'Kích cỡ', fidelity: 'Độ chung thủy', jealous: 'Độ ghen',
+    attitude: 'Thái độ với bạn', attitudeTitle: 'Thái độ & độ kiên định', firm: 'Độ kiên định', firmNote: 'Kiên định cao: hay từ chối lời đề nghị. Thấp: dễ đồng ý. Thái độ lãng mạn chỉ dành cho người lớn ngoài gia đình. Giới hạn của nhân vật luôn được tôn trọng.', chem: 'Độ hợp', fire: 'Lửa', libido: 'Ham muốn', flex: 'Dẻo dai', jealNet: 'Ghen với người tình khác', sincere: 'Độ thật lòng', knowsOthers: 'Biết về những người tình khác', favPos: 'Tư thế yêu thích', kinksTitle: 'Sở thích & giới hạn', kWant: 'Muốn thử', kNever: 'Giới hạn', revealAll: 'Cho bạn biết hết', likes: 'Thích', limits: 'Giới hạn', allowance: 'Trợ cấp/năm', privateLife: 'Đời tư', chest: 'Rương bí mật', positions: 'Sổ tay tư thế', tried: 'Điều mới đã thử', charm: 'Đào hoa', loyal: 'Tiếng chung thủy', scandal: 'Tai tiếng', clubCard: 'Thẻ CLB người lớn', ropeDone: 'Đã học shibari', allPos: 'Mở khóa cả 36 tư thế', funeral: 'Tang lễ',
     promoteAsk: 'Xin thăng chức', promoteReady: 'Đã đủ năm kinh nghiệm', nextRank: 'Cấp tiếp theo', topRank: 'Bạn đã ở cấp cao nhất của nghề này.', needYears: 'Kinh nghiệm {a}/{b} năm', needPerf: 'Hiệu suất từ {n}', ladder: 'Lộ trình thăng tiến', yrsShort: '{n} năm', entry: 'mới vào', expYears: '{n} năm kinh nghiệm', yearWord: 'năm',
     special: 'Nghề đặc biệt', followers: 'người theo dõi', netHelp: 'Đăng bài để tăng người theo dõi. Từ 10K có thể nhận quảng cáo.', levelOf: 'Bậc {n}/{m}', quitSpecial: 'Rời nghề', ageRange: 'tuổi {a}–{b}', mgMaze: 'Vượt ngục', mgMazeHelp: 'Đưa 🧍 đến 🚪 trước khi hết bước, tránh 👮.', mgMoves: 'Còn {n} bước', mgGiveUp: 'Bỏ cuộc, quay về phòng giam', mgCards: 'Cao hay thấp', mgCardsHelp: 'Đoán lá tiếp theo cao hơn hay thấp hơn. Đúng thì tiền cược nhân đôi, sai là mất hết. Rút tiền bất cứ lúc nào.', mgBet: 'Cược', mgLeave: 'Thôi, về', mgPot: 'Đang có', mgNext: 'Lá tiếp theo sẽ…', mgHi: 'Cao hơn', mgLo: 'Thấp hơn', mgCash: 'Rút tiền', mgQuiz: 'Thi học sinh giỏi', mgQ: 'Câu {n}/{m}',
     goals: 'Mục tiêu đời này', goalDone: 'Hoàn thành mục tiêu!', trophies: 'Thành tựu', graveyard: 'Nghĩa trang', ribbonBook: 'Bộ sưu tập ribbon', newAch: 'Thành tựu mới mở khóa', livesLived: '{n} đời đã sống', noGraves: 'Chưa có ai ở đây. Hãy sống một đời trước đã.', countriesBorn: 'Đã sinh ra ở {n} quốc gia', lockedAch: 'Chưa mở khóa', achCount: '{n}/{m} thành tựu', ribbonCount: '{n}/{m} ribbon', goalsOf: '{n}/3 mục tiêu', goalsTotal: '{n} mục tiêu đã hoàn thành', gen: 'Thế hệ {n}',
@@ -484,7 +492,7 @@ const STRINGS = {
     closeness: 'Closeness', alone: 'Nobody here yet.',
     roles: { mother: 'Mother', father: 'Father', sibling: 'Sibling', partner: 'Partner', spouse: 'Spouse', child: 'Child', friend: 'Friend', contact: 'Acquaintance', ex: 'Ex', lover: 'Lover', bestie: 'Best friend', rival: 'Rival', mentor: 'Mentor', half: 'Half-sibling', pet: 'Pet', loverPoly: 'Secondary partner', coworker: 'Coworker', neighbor: 'Neighbour' },
     bigMoment: 'Big moment', lifeChart: 'Your life, year by year', milestones: 'Milestones',
-    actGroups: { fun: 'Fun', shop: 'Shopping', life: 'Lifestyle', pet: 'Pets', money: 'Finance', net: 'Social media', kid: 'Play', teen: 'Learning & training', mind: 'Mind & body', night: 'Nightlife', love: 'Love', crime: 'Crime', prison: 'Prison' },
+    actGroups: { fun: 'Fun', shop: 'Shopping', life: 'Lifestyle', pet: 'Pets', money: 'Finance', net: 'Social media', kid: 'Play', teen: 'Learning & training', mind: 'Mind & body', night: 'Nightlife', love: 'Love', adult: 'Grown-ups 25+', crime: 'Crime', prison: 'Prison' },
     cost: 'Cost',
     traitsNone: 'No special traits',
     lifeExp: 'Life expectancy', incomeTier: 'National income level', tiers: { low: 'Low', mid: 'Middle', high: 'High' },
@@ -521,6 +529,7 @@ const STRINGS = {
     mgRace: 'Horse racing', mgRaceHelp: 'Pick a stake, then a horse. Higher odds mean a less likely winner.', mgPickHorse: 'Pick a horse:', mgOdds: 'odds', mgBJ: 'Blackjack', mgBJHelp: 'Get closest to 21 without going over. The dealer draws to 17.', mgDealer: 'Dealer', mgYou: 'You', mgHit: 'Hit', mgStand: 'Stand', mgInterview: 'Job interview', mgExam: 'Entrance exam practice', examPrep: 'Practise for entrance exams', examPrepSub: 'Doing well raises your admission chances',
     overtime: 'Work overtime', bossdrinks: 'Drinks with the boss', transfer: 'Ask for a transfer', leaveWork: 'Take leave', strike: 'Join a strike', whistle: 'Report your boss', renamePrompt: 'Your new first name:', loanLeft: 'Loan balance', insHealth: 'Health insurance', insLife: 'Life insurance',
     godPerson: 'Edit this person (God Mode)', godPersonSub: 'Closeness, looks, smarts and intimate stats', godPersonNote: 'Age cannot be changed. Intimate stats only apply to adults 18+ with 25+ content on.', intimateStats: 'Intimate stats', poly: 'Open to polyamory', skill: 'Bedroom skill', fert: 'Fertility', size: 'Size', fidelity: 'Fidelity', jealous: 'Jealousy',
+    attitude: 'Attitude to you', attitudeTitle: 'Attitude & firmness', firm: 'Firmness', firmNote: 'High firmness: often says no. Low: tends to agree. Romantic attitudes are only for adults outside the family. A character\'s hard limits are always respected.', chem: 'Chemistry', fire: 'Spark', libido: 'Libido', flex: 'Flexibility', jealNet: 'Jealous of other lovers', sincere: 'Sincerity', knowsOthers: 'Knows about your other lovers', favPos: 'Favourite position', kinksTitle: 'Desires & limits', kWant: 'Wants', kNever: 'Limit', revealAll: 'Reveal everything to you', likes: 'Into', limits: 'Limits', allowance: 'Allowance/yr', privateLife: 'Private life', chest: 'Secret chest', positions: 'Positions handbook', tried: 'New things tried', charm: 'Charm', loyal: 'Loyalty rep', scandal: 'Scandal', clubCard: 'Adult club card', ropeDone: 'Learned shibari', allPos: 'Unlock all 36 positions', funeral: 'Funeral',
     promoteAsk: 'Ask for a promotion', promoteReady: 'Enough experience now', nextRank: 'Next level', topRank: "You're at the top of this career.", needYears: 'Experience {a}/{b} yrs', needPerf: 'Performance {n}+', ladder: 'Career ladder', yrsShort: '{n} yrs', entry: 'entry', expYears: '{n} yrs experience', yearWord: 'yr',
     special: 'Special career', followers: 'followers', netHelp: 'Post to grow followers. At 10K, brands will pay you.', levelOf: 'Level {n}/{m}', quitSpecial: 'Leave this career', ageRange: 'age {a}–{b}', mgMaze: 'Prison break', mgMazeHelp: 'Get 🧍 to 🚪 before you run out of moves. Avoid 👮.', mgMoves: '{n} moves left', mgGiveUp: 'Give up and go back to your cell', mgCards: 'Higher or lower', mgCardsHelp: 'Guess if the next card is higher or lower. Right doubles your pot, wrong loses it all. Cash out any time.', mgBet: 'Bet', mgLeave: 'Walk away', mgPot: 'Pot', mgNext: 'The next card will be…', mgHi: 'Higher', mgLo: 'Lower', mgCash: 'Cash out', mgQuiz: 'Academic olympiad', mgQ: 'Question {n}/{m}',
     goals: 'Goals for this life', goalDone: 'Goal complete!', trophies: 'Achievements', graveyard: 'Graveyard', ribbonBook: 'Ribbon collection', newAch: 'New achievements unlocked', livesLived: '{n} lives lived', noGraves: 'Nobody here yet. Live a life first.', countriesBorn: 'Born in {n} countries', lockedAch: 'Locked', achCount: '{n}/{m} achievements', ribbonCount: '{n}/{m} ribbons', goalsOf: '{n}/3 goals', goalsTotal: '{n} goals completed', gen: 'Generation {n}',
@@ -3041,6 +3050,1096 @@ function applyCrimeSys(life, key) {
 
 return { CRIMES, inPrison, commitCrime, prisonAction, prisonYear, emigrationOdds, emigrationCost, emigrate, createCoborns, cobornName, cobornYear, buildCrimeSys, applyCrimeSys };
 };
+__defs["src/engine/intimacy.js"] = () => {
+// Nội dung thân mật 25+ (bản duyệt 29 mục), thái độ của nhân vật với bạn, độ kiên định, và tương tác cho mọi người.
+// Luật cứng: mọi cảnh tình cảm/tình dục chỉ giữa người từ 18 tuổi, không bao giờ với gia đình hay thú cưng,
+// luôn có đồng thuận; "giới hạn" của nhân vật không bao giờ bị phá, dù độ kiên định thấp đến đâu.
+const { L, clamp, rand, chance, randint, pick } = __req("src/engine/util.js");
+const { country, unit, partner, people, byId, randomPerson, partnerGender, personName, addLog, setFlag, lovers, polyOk, makeLover, endLover, syncAffair } = __req("src/engine/life.js");
+const { applyEffects, tryConceive, protectChance } = __req("src/engine/events.js");
+
+const res = (text, changes = [], tone) => ({ text, changes, tone });
+const nm = (life, p) => personName(life, p);
+const u = (life, n) => n * unit(life);
+const fx = (life, e) => applyEffects(life, e);
+const oc = (text, effects = {}, run, next, ch = 1) => ({ chance: ch, text, effects, run, next });
+const modal = (uid, text, choices) => ({ event: { uid, text, choices } });
+const sev = (uid, text, choices) => ({ uid, sys: true, text, choices });
+
+const FAMILY = ['mother', 'father', 'sibling', 'half', 'child', 'pet'];
+const ROM = ['partner', 'spouse', 'lover'];
+/** Cặp người lớn hợp lệ cho mọi nội dung tình cảm: cả hai ≥ 18, không phải gia đình. */
+const adultOK = (life, p) => !!p && p.alive && life.age >= 18 && p.age >= 18 && !FAMILY.includes(p.role);
+const on = (st, life) => !!(st && st.adult25 && life.age >= 18);
+
+function seedOf(str) { let h = 2166136261; for (const c of String(str)) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; }
+
+// ───────── Thái độ với nhân vật chính ─────────
+const ATT = {
+  hate: { em: '😡', name: L('Ghét bạn', 'Hates you') },
+  rival: { em: '⚔️', name: L('Đối thủ', 'Rival') },
+  neutral: { em: '😐', name: L('Bình thường', 'Neutral') },
+  friendly: { em: '😊', name: L('Quý mến', 'Fond of you') },
+  crush: { em: '🙈', name: L('Yêu thầm', 'Secret crush'), rom: true },
+  like: { em: '😍', name: L('Thích công khai', 'Openly into you'), rom: true },
+  affair: { em: '😈', name: L('Muốn ngoại tình với bạn', 'Wants an affair with you'), rom: true },
+};
+const attOf = (p) => p.att || (p.role === 'rival' ? 'rival' : ROM.includes(p.role) ? 'like' : 'neutral');
+/** Thái độ được phép: thái độ lãng mạn chỉ dành cho người lớn ngoài gia đình. */
+const attOptions = (life, p) => Object.keys(ATT).filter((k) => !ATT[k].rom || (p.alive && p.age >= 18 && !FAMILY.includes(p.role)));
+function setAtt(life, p, k) {
+  if (!ATT[k] || !attOptions(life, p).includes(k)) return false;
+  p.att = k;
+  return true;
+}
+
+// ───────── Hồ sơ thân mật (tạo theo id, không đụng RNG của đời) ─────────
+const K = (id, grp, vi, en, sv, se, item, risk) => ({ id, grp, name: L(vi, en), scene: [sv, se], item, risk });
+const KINKS = [
+  K('toy', 'basic', 'Đồ chơi người lớn', 'Adult toys', '{n} mở hộp quà bạn đưa, nhướng mày, rồi với tay tắt đèn.', '{n} opens the box you hand them, raises an eyebrow, and reaches for the light.', 'toys'),
+  K('lead', 'basic', 'Dẫn dắt và nghe lời', 'Lead and follow', 'Tối nay một người ra lệnh, người kia nghe theo. Luật đã thống nhất từ trước, từ an toàn cũng vậy.', 'Tonight one of you gives the orders and the other follows. Rules agreed beforehand, safe word too.'),
+  K('feet', 'fetish', 'Chân và giày cao gót', 'Feet and heels', 'Bạn dành cả buổi tối chiều chuộng đôi chân của {n}. Họ không ngờ mình thích đến vậy.', 'You spend the evening pampering {n}\'s feet. They had no idea they\'d love it this much.'),
+  K('lingerie', 'fetish', 'Nội y và tất lưới', 'Lingerie and fishnets', '{n} bước ra trong bộ đồ ren bạn mua. Bữa tối nguội dần trên bàn.', '{n} steps out in the lace you bought. Dinner goes cold on the table.', 'lingerie'),
+  K('leather', 'fetish', 'Da và latex', 'Leather and latex', 'Tiếng da sột soạt trong bóng tối. {n} trông như một người hoàn toàn khác.', 'Leather creaks in the dark. {n} looks like a different person.', 'leather'),
+  K('uniform', 'fetish', 'Đồng phục người lớn', 'Grown-up uniforms', 'Một bộ đồng phục, một vai diễn, và {n} nhập vai nghiêm túc đến mức bạn bật cười trước.', 'A uniform, a role, and {n} plays it so seriously you crack first.', 'uniform'),
+  K('blindfold', 'sense', 'Bịt mắt và tai nghe', 'Blindfold and headphones', 'Bịt mắt, đeo tai nghe. {n} chỉ còn cảm nhận được bạn.', 'Blindfold on, headphones in. {n} can only feel you.', 'blindfold'),
+  K('candle', 'sense', 'Nóng lạnh với nến massage', 'Hot and cold, massage candles', 'Nến massage tan chảy, ấm rồi mát. {n} thở ra thật dài.', 'Massage wax melts, warm then cool. {n} lets out a long breath.', 'candles', 'candle'),
+  K('tickle', 'sense', 'Cù và trêu chọc', 'Tickling', 'Bắt đầu là trêu chọc, kết thúc là cả hai cười lăn và quên mất định làm gì.', 'It starts as teasing and ends with you both in stitches, forgetting what you were doing.'),
+  K('food', 'sense', 'Đồ ăn', 'Food play', 'Một hộp kem, ít dâu tây và rất nhiều sáng tạo. Ga giường thì phải giặt.', 'A tub of ice cream, some strawberries and a lot of creativity. The sheets need washing.'),
+  K('silk', 'sense', 'Dây lụa', 'Silk ties', 'Dải lụa buộc hờ quanh cổ tay. {n} biết chỉ cần một từ là mọi thứ dừng lại.', 'Silk loosely around the wrists. {n} knows one word stops everything.', 'silk'),
+  K('spank', 'power', 'Phát yêu nhẹ', 'Light spanking', 'Vài cái phát nhẹ, tiếng cười khúc khích, rồi {n} quay lại: "Nữa."', 'A few light smacks, a giggle, then {n} looks back: "Again."'),
+  K('worship', 'power', 'Tôn thờ cơ thể', 'Body worship', 'Bạn đối xử với {n} như một tác phẩm nghệ thuật, từng chút một.', 'You treat {n} like a work of art, inch by inch.'),
+  K('hotwife', 'power', 'Chia sẻ có đồng thuận', 'Consensual sharing', 'Theo thỏa thuận của hai người, {n} đi chơi với một người khác rồi về kể cho bạn nghe. Cả hai đều thích điều đó.', 'As you both agreed, {n} goes out with someone else and comes home to tell you all about it. You both love it.'),
+  K('findom', 'power', 'Thống trị bằng ví tiền', 'Findom', '{n} thích được bạn chi tiền, còn bạn thích cảm giác "phục vụ" bằng ví của mình.', '{n} loves being spent on, and you love serving with your wallet.'),
+  K('collar', 'power', 'Vòng cổ kỷ niệm', 'Keepsake collar', 'Một chiếc vòng cổ nhỏ khắc tên. {n} đeo nó như bí mật chỉ hai người hiểu.', 'A small engraved collar. {n} wears it like a secret only you two share.', 'collar'),
+  K('roleplay', 'play', 'Nhập vai', 'Roleplay', 'Tối nay hai người là người lạ gặp nhau ở quầy bar khách sạn. Không ai phá vai.', 'Tonight you\'re strangers meeting at a hotel bar. Nobody breaks character.'),
+  K('cosplay', 'play', 'Cosplay', 'Cosplay', 'Trang phục nhân vật yêu thích, tóc giả lệch một bên. Vẫn hiệu quả bất ngờ.', 'Favourite character costumes, wig slightly askew. Surprisingly effective.', 'costume'),
+  K('exhib', 'play', 'Phô bày có đồng thuận', 'Consensual exhibition', 'Ban công tầng cao, rèm mở, thành phố lấp lánh bên dưới. Tim đập thình thịch.', 'A high balcony, curtains open, the city glittering below. Hearts pounding.', null, 'exhib'),
+  K('stream', 'play', 'Livestream riêng cho người ấy', 'Private livestream', 'Một buổi phát trực tiếp riêng, khán giả duy nhất là {n}.', 'A private stream with exactly one viewer: {n}.'),
+  K('mirror', 'play', 'Gương', 'Mirror', 'Tấm gương lớn trong phòng ngủ cuối cùng cũng có công dụng.', 'The big bedroom mirror finally earns its keep.'),
+  K('shibari', 'special', 'Dây trói nghệ thuật (shibari)', 'Shibari', 'Những nút dây đẹp như tác phẩm triển lãm. Bạn chụp một tấm ảnh nghệ thuật cho {n}.', 'Knots as pretty as a gallery piece. You take an art photo for {n}.', 'rope', 'shibari'),
+  K('tease', 'special', 'Trò chơi chờ đợi', 'The waiting game', 'Cả ngày không được chạm nhau, chỉ nhắn tin trêu chọc. Tối đến, người thua phải làm theo người kia.', 'No touching all day, only teasing texts. By night, the loser does what the winner says.'),
+  K('undertable', 'special', 'Đụng chạm dưới gầm bàn', 'Under the table', 'Dưới gầm bàn ăn, một bàn chân tìm đến bạn. Trên bàn, mọi người vẫn nói chuyện thời tiết.', 'Under the dinner table a foot finds yours. Above it, everyone\'s discussing the weather.', null, 'undertable'),
+  K('voice', 'special', 'Mê giọng nói', 'Voice', '{n} thì thầm qua điện thoại. Bạn bỏ dở cuộc họp lúc nào không hay.', '{n} whispers down the phone. You walk out of a meeting without noticing.'),
+  K('lift', 'special', 'Bế bổng', 'Being carried', '{n} bế bổng bạn lên như trong phim.', '{n} sweeps you off your feet like in the movies.', null, 'lift'),
+  K('scent', 'special', 'Mùi hương', 'Scent', 'Bạn mặc áo sơ mi của {n} khi họ đi công tác. Cái gối thì cấm ai giặt.', 'You wear {n}\'s shirt while they\'re away. Nobody is allowed to wash the pillow.'),
+  K('petplay', 'special', 'Nhập vai thú cưng (người lớn)', 'Adult pet play', 'Tai mèo, vòng cổ có chuông và một người "chủ" rất chu đáo.', 'Cat ears, a belled collar and a very attentive "owner".', null, 'petplay'),
+  K('ink', 'special', 'Hình xăm và khuyên', 'Tattoos and piercings', 'Bạn phát hiện một hình xăm giấu kín trên người {n}. Hai người hẹn đi xăm một hình chỉ hai người hiểu.', 'You find a hidden tattoo on {n}. You book matching ink only you two understand.'),
+];
+const kinkById = Object.fromEntries(KINKS.map((k) => [k.id, k]));
+const KINK_GROUPS = [
+  ['basic', '🧸', L('Cơ bản', 'Basics')], ['fetish', '👠', L('Fetish quen thuộc', 'Classic fetishes')], ['sense', '🕯️', L('Chơi với cảm giác', 'Sensation play')],
+  ['power', '👑', L('Quyền lực', 'Power play')], ['play', '🎭', L('Nhập vai và phô bày', 'Roleplay and show')], ['special', '✨', L('Đặc biệt', 'Special')],
+];
+const MISHAP = {
+  candle: L('Một giọt nến rơi trúng ga giường mới. Ga thì hỏng, tâm trạng thì không.', 'A drop of wax lands on the new sheets. The sheets are ruined, the mood isn\'t.'),
+  exhib: L('Đèn nhà đối diện bật sáng. Hai người lao vào trong nhanh như ninja.', 'A light flicks on across the street. You both dive inside like ninjas.'),
+  shibari: L('Nút thắt kẹt cứng. Cuối cùng phải lấy kéo cắt dây, vừa cắt vừa cười.', 'The knot jams. You end up cutting the rope, laughing the whole time.'),
+  undertable: L('Bạn làm rơi dĩa. Mẹ người ấy hỏi: "Con sao vậy, mặt đỏ thế?"', 'You drop your fork. Their mum asks: "Are you alright, dear? You\'re all red."'),
+  lift: L('Hai bước đầu rất đẹp. Bước thứ ba, cả hai cùng ngã xuống thảm, cười chảy nước mắt.', 'The first two steps are perfect. On the third you both tumble onto the rug, crying with laughter.'),
+  petplay: L('Chuông cửa reo đúng lúc. Anh shipper nhìn chiếc tai mèo rất lâu.', 'The doorbell rings at the worst moment. The courier stares at the cat ears for a long time.'),
+};
+
+const CHEST = {
+  toys: { em: '🎁', units: 3, name: L('Hộp đồ chơi người lớn', 'Box of adult toys') },
+  lingerie: { em: '🩱', units: 4, name: L('Bộ nội y ren', 'Lace lingerie') },
+  leather: { em: '🖤', units: 6, name: L('Trang phục da', 'Leather outfit') },
+  uniform: { em: '👮', units: 4, name: L('Bộ đồng phục nhập vai', 'Roleplay uniform') },
+  blindfold: { em: '🙈', units: 1, name: L('Bịt mắt lụa', 'Silk blindfold') },
+  candles: { em: '🕯️', units: 1, name: L('Nến massage', 'Massage candles') },
+  silk: { em: '🎀', units: 1, name: L('Dây lụa', 'Silk ties') },
+  collar: { em: '📿', units: 2, name: L('Vòng cổ khắc tên', 'Engraved collar') },
+  costume: { em: '🦸', units: 5, name: L('Trang phục cosplay', 'Cosplay costume') },
+  rope: { em: '🪢', units: 2, name: L('Dây shibari', 'Shibari rope') },
+  book: { em: '📕', units: 2, name: L('Sổ tay 36 tư thế', 'The 36 Positions Handbook') },
+};
+
+const P = (vi, en) => L(vi, en);
+const POSITIONS = [
+  // Dễ (0–11)
+  P('Thìa Đôi', 'Double Spoon'), P('Gối Đầu Trăng', 'Moon Pillow'), P('Sáng Chủ Nhật', 'Sunday Morning'), P('Ôm Gấu', 'Bear Hug'), P('Mèo Lười', 'Lazy Cat'), P('Sóng Nhẹ', 'Gentle Wave'),
+  P('Lá Sen', 'Lotus Leaf'), P('Võng Đưa', 'Swaying Hammock'), P('Hai Chiếc Lá', 'Two Leaves'), P('Mây Trôi', 'Drifting Cloud'), P('Đêm Mưa', 'Rainy Night'), P('Tổ Chim', 'Bird\'s Nest'),
+  // Trung bình (12–23)
+  P('Ghế Bập Bênh', 'Rocking Chair'), P('Con Thuyền Say', 'Drunken Boat'), P('Cầu Thang Xoắn', 'Spiral Stairs'), P('Bàn Làm Việc', 'The Desk'), P('Gương Soi', 'The Looking Glass'), P('Cánh Bướm', 'Butterfly'),
+  P('Xe Đạp Đôi', 'Tandem Bike'), P('Bập Bênh Sofa', 'Sofa Seesaw'), P('Cửa Sổ Bếp', 'Kitchen Window'), P('Thang Máy', 'The Elevator'), P('Ghế Xoay', 'Swivel Chair'), P('Mái Chèo', 'The Oar'),
+  // Khó (24–35)
+  P('Cầu Vồng Ngược', 'Upside-down Rainbow'), P('Tháp Nghiêng', 'Leaning Tower'), P('Xiếc Đêm', 'Night Circus'), P('Cầu Treo', 'Suspension Bridge'), P('Con Cua Kiêu Hãnh', 'Proud Crab'), P('Ngôi Sao Năm Cánh', 'Five-point Star'),
+  P('Vũ Công Ballet', 'Ballet Dancer'), P('Tàu Lượn', 'Rollercoaster'), P('Đại Bàng', 'The Eagle'), P('Chong Chóng', 'Pinwheel'), P('Cột Đèn', 'The Lamppost'), P('Kim Tự Tháp', 'The Pyramid'),
+];
+const POS_LEVELS = [L('Dễ', 'Easy'), L('Trung bình', 'Medium'), L('Khó', 'Hard')];
+
+/** Hồ sơ của một nhân vật: sở thích ẩn, giới hạn, độ hợp, lửa, ham muốn, dẻo dai, kiên định... */
+function prof(p) {
+  if (!p.ix) {
+    const s = { rng: seedOf(p.id) };
+    const ids = KINKS.map((k) => k.id);
+    for (let i = ids.length - 1; i > 0; i--) { const j = Math.floor(rand(s) * (i + 1)); [ids[i], ids[j]] = [ids[j], ids[i]]; }
+    p.ix = {
+      kinks: ids.slice(0, 3), limits: ids.slice(3, 5), known: [], knownLim: [],
+      chem: randint(s, 20, 95), fire: randint(s, 0, 25), libido: randint(s, 25, 85), flex: randint(s, 15, 85),
+      sincere: randint(s, 15, 95), style: pick(s, ['soft', 'bold', 'fun']), jeal: randint(s, 10, 90), knows: false,
+      fav: null, pc: {}, first: false,
+    };
+  }
+  firmOf(p);
+  return p.ix;
+}
+/** Độ kiên định: cố định theo id cho tới khi God Mode chỉnh. */
+function firmOf(p) {
+  if (p.firm == null) p.firm = 20 + (seedOf(p.id + ':firm') % 61);
+  return p.firm;
+}
+
+/** Hồ sơ của người chơi. */
+function me(life) {
+  if (!life.ix) life.ix = { libido: 65, flex: 40, chest: [], pos: [], tried: [], care: 0, charm: 15, loyal: 50, scandal: 0, club: false, rope: false, babies: 0, memoir: false, loverTotal: 0, groups: 0, seenExp: 0, mid: false };
+  return life.ix;
+}
+
+/**
+ * Xác suất một người đồng ý một lời đề nghị.
+ * Độ kiên định thấp → dễ đồng ý; cao → hay từ chối. Thái độ với bạn cũng góp phần.
+ * Không dùng cho "giới hạn": giới hạn luôn bị từ chối trước khi gọi hàm này.
+ */
+function agree(life, p, base, romantic = false) {
+  const a = attOf(p);
+  const attB = romantic
+    ? { hate: -0.4, rival: -0.12, neutral: 0, friendly: 0.05, crush: 0.22, like: 0.18, affair: 0.3 }[a]
+    : { hate: -0.3, rival: -0.1, neutral: 0, friendly: 0.1, crush: 0.1, like: 0.1, affair: 0.08 }[a];
+  return clamp(base + (50 - firmOf(p)) / 150 + attB, 0.02, 0.98);
+}
+
+const cl = (life, p, a, b) => { p.closeness = clamp(p.closeness + randint(life, a, b)); };
+const fire = (p, d) => { const x = prof(p); x.fire = clamp(x.fire + d); };
+/** Bắt đầu quan hệ lãng mạn với p theo hoàn cảnh hiện tại. Trả về 'partner' | 'lover'. */
+function romance(life, p) {
+  const pt = partner(life);
+  if (pt && pt !== p) { makeLover(life, p); p.wasLover = true; if (!polyOk(life)) life.stats.karma = clamp(life.stats.karma - 4); return 'lover'; }
+  if (!pt) { p.role = 'partner'; p.closeness = Math.max(p.closeness, 65); p.years = 0; p.metAge = life.age; life.counts.partners++; syncAffair(life); return 'partner'; }
+  return 'partner';
+}
+const romText = (life, p, kind, st) => kind === 'lover'
+  ? (on(st, life) ? L(`Đêm đó bạn và ${nm(life, p)} không về nhà riêng. Một bí mật mới bắt đầu.`, `Neither you nor ${nm(life, p)} goes home alone that night. A new secret begins.`) : L(`Bạn và ${nm(life, p)} bắt đầu lén lút qua lại.`, `You and ${nm(life, p)} start seeing each other in secret.`))
+  : L(`Bạn và ${nm(life, p)} chính thức hẹn hò.`, `You and ${nm(life, p)} start dating.`);
+function freshAdult(life, role, ageAround, extra = {}) {
+  const age = clamp(ageAround, 18, 90);
+  const p = randomPerson(life, life, { role, gender: partnerGender(life, life), age, closeness: 40 });
+  Object.assign(p, extra);
+  life.people.push(p);
+  return p;
+}
+function findOrMake(life, roles, make) {
+  const c = life.people.filter((p) => roles.includes(p.role) && adultOK(life, p) && !p.cut);
+  return c.length ? pick(life, c) : make();
+}
+
+// ───────── Tương tác cho mọi người ─────────
+function ixPersonActions(life, p, st) {
+  const out = [];
+  if (!p.alive || life.prison || p.role === 'pet') return out;
+  const rom = ROM.includes(p.role);
+  if (!rom) out.push(['compliment', L('Khen ngợi', 'Compliment')]);
+  if (life.age >= 3) out.push(['hug', L('Ôm', 'Hug')]);
+  if (life.age >= 6 && !rom) out.push(['hangout', L('Rủ đi chơi', 'Hang out')]);
+  if (life.age >= 10) out.push(['deeptalk', L('Tâm sự', 'Heart-to-heart')]);
+  if (life.age >= 10) out.push(['favor', L('Nhờ giúp một việc', 'Ask a favour')]);
+  if (life.age >= 14) out.push(['invite', L('Mời dự tiệc', 'Invite to a party')]);
+  if (life.age >= 12) out.push(['gossip', L('Buôn chuyện', 'Gossip')]);
+  if (adultOK(life, p) && !rom) { out.push(['flirtx', L('Tán tỉnh', 'Flirt')]); out.push(['confessx', L('Tỏ tình', 'Confess your feelings')]); }
+  if (rom && on(st, life) && p.age >= 18) {
+    const m = me(life);
+    out.push(['ixtalk', L('Trò chuyện thầm kín', 'Intimate talk')]);
+    out.push(['kink', L('Thử điều mới', 'Try something new')]);
+    if (m.chest.includes('book')) out.push(['pos', L('Thử tư thế (Sổ tay 36)', 'Try a position (the Handbook)')]);
+    out.push(['sext', L('Nhắn tin nóng', 'Send spicy texts')]);
+    out.push(['group', L('Trải nghiệm nhiều người', 'Group experience')]);
+    if (m.club) out.push(['clubtogether', L('Cùng đến CLB người lớn', 'Visit the adult club together')]);
+    if (p.baby) { out.push(['spoil', L('Chiều chuộng (quà lớn)', 'Spoil them')]); out.push(['rules', L('Đặt quy tắc', 'Set the rules')]); out.push(['endbaby', L('Kết thúc thỏa thuận', 'End the arrangement')]); }
+  }
+  return out;
+}
+
+function doIxPersonAction(life, st, p, act, n) {
+  const name = nm(life, p);
+  const tired = res(L('Năm nay như vậy là đủ rồi.', "That's enough for this year."), []);
+  const romantic = adultOK(life, p);
+  switch (act) {
+    case 'compliment': {
+      if (n > 3) return tired;
+      if (attOf(p) === 'hate') return res(L(`${name} nhếch mép: "Đừng có mà nịnh."`, `${name} smirks: "Don't bother flattering me."`), [], 'bad');
+      cl(life, p, 3, 7);
+      if (romantic && attOf(p) === 'neutral' && chance(life, 0.06)) p.att = 'crush';
+      return res(L(`${name} cười tít mắt.`, `${name} beams.`), fx(life, { happy: 2 }), 'good');
+    }
+    case 'hug': {
+      if (n > 3) return tired;
+      if (attOf(p) === 'hate' || attOf(p) === 'rival') { p.closeness = clamp(p.closeness - 3); return res(L(`${name} né người, rất ngượng.`, `${name} sidesteps you. Awkward.`), [], 'bad'); }
+      cl(life, p, 2, 6);
+      return res(L(`Một cái ôm thật chặt. ${name} không muốn buông.`, `A big tight hug. ${name} doesn't want to let go.`), fx(life, { happy: 3 }), 'good');
+    }
+    case 'hangout': {
+      if (n > 2) return tired;
+      if (chance(life, agree(life, p, 0.7 + p.closeness / 500))) {
+        cl(life, p, 5, 10);
+        if (romantic) fire(p, 3);
+        return res(pick(life, [L(`Bạn và ${name} đi ăn vặt khắp phố.`, `You and ${name} go on a street-food crawl.`), L(`Bạn và ${name} đi xem phim, cãi nhau về cái kết.`, `You and ${name} see a film and argue about the ending.`), L(`Bạn và ${name} ngồi cà phê cả buổi chiều.`, `You and ${name} spend the afternoon at a café.`)]), fx(life, { happy: 4 }), 'good');
+      }
+      p.closeness = clamp(p.closeness - 1);
+      return res(L(`${name} bảo hôm nay bận.`, `${name} says they're busy today.`), []);
+    }
+    case 'deeptalk': {
+      if (n > 2) return tired;
+      cl(life, p, 4, 8);
+      p.attKnown = true;
+      const a = attOf(p);
+      const reveal = {
+        hate: L(`Nói chuyện một lúc, ${name} buột miệng: họ chưa bao giờ ưa bạn.`, `Halfway through, ${name} admits they've never liked you.`),
+        rival: L(`${name} thú nhận luôn coi bạn là đối thủ, và điều đó khiến họ cố gắng hơn.`, `${name} admits they've always seen you as a rival, and it pushes them.`),
+        crush: L(`Giọng ${name} run run. Bạn chợt hiểu: họ đã để ý bạn từ lâu.`, `${name}'s voice wobbles. It dawns on you: they've had feelings for you for a long time.`),
+        like: L(`${name} nhìn bạn rất lâu và không giấu việc mình thích bạn.`, `${name} holds your gaze and makes no secret of liking you.`),
+        affair: L(`${name} nói nhỏ: "Nếu bạn muốn, chuyện này sẽ là bí mật của hai ta."`, `${name} says softly: "If you want, this could be our secret."`),
+      }[a];
+      return res(reveal || L(`Bạn và ${name} kể cho nhau nghe những chuyện chưa từng kể với ai.`, `You and ${name} share things you've never told anyone.`), fx(life, { happy: 3 }), a === 'hate' ? 'bad' : 'good');
+    }
+    case 'favor': {
+      if (n > 2) return tired;
+      if (chance(life, agree(life, p, 0.4 + p.closeness / 250))) {
+        cl(life, p, -2, 2);
+        return res(pick(life, [L(`${name} chở bạn đi khắp nơi cả ngày.`, `${name} drives you around all day.`), L(`${name} giúp bạn chuyển nhà, không lấy công.`, `${name} helps you move house for free.`), L(`${name} đi cùng bạn đến buổi phỏng vấn cho đỡ run.`, `${name} comes along to your interview for moral support.`)]), fx(life, { happy: 4, willpower: 1 }), 'good');
+      }
+      p.closeness = clamp(p.closeness - 3);
+      return res(L(`${name} từ chối: "Lần này chịu thôi."`, `${name} declines: "Can't help this time."`), [], 'bad');
+    }
+    case 'invite': {
+      if (n > 2) return tired;
+      if (chance(life, agree(life, p, 0.6))) {
+        cl(life, p, 4, 9);
+        if (romantic) fire(p, 5);
+        return res(L(`${name} đến tiệc và là người về muộn nhất.`, `${name} comes to the party and is the last to leave.`), fx(life, { happy: 5 }), 'good');
+      }
+      return res(L(`${name} không đến. Bạn thấy họ đăng ảnh ở một bữa tiệc khác.`, `${name} doesn't show. You see them posting from another party.`), fx(life, { happy: -2 }), 'bad');
+    }
+    case 'gossip': {
+      if (n > 2) return tired;
+      cl(life, p, 2, 5);
+      if (chance(life, 0.15)) { me(life).scandal = clamp(me(life).scandal + 3); return res(L(`Chuyện bạn kể với ${name} lan khắp nơi chỉ sau một ngày.`, `What you told ${name} is everywhere by the next day.`), fx(life, { happy: -3, karma: -2 }), 'bad'); }
+      return res(L(`Bạn và ${name} buôn chuyện thiên hạ đến khuya.`, `You and ${name} gossip until late.`), fx(life, { happy: 3, karma: -1 }));
+    }
+    case 'flirtx': {
+      if (!romantic) return res(L('Không thể với người này.', "Not with this person."), [], 'bad');
+      if (n > 3) return tired;
+      const pr = agree(life, p, 0.35 + (life.stats.looks - p.looks) / 300 + p.closeness / 400 + prof(p).fire / 400, true);
+      if (chance(life, pr)) {
+        fire(p, randint(life, 8, 15)); cl(life, p, 2, 5);
+        if (attOf(p) === 'neutral' && chance(life, 0.25)) p.att = 'crush';
+        return res(L(`${name} đỏ mặt và tán lại. Không khí giữa hai người nóng dần.`, `${name} blushes and flirts back. The air between you heats up.`), fx(life, { happy: 3 }), 'good');
+      }
+      p.closeness = clamp(p.closeness - 4);
+      return res(L(`${name} cười trừ, nhắc khéo rằng chỉ coi bạn là bạn.`, `${name} laughs it off and gently reminds you you're just friends.`), fx(life, { happy: -2 }), 'bad');
+    }
+    case 'confessx': {
+      if (!romantic) return res(L('Không thể với người này.', "Not with this person."), [], 'bad');
+      if (n > 1) return tired;
+      const x = prof(p);
+      if (chance(life, agree(life, p, 0.1 + p.closeness / 250 + x.fire / 220, true))) {
+        const slow = x.fire >= 80;
+        const kind = romance(life, p);
+        x.fire = clamp(x.fire + 20);
+        return res(slow ? L(`Sau ngần ấy thời gian, cuối cùng cũng có người nói ra. ${name} ôm chầm lấy bạn.`, `After all this time, someone finally said it. ${name} pulls you into a hug.`) : romText(life, p, kind, st), fx(life, { happy: slow ? 15 : 9 }), 'good');
+      }
+      p.closeness = clamp(p.closeness - 8);
+      return res(L(`${name} cảm ơn bạn, nhưng không đáp lại.`, `${name} thanks you, but doesn't feel the same.`), fx(life, { happy: -6 }), 'bad');
+    }
+    case 'ixtalk': return ixTalk(life, p, n);
+    case 'kink': return kinkMenu(life, st, p);
+    case 'pos': return posMenu(life, st, p);
+    case 'sext': if (n > 2) return tired; return sextRound(life, p, 0, 0);
+    case 'group': if (n > 1) return tired; return groupMenu(life, st, p);
+    case 'clubtogether': {
+      if (n > 1) return tired;
+      cl(life, p, 5, 10); fire(p, 10);
+      return res(L(`Đêm mặt nạ ở CLB. Bạn và ${name} chỉ nhìn, nắm tay nhau thật chặt, rồi về nhà rất vội.`, `Masquerade night at the club. You and ${name} only watch, hold hands tight, then hurry home.`), fx(life, { happy: 9, money: -3 }), 'good');
+    }
+    case 'spoil': return spoilMenu(life, p);
+    case 'rules': if (n > 1) return tired; return rulesMenu(life, p);
+    case 'endbaby': {
+      p.baby = false; p.allow = 0;
+      endLover(life, p);
+      if (prof(p).sincere < 40) { me(life).scandal = clamp(me(life).scandal + 8); return res(L(`${name} giữ hết quà và đăng một story đầy ẩn ý.`, `${name} keeps every gift and posts a very pointed story.`), fx(life, { happy: -4 }), 'bad'); }
+      return res(L(`${name} ôm bạn lần cuối: "Cảm ơn vì tất cả."`, `${name} hugs you one last time: "Thank you for everything."`), fx(life, { happy: -2 }));
+    }
+  }
+  return null;
+}
+
+// Mục 1 · Trò chuyện thầm kín: lộ dần sở thích và giới hạn
+function ixTalk(life, p, n) {
+  if (n > 2) return res(L('Năm nay như vậy là đủ rồi.', "That's enough for this year."), []);
+  const x = prof(p);
+  const name = nm(life, p);
+  if (p.closeness < 30) { p.closeness = clamp(p.closeness - 4); return res(L(`${name} đang giận, chẳng muốn nói chuyện này.`, `${name} is upset and in no mood for this talk.`), [], 'bad'); }
+  const wants = x.kinks.filter((k) => !x.known.includes(k));
+  const lims = x.limits.filter((k) => !x.knownLim.includes(k));
+  x.chem = clamp(x.chem + 2); cl(life, p, 2, 5);
+  if (wants.length && (!lims.length || chance(life, 0.6))) {
+    const k = pick(life, wants); x.known.push(k);
+    return res(L(`${name} thì thầm điều họ luôn muốn thử: ${kinkById[k].name.vi.toLowerCase()}.`, `${name} whispers what they've always wanted to try: ${kinkById[k].name.en.toLowerCase()}.`), fx(life, { happy: 4 }), 'good');
+  }
+  if (lims.length) {
+    const k = pick(life, lims); x.knownLim.push(k);
+    return res(L(`${name} nói rõ: "${kinkById[k].name.vi}" là giới hạn của họ. Bạn ghi nhớ.`, `${name} is clear: "${kinkById[k].name.en}" is a hard limit. You make a note.`), fx(life, { happy: 2 }), 'good');
+  }
+  return res(L(`Bạn và ${name} đã hiểu nhau đến từng chi tiết.`, `You and ${name} know each other inside out now.`), fx(life, { happy: 3 }), 'good');
+}
+
+// Mục 5, 10, 17–20 · Thử điều mới
+function kinkMenu(life, st, p) {
+  const name = nm(life, p);
+  return modal('ix/kink', L(`Thử gì mới với ${name}?`, `What new thing will you try with ${name}?`),
+    KINK_GROUPS.map(([g, em, label]) => ({ label: L(`${em} ${label.vi}`, `${em} ${label.en}`), outcomes: [oc('', {}, null, (lf) => kinkGroup(lf, st, p, g))] }))
+      .concat([{ label: L('Thôi, để lúc khác', 'Maybe another time'), outcomes: [oc(L('Hai người chỉ ôm nhau ngủ.', 'You just cuddle and fall asleep.'))] }]));
+}
+function kinkGroup(life, st, p, g) {
+  const m = me(life);
+  const x = prof(p);
+  const list = KINKS.filter((k) => k.grp === g);
+  return {
+    uid: 'ix/kinkgroup',
+    text: L('Chọn một điều. Tên có ♥ là điều họ đã thú nhận muốn thử.', 'Pick one. ♥ marks something they told you they want.'),
+    choices: list.map((k) => {
+      const need = (k.item && !m.chest.includes(k.item)) ? CHEST[k.item] : null;
+      const tag = `${x.known.includes(k.id) ? ' ♥' : ''}${x.knownLim.includes(k.id) ? ' ⛔' : ''}${need ? ` (${L('cần', 'needs').vi} ${need.em})` : ''}`;
+      const tagEn = `${x.known.includes(k.id) ? ' ♥' : ''}${x.knownLim.includes(k.id) ? ' ⛔' : ''}${need ? ` (needs ${need.em})` : ''}`;
+      return { label: L(k.name.vi + tag, k.name.en + tagEn), outcomes: kinkOutcomes(life, st, p, k) };
+    }),
+  };
+}
+function kinkOutcomes(life, st, p, k) {
+  const m = me(life);
+  const x = prof(p);
+  const name = nm(life, p);
+  const sc = (i) => k.scene[i].replace(/\{n\}/g, name);
+  if (k.item && !m.chest.includes(k.item)) return [oc(L(`Bạn cần "${CHEST[k.item].name.vi}" trong Rương bí mật. Ghé Cửa hàng người lớn trong mục Hoạt động.`, `You need "${CHEST[k.item].name.en}" in your secret chest. Visit the adult shop in Activities.`))];
+  if (k.id === 'shibari' && !m.rope) return [oc(L('Dây trói nghệ thuật cần học bài bản trước. Hãy đăng ký lớp shibari trong mục Hoạt động.', 'Shibari needs proper lessons first. Sign up for a class in Activities.'))];
+  // Giới hạn: luôn từ chối, bất kể độ kiên định
+  if (x.limits.includes(k.id)) return [oc(L(`${name} lắc đầu: đây là giới hạn của họ. Bạn tôn trọng và không nhắc lại.`, `${name} shakes their head: that's a hard limit. You respect it and drop it.`), {}, (lf) => { if (!x.knownLim.includes(k.id)) x.knownLim.push(k.id); p.closeness = clamp(p.closeness - 3); })];
+  const wants = x.kinks.includes(k.id);
+  const ok = wants ? 0.97 : agree(life, p, 0.42 + x.chem / 300, true);
+  const after = (lf) => aftercare(lf, p);
+  const win = (lf, extra = 0) => {
+    if (!m.tried.includes(k.id)) m.tried.push(k.id);
+    if (wants && !x.known.includes(k.id)) x.known.push(k.id);
+    p.closeness = clamp(p.closeness + randint(lf, 4, 9) + (wants ? 6 : 0));
+    x.fire = clamp(x.fire + 6); x.chem = clamp(x.chem + (wants ? 4 : 1));
+    lf.stats.happy = clamp(lf.stats.happy + Math.round(x.chem / 25) + extra);
+    setFlag(lf, 'recent_intimate');
+    if (k.id === 'findom') { lf.money -= u(lf, randint(lf, 5, 20)); }
+  };
+  const hap = 6 + (wants ? 8 : 0);
+  const outs = [];
+  const okMain = ok * (k.risk ? 0.72 : 0.92);
+  outs.push(oc(L(sc(0) + (wants ? ' Ánh mắt họ nói rằng họ đã chờ điều này rất lâu.' : ''), sc(1) + (wants ? ' Their eyes say they\'ve waited a long time for this.' : '')), { happy: hap }, (lf) => win(lf), after, okMain));
+  if (k.risk) outs.push(oc(L(sc(0) + ' ' + MISHAP[k.risk].vi, sc(1) + ' ' + MISHAP[k.risk].en), { happy: 5, ...(k.risk === 'lift' ? { health: -2 } : {}) }, (lf) => { win(lf, 2); if (k.risk === 'exhib') m.scandal = clamp(m.scandal + 2); }, after, ok * 0.2));
+  outs.push(oc(L(`Giữa chừng, ${name} nói từ an toàn. Bạn dừng ngay, ôm họ và hỏi họ ổn không. Họ tin bạn hơn bao giờ hết.`, `Partway through, ${name} uses the safe word. You stop at once, hold them and check in. They trust you more than ever.`), { happy: 1 }, (lf) => { p.closeness = clamp(p.closeness + 4); m.care++; }, null, ok * 0.08));
+  outs.push(oc(L(`${name} ngập ngừng: chưa sẵn sàng cho chuyện này. Có lẽ để lúc khác.`, `${name} hesitates: not ready for that. Maybe another time.`), {}, (lf) => { p.closeness = clamp(p.closeness - 1); }, null, 1 - ok));
+  return outs;
+}
+// Chăm sóc sau cảnh (aftercare)
+function aftercare(life, p) {
+  const m = me(life);
+  const name = nm(life, p);
+  return {
+    uid: 'ix/after', text: L(`Sau đó, bạn làm gì cho ${name}?`, `Afterwards, what do you do for ${name}?`),
+    choices: [
+      { label: L('Ôm nhau và trò chuyện', 'Cuddle and talk'), outcomes: [oc(L(`Hai người nằm nói chuyện đến khi ${name} ngủ thiếp đi trên vai bạn.`, `You talk until ${name} drifts off on your shoulder.`), { happy: 2 }, () => { m.care++; p.closeness = clamp(p.closeness + 3); })] },
+      { label: L('Pha nước ấm, tắm cùng', 'Run a warm bath together'), outcomes: [oc(L('Nước ấm, nến thơm, không ai nói gì mà vẫn hiểu.', 'Warm water, a candle, no words needed.'), { happy: 3, health: 1 }, () => { m.care++; p.closeness = clamp(p.closeness + 2); })] },
+      { label: L('Mang nước và đồ ăn vặt', 'Bring water and snacks'), outcomes: [oc(L(`${name} cười: "Chu đáo thế này thì ai chịu nổi."`, `${name} grins: "Who could resist someone this thoughtful?"`), { happy: 2 }, () => { m.care++; p.closeness = clamp(p.closeness + 2); })] },
+      { label: L('Lăn ra ngủ luôn', 'Fall straight asleep'), outcomes: [oc(L(`Bạn ngáy trước cả khi ${name} kịp nói gì.`, `You're snoring before ${name} can say a word.`), {}, () => { p.closeness = clamp(p.closeness - 1); })] },
+    ],
+  };
+}
+
+// Mục 21 · Sổ tay tư thế
+const posLevel = (i) => (i < 12 ? 0 : i < 24 ? 1 : 2);
+function posMenu(life, st, p) {
+  const x = prof(p);
+  const name = nm(life, p);
+  const choices = POS_LEVELS.map((lv, i) => ({ label: L(`${lv.vi} · ${me(life).pos.filter((q) => posLevel(q) === i).length}/12`, `${lv.en} · ${me(life).pos.filter((q) => posLevel(q) === i).length}/12`), outcomes: posOutcomes(life, p, i) }));
+  if (x.fav != null) choices.unshift({ label: L(`Tư thế của hai người: ${POSITIONS[x.fav].vi}`, `Your signature move: ${POSITIONS[x.fav].en}`), outcomes: [oc(L(`Không cần nói gì. "${POSITIONS[x.fav].vi}" luôn khiến ${name} mềm lòng, kể cả sau trận cãi to nhất.`, `No words needed. "${POSITIONS[x.fav].en}" always melts ${name}, even after the worst fight.`), { happy: 8 }, (lf) => { p.closeness = clamp(p.closeness + (p.closeness < 50 ? 14 : 6)); setFlag(lf, 'recent_intimate'); })] });
+  return modal('ix/pos', L(`Mở Sổ tay 36 tư thế cùng ${name}. Chọn độ khó:`, `You open the 36 Positions Handbook with ${name}. Pick a difficulty:`), choices.concat([{ label: L('Đóng sổ', 'Close the book'), outcomes: [oc(L('Hai người cười và cất sổ vào Rương bí mật.', 'You laugh and put the book back in the chest.'))] }]));
+}
+function posOutcomes(life, p, lvl) {
+  const m = me(life);
+  const x = prof(p);
+  const name = nm(life, p);
+  const flex = (m.flex + x.flex) / 2;
+  let ok = [0.9, 0.3 + flex / 140, 0.08 + flex / 130 + (life.stats.health - 50) / 300][lvl];
+  if (lvl === 2 && life.stats.health < 60) ok *= 0.5;
+  ok = clamp(ok, 0.03, 0.95);
+  const fails = [
+    L('Chuột rút giữa chừng. Bạn nằm bóp chân, còn người kia cười không dứt.', 'A cramp halfway through. You rub your calf while they can\'t stop laughing.'),
+    L('Cả hai cùng lăn khỏi giường. Cái đèn ngủ cũng không thoát.', 'You both roll off the bed. The bedside lamp doesn\'t survive either.'),
+    L('Hai người cười đến mức quên luôn đang làm gì.', 'You laugh so hard you forget what you were doing.'),
+    L('Theo hình vẽ thì dễ lắm. Thực tế thì không.', 'It looked so easy in the drawing. It isn\'t.'),
+  ];
+  return [
+    oc(L(`Thành công! Bạn ghi một tư thế mới vào sổ. ${name} giơ ngón cái.`, `Success! A new one for the book. ${name} gives you a thumbs up.`), { happy: 6 + lvl * 4 }, (lf) => {
+      const pool = POSITIONS.map((_, i) => i).filter((i) => posLevel(i) === lvl && !m.pos.includes(i));
+      const pidx = pool.length ? pick(lf, pool) : pick(lf, POSITIONS.map((_, i) => i).filter((i) => posLevel(i) === lvl));
+      if (!m.pos.includes(pidx)) m.pos.push(pidx);
+      x.pc[pidx] = (x.pc[pidx] || 0) + 1;
+      if (x.fav == null && x.pc[pidx] >= 2) { x.fav = pidx; addLog(lf, L(`"${POSITIONS[pidx].vi}" trở thành tư thế yêu thích của bạn và ${name}.`, `"${POSITIONS[pidx].en}" becomes your and ${name}'s favourite.`), 'good'); }
+      p.closeness = clamp(p.closeness + 4 + lvl * 2); x.fire = clamp(x.fire + 4);
+      setFlag(lf, 'recent_intimate');
+      addLog(lf, L(`Đã mở khóa tư thế "${POSITIONS[pidx].vi}" (${m.pos.length}/36).`, `Unlocked "${POSITIONS[pidx].en}" (${m.pos.length}/36).`));
+    }, null, ok),
+    oc(pick(life, fails), { happy: 3 }, () => { p.closeness = clamp(p.closeness + 2); }, null, (1 - ok) * (lvl ? 0.75 : 1)),
+    ...(lvl ? [oc(L('Một tiếng "rắc". Bạn trẹo lưng, phải đi khám và bịa với bác sĩ là "bê tủ lạnh".', 'A loud "crack". You put your back out and tell the doctor you were "moving a fridge".'), { health: -6, happy: -2, money: -2 }, null, null, (1 - ok) * 0.25)] : []),
+  ];
+}
+
+// Mục 2 & 25 · Mini-game nhắn tin, có rủi ro gửi nhầm
+const STYLE = { soft: L('Dịu dàng', 'Sweet'), bold: L('Táo bạo', 'Bold'), fun: L('Hài hước', 'Playful') };
+const LINES = {
+  soft: [L('"Nhớ bạn quá, về sớm nhé."', '"Miss you. Come home early."'), L('"Tối nay mình nấu món bạn thích."', '"Making your favourite tonight."'), L('"Nghĩ đến bạn là mình cười một mình."', '"I keep smiling when I think of you."')],
+  bold: [L('"Đoán xem mình đang mặc gì."', '"Guess what I\'m wearing."'), L('"Tối nay đừng hẹn ai khác."', '"Don\'t make other plans tonight."'), L('"Mình có một ý tưởng. Bạn sẽ thích."', '"I\'ve got an idea. You\'ll like it."')],
+  fun: [L('"Bạn có phải wifi không? Vì mình đang muốn kết nối."', '"Are you wifi? Because I feel a connection."'), L('"Mình đặt lịch họp với bạn tối nay. Nội dung: bí mật."', '"Meeting booked with you tonight. Agenda: classified."'), L('Một ảnh selfie mặt hề nhất thế giới.', 'The goofiest selfie ever taken.')],
+};
+function sextRound(life, p, i, score) {
+  const x = prof(p);
+  const name = nm(life, p);
+  const pickL = (s) => LINES[s][i % 3];
+  const choices = Object.keys(STYLE).map((s) => ({
+    label: L(`${STYLE[s].vi}: ${pickL(s).vi}`, `${STYLE[s].en}: ${pickL(s).en}`),
+    outcomes: [oc('', {}, null, (lf) => {
+      const sc = score + (s === x.style ? 2 : (s === 'soft' || x.style === 'soft') ? 0 : 1);
+      if (chance(lf, 0.05)) return wrongSend(lf, p);
+      return i < 2 ? sextRound(lf, p, i + 1, sc) : sextEnd(lf, p, sc);
+    })],
+  }));
+  return i === 0 ? modal('ix/sext', L(`Bạn mở cuộc trò chuyện với ${name}. Tin đầu tiên?`, `You open your chat with ${name}. First message?`), choices) : { uid: 'ix/sext', text: L(`${name} đang trả lời... Gửi tiếp:`, `${name} is typing... Next message:`), choices };
+}
+function sextEnd(life, p, sc) {
+  const name = nm(life, p);
+  const x = prof(p);
+  const great = sc >= 5; const okk = sc >= 3;
+  return { uid: 'ix/sext_end', text: L(`${name} vừa trả lời.`, `${name} just replied.`), choices: [{ label: L('Đọc tin nhắn', 'Read it'), outcomes: [
+    great ? oc(L(`"Về ngay đây." Bạn chưa kịp cất điện thoại thì đã nghe tiếng chìa khóa.`, `"On my way." You hear the key in the lock before you've put the phone down.`), { happy: 8 }, () => { p.closeness = clamp(p.closeness + 8); x.fire = clamp(x.fire + 10); x.style = x.style; })
+      : okk ? oc(L(`${name} gửi lại một biểu tượng mặt đỏ. Tối nay chắc sẽ vui.`, `${name} sends back a blushing emoji. Tonight should be fun.`), { happy: 4 }, () => { p.closeness = clamp(p.closeness + 4); x.fire = clamp(x.fire + 4); })
+        : oc(L(`"Đã xem." Không có gì thêm.`, `"Seen." Nothing else.`), { happy: -3 }, () => { p.closeness = clamp(p.closeness - 2); }),
+  ] }] };
+}
+function wrongSend(life, p) {
+  const name = nm(life, p);
+  const opts = [];
+  const parents = life.people.filter((q) => q.alive && (q.role === 'mother' || q.role === 'father'));
+  if (parents.length) opts.push('family');
+  if (life.job) opts.push('boss');
+  const others = life.people.filter((q) => q.alive && q !== p && ROM.includes(q.role));
+  if (others.length) opts.push('other');
+  if (!opts.length) opts.push('group');
+  const kind = pick(life, opts);
+  const target = kind === 'other' ? pick(life, others) : null;
+  const who = { family: L('nhóm chat gia đình', 'the family group chat'), boss: L('sếp', 'your boss'), group: L('nhóm chat lớp cũ', 'your old class group chat'), other: target ? L(nm(life, target), nm(life, target)) : L('', '') }[kind];
+  return { uid: 'ix/wrong', text: L(`Ôi không! Tin nhắn dành cho ${name} vừa gửi nhầm vào ${who.vi}.`, `Oh no! The message meant for ${name} just went to ${who.en}.`), choices: [
+    { label: L('Thu hồi ngay', 'Unsend it now'), outcomes: [
+      oc(L('Thu hồi kịp. Không ai thấy... hình như vậy.', 'Unsent in time. Nobody saw... probably.'), {}, null, null, 0.5),
+      oc(L('Quá muộn: đã có người "đã xem".', 'Too late: someone already saw it.'), { happy: -4 }, (lf) => wrongFallout(lf, kind, target), null, 0.5),
+    ] },
+    { label: L('Nói là bị hack', 'Say you got hacked'), outcomes: [
+      oc(L('Mọi người tin. Bạn đổi mật khẩu cho có.', 'Everyone buys it. You change your password for show.'), { karma: -2 }, null, null, 0.45),
+      oc(L('Không ai tin. Biệt danh mới của bạn sống mãi trong nhóm chat.', 'Nobody believes you. Your new nickname lives on forever in the chat.'), { happy: -5 }, (lf) => wrongFallout(lf, kind, target), null, 0.55),
+    ] },
+    { label: L('Thừa nhận và cười trừ', 'Own it and laugh'), outcomes: [oc(L('Bạn thừa nhận. Ngượng chín người nhưng thẳng thắn.', 'You own it. Mortifying, but honest.'), { happy: -2, willpower: 2 }, (lf) => wrongFallout(lf, kind, target, true))] },
+  ] };
+}
+function wrongFallout(life, kind, target, honest) {
+  if (kind === 'family') for (const q of life.people) if (q.alive && (q.role === 'mother' || q.role === 'father')) q.closeness = clamp(q.closeness - 5);
+  if (kind === 'boss' && life.job) { life.job.perf = clamp((life.job.perf || 50) - (honest ? 5 : 10)); me(life).scandal = clamp(me(life).scandal + 6); }
+  if (kind === 'group') me(life).scandal = clamp(me(life).scandal + 4);
+  if (kind === 'other' && target) {
+    if (polyOk(life)) { target.closeness = clamp(target.closeness - 3); return; }
+    target.closeness = clamp(target.closeness - 15);
+    if ((target.role === 'partner' || target.role === 'spouse') && lovers(life).length) life.queue.unshift({ sys: 'affair_exposed' });
+  }
+}
+
+// Mục 16 · Trải nghiệm nhiều người (chỉ người lớn, tất cả đồng ý)
+function groupMenu(life, st, p) {
+  const name = nm(life, p);
+  const x = prof(p);
+  const m = me(life);
+  const consent = polyOk(life) ? 0.9 : agree(life, p, (p.poly ?? 30) / 130 + 0.05, true);
+  const refuse = oc(L(`${name} lắc đầu: "Mình chỉ muốn có hai ta thôi."`, `${name} shakes their head: "I just want it to be us."`), {}, () => { p.closeness = clamp(p.closeness - 4); });
+  const done = (lf) => { m.groups++; m.charm = clamp(m.charm + 3); setFlag(lf, 'recent_intimate'); };
+  const third = () => (lf) => { const t = freshAdult(lf, 'contact', lf.age + randint(lf, -6, 6)); prof(t).fire = 60; return t; };
+  return modal('ix/group', L(`Bạn gợi ý với ${name} một trải nghiệm táo bạo hơn.`, `You suggest something bolder to ${name}.`), [
+    { label: L('Bộ ba với một người mới', 'A threesome with someone new'), outcomes: [
+      oc(L(`Một người bạn quen ở quầy bar, một căn phòng khách sạn, ba ly rượu. Sáng ra ${name} hôn bạn trước tiên.`, `Someone you met at the bar, a hotel room, three glasses of wine. In the morning ${name} kisses you first.`), { happy: 10 }, (lf) => { done(lf); third()(lf); p.closeness = clamp(p.closeness + 6); }, null, consent * 0.55),
+      oc(L(`Đêm đó vui, nhưng sáng hôm sau ${name} im lặng. Có gì đó gợn lại.`, `The night was fun, but ${name} is quiet the next morning. Something stings.`), { happy: 2 }, (lf) => { done(lf); p.closeness = clamp(p.closeness - 12); x.jeal = clamp(x.jeal + 10); }, null, consent * 0.25),
+      oc(L('Người thứ ba xin số của bạn trước khi về. Mọi chuyện bắt đầu phức tạp.', 'The third person asks for your number before leaving. Things get complicated.'), { happy: 6 }, (lf) => { done(lf); const t = third()(lf); makeLover(lf, t); t.wasLover = true; }, null, consent * 0.2),
+      { ...refuse, chance: 1 - consent },
+    ] },
+    { label: L('Hoán đổi với cặp bạn thân', 'Swap with a couple you\'re close to'), outcomes: [
+      oc(L('Bốn người, một kỳ nghỉ cuối tuần, và một thỏa thuận không bao giờ kể lại. Tình bạn còn khăng khít hơn.', 'Four people, one weekend, and an agreement never to speak of it. The friendship gets even closer.'), { happy: 9 }, (lf) => { done(lf); p.closeness = clamp(p.closeness + 4); for (const f of lf.people.filter((q) => q.alive && ['friend', 'bestie'].includes(q.role) && q.age >= 18).slice(0, 2)) f.closeness = clamp(f.closeness + 6); }, null, consent * 0.7),
+      oc(L('Bữa tối sau đó với cặp bạn kia ngượng đến mức không ai dám nhìn ai.', 'Dinner with the other couple afterwards is so awkward nobody makes eye contact.'), { happy: -2 }, (lf) => { done(lf); for (const f of lf.people.filter((q) => q.alive && ['friend', 'bestie'].includes(q.role)).slice(0, 2)) f.closeness = clamp(f.closeness - 10); }, null, consent * 0.3),
+      { ...refuse, chance: 1 - consent },
+    ] },
+    { label: L('Tiệc riêng ở biệt thự thuê', 'A private party at a rented villa'), outcomes: [
+      oc(L('Hồ bơi, mặt nạ, nhạc đến sáng. Ai cũng là người lớn, ai cũng biết luật. Bạn và người ấy về nhà với một bí mật chung.', 'A pool, masks, music till dawn. All grown-ups, all knowing the rules. You go home sharing a secret.'), { happy: 11, money: -30 }, (lf) => { done(lf); p.closeness = clamp(p.closeness + 7); x.fire = clamp(x.fire + 12); }, null, consent),
+      { ...refuse, chance: 1 - consent },
+    ] },
+    { label: L('Kỳ nghỉ du thuyền dành cho cặp đôi', 'A couples-only yacht cruise'), outcomes: [
+      oc(L('Một tuần trên biển với những cặp đôi cởi mở. Bạn trở về rám nắng và đầy chuyện để giữ kín.', 'A week at sea with open-minded couples. You come home tanned and full of stories to keep quiet.'), { happy: 14, health: 2, money: -80 }, (lf) => { done(lf); p.closeness = clamp(p.closeness + 10); x.fire = clamp(x.fire + 15); }, null, consent),
+      { ...refuse, chance: 1 - consent },
+    ] },
+    { label: L('Thôi, chỉ hai ta là đủ', 'Never mind, just us'), outcomes: [oc(L('Hai người ôm nhau xem phim.', 'You cuddle up and watch a film.'), { happy: 2 })] },
+  ]);
+}
+
+// Mục 14 · Sugar daddy / sugar mommy (bạn là người chu cấp)
+function spoilMenu(life, p) {
+  const name = nm(life, p);
+  const g = (label, units, d, text) => ({ label, outcomes: [oc(text, { money: -units, happy: 4 }, () => { p.closeness = clamp(p.closeness + d); prof(p).sincere = clamp(prof(p).sincere + Math.round(d / 4)); })] });
+  return modal('ix/spoil', L(`Tặng ${name} gì đây?`, `What will you give ${name}?`), [
+    g(L('Túi hiệu', 'A designer bag'), 20, 8, L(`${name} đăng ảnh chiếc túi kèm dòng "cảm ơn ai đó".`, `${name} posts the bag with "thank you, someone".`)),
+    g(L('Một chiếc xe', 'A car'), 150, 15, L(`${name} hét lên khi thấy chìa khóa.`, `${name} screams when they see the keys.`)),
+    g(L('Một căn hộ', 'An apartment'), 600, 25, L(`${name} có nhà riêng. Chìa dự phòng nằm trong ví bạn.`, `${name} has a place of their own. The spare key lives in your wallet.`)),
+    { label: L('Thôi', 'Not now'), outcomes: [oc(L('Bạn cất thẻ đi.', 'You put the card away.'))] },
+  ]);
+}
+function rulesMenu(life, p) {
+  const name = nm(life, p);
+  const r = (label, text) => ({ label, outcomes: [
+    oc(text, { happy: 4 }, () => { p.closeness = clamp(p.closeness + 3); }, null, agree(life, p, 0.55 + prof(p).sincere / 300)),
+    oc(L(`${name} nhíu mày: "Vậy thì tăng trợ cấp nhé."`, `${name} frowns: "Then raise my allowance."`), {}, (lf) => { p.allow = Math.round((p.allow || u(lf, 30)) * 1.25); }, null, 1 - agree(life, p, 0.55 + prof(p).sincere / 300)),
+  ] });
+  return modal('ix/rules', L(`Đặt quy tắc gì với ${name}?`, `What rule will you set for ${name}?`), [
+    r(L('Luôn nghe máy khi bạn gọi', 'Always pick up when you call'), L(`Từ nay ${name} nghe máy sau hồi chuông đầu tiên.`, `From now on ${name} answers on the first ring.`)),
+    r(L('Mặc đồ bạn chọn khi đi cùng', 'Wear what you pick when out together'), L(`${name} xuất hiện trong bộ đồ bạn chọn, và rất hợp.`, `${name} shows up in the outfit you chose, and it suits them.`)),
+    r(L('Không đăng ảnh hai người lên mạng', 'No photos of you two online'), L(`${name} gật đầu: "Bí mật của chúng ta."`, `${name} nods: "Our secret."`)),
+  ]);
+}
+
+// ───────── Hoạt động 25+ ─────────
+const IX_ACTIVITIES = [
+  { id: 'adultshop', group: 'adult', min: 18, max: 120, when: (lf, st) => on(st, lf), label: L('Cửa hàng người lớn', 'Adult shop'), run: (lf) => shopMenu(lf) },
+  { id: 'club25', group: 'adult', min: 18, max: 120, when: (lf, st) => on(st, lf), label: L('CLB người lớn', 'Adult club'), run: (lf, st) => clubMenu(lf, st) },
+  { id: 'sugarfind', group: 'adult', min: 25, max: 120, when: (lf, st) => on(st, lf) && lf.money >= u(lf, 2500), label: L('Tìm sugar baby', 'Find a sugar baby'), run: (lf, st) => sugarFind(lf, st) },
+  { id: 'fling', group: 'adult', min: 18, max: 80, units: 25, when: (lf, st) => on(st, lf), label: L('Du lịch một mình', 'Travel solo'), run: (lf, st) => flingTrip(lf, st) },
+  { id: 'ropeclass', group: 'adult', min: 18, max: 90, units: 8, when: (lf, st) => on(st, lf) && !me(lf).rope, label: L('Học lớp dây trói nghệ thuật', 'Take a shibari class'), run: (lf) => { me(lf).rope = true; return res(L('Bạn học được những nút thắt an toàn và đẹp. Giáo viên khen bạn có tay nghề.', 'You learn safe, beautiful knots. The teacher says you have a knack for it.'), fx(lf, { happy: 4, smarts: 1 }), 'good'); } },
+  { id: 'memoir', group: 'adult', min: 50, max: 120, when: (lf, st) => on(st, lf) && !me(lf).memoir && me(lf).loverTotal >= 2, label: L('Viết hồi ký "Sổ đen"', 'Write your "Little Black Book" memoir'), run: (lf) => writeMemoir(lf) },
+];
+
+function shopMenu(life) {
+  const m = me(life);
+  const items = Object.entries(CHEST).filter(([k]) => !m.chest.includes(k));
+  if (!items.length) return res(L('Rương bí mật của bạn đã đầy đủ mọi thứ.', 'Your secret chest already has everything.'), []);
+  return modal('ix/shop', L('Cửa hàng kín đáo, giao hàng không ghi tên người gửi. Mua gì?', 'A discreet shop, unmarked delivery. What will you buy?'), items.map(([k, it]) => ({
+    label: L(`${it.em} ${it.name.vi}`, `${it.em} ${it.name.en}`),
+    outcomes: [
+      oc(L(`"${it.name.vi}" đã nằm trong Rương bí mật.`, `"${it.name.en}" is now in your secret chest.`), { money: -it.units, happy: 2 }, () => { if (!m.chest.includes(k)) m.chest.push(k); }, null, 0.9),
+      oc(L(`Gói hàng giao nhầm sang nhà hàng xóm. Họ mang sang tận tay, mỉm cười rất lạ.`, `The parcel goes to the neighbour. They bring it over with a very strange smile.`), { money: -it.units, happy: -1 }, () => { if (!m.chest.includes(k)) m.chest.push(k); m.scandal = clamp(m.scandal + 2); }, null, 0.1),
+    ],
+  })).concat([{ label: L('Ra về', 'Leave'), outcomes: [oc(L('Bạn chỉ xem cho biết.', 'Just browsing.'))] }]));
+}
+
+// Mục 15 · CLB người lớn (không có đột kiểm)
+function clubMenu(life, st) {
+  const m = me(life);
+  if (!m.club) return modal('ix/clubjoin', L('Một CLB kín dành cho người lớn: thẻ hội viên đắt, luật rõ ràng: "Chỉ xem nếu muốn. Luôn hỏi trước khi chạm."', 'A private club for grown-ups: pricey membership, clear rules: "Just watch if you like. Always ask before touching."'), [
+    { label: L('Mua thẻ hội viên', 'Buy a membership'), outcomes: [oc(L('Bạn nhận một tấm thẻ đen không in chữ nào.', 'You receive a black card with nothing printed on it.'), { money: -150, happy: 4 }, () => { m.club = true; m.charm = clamp(m.charm + 3); })] },
+    { label: L('Thôi, chưa sẵn sàng', 'Not ready yet'), outcomes: [oc(L('Bạn cất danh thiếp vào ví.', 'You tuck the card into your wallet.'))] },
+  ]);
+  const known = life.people.filter((p) => adultOK(life, p) && ['coworker', 'neighbor', 'mentor', 'friend'].includes(p.role));
+  return modal('ix/club', L('Tối nay CLB có gì?', 'What\'s on at the club tonight?'), [
+    { label: L('Đêm mặt nạ', 'Masquerade night'), outcomes: [
+      oc(L('Sau lớp mặt nạ ai cũng bạo dạn hơn. Bạn trò chuyện với một người lạ đến tận sáng.', 'Behind the masks everyone is bolder. You talk with a stranger until dawn.'), { happy: 8, money: -5 }, (lf) => { const t = freshAdult(lf, 'contact', lf.age + randint(lf, -8, 8)); prof(t).fire = 55; t.att = 'like'; m.charm = clamp(m.charm + 2); }, null, 0.6),
+      ...(known.length ? [oc(L('Một người tháo mặt nạ. Là người bạn quen! Hai người nhìn nhau rồi phá lên cười: từ nay có bí mật chung.', 'Someone takes off their mask. You know them! You both burst out laughing: now you share a secret.'), { happy: 5, money: -5 }, (lf) => { const q = pick(lf, known); q.closeness = clamp(q.closeness + 12); if (q.att === 'neutral' || !q.att) q.att = 'friendly'; addLog(lf, L(`Bạn và ${nm(lf, q)} có một bí mật chung từ CLB.`, `You and ${nm(lf, q)} share a secret from the club.`)); }, null, 0.4)] : [oc(L('Bạn chỉ uống một ly và ngắm mọi người.', 'You have one drink and people-watch.'), { happy: 4, money: -5 }, null, null, 0.4)]),
+    ] },
+    { label: L('Phòng chủ đề', 'Themed rooms'), outcomes: [oc(L('Mỗi căn phòng một thế giới. Bạn về nhà với đầu óc quay cuồng và nhiều ý tưởng mới.', 'Each room is its own world. You go home dizzy and full of ideas.'), { happy: 7, money: -8 }, () => { m.charm = clamp(m.charm + 2); })] },
+    { label: L('Quầy bar riêng', 'The private bar'), outcomes: [
+      oc(L('Một người lạ hấp dẫn mời bạn ly thứ hai. Rồi ly thứ ba.', 'An attractive stranger buys your second drink. Then your third.'), { happy: 7, money: -4 }, (lf) => { const t = freshAdult(lf, 'contact', lf.age + randint(lf, -8, 8)); prof(t).fire = 70; t.att = on(st, lf) && partner(lf) ? 'affair' : 'like'; }, null, 0.7),
+      oc(L('Tối nay yên ắng. Bạn và bartender thành bạn.', 'A quiet night. You make friends with the bartender.'), { happy: 3, money: -3 }, null, null, 0.3),
+    ] },
+  ]);
+}
+
+// Mục 14 · tìm sugar baby
+function sugarFind(life, st) {
+  const cs = [0, 1, 2].map(() => {
+    const age = clamp(life.age - randint(life, 10, 25), 18, Math.max(18, life.age - 5));
+    const p = randomPerson(life, life, { role: 'contact', gender: partnerGender(life, life), age, closeness: 40 });
+    p.looks = clamp(p.looks + 25);
+    prof(p);
+    return p;
+  });
+  const tiers = (p) => (lf) => ({ uid: 'ix/sugar_deal', text: L(`Thương lượng trợ cấp hằng năm với ${nm(lf, p)}.`, `Negotiate a yearly allowance with ${nm(lf, p)}.`), choices: [[L('Khiêm tốn', 'Modest'), 20, 0.55], [L('Rộng rãi', 'Generous'), 50, 0.8], [L('Không giới hạn', 'Lavish'), 120, 0.97]].map(([lb, a, c]) => ({
+    label: L(`${lb.vi} · ${a}% thu nhập TB/năm`, `${lb.en} · ${a}% of avg income/yr`),
+    outcomes: [
+      oc(L(`${nm(lf, p)} đồng ý. Hai người bắt tay, rồi nhiều hơn thế.`, `${nm(lf, p)} agrees. You shake hands, and then some.`), { happy: 8 }, (x) => { if (!x.people.includes(p)) x.people.push(p); p.baby = true; p.allow = u(x, a); makeLover(x, p); p.wasLover = true; me(x).babies++; addLog(x, L(`${nm(x, p)} trở thành sugar baby của bạn.`, `${nm(x, p)} becomes your sugar baby.`), 'good'); }, null, agree(lf, p, c - 0.15, true)),
+      oc(L(`${nm(lf, p)} cười: "Tôi đáng giá hơn thế."`, `${nm(lf, p)} laughs: "I'm worth more than that."`), { happy: -3 }, null, null, 1 - agree(lf, p, c - 0.15, true)),
+    ],
+  })) });
+  return modal('ix/sugar', L('Một ứng dụng hẹn hò cao cấp gợi ý ba hồ sơ (đều từ 18 tuổi):', 'A high-end dating app suggests three profiles (all 18+):'), cs.map((p) => ({
+    label: L(`${nm(life, p)} · ${p.age} tuổi · ngoại hình ${p.looks}`, `${nm(life, p)} · ${p.age} · looks ${p.looks}`),
+    outcomes: [oc('', {}, null, tiers(p))],
+  })).concat([{ label: L('Đóng ứng dụng', 'Close the app'), outcomes: [oc(L('Bạn đổi ý.', 'You change your mind.'))] }]));
+}
+
+// Mục 8 · Tình một đêm khi du lịch
+function flingTrip(life, st) {
+  return modal('ix/fling', L('Một mình ở một thành phố xa lạ. Tối nay đi đâu?', 'Alone in a strange city. Where tonight?'), [
+    { label: L('Quán bar trên sân thượng', 'A rooftop bar'), outcomes: [
+      oc(L('Một người lạ, không cần biết tên. Một đêm như trong phim, sáng ra chỉ còn mảnh giấy "Cảm ơn".', 'A stranger, no names needed. A night like a film; by morning, just a note saying "Thanks".'), { happy: 12 }, (lf) => { lf.counts.ons++; me(lf).charm = clamp(me(lf).charm + 3); const t = freshAdult(lf, 'contact', lf.age + randint(lf, -6, 6), { fling: true }); t.cut = true; tryConceive(lf, t, protectChance(st && st.alwaysProtect)); }, null, 0.65),
+      oc(L('Bạn ngắm thành phố và nói chuyện với bartender về cuộc đời.', 'You watch the city and talk life with the bartender.'), { happy: 5 }, null, null, 0.35),
+    ] },
+    { label: L('Khám phá phố cổ', 'Explore the old town'), outcomes: [oc(L('Bạn lạc đường, ăn món lạ và về khách sạn rất muộn.', 'You get lost, eat something strange and get back very late.'), { happy: 7, health: 1 })] },
+    { label: L('Ở khách sạn gọi phục vụ phòng', 'Room service night'), outcomes: [oc(L('Áo choàng tắm, phim dở và một bữa tối đắt đỏ. Hoàn hảo.', 'A bathrobe, a bad film and an overpriced dinner. Perfect.'), { happy: 5 })] },
+  ]);
+}
+
+// Mục 27 · Hồi ký Sổ đen
+function writeMemoir(life) {
+  const m = me(life);
+  m.memoir = true;
+  const sales = u(life, Math.round(30 + m.loverTotal * 25 + m.scandal * 3 + m.charm * 2));
+  life.money += sales;
+  m.scandal = clamp(m.scandal + 25);
+  const r = randint(life, 0, 2);
+  const tail = [
+    () => { life.money -= u(life, 40); return L(' Một người cũ kiện vì bị nhắc tên. Bạn phải bồi thường.', ' An ex sues for being named. You settle.'); },
+    () => { for (const k of people(life, 'child')) k.closeness = clamp(k.closeness - 12); return L(' Con cái bạn xấu hổ đến mức không dám đi họp lớp.', ' Your kids are too embarrassed to go to their reunions.'); },
+    () => { life.money += u(life, 120); life.stats.fame = clamp(life.stats.fame + 12); return L(' Một hãng phim mua bản quyền chuyển thể.', ' A studio buys the film rights.'); },
+  ][r]();
+  addLog(life, L('Cuốn "Sổ đen" lên kệ.', '"The Little Black Book" hits the shelves.'), 'good');
+  return res(L(`Cuốn hồi ký bán chạy nhờ ${m.loverTotal} cái tên được đổi đi rất sơ sài.${tail.vi}`, `The memoir sells well thanks to ${m.loverTotal} very thinly disguised names.${tail.en}`), [['money', sales]], 'good');
+}
+
+// ───────── Diễn biến hằng năm ─────────
+function ixYear(life, st) {
+  const m = me(life);
+  const pushes = [];
+  // Thái độ của mọi người tác động mỗi năm (không cần 25+)
+  for (const p of life.people) if (p.alive && p.att && p.role !== 'pet') attYear(life, p, pushes);
+  if (life.age < 18) return;
+  // Người lớn ngoài gia đình có thể tự nảy sinh tình cảm
+  if (chance(life, 0.05 + life.stats.looks / 1500)) {
+    const c = life.people.filter((p) => adultOK(life, p) && !ROM.includes(p.role) && attOf(p) === 'neutral' && p.closeness >= 50);
+    if (c.length) pick(life, c).att = 'crush';
+  }
+  for (const p of life.people) {
+    if (!adultOK(life, p) || !p.ix) continue;
+    if (ROM.includes(p.role)) p.ix.fire = clamp(p.ix.fire - 4);
+    else if (['crush', 'like', 'affair'].includes(attOf(p))) p.ix.fire = clamp(p.ix.fire + 4);
+  }
+  // Ham muốn thay đổi theo tuổi, stress, con nhỏ
+  const target = life.age < 30 ? 75 : life.age < 45 ? 65 : life.age < 60 ? 50 : 35;
+  const kids = people(life, 'child').some((k) => k.age < 4);
+  m.libido = clamp(m.libido + Math.round((target - m.libido) * 0.15) + randint(life, -3, 3) - (kids ? 3 : 0) - (life.stats.happy < 30 ? 3 : 0));
+  if (life.age > 40) m.flex = clamp(m.flex - randint(life, 0, 2));
+  // Danh tiếng tình trường
+  const ls = lovers(life);
+  for (const p of ls) if (!p.counted) { p.counted = true; p.wasLover = true; m.loverTotal++; m.charm = clamp(m.charm + 4); }
+  if (partner(life) && !ls.length) m.loyal = clamp(m.loyal + 2); else if (ls.length && !polyOk(life)) m.loyal = clamp(m.loyal - 4);
+  const exp = (life.counts.affairsExposed || 0) + (life.counts.multiExposed || 0);
+  if (exp > m.seenExp) { m.scandal = clamp(m.scandal + 20 * (exp - m.seenExp)); m.loyal = clamp(m.loyal - 15); m.seenExp = exp; }
+  m.scandal = clamp(m.scandal - 3); m.charm = clamp(m.charm - 1);
+  if (m.scandal > 60 && life.job && chance(life, 0.12)) { life.job.perf = clamp((life.job.perf || 50) - 10); addLog(life, L('Đồng nghiệp xì xào về đời tư của bạn. Sếp nhìn bạn khác đi.', 'Coworkers whisper about your private life. Your boss looks at you differently.'), 'bad'); }
+  if (!on(st, life)) { flush(life, pushes); return; }
+  // Sugar babies: trợ cấp và chuyện phát sinh
+  for (const p of life.people.filter((q) => q.alive && q.baby && q.role === 'lover')) {
+    life.money -= p.allow || 0;
+    const x = prof(p);
+    if (x.sincere < 40 && chance(life, 0.2)) pushes.push({ sys: 'ix_baby', id: p.id, kind: 'raise' });
+    else if (partner(life) && !polyOk(life) && chance(life, 0.12)) pushes.push({ sys: 'ix_baby', id: p.id, kind: 'photo' });
+    else if (x.sincere > 75 && chance(life, 0.1)) pushes.push({ sys: 'ix_baby', id: p.id, kind: 'public' });
+  }
+  // Mạng lưới tình nhân
+  if (ls.length >= 2 && chance(life, 0.25)) pushes.push({ sys: 'ix_net' });
+  // Khủng hoảng tuổi trung niên
+  if (!m.mid && life.age >= 40 && life.age <= 55 && chance(life, 0.12)) { m.mid = true; pushes.push({ sys: 'ix_mid' }); }
+  const pt = partner(life);
+  if (pt && pt.age >= 18) {
+    const px = prof(pt);
+    px.libido = clamp(px.libido + randint(life, -3, 2));
+    if (Math.abs(px.libido - m.libido) > 35 && chance(life, 0.15)) pushes.push({ sys: 'ix_mismatch' });
+    const admirer = life.people.find((q) => adultOK(life, q) && !ROM.includes(q.role) && ['crush', 'like', 'affair'].includes(attOf(q)));
+    if (admirer && chance(life, 0.1)) pushes.push({ sys: 'ix_jealous', id: admirer.id });
+  }
+  if (chance(life, 0.07)) pushes.push({ sys: 'ix_fated', id: pick(life, fatedPool(life)), step: 1 });
+  if (life.job && chance(life, 0.06)) pushes.push({ sys: 'ix_office' });
+  const exes = life.people.filter((q) => q.role === 'ex' && adultOK(life, q) && !q.cut);
+  if (exes.length && chance(life, 0.07)) pushes.push({ sys: 'ix_ex', id: pick(life, exes).id });
+  flush(life, pushes);
+}
+function flush(life, pushes) { for (const x of pushes.slice(0, 2)) life.queue.push(x); }
+
+function attYear(life, p, pushes) {
+  const a = attOf(p);
+  const name = nm(life, p);
+  if (a === 'hate') { p.closeness = clamp(p.closeness - randint(life, 2, 6)); if (chance(life, 0.12)) { life.stats.happy = clamp(life.stats.happy - 3); addLog(life, L(`${name} nói xấu bạn sau lưng với mọi người.`, `${name} badmouths you behind your back.`), 'bad'); } }
+  else if (a === 'rival') { if (chance(life, 0.1)) { life.stats.willpower = clamp(life.stats.willpower + 1); addLog(life, L(`${name} lại vượt mặt bạn một lần nữa. Bạn thề lần sau sẽ thắng.`, `${name} outdoes you again. You swear you'll win next time.`)); } }
+  else if (a === 'friendly') { cl(life, p, 1, 4); if (chance(life, 0.1)) { life.stats.happy = clamp(life.stats.happy + 2); addLog(life, L(`${name} ghé qua tặng bạn ít đồ ăn tự làm.`, `${name} drops by with some homemade food.`), 'good'); } }
+  else if (ROM.includes(p.role) || !adultOK(life, p)) return;
+  else if (a === 'crush') { cl(life, p, 1, 3); if (chance(life, 0.2)) addLog(life, L('Ai đó để lại một ly cà phê trên bàn bạn, không ký tên.', 'Someone leaves a coffee on your desk, unsigned.')); if (chance(life, 0.15)) pushes.push({ sys: 'ix_att', id: p.id }); }
+  else if (a === 'like') { if (chance(life, 0.2)) pushes.push({ sys: 'ix_att', id: p.id }); }
+  else if (a === 'affair') { if (chance(life, 0.25)) pushes.push({ sys: 'ix_att', id: p.id }); }
+}
+
+// ───────── Sự kiện hệ thống ─────────
+const FATED = ['oneroom', 'elevator', 'wedding', 'enemies', 'reunion'];
+function fatedPool(life) { return FATED.filter((f) => f !== 'reunion' || life.age >= 36); }
+
+function buildIxSys(life, item, st) {
+  if (!item.sys || !item.sys.startsWith('ix_')) return null;
+  const s = item.sys;
+  const adult = on(st, life);
+  if (s === 'ix_att') {
+    const p = byId(life, item.id);
+    if (!adultOK(life, p) || ROM.includes(p.role)) return null;
+    const name = nm(life, p);
+    const a = attOf(p);
+    if (a === 'crush') return sev('sys/ix_crush', L(`${name} đỏ mặt, ấp úng: "Mình... thích bạn lâu rồi."`, `${name} blushes and stammers: "I... I've liked you for a long time."`), [
+      { label: L('Đáp lại tình cảm', 'Return their feelings'), outcomes: [oc(L(`Bạn nắm tay ${name}. Họ cười như vừa trúng số.`, `You take ${name}'s hand. They grin like they've won the lottery.`), { happy: 10 }, (lf) => { romance(lf, p); p.att = 'like'; prof(p).fire = clamp(prof(p).fire + 20); })] },
+      { label: L('Cứ để mọi thứ từ từ', 'Let things unfold slowly'), outcomes: [oc(L('Hai người hẹn đi cà phê. Không vội.', 'You agree to get coffee. No rush.'), { happy: 4 }, () => { p.att = 'like'; prof(p).fire = clamp(prof(p).fire + 10); })] },
+      { label: L('Từ chối nhẹ nhàng', 'Let them down gently'), outcomes: [oc(L(`${name} gật đầu, mắt hơi đỏ.`, `${name} nods, eyes a little red.`), { karma: 1 }, () => { p.att = 'friendly'; p.closeness = clamp(p.closeness - 5); })] },
+    ]);
+    if (a === 'like') return sev('sys/ix_like', L(`${name} rủ bạn đi ăn tối, chỉ hai người.`, `${name} asks you to dinner, just the two of you.`), [
+      { label: L('Đồng ý', 'Say yes'), outcomes: [
+        oc(L('Bữa tối kéo dài đến khi nhà hàng đóng cửa.', 'Dinner lasts until the restaurant closes.'), { happy: 7 }, (lf) => { cl(lf, p, 5, 10); prof(p).fire = clamp(prof(p).fire + 15); if (!partner(lf) && chance(lf, 0.5)) romance(lf, p); }, null, 1),
+      ] },
+      { label: L('Từ chối', 'Decline'), outcomes: [oc(L(`${name} nhún vai: "Lần khác vậy."`, `${name} shrugs: "Another time, then."`), {}, () => { p.closeness = clamp(p.closeness - 3); })] },
+    ]);
+    // affair
+    const taken = partner(life) && !polyOk(life);
+    return sev('sys/ix_affair', adult
+      ? L(`${name} nhắn lúc nửa đêm: "${taken ? 'Mình biết bạn đang có người. Mình không quan tâm.' : 'Mình đang có người, nhưng mình chỉ nghĩ đến bạn.'} Tối mai, khách sạn cũ?"`, `${name} texts at midnight: "${taken ? "I know you're taken. I don't care." : "I'm with someone, but I only think about you."} Tomorrow night, the usual hotel?"`)
+      : L(`${name} nhắn lúc nửa đêm, nói muốn gặp riêng bạn, không ai biết.`, `${name} texts at midnight, wanting to see you in secret.`), [
+      { label: L('Đến', 'Go'), outcomes: [oc(adult ? L('Cánh cửa khách sạn đóng lại sau lưng hai người.', 'The hotel door closes behind you both.') : L('Bạn đến điểm hẹn.', 'You go to meet them.'), { happy: 10, risk: 3 }, (lf) => { makeLover(lf, p); p.wasLover = true; if (taken) lf.stats.karma = clamp(lf.stats.karma - 5); setFlag(lf, 'recent_intimate'); })] },
+      { label: L('Chỉ tán tỉnh qua lại', 'Just flirt back'), outcomes: [oc(L('Bạn trả lời bằng một câu đầy ẩn ý rồi tắt máy.', 'You reply with something suggestive, then switch off.'), { happy: 3 }, () => { prof(p).fire = clamp(prof(p).fire + 15); })] },
+      { label: L('Từ chối dứt khoát', 'Firmly decline'), outcomes: [oc(L('Bạn chặn số. Ý chí thép.', 'You block the number. Nerves of steel.'), { willpower: 4 }, () => { p.att = 'neutral'; p.closeness = clamp(p.closeness - 8); })] },
+      ...(partner(life) ? [{ label: L('Kể với người yêu', 'Tell your partner'), outcomes: [oc(L('Người yêu cảm ơn vì bạn đã thành thật.', 'Your partner thanks you for being honest.'), { karma: 4 }, (lf) => { const pt = partner(lf); if (pt) pt.closeness = clamp(pt.closeness + 6); p.att = 'hate'; })] }] : []),
+    ]);
+  }
+  if (s === 'ix_office') {
+    let p = item.pid ? byId(life, item.pid) : null;
+    if (!adultOK(life, p)) { p = findOrMake(life, ['coworker'], () => freshAdult(life, 'coworker', life.age + randint(life, -6, 6))); item.pid = p.id; }
+    const name = nm(life, p);
+    return sev('sys/ix_office', L(`Tiệc cuối năm công ty. ${name} kéo bạn ra ban công, đứng gần hơn mức cần thiết.`, `The office party. ${name} pulls you out onto the balcony and stands closer than necessary.`), [
+      { label: L('Hôn họ', 'Kiss them'), outcomes: [
+        oc(adult ? L('Phòng họp tầng 12 hôm đó khóa cửa rất lâu.', 'The 12th-floor meeting room stays locked for a long time that night.') : L('Hai người bắt đầu hẹn hò bí mật ở công ty.', 'You start a secret office romance.'), { happy: 9 }, (lf) => { prof(p).fire = clamp(prof(p).fire + 20); romance(lf, p); }, null, 0.75),
+        oc(L('Ai đó đã thấy. Tuần sau HR mời bạn lên nói chuyện.', 'Someone saw. Next week HR wants a word.'), { happy: -4 }, (lf) => { romance(lf, p); if (lf.job) lf.job.perf = clamp((lf.job.perf || 50) - 15); me(lf).scandal = clamp(me(lf).scandal + 8); }, null, 0.25),
+      ] },
+      { label: L('Giữ chuyên nghiệp', 'Keep it professional'), outcomes: [oc(L('Bạn mỉm cười, nâng ly, rồi quay vào trong.', 'You smile, raise your glass and head back inside.'), { willpower: 3 }, () => { prof(p).fire = clamp(prof(p).fire + 5); })] },
+      { label: L('Hẹn gặp ngoài giờ', 'Suggest meeting after hours'), outcomes: [oc(L('Một quán rượu nhỏ cách công ty ba con phố. Không đồng nghiệp nào lui tới.', 'A small bar three streets from work. No coworkers ever go there.'), { happy: 5 }, () => { p.att = 'like'; prof(p).fire = clamp(prof(p).fire + 15); })] },
+    ]);
+  }
+  if (s === 'ix_ex') {
+    const p = byId(life, item.id);
+    if (!adultOK(life, p)) return null;
+    const name = nm(life, p);
+    return sev('sys/ix_ex', L(`2 giờ sáng. ${name}: "Ngủ chưa?"`, `2am. ${name}: "u up?"`), [
+      { label: L('Trả lời', 'Reply'), outcomes: [
+        oc(L(`"Chỉ để nói chuyện thôi." Một tiếng sau ${name} đã đứng trước cửa nhà bạn.`, `"Just to talk." An hour later ${name} is at your door.`), { happy: 6 }, (lf) => { romance(lf, p); setFlag(lf, 'recent_intimate'); }, null, 0.5),
+        oc(L('Hai người nói chuyện đến sáng và nhớ ra vì sao đã chia tay.', 'You talk till dawn and remember exactly why you broke up.'), { happy: -3 }, () => { p.closeness = clamp(p.closeness + 5); }, null, 0.5),
+      ] },
+      { label: L('Phớt lờ', 'Ignore it'), outcomes: [oc(L('Bạn úp điện thoại xuống và ngủ tiếp.', 'You turn the phone face-down and go back to sleep.'), { willpower: 3 })] },
+      { label: L('Chặn số', 'Block them'), outcomes: [oc(L('Một chương đã đóng lại.', 'That chapter is closed.'), { willpower: 2 }, () => { p.cut = true; })] },
+    ]);
+  }
+  if (s === 'ix_net') {
+    const ls = lovers(life);
+    if (ls.length < 2) return null;
+    const [a, b] = [ls[0], ls[1]];
+    const na = nm(life, a); const nb = nm(life, b);
+    if (item.r == null) item.r = rand(life);
+    if (polyOk(life)) {
+      if (item.r < 0.5) return sev('sys/ix_net_poly', L(`Sinh nhật chung của "Gia đình mở": ${na}, ${nb} và bạn. Nhóm chat sôi nổi cả tuần.`, `A joint birthday for the "Open Family": ${na}, ${nb} and you. The group chat buzzes all week.`), [
+        { label: L('Tổ chức thật lớn', 'Throw a big party'), outcomes: [oc(L('Một chiếc bánh ba tầng, ba tên trên mặt bánh.', 'A three-tier cake with three names on it.'), { happy: 10, money: -8 }, () => { for (const q of ls) q.closeness = clamp(q.closeness + 6); })] },
+        { label: L('Lập lịch phân ca cho công bằng', 'Make a fair rota'), outcomes: [oc(L('Một bảng tính màu sắc dán trên tủ lạnh. Ai cũng hài lòng.', 'A colour-coded spreadsheet on the fridge. Everyone is happy.'), { happy: 5 }, () => { for (const q of ls) prof(q).jeal = clamp(prof(q).jeal - 10); })] },
+      ]);
+      return sev('sys/ix_net_friends', L(`${na} và ${nb} thành bạn thân, rủ nhau đi chơi mà không mời bạn.`, `${na} and ${nb} become best friends and go out without inviting you.`), [
+        { label: L('Cười cho qua', 'Laugh it off'), outcomes: [oc(L('Ít nhất họ hợp nhau.', 'At least they get along.'), { happy: 2 }, () => { prof(a).jeal = clamp(prof(a).jeal - 15); prof(b).jeal = clamp(prof(b).jeal - 15); })] },
+        { label: L('Đòi được đi cùng', 'Demand to come along'), outcomes: [oc(L('Họ cho bạn đi cùng, với điều kiện bạn trả tiền.', 'They let you tag along, as long as you pay.'), { happy: 4, money: -3 })] },
+      ]);
+    }
+    const xa = prof(a); const xb = prof(b);
+    if (xa.knows && xb.knows && (xa.jeal + xb.jeal) / 2 > 55 && item.r < 0.5) return sev('sys/ix_net_alliance', L(`${na} và ${nb} đã nói chuyện với nhau. Họ cùng lúc chia tay bạn.`, `${na} and ${nb} have talked. They dump you at the same time.`), [
+      { label: L('Chấp nhận', 'Accept it'), outcomes: [oc(L('Hai tin nhắn đến cùng một giây.', 'Two messages arrive in the same second.'), { happy: -10 }, (lf) => { endLover(lf, a); endLover(lf, b); me(lf).scandal = clamp(me(lf).scandal + 10); })] },
+      { label: L('Cố níu kéo cả hai', 'Try to keep them both'), outcomes: [
+        oc(L('Bằng cách nào đó bạn thuyết phục được cả hai. Không ai hiểu nổi.', 'Somehow you talk them both round. Nobody understands how.'), { happy: 4 }, () => { a.closeness = clamp(a.closeness - 5); b.closeness = clamp(b.closeness - 5); }, null, 0.25),
+        oc(L('Họ chặn số bạn, cùng một lúc.', 'They block you, in unison.'), { happy: -12 }, (lf) => { endLover(lf, a); endLover(lf, b); }, null, 0.75),
+      ] },
+    ]);
+    return sev('sys/ix_net_cafe', L(`${na} và ${nb}, hai người tình của bạn, tình cờ ngồi cùng bàn ở quán cà phê. Bạn vừa bước vào.`, `${na} and ${nb}, two of your lovers, happen to share a table at a café. You've just walked in.`), [
+      { label: L('Lẳng lặng quay ra', 'Quietly back out'), outcomes: [
+        oc(L('Không ai thấy bạn. Tim đập như trống.', 'Nobody saw you. Heart pounding.'), { happy: -1 }, null, null, 0.6),
+        oc(L('Cả hai cùng ngẩng lên đúng lúc. Rồi nhìn nhau.', 'They both look up at the same moment. Then at each other.'), { happy: -8 }, () => { xa.knows = true; xb.knows = true; a.closeness = clamp(a.closeness - 15); b.closeness = clamp(b.closeness - 15); }, null, 0.4),
+      ] },
+      { label: L('Đến chào cả hai', 'Go and greet them both'), outcomes: [oc(L('Bạn ngồi xuống giữa hai người. Cuộc nói chuyện ngượng nhất thế kỷ.', 'You sit down between them. The most awkward conversation of the century.'), { happy: -5 }, (lf) => { xa.knows = true; xb.knows = true; a.closeness = clamp(a.closeness - 10); b.closeness = clamp(b.closeness - 10); me(lf).charm = clamp(me(lf).charm + 3); })] },
+      { label: L('Nhắn hủy hẹn cả hai', 'Text both to cancel'), outcomes: [oc(L('Hai điện thoại trên cùng một bàn rung lên cùng lúc.', 'Two phones on the same table buzz at once.'), {}, () => { a.closeness = clamp(a.closeness - 4); b.closeness = clamp(b.closeness - 4); })] },
+    ]);
+  }
+  if (s === 'ix_mid') {
+    const pt = partner(life);
+    return sev('sys/ix_mid', L('Sáng nay soi gương, bạn thấy một sợi tóc bạc. Khủng hoảng tuổi trung niên ập đến.', 'This morning you spot a grey hair. The midlife crisis hits.'), [
+      { label: L('Mua xe mui trần', 'Buy a convertible'), outcomes: [oc(L('Tóc bay trong gió. Hàng xóm bàn tán.', 'Wind in your hair. The neighbours talk.'), { happy: 10, money: -300 })] },
+      { label: L('Hẹn hò với người trẻ hơn nhiều', 'Date someone much younger'), outcomes: [oc(adult ? L('Họ đủ tuổi, nhưng trẻ đến mức bạn phải tra nghĩa từ lóng họ dùng.', 'They\'re an adult, but young enough that you google their slang.') : L('Bạn hẹn hò với một người trẻ hơn nhiều.', 'You date someone much younger.'), { happy: 8 }, (lf) => { const t = freshAdult(lf, 'contact', Math.max(25, lf.age - 18)); romance(lf, t); })] },
+      ...(pt ? [{ label: L(`Yêu lại ${nm(life, pt)} như hồi đầu`, `Fall for ${nm(life, pt)} all over again`), outcomes: [oc(L('Tuần trăng mật lần hai. Như thể mới quen.', 'A second honeymoon. Like you\'ve just met.'), { happy: 12, money: -40 }, () => { pt.closeness = clamp(pt.closeness + 20); prof(pt).fire = clamp(prof(pt).fire + 30); })] }] : []),
+      { label: L('Đi học nhảy salsa', 'Take salsa lessons'), outcomes: [oc(L('Hông bạn nhớ lại những điều đã quên từ lâu.', 'Your hips remember things they\'d long forgotten.'), { happy: 6, health: 3 }, (lf) => { me(lf).flex = clamp(me(lf).flex + 10); })] },
+    ]);
+  }
+  if (s === 'ix_mismatch') {
+    const pt = partner(life);
+    if (!pt) return null;
+    const px = prof(pt); const m = me(life);
+    const name = nm(life, pt);
+    return sev('sys/ix_mismatch', px.libido > m.libido ? L(`${name} than phiền dạo này bạn lúc nào cũng mệt.`, `${name} complains you're always tired lately.`) : L(`Bạn thấy ${name} dạo này lạnh nhạt chuyện chăn gối.`, `You feel ${name} has gone cold in the bedroom lately.`), [
+      { label: L('Đi trị liệu cặp đôi', 'See a couples therapist'), outcomes: [oc(L('Sáu buổi trị liệu, rất nhiều khăn giấy, và hai người hiểu nhau hơn.', 'Six sessions, lots of tissues, and you understand each other better.'), { happy: 4, money: -10 }, () => { pt.closeness = clamp(pt.closeness + 10); const mid = Math.round((px.libido + m.libido) / 2); px.libido = mid; m.libido = mid; })] },
+      { label: L('Tuần trăng mật lần hai', 'A second honeymoon'), outcomes: [oc(L('Một hòn đảo, không điện thoại, không con cái. Lửa bùng lên lại.', 'An island, no phones, no kids. The spark is back.'), { happy: 10, money: -40 }, () => { pt.closeness = clamp(pt.closeness + 12); px.libido = clamp(px.libido + 15); m.libido = clamp(m.libido + 10); })] },
+      { label: L('Đề nghị thỏa thuận mở', 'Suggest opening things up'), outcomes: [
+        oc(L(`${name} suy nghĩ rồi đồng ý: "Có luật rõ ràng."`, `${name} thinks it over and agrees: "With clear rules."`), { happy: 5 }, (lf) => { setFlag(lf, 'open_rel'); }, null, agree(life, pt, (pt.poly ?? 30) / 110, true)),
+        oc(L(`${name} sững người. Không khí lạnh đi mấy tuần.`, `${name} freezes. Things are frosty for weeks.`), { happy: -5 }, () => { pt.closeness = clamp(pt.closeness - 12); }, null, 1 - agree(life, pt, (pt.poly ?? 30) / 110, true)),
+      ] },
+      { label: L('Mặc kệ', 'Ignore it'), outcomes: [oc(L('Hai người ngủ quay lưng vào nhau.', 'You sleep back to back.'), { happy: -3 }, () => { pt.closeness = clamp(pt.closeness - 8); })] },
+    ]);
+  }
+  if (s === 'ix_jealous') {
+    const pt = partner(life); const q = byId(life, item.id);
+    if (!pt || !adultOK(life, q)) return null;
+    const name = nm(life, pt); const qn = nm(life, q);
+    return sev('sys/ix_jealous', L(`${name} thấy tin nhắn ${qn} gửi bạn và nổi ghen.`, `${name} sees a message from ${qn} and gets jealous.`), [
+      { label: L('Trấn an', 'Reassure them'), outcomes: [
+        oc(L(`${name} dịu lại khi bạn đưa điện thoại cho họ xem hết.`, `${name} calms down when you hand over your phone.`), { happy: 2 }, () => { pt.closeness = clamp(pt.closeness + 3); }, null, agree(life, pt, 0.6)),
+        oc(L(`${name} vẫn không tin. Cả tối im lặng.`, `${name} still doesn't believe you. A silent evening.`), { happy: -4 }, () => { pt.closeness = clamp(pt.closeness - 6); }, null, 1 - agree(life, pt, 0.6)),
+      ] },
+      { label: L('Làm lành kiểu người lớn', 'Make up the grown-up way'), outcomes: [
+        oc(adult ? L(`Trận cãi kết thúc trên giường. ${name} thì thầm: "Bạn là của mình."`, `The fight ends in bed. ${name} whispers: "You're mine."`) : L('Hai người làm lành.', 'You make up.'), { happy: 8 }, (lf) => { pt.closeness = clamp(pt.closeness + 10); setFlag(lf, 'recent_intimate'); }, null, 0.8),
+        oc(L(`${name} đẩy bạn ra: "Đừng nghĩ cách đó giải quyết được mọi thứ."`, `${name} pushes you away: "Don't think that fixes everything."`), { happy: -5 }, () => { pt.closeness = clamp(pt.closeness - 8); }, null, 0.2),
+      ] },
+      { label: L('Cãi lại', 'Argue back'), outcomes: [oc(L('Cửa đóng sầm. Bạn ngủ sofa.', 'The door slams. You sleep on the sofa.'), { happy: -6 }, () => { pt.closeness = clamp(pt.closeness - 12); })] },
+    ]);
+  }
+  if (s === 'ix_baby') {
+    const p = byId(life, item.id);
+    if (!p || !p.alive || !p.baby) return null;
+    const name = nm(life, p);
+    if (item.kind === 'raise') return sev('sys/ix_baby_raise', L(`${name} gợi ý muốn tăng trợ cấp: "Giá cả dạo này đắt quá."`, `${name} hints at a raise: "Everything's so expensive lately."`), [
+      { label: L('Tăng gấp rưỡi', 'Raise it by half'), outcomes: [oc(L(`${name} ôm cổ bạn, thơm má.`, `${name} throws their arms around you.`), { happy: 4 }, () => { p.allow = Math.round(p.allow * 1.5); p.closeness = clamp(p.closeness + 8); })] },
+      { label: L('Từ chối', 'Refuse'), outcomes: [
+        oc(L(`${name} hờn vài hôm rồi thôi.`, `${name} sulks for a few days, then lets it go.`), {}, () => { p.closeness = clamp(p.closeness - 6); }, null, 0.6),
+        oc(L(`${name} tìm được người hào phóng hơn và rời đi.`, `${name} finds someone more generous and leaves.`), { happy: -5 }, (lf) => { p.baby = false; endLover(lf, p); }, null, 0.4),
+      ] },
+    ]);
+    if (item.kind === 'photo') return sev('sys/ix_baby_photo', L(`${name} đăng ảnh món quà bạn tặng, và góc ảnh có... tay bạn đeo đồng hồ quen thuộc.`, `${name} posts your gift, and in the corner of the photo is... your very recognisable watch.`), [
+      { label: L('Bảo xóa ngay', 'Tell them to delete it'), outcomes: [
+        oc(L('Xóa kịp trước khi ai để ý.', 'Deleted before anyone noticed.'), {}, null, null, 0.65),
+        oc(L('Người yêu bạn đã chụp màn hình.', 'Your partner already took a screenshot.'), { happy: -6 }, (lf) => lf.queue.unshift({ sys: 'affair_exposed' }), null, 0.35),
+      ] },
+      { label: L('Kệ, chẳng ai để ý đâu', 'Leave it, nobody will notice'), outcomes: [
+        oc(L('Đúng là chẳng ai để ý.', 'Nobody does.'), {}, null, null, 0.5),
+        oc(L('Có người để ý. Là người yêu bạn.', 'Somebody notices. Your partner.'), { happy: -6 }, (lf) => lf.queue.unshift({ sys: 'affair_exposed' }), null, 0.5),
+      ] },
+    ]);
+    return sev('sys/ix_baby_public', L(`${name} nói nhỏ: "Mình muốn được công khai. Không chỉ là thỏa thuận nữa."`, `${name} says quietly: "I want to be public. Not just an arrangement anymore."`), [
+      { label: L('Công khai, thành người yêu chính thức', 'Go public, make it official'), outcomes: [oc(L('Bức ảnh đầu tiên của hai người được đăng lên. Hàng nghìn bình luận.', 'Your first photo together goes up. Thousands of comments.'), { happy: 8 }, (lf) => { p.baby = false; p.allow = 0; const pt = partner(lf); if (pt && pt !== p) { /* vẫn là người tình nếu đang có người yêu */ } else { p.role = 'partner'; p.years = 0; lf.counts.partners++; syncAffair(lf); } me(lf).scandal = clamp(me(lf).scandal + 6); })] },
+      { label: L('Giữ như cũ', 'Keep things as they are'), outcomes: [oc(L(`${name} gật đầu, nhưng ánh mắt buồn hơn.`, `${name} nods, but their eyes are sadder.`), {}, () => { p.closeness = clamp(p.closeness - 6); })] },
+    ]);
+  }
+  if (s === 'ix_fated') return fatedEvent(life, item, adult);
+  return null;
+}
+
+// Mục 23 · Đêm định mệnh (kịch bản rẽ nhánh 2 bước)
+function fatedPerson(life, item) {
+  if (item.pid) { const p = byId(life, item.pid); if (p && adultOK(life, p)) return p; }
+  let p;
+  if (item.id === 'oneroom' || item.id === 'enemies') p = findOrMake(life, ['rival', 'coworker'], () => freshAdult(life, item.id === 'enemies' ? 'rival' : 'coworker', life.age + randint(life, -5, 5)));
+  else if (item.id === 'elevator' || item.id === 'wedding') p = findOrMake(life, ['ex'], () => freshAdult(life, 'ex', life.age + randint(life, -4, 4)));
+  else p = freshAdult(life, 'contact', life.age + randint(life, -1, 1), { firstLove: true });
+  if (item.id === 'oneroom' || item.id === 'enemies') p.att = p.att && p.att !== 'neutral' ? p.att : 'rival';
+  item.pid = p.id;
+  return p;
+}
+function fatedEvent(life, item, adult) {
+  const p = fatedPerson(life, item);
+  if (!p) return null;
+  const name = nm(life, p);
+  const x = prof(p);
+  const step2 = (lf) => lf.queue.unshift({ sys: 'ix_fated', id: item.id, step: 2, pid: p.id });
+  const together = (lf) => { romance(lf, p); p.att = 'like'; x.fire = clamp(x.fire + 30); setFlag(lf, 'recent_intimate'); };
+  const T = {
+    oneroom: [
+      L(`Đi công tác cùng ${name}, đối thủ ở công ty. Khách sạn chỉ còn một phòng, một giường.`, `A work trip with ${name}, your office rival. The hotel has one room left. One bed.`),
+      [
+        { label: L('Chia đôi giường, đặt gối ở giữa', 'Share the bed, pillow wall in the middle'), outcomes: [oc(L('Bức tường gối được dựng lên rất nghiêm túc.', 'The pillow wall is constructed with great seriousness.'), {}, step2)] },
+        { label: L('Bạn ngủ sofa', 'You take the sofa'), outcomes: [oc(L(`Sáng ra ${name} đắp chăn cho bạn từ lúc nào.`, `In the morning you find ${name} put a blanket over you.`), { happy: 3 }, () => { x.fire = clamp(x.fire + 12); p.closeness = clamp(p.closeness + 8); })] },
+        { label: L('Đi tìm khách sạn khác', 'Find another hotel'), outcomes: [oc(L('Bạn đi bộ nửa thành phố lúc nửa đêm.', 'You walk half the city at midnight.'), { happy: -3, money: -5 })] },
+      ],
+      L('Nửa đêm, chiếc gối ở giữa biến mất lúc nào không hay.', 'At midnight, the pillow wall has quietly vanished.'),
+      [
+        { label: L('Để yên', 'Leave it'), outcomes: [oc(adult ? L(`Hơi thở ${name} sát bên tai. Sáng hôm sau, cuộc họp với khách hàng bị dời sang chiều.`, `${name}'s breath against your ear. The next morning's client meeting gets moved to the afternoon.`) : L('Hai người nắm tay nhau ngủ.', 'You fall asleep holding hands.'), { happy: 14 }, together)] },
+        { label: L('Đặt gối lại chỗ cũ', 'Put the pillow back'), outcomes: [oc(L('Chưa phải lúc. Nhưng cả hai đều biết điều gì đó đã thay đổi.', 'Not yet. But you both know something has changed.'), { willpower: 3 }, () => { x.fire = clamp(x.fire + 25); p.att = 'crush'; })] },
+        { label: L('Bật đèn, nói chuyện thẳng thắn', 'Turn on the light and talk'), outcomes: [oc(L('Hai người nói chuyện đến sáng. Từ đối thủ thành đồng minh.', 'You talk till dawn. From rivals to allies.'), { happy: 6 }, () => { p.att = 'friendly'; p.closeness = clamp(p.closeness + 15); })] },
+      ],
+    ],
+    elevator: [
+      L(`Mất điện. Bạn kẹt trong thang máy với ${name}, người cũ, suốt hai tiếng.`, `Power cut. You're stuck in a lift with ${name}, your ex, for two hours.`),
+      [
+        { label: L('Nhắc lại chuyện cũ', 'Bring up the past'), outcomes: [oc(L('Những kỷ niệm ùa về trong bóng tối.', 'The memories flood back in the dark.'), {}, step2)] },
+        { label: L('Im lặng nghịch điện thoại', 'Stare at your phone'), outcomes: [oc(L('Hai tiếng dài nhất đời bạn.', 'The longest two hours of your life.'), { happy: -2 })] },
+        { label: L('Cùng hát cho đỡ sợ', 'Sing together to stay calm'), outcomes: [oc(L('Hai người hát hết album yêu thích hồi còn yêu nhau. Cười đến đau bụng.', 'You sing the whole album you loved as a couple. You laugh until it hurts.'), { happy: 6 }, () => { p.closeness = clamp(p.closeness + 12); })] },
+      ],
+      L(`${name} hỏi nhỏ: "Nếu ngày đó mình không chia tay...?"`, `${name} asks softly: "What if we hadn't broken up...?"`),
+      [
+        { label: L('Hôn họ', 'Kiss them'), outcomes: [oc(adult ? L('Đèn sáng lại. Hai người vẫn chưa buông nhau ra.', 'The lights come back. You still haven\'t let go of each other.') : L('Đèn sáng lại. Hai người nắm tay bước ra.', 'The lights come back. You step out holding hands.'), { happy: 12 }, together)] },
+        { label: L('Nói lời xin lỗi thật lòng', 'Say a real sorry'), outcomes: [oc(L('Cuối cùng cũng có một cái kết tử tế.', 'At last, a decent ending.'), { happy: 6, karma: 4 }, () => { p.closeness = clamp(p.closeness + 20); p.att = 'friendly'; })] },
+        { label: L('Đúng lúc đó, đèn sáng', 'Right then, the lights come on'), outcomes: [oc(L('Cửa mở ra trước mặt một đám đông đang chờ. Câu hỏi bỏ ngỏ.', 'The doors open on a waiting crowd. The question hangs.'), {}, () => { x.fire = clamp(x.fire + 20); p.att = 'crush'; })] },
+      ],
+    ],
+    wedding: [
+      L(`Ở đám cưới của ${name}, giữa tiệc, họ kéo bạn ra một góc: "Mình vẫn chưa quên."`, `At ${name}'s wedding, mid-reception, they pull you aside: "I still haven't forgotten."`),
+      [
+        { label: L('Bỏ trốn cùng họ', 'Run away with them'), outcomes: [oc(L('Một chiếc xe hoa chạy mất, cô dâu chú rể chỉ còn một người. Cả thành phố bàn tán.', 'A wedding car speeds off with one half of the couple. The whole town talks.'), { happy: 10, karma: -8 }, (lf) => { together(lf); me(lf).scandal = clamp(me(lf).scandal + 15); })] },
+        { label: L('Chúc phúc và rời đi', 'Wish them well and leave'), outcomes: [oc(L('Bạn nâng ly chúc mừng rồi lặng lẽ về.', 'You raise a toast and slip away.'), { karma: 5, willpower: 3 })] },
+        { label: L('Hẹn sau tuần trăng mật', 'Say: after the honeymoon'), outcomes: [oc(L('Một ánh nhìn, một lời hẹn không thành tiếng.', 'A look, an unspoken promise.'), { happy: 3 }, () => { p.att = 'affair'; x.fire = clamp(x.fire + 25); })] },
+      ],
+    ],
+    enemies: [
+      L(`Ba năm cãi nhau với ${name}. Một đêm mưa, cả hai trú chung dưới một mái hiên.`, `Three years of fighting with ${name}. One rainy night you end up under the same awning.`),
+      [
+        { label: L('Cãi tiếp cho đỡ lạnh', 'Keep arguing to stay warm'), outcomes: [oc(L('Cãi đến hết mưa. Lạ là chẳng ai muốn về.', 'You argue until the rain stops. Oddly, neither of you wants to leave.'), { happy: 2 }, () => { x.fire = clamp(x.fire + 15); })] },
+        { label: L('Chia nhau chiếc ô', 'Share your umbrella'), outcomes: [oc(L('Chiếc ô quá nhỏ cho hai người. Vai chạm vai.', 'The umbrella is too small for two. Shoulders touch.'), {}, step2)] },
+        { label: L('Mời về nhà uống trà', 'Invite them in for tea'), outcomes: [oc(L('Ấm trà nguội từ lúc nào.', 'The tea goes cold without anyone noticing.'), {}, step2)] },
+      ],
+      L('Hết mưa rồi. Không ai nói lời tạm biệt.', 'The rain has stopped. Nobody says goodbye.'),
+      [
+        { label: L('Ở lại', 'Stay'), outcomes: [oc(adult ? L('Ba năm căng thẳng tan biến trong một đêm.', 'Three years of tension melt away in one night.') : L('Hai người bắt đầu hẹn hò, ai cũng sốc.', 'You start dating. Everyone is shocked.'), { happy: 15 }, together)] },
+        { label: L('Chỉ đứng nhìn nhau', 'Just look at each other'), outcomes: [oc(L('Lửa cháy âm ỉ. Chưa ai dám bước tiếp.', 'A slow burn. Neither dares take the step yet.'), {}, () => { x.fire = 90; p.att = 'crush'; })] },
+        { label: L('Về nhà', 'Go home'), outcomes: [oc(L('Từ nay hai người cãi nhau nhẹ nhàng hơn hẳn.', 'From now on your arguments are much gentler.'), { happy: 3 }, () => { p.att = 'like'; p.closeness = clamp(p.closeness + 10); })] },
+      ],
+    ],
+    reunion: [
+      L(`Họp lớp 20 năm. ${name}, mối tình đầu, vẫn cười như ngày xưa.`, `Your 20-year reunion. ${name}, your first love, still has the same smile.`),
+      [
+        { label: L('Ngồi cạnh nói chuyện cả tối', 'Sit together all night'), outcomes: [oc(L('Hai mươi năm gói gọn trong một buổi tối.', 'Twenty years fit into a single evening.'), {}, step2)] },
+        { label: L('Chỉ chào xã giao', 'Just say hello'), outcomes: [oc(L('Một cái gật đầu, một nụ cười. Thế là đủ.', 'A nod, a smile. That\'s enough.'))] },
+        { label: L('Hát karaoke bài hát cũ', 'Sing your old song at karaoke'), outcomes: [oc(L('Cả lớp hò reo. Hai người đỏ mặt như năm 17 tuổi.', 'The whole class cheers. You both blush like you\'re seventeen.'), { happy: 6 }, () => { x.fire = clamp(x.fire + 20); p.closeness = clamp(p.closeness + 10); })] },
+      ],
+      L(`Tan tiệc, ${name} hỏi: "Đi dạo một chút nhé?"`, `As the party ends, ${name} asks: "Walk for a bit?"`),
+      [
+        { label: L('Đi', 'Go'), outcomes: [oc(adult ? L('Con đường cũ, cổng trường cũ, và một nụ hôn trễ hai mươi năm.', 'The old road, the old school gate, and a kiss twenty years late.') : L('Con đường cũ, cổng trường cũ.', 'The old road, the old school gate.'), { happy: 12 }, together)] },
+        { label: L('Trao số điện thoại', 'Swap numbers'), outcomes: [oc(L('Một tin nhắn "về đến nhà chưa?" lúc nửa đêm.', 'A midnight "home safe?" text.'), { happy: 4 }, () => { p.att = 'crush'; x.fire = clamp(x.fire + 30); })] },
+        { label: L('Tạm biệt', 'Say goodbye'), outcomes: [oc(L('Có những người chỉ nên ở lại trong ký ức.', 'Some people belong in memory.'), { happy: -2 })] },
+      ],
+    ],
+  }[item.id];
+  if (!T) return null;
+  const step = item.step === 2 && T[2] ? 2 : 0;
+  return sev(`sys/ix_fated_${item.id}_${step}`, T[step], T[step + 1]);
+}
+
+// Mục 3, 4, 6 · Cảnh gần gũi 25+: địa điểm, đêm đầu tiên, độ hợp
+function intimateScene25(life, st, p, closer) {
+  const name = nm(life, p);
+  const x = prof(p);
+  const go = (place) => (protect) => ({
+    chance: 1, effects: { happy: 8 },
+    text: !x.first
+      ? (x.chem + (p.skill ?? 50) / 2 > 100 ? L(`Đêm đầu tiên với ${name}: hồi hộp, rồi hoàn hảo đến khó tin.`, `Your first night with ${name}: nervous, then unbelievably perfect.`) : x.chem > 50 ? L(`Đêm đầu tiên với ${name}: vụng về, nhiều tiếng cười, và rất ngọt.`, `Your first night with ${name}: clumsy, lots of laughs, very sweet.`) : L(`Đêm đầu tiên với ${name}: hơi ngượng, cả hai cần thêm thời gian để hiểu nhau.`, `Your first night with ${name}: a bit awkward. You both need time to learn each other.`))
+      : place.text,
+    run: (lf) => {
+      x.first = true;
+      closer(lf, p, 4, 10);
+      setFlag(lf, 'recent_intimate');
+      tryConceive(lf, p, protectChance(protect));
+      x.fire = clamp(x.fire + 3);
+      lf.stats.happy = clamp(lf.stats.happy + Math.round(((p.skill ?? 50) - 50) / 12 + (p.gender === 'male' ? ((p.size ?? 50) - 50) / 25 : 0) + (x.chem - 50) / 15));
+      if (place.after) place.after(lf);
+    },
+  });
+  const places = [
+    { label: L('Ở nhà, chậm rãi', 'At home, slowly'), text: L(`Bạn và ${name} dành cả buổi tối cho nhau, chậm rãi và không vội vàng.`, `You and ${name} spend the whole evening on each other, slow and unhurried.`) },
+    { label: L('Khách sạn tình yêu', 'A love hotel'), units: 3, text: L('Phòng có gương trên trần và bồn tắm hình trái tim. Hai người cười suốt.', 'Mirrored ceiling, heart-shaped tub. You laugh the whole time.') },
+    { label: L('Bồn tắm', 'The bathtub'), text: L('Nước tràn ra sàn. Không ai bận tâm.', 'Water all over the floor. Nobody cares.') },
+    { label: L('Trên ghế sau xe hơi', 'The back seat of the car'), text: L('Kính xe mờ hơi nước. Đúng lúc đó có người gõ cửa kính hỏi đường.', 'The windows fog up. Right then, someone knocks to ask for directions.'), after: (lf) => { me(lf).scandal = clamp(me(lf).scandal + 1); } },
+    { label: L('Bãi biển vắng lúc nửa đêm', 'A deserted beach at midnight'), text: L('Sóng, sao, và cát ở những chỗ không ngờ tới.', 'Waves, stars, and sand in unexpected places.') },
+    { label: L('Trong bếp', 'The kitchen'), text: L('Nồi canh trào. Bữa tối gọi đồ ăn ngoài.', 'The soup boils over. Dinner is takeaway.') },
+  ];
+  return {
+    event: {
+      uid: 'ix/intimate', text: L(`Bạn muốn gần gũi với ${name}. Ở đâu?`, `You want some intimacy with ${name}. Where?`),
+      choices: places.map((pl) => ({ label: pl.label, outcomes: [oc('', pl.units ? { money: -pl.units } : {}, null, () => ({ uid: 'ix/protect', text: L('Biện pháp?', 'Protection?'), choices: [{ label: L('Dùng biện pháp', 'Use protection'), outcomes: [go(pl)(true)] }, { label: L('Không dùng', 'Skip it'), outcomes: [go(pl)(false)] }] }))] })),
+    },
+  };
+}
+
+// ───────── Tang lễ tiết lộ (mục 28) và kế thừa ─────────
+function funeral(life) {
+  if (life.age < 18) return;
+  const lines = [];
+  const secret = life.people.filter((p) => p.alive && p.age >= 18 && (p.role === 'lover' || (p.wasLover && p.role === 'ex')));
+  life.counts.funeralLovers = secret.length;
+  if (secret.length) lines.push(L(`Ở đám tang, ${secret.length} người lạ lặng lẽ đứng cuối hàng. Gia đình không ai biết họ là ai.`, `At the funeral, ${secret.length} strangers stand quietly at the back. Nobody in the family knows who they are.`));
+  const cur = lovers(life);
+  if (cur.length && life.money > 0) {
+    const share = life.money * 0.1;
+    life.money -= share;
+    for (const p of cur) p.wealth = (p.wealth || 0) + share / cur.length;
+    lines.push(L('Di chúc để lại một khoản cho "một người bạn". Luật sư từ chối tiết lộ danh tính.', 'The will leaves a sum to "a friend". The lawyer refuses to say who.'));
+  }
+  const untouched = life.people.find((p) => adultOK({ age: 99 }, p) && p.ix && p.ix.fire >= 70 && !p.wasLover && !ROM.includes(p.role));
+  if (untouched) lines.push(L(`Một bó hoa không đề tên. Tấm thiệp chỉ ghi: "Người tôi chưa từng chạm." Đó là ${nm(life, untouched)}.`, `A bouquet with no name. The card reads: "The one I never touched." It was ${nm(life, untouched)}.`));
+  if (life.ix && life.ix.memoir) lines.push(L('Cuốn "Sổ đen" bán hết sạch trong tuần lễ tang.', '"The Little Black Book" sells out the week of the funeral.'));
+  life.funeral = lines;
+  for (const l of lines) addLog(life, l);
+}
+
+/** Đời mới (con) kế thừa bí mật của đời trước. */
+function inheritSecrets(old, life, kid) {
+  const notes = [];
+  const sibs = life.people.filter((p) => p.role === 'sibling');
+  let half = 0;
+  for (const s of sibs) if (s.otherParentId && kid.otherParentId && s.otherParentId !== kid.otherParentId) { s.role = 'half'; half++; }
+  if (half) notes.push(L(`Ở đám tang, bạn mới biết mình có ${half} anh chị em cùng cha/mẹ khác.`, `At the funeral you learn you have ${half} half-sibling${half > 1 ? 's' : ''}.`));
+  const ol = old.people.filter((p) => p.alive && p.age >= 18 && (p.role === 'lover' || p.wasLover) && p.id !== kid.otherParentId);
+  if (ol.length) {
+    const p = { ...ol[0], role: 'contact', closeness: 30, att: 'friendly' };
+    delete p.ix; delete p.counted; delete p.wasLover; delete p.baby;
+    life.people.push(p);
+    notes.push(L(`Bạn gặp ${personName(old, p)}, người từng là bí mật của ${old.first}. Họ kể những chuyện bạn chưa từng biết.`, `You meet ${personName(old, p)}, once ${old.first}'s secret. They tell you things you never knew.`));
+  }
+  for (const n of notes) addLog(life, n);
+}
+
+// ───────── God Mode ─────────
+function godIxPerson(life, p, vals) {
+  if (vals.firm != null) p.firm = clamp(Number(vals.firm));
+  if (vals.att) setAtt(life, p, vals.att);
+  if (p.age < 18) return;
+  const x = prof(p);
+  for (const k of ['chem', 'fire', 'libido', 'flex', 'sincere', 'jeal']) if (vals[k] != null) x[k] = clamp(Number(vals[k]));
+  if (vals.knows != null) x.knows = !!vals.knows;
+  if (vals.fav !== undefined) x.fav = vals.fav === '' || vals.fav == null ? null : clamp(Number(vals.fav), 0, POSITIONS.length - 1);
+  if (vals.kinks) {
+    x.kinks = []; x.limits = [];
+    for (const [id, v] of Object.entries(vals.kinks)) { if (!kinkById[id]) continue; if (v === 'want') x.kinks.push(id); else if (v === 'never') x.limits.push(id); }
+  }
+  if (vals.reveal) { x.known = [...x.kinks]; x.knownLim = [...x.limits]; }
+  else { x.known = x.known.filter((k) => x.kinks.includes(k)); x.knownLim = x.knownLim.filter((k) => x.limits.includes(k)); }
+}
+function godIxSelf(life, v) {
+  const m = me(life);
+  for (const k of ['libido', 'flex', 'charm', 'loyal', 'scandal']) if (v[k] != null) m[k] = clamp(Number(v[k]));
+  if (Array.isArray(v.chest)) m.chest = v.chest.filter((k) => CHEST[k]);
+  if (v.allPos) m.pos = POSITIONS.map((_, i) => i);
+  if (v.club != null) m.club = !!v.club;
+  if (v.rope != null) m.rope = !!v.rope;
+}
+
+return { FAMILY, ROM, adultOK, ATT, attOf, attOptions, setAtt, KINKS, kinkById, KINK_GROUPS, CHEST, POSITIONS, POS_LEVELS, prof, firmOf, me, agree, romance, ixPersonActions, doIxPersonAction, posLevel, IX_ACTIVITIES, ixYear, buildIxSys, intimateScene25, funeral, inheritSecrets, godIxPerson, godIxSelf };
+};
 __defs["src/engine/love.js"] = () => {
 // Tình cảm: tìm người yêu, tương tác, sống chung, cầu hôn, cưới, ly hôn, con cái, và các diễn biến hằng năm.
 // Mọi câu chữ trung tính giới: người kia luôn là "người yêu" / "họ".
@@ -3048,6 +4147,7 @@ const { L, clamp, rand, chance, randint, pick } = __req("src/engine/util.js");
 const { country, unit, partner, spouse, people, byId, randomPerson, enrichAdult, partnerGender, personName, addLog, setFlag, milestone, lovers, polyOk, makeLover, endLover, endAllLovers, syncAffair } = __req("src/engine/life.js");
 const { tryConceive, protectChance, breakUp, addChild } = __req("src/engine/events.js");
 const { netWorth } = __req("src/engine/economy.js");
+const { agree, intimateScene25, prof } = __req("src/engine/intimacy.js");
 
 const res = (text, changes = [], tone) => ({ text, changes, tone });
 const u = (life, n) => n * unit(life);
@@ -3100,7 +4200,9 @@ function profileScene(life, p, left) {
     text: L(`${nm(life, p)}: ${profileLine(life, p).vi}.${p.sugar ? ' Tài sản rất lớn.' : ''}`, `${nm(life, p)}: ${profileLine(life, p).en}.${p.sugar ? ' Extremely wealthy.' : ''}`),
     choices: [
       { label: L('Nhắn tin làm quen', 'Send a message'), outcomes: [
-        { chance: ok, effects: { happy: 10 }, text: L(`${nm(life, p)} trả lời ngay. Hai người bắt đầu hẹn hò.`, `${nm(life, p)} replies right away. You start dating.`), run: (lf) => startDating(lf, p) },
+        { chance: ok * 0.88, effects: { happy: 10 }, text: L(`${nm(life, p)} trả lời ngay. Hai người bắt đầu hẹn hò.`, `${nm(life, p)} replies right away. You start dating.`), run: (lf) => startDating(lf, p) },
+        { chance: ok * 0.07, effects: { happy: -6 }, text: L('Đến buổi hẹn, người ngồi đó trông khác hẳn ảnh. Bạn vừa bị catfish.', 'At the date, the person waiting looks nothing like their photos. You\'ve been catfished.') },
+        { chance: ok * 0.05, effects: { happy: 6 }, text: L(`Hóa ra ${nm(life, p)} làm cùng công ty. Hai người hẹn hò, và thống nhất giấu kín ở văn phòng.`, `Turns out ${nm(life, p)} works at your company. You start dating and agree to keep it quiet at the office.`), run: (lf) => startDating(lf, p) },
         { chance: 1 - ok, effects: { happy: -4 }, text: L('Tin nhắn đã xem nhưng không trả lời.', 'Seen, but no reply.') },
       ] },
       ...(nextOne ? [{ label: L('Vuốt qua người khác', 'Swipe to the next one'), outcomes: [{ chance: 1, effects: {}, text: '', next: nextOne }] }] : []),
@@ -3210,7 +4312,7 @@ function partnerAction(life, settings, p, act) {
     }
     case 'gift': return giftScene(life, p);
     case 'date': return dateScene(life, p);
-    case 'intimate': return intimateScene(life, settings, p);
+    case 'intimate': return settings.adult25 && life.age >= 18 && p.age >= 18 ? intimateScene25(life, settings, p, closer) : intimateScene(life, settings, p);
     case 'baby': {
       if (n > 2) return tired;
       if (!tryConceive(life, p, 0.3)) { life.stats.happy = clamp(life.stats.happy - 2); return res(L('Tháng này chưa có tin vui.', 'No luck this month.'), []); }
@@ -3220,7 +4322,7 @@ function partnerAction(life, settings, p, act) {
     case 'adopt': if (n > 1) return tired; return adoptScene(life, p);
     case 'askmoney': {
       if (n > 1) return tired;
-      if (chance(life, p.closeness / 140 + (p.sugar ? 0.25 : 0))) {
+      if (chance(life, agree(life, p, p.closeness / 140 + (p.sugar ? 0.25 : 0)))) {
         const amt = Math.min(p.wealth * 0.05, u(life, p.sugar ? 120 : 30));
         p.wealth -= amt; life.money += amt; p.closeness = clamp(p.closeness - 3);
         return res(L(`${name} chuyển cho bạn một khoản tiền.`, `${name} sends you some money.`), [['money', amt]], 'good');
@@ -3230,7 +4332,7 @@ function partnerAction(life, settings, p, act) {
     }
     case 'movein': {
       if (n > 1) return tired;
-      if (chance(life, clamp(p.closeness / 100 - 0.1, 0.05, 0.95))) { p.cohab = true; p.closeness = clamp(p.closeness + 6); addLog(life, L(`Bạn và ${name} dọn về sống chung.`, `You and ${name} move in together.`), 'good'); return res(L(`${name} đồng ý! Hai người dọn về sống chung.`, `${name} says yes! You move in together.`), [['happy', 8]], 'good'); }
+      if (chance(life, agree(life, p, clamp(p.closeness / 100 - 0.1, 0.05, 0.95), true))) { p.cohab = true; p.closeness = clamp(p.closeness + 6); addLog(life, L(`Bạn và ${name} dọn về sống chung.`, `You and ${name} move in together.`), 'good'); return res(L(`${name} đồng ý! Hai người dọn về sống chung.`, `${name} says yes! You move in together.`), [['happy', 8]], 'good'); }
       p.closeness = clamp(p.closeness - 6); return res(L(`${name} muốn chậm lại một chút.`, `${name} wants to take things slower.`), [], 'bad');
     }
     case 'propose': return proposeScene(life, p);
@@ -3259,7 +4361,7 @@ function partnerAction(life, settings, p, act) {
       return res(settings.adult25 ? L(`Ba ngày ở một thành phố biển với ${name}. Rèm đóng gần như suốt.`, `Three days by the sea with ${name}. The curtains stay closed most of the time.`) : L(`Ba ngày ở một thành phố biển với ${name}.`, `Three days by the sea with ${name}.`), [['money', -u(life, 10)], ['happy', 12]], 'good');
     }
     case 'official': {
-      if (chance(life, clamp(p.closeness / 100 + 0.1, 0.1, 0.95))) {
+      if (chance(life, agree(life, p, clamp(p.closeness / 100 + 0.1, 0.1, 0.95), true))) {
         if (partner(life)) breakUp(life, 'affair');
         p.role = 'partner'; p.closeness = Math.max(p.closeness, 65); p.years = 0; life.counts.partners++;
         syncAffair(life);
@@ -3271,7 +4373,7 @@ function partnerAction(life, settings, p, act) {
     }
     case 'askopen': {
       if (n > 1) return tired;
-      const pp = clamp(((p.poly ?? 30) / 100) * 0.85 + p.closeness / 500, 0.03, 0.92);
+      const pp = agree(life, p, clamp(((p.poly ?? 30) / 100) * 0.85 + p.closeness / 500, 0.03, 0.92), true);
       if (chance(life, pp)) { setFlag(life, 'open_rel'); p.closeness = clamp(p.closeness + 3); addLog(life, L(`Bạn và ${name} đồng ý thử mối quan hệ mở.`, `You and ${name} agree to try an open relationship.`), 'good'); return res(L(`${name} suy nghĩ một lúc rồi gật đầu: "Mình thử, có luật rõ ràng."`, `${name} thinks it over and nods: "Let's try. With clear rules."`), [['happy', 6]], 'good'); }
       p.closeness = clamp(p.closeness - 12);
       if ((p.crazy ?? 50) > 80 && chance(life, 0.3)) { breakUp(life, 'choice'); return res(L(`${name} coi đó là lời chia tay. Họ đi luôn.`, `${name} takes it as a breakup. They leave.`), [['happy', -10]], 'bad'); }
@@ -3353,7 +4455,7 @@ function adoptScene(life, p) {
 }
 
 function proposeScene(life, p) {
-  const base = clamp(p.closeness / 110 + (p.cohab ? 0.08 : 0) + Math.min(p.years || 0, 4) * 0.03 - 0.15, 0.05, 0.95);
+  const base = clamp(p.closeness / 110 + (p.cohab ? 0.08 : 0) + Math.min(p.years || 0, 4) * 0.03 - 0.15 + (50 - (prof(p), p.firm ?? 50)) / 250, 0.05, 0.95);
   const ring = (label, units, bonus) => ({
     label,
     outcomes: [
@@ -3904,6 +5006,7 @@ const { FLAG_TTL, pickYearEvents } = __req("src/engine/events.js");
 const { economyYear, netWorth, livesInOwnHome } = __req("src/engine/economy.js");
 const { prisonYear, cobornYear } = __req("src/engine/crime.js");
 const { loveYear } = __req("src/engine/love.js");
+const { ixYear, funeral } = __req("src/engine/intimacy.js");
 const { arcYear } = __req("src/engine/arcs.js");
 
 /** Xác suất chết trong năm. */
@@ -4086,6 +5189,7 @@ function ageUp(life, events, settings) {
   prisonYear(life);
   economyYear(life);
   loveYear(life);
+  ixYear(life, settings);
   arcYear(life);
   cobornYear(life, mortality);
   life.counts.maxMoney = Math.max(life.counts.maxMoney, netWorth(life));
@@ -4112,6 +5216,7 @@ function die(life, cause) {
   life.queue = [];
   life.cause = cause || causeFor(life);
   addLog(life, L(`Bạn qua đời ở tuổi ${life.age} vì ${life.cause.vi}.`, `You die at age ${life.age} from ${life.cause.en}.`), 'bad');
+  funeral(life);
   life.ribbons = ribbonsFor(life);
 }
 
@@ -4140,6 +5245,11 @@ const RIBBONS = {
   golddigger: { name: L('Đào mỏ', 'Gold digger'), why: L('Cưới hoặc hẹn hò nhiều người giàu', 'Married or dated big money') },
   devoted: { name: L('Thủy chung', 'Devoted'), why: L('Một cuộc hôn nhân kéo dài 40 năm', 'One marriage lasting 40 years') },
   serial: { name: L('Hôn nhân chớp nhoáng', 'Serial spouse'), why: L('Ly hôn từ 3 lần', 'Divorced three or more times') },
+  nolimits: { name: L('Không có gì là cấm', 'Nothing off-limits'), why: L('Đã thử từ 20 điều mới trở lên', 'Tried 20 or more new things') },
+  carer: { name: L('Bậc thầy chăm sóc', 'Aftercare expert'), why: L('Chăm sóc người ấy sau cảnh từ 30 lần', 'Gave aftercare 30 or more times') },
+  posmaster: { name: L('Bậc thầy sổ tay', 'Handbook master'), why: L('Đã thử đủ 36/36 tư thế', 'Tried all 36 positions') },
+  sugarlegend: { name: L('Sugar huyền thoại', 'Sugar legend'), why: L('Bao bọc từ 5 sugar baby', 'Kept five or more sugar babies') },
+  crowdfuneral: { name: L('Đám tang đông nhất', 'Packed funeral'), why: L('Từ 5 người tình dự đám tang', 'Five or more lovers at the funeral') },
   mediocre: { name: L('Bình thường', 'Ordinary'), why: L('Một đời không có gì đặc biệt', 'An unremarkable life') },
 };
 
@@ -4169,6 +5279,14 @@ function ribbonsFor(life) {
   if (life.marriage && life.age - life.marriage.since >= 40 && !life.counts.affairsExposed) r.push('devoted');
   if (life.counts.divorces >= 3) r.push('serial');
   if ((life.counts.maxBiz || 0) > 50 * gdp) r.push('tycoon');
+  const ix = life.ix;
+  if (ix) {
+    if (ix.tried.length >= 20) r.push('nolimits');
+    if (ix.care >= 30) r.push('carer');
+    if (ix.pos.length >= 36) r.push('posmaster');
+    if (ix.babies >= 5) r.push('sugarlegend');
+  }
+  if ((life.counts.funeralLovers || 0) >= 5) r.push('crowdfuneral');
   // Đời tùy chỉnh (God Mode / Tự do) không nhận ribbon khó
   const HARD = ['loaded', 'academic', 'longlived', 'saint', 'famous', 'tycoon', 'houdini', 'cunning'];
   const out = life.customized ? r.filter((k) => !HARD.includes(k)) : r;
@@ -30614,6 +31732,7 @@ const { buildArcEvent, applyArc } = __req("src/engine/arcs.js");
 const { choiceLocked } = __req("src/engine/events.js");
 const { assignGoals } = __req("src/engine/goals.js");
 const { buildCareerSys } = __req("src/engine/career.js");
+const { buildIxSys, inheritSecrets } = __req("src/engine/intimacy.js");
 const big = __req("src/data/packs/core_big.json").default;
 const love = __req("src/data/packs/love_core.json").default;
 const coreLife = __req("src/data/packs/core_life.json").default;
@@ -30710,7 +31829,7 @@ function currentEvent(game) {
   while (life.queue.length) {
     const item = life.queue[0];
     if (item.sys) {
-      const ev = buildSysEvent(life, item, game.settings) || buildCrimeSys(life, item) || buildLoveSys(life, item) || buildArcEvent(life, item) || buildCareerSys(life, item);
+      const ev = buildSysEvent(life, item, game.settings) || buildCrimeSys(life, item) || buildLoveSys(life, item) || buildArcEvent(life, item) || buildCareerSys(life, item) || buildIxSys(life, item, game.settings);
       if (ev && ev.choices.every((c) => choiceLocked(life, c))) ev.choices = ev.choices.map((c, i) => (i === ev.choices.length - 1 ? { ...c, requires: undefined } : c));
       if (ev) return ev;
       life.queue.shift();
@@ -30799,6 +31918,7 @@ function continueAsChild(game, childId) {
   if (kid.age >= 6 && kid.age < 18) life.edu.stage = kid.age >= 11 ? 'secondary' : 'primary';
   if (kid.age >= 18) life.edu.level = 'highschool';
   life.log = [{ age: kid.age, items: [{ text: L(`Bạn là ${personName(old, kid)}, con của ${old.first}. Bạn được thừa kế tài sản sau thuế.`, `You are ${personName(old, kid)}, child of ${old.first}. You inherit the estate after taxes.`) }] }];
+  inheritSecrets(old, life, kid);
   game.life = life;
   return life;
 }
@@ -30818,6 +31938,7 @@ const { country, unit, partner, spouse, people, byId, randomPerson, partnerGende
 const { applyEffects, tryConceive, protectChance, newContact, startAffair, breakUp } = __req("src/engine/events.js");
 const { CRIMES, commitCrime, prisonAction } = __req("src/engine/crime.js");
 const { ROMANTIC, partnerActionList, partnerAction, datingApp, blindDate } = __req("src/engine/love.js");
+const { ixPersonActions, doIxPersonAction, IX_ACTIVITIES, agree, prof, godIxPerson, godIxSelf, me } = __req("src/engine/intimacy.js");
 
 const fx = (life, effects) => applyEffects(life, effects);
 const res = (text, changes = [], tone) => ({ text, changes, tone });
@@ -30950,12 +32071,13 @@ const ACTIVITIES = [
 ];
 
 const PRISON_OK = new Set(['gym', 'library', 'meditate']);
-ACTIVITIES.push(...EXTRA_ACTIVITIES);
+ACTIVITIES.push(...EXTRA_ACTIVITIES, ...IX_ACTIVITIES);
 
-function availableActivities(life) {
+function availableActivities(life, settings) {
   if (life.prison) return ACTIVITIES.filter((a) => a.group === 'prison' || PRISON_OK.has(a.id));
-  return ACTIVITIES.filter((a) => a.group !== 'prison' && life.age >= a.min && life.age <= a.max && (!a.when || a.when(life)));
+  return ACTIVITIES.filter((a) => a.group !== 'prison' && life.age >= a.min && life.age <= a.max && (!a.when || a.when(life, settings)));
 }
+const FLEX_ACTS = new Set(['gym', 'yoga', 'martial', 'hike']);
 
 function doActivity(life, settings, id) {
   const a = ACTIVITIES.find((x) => x.id === id);
@@ -30966,18 +32088,21 @@ function doActivity(life, settings, id) {
   if (a.units && !canAfford(life, a.units)) return res(L('Bạn không đủ tiền.', 'You can\'t afford it.'), [], 'bad');
   const n = (life.yearActs[id] = (life.yearActs[id] || 0) + 1);
   if (n > 3) return res(L('Bạn đã làm việc này đủ nhiều trong năm nay.', 'You\'ve done this enough for one year.'), []);
+  if (a.when && !a.when(life, settings)) return null;
   if (a.units) life.money -= cost(life, a.units);
+  if (FLEX_ACTS.has(id) && life.age >= 16) { const m = me(life); m.flex = clamp(m.flex + randint(life, 1, 3)); }
   return a.run(life, settings);
 }
 
 // ───────── Quan hệ ─────────
-function personActions(life, p) {
+const dedupe = (list) => { const seen = new Set(); return list.filter(([k]) => (seen.has(k) ? false : seen.add(k))); };
+function personActions(life, p, settings) {
   const out = [];
   if (!p.alive) return out;
   out.push(['talk', L('Trò chuyện', 'Talk')]);
   if (life.prison) return out.concat([['argue', L('Cãi nhau', 'Argue')]]);
   if (p.role === 'pet') return extraPersonActions(life, p);
-  if (ROMANTIC.includes(p.role)) return partnerActionList(life, p).concat(extraPersonActions(life, p));
+  if (ROMANTIC.includes(p.role)) return dedupe(partnerActionList(life, p).concat(ixPersonActions(life, p, settings), extraPersonActions(life, p)));
   if (life.age >= 10) out.push(['gift', L('Tặng quà', 'Give a gift')]);
   out.push(['argue', L('Cãi nhau', 'Argue')]);
   if ((p.role === 'mother' || p.role === 'father') && life.age >= 6) out.push(['money', L('Xin tiền', 'Ask for money')]);
@@ -30986,9 +32111,9 @@ function personActions(life, p) {
   if (p.role === 'partner') out.push(['breakup', L('Chia tay', 'Break up')]);
   if (p.role === 'spouse') out.push(['divorce', L('Ly hôn', 'Divorce')]);
   if (p.role === 'lover') out.push(['endaffair', L('Chấm dứt', 'End it')]);
-  if ((p.role === 'contact' || p.role === 'ex') && life.age >= 18 && !partner(life)) out.push(['askout', L('Rủ hẹn hò', 'Ask out')]);
+  if (canSeduce(life, p) && !partner(life)) out.push(['askout', L('Rủ hẹn hò', 'Ask out')]);
   if (canSeduce(life, p)) out.push(['seduce', L('Quyến rũ', 'Seduce')]);
-  return out.concat(extraPersonActions(life, p));
+  return dedupe(out.concat(ixPersonActions(life, p, settings), extraPersonActions(life, p)));
 }
 
 function doPersonAction(life, settings, personId, act) {
@@ -30999,6 +32124,8 @@ function doPersonAction(life, settings, personId, act) {
   const key = `p:${act}:${p.id}`;
   const n = (life.yearActs[key] = (life.yearActs[key] || 0) + 1);
   if (n > 3 && ['talk', 'gift', 'money'].includes(act)) return res(L('Năm nay như vậy là đủ rồi.', 'That\'s enough for this year.'), []);
+  const rx = doIxPersonAction(life, settings, p, act, n);
+  if (rx) return rx;
   switch (act) {
     case 'talk': p.closeness = clamp(p.closeness + randint(life, 2, 7)); return res(L(`Bạn và ${name} nói chuyện rất lâu.`, `You and ${name} talk for a long time.`), [['happy', 0]]);
     case 'gift':
@@ -31009,7 +32136,7 @@ function doPersonAction(life, settings, personId, act) {
     case 'argue': p.closeness = clamp(p.closeness - randint(life, 6, 14)); return res(L(`Bạn và ${name} cãi nhau to.`, `You and ${name} have a big fight.`), fx(life, { happy: -3 }), 'bad');
     case 'money': {
       const mult = { poor: 1, middle: 4, well: 12, rich: 40 }[life.wealth];
-      if (chance(life, p.closeness / 130)) {
+      if (chance(life, agree(life, p, p.closeness / 130))) {
         const u = randint(life, 1, 3) * mult;
         return res(L(`${name} cho bạn một ít tiền.`, `${name} gives you some money.`), fx(life, { money: u }), 'good');
       }
@@ -31034,9 +32161,14 @@ function doPersonAction(life, settings, personId, act) {
     case 'seduce': {
       if (!canSeduce(life, p)) return res(L('Bạn không thể làm vậy với người này.', "You can't do that with this person."), [], 'bad');
       if (n > 2) return res(L('Năm nay như vậy là đủ rồi.', "That's enough for this year."), []);
-      const pr = clamp(0.15 + life.stats.looks / 250 + p.closeness / 250 + (p.poly ?? 30) / 400 + life.stats.fame / 500 + (life.skill ?? 50) / 600 - (p.fidelity ?? 60) / 400, 0.05, 0.92);
+      const x = prof(p);
+      const pr = agree(life, p, 0.15 + life.stats.looks / 250 + p.closeness / 250 + (p.poly ?? 30) / 400 + life.stats.fame / 500 + (life.skill ?? 50) / 600 - (p.fidelity ?? 60) / 400 + x.fire / 400 - 0.05, true);
       if (chance(life, pr)) {
+        const slow = x.fire >= 80;
+        x.fire = clamp(x.fire + 20);
+        if (slow) life.stats.happy = clamp(life.stats.happy + 6);
         makeLover(life, p);
+        p.wasLover = true;
         setFlag(life, 'recent_intimate');
         const taken = partner(life) && !polyOk(life);
         if (taken) life.stats.karma = clamp(life.stats.karma - 6);
@@ -31051,7 +32183,7 @@ function doPersonAction(life, settings, personId, act) {
       return res(L(`${name} lịch sự lùi lại một bước. Không khí hơi ngượng.`, `${name} politely steps back. It's a bit awkward.`), [['happy', -4]], 'bad');
     }
     case 'askout':
-      if (chance(life, p.closeness / 100 + 0.1)) { p.role = 'partner'; p.closeness = 65; life.counts.partners++; return res(L(`${name} đồng ý hẹn hò với bạn.`, `${name} agrees to date you.`), fx(life, { happy: 8 }), 'good'); }
+      if (chance(life, agree(life, p, p.closeness / 100 + 0.1, true))) { p.role = 'partner'; p.closeness = 65; life.counts.partners++; return res(L(`${name} đồng ý hẹn hò với bạn.`, `${name} agrees to date you.`), fx(life, { happy: 8 }), 'good'); }
       return res(L(`${name} không muốn.`, `${name} isn't interested.`), fx(life, { happy: -3 }));
   }
   return doExtraPersonAction(life, p, act, n);
@@ -31162,6 +32294,7 @@ function godApply(life, change) {
   if (change.money != null) life.money = Number(change.money) || 0;
   if (change.cure) { life.ill = null; life.addicted = false; life.stats.health = Math.max(life.stats.health, 80); }
   if (change.clearDebt && life.money < 0) life.money = 0;
+  if (change.ix) godIxSelf(life, change.ix);
   if (change.body) for (const k of ['fert', 'skill', 'size']) if (change.body[k] != null && (k !== 'size' || life.gender === 'male')) life[k] = clamp(Number(change.body[k]));
   if (change.country && byCode[change.country] && change.country !== life.country) {
     const from = country(life);
@@ -31184,6 +32317,7 @@ function godPerson(life, id, vals) {
     for (const k of ['poly', 'fert', 'skill', 'fidelity', 'crazy']) if (vals[k] != null) p[k] = clamp(Number(vals[k]));
     if (p.gender === 'male' && vals.size != null) p.size = clamp(Number(vals.size));
   }
+  godIxPerson(life, p, vals);
   return p;
 }
 
@@ -31321,6 +32455,7 @@ const { resolveEscape, resolveCasino, resolveOlympiad, resolveRace, resolveBlack
 const { SPECIALS, canJoin, specialAction, followersText } = __req("src/engine/specials.js");
 const { GOALS, goalById, checkGoals, ACHIEVEMENTS, archiveLife, emptyProfile } = __req("src/engine/goals.js");
 const { emigrate, emigrationOdds, emigrationCost, cobornName } = __req("src/engine/crime.js");
+const { ATT, attOf, attOptions, KINKS, KINK_GROUPS, kinkById, CHEST, POSITIONS, POS_LEVELS, posLevel, prof, me, firmOf, adultOK, ROM: ROM_ROLES } = __req("src/engine/intimacy.js");
 
 // ───────── Lưu trữ (an toàn khi trình duyệt chặn) ─────────
 const KEY = { gate: 'motdoi.gate', settings: 'motdoi.settings', save: 'motdoi.save', packs: 'motdoi.packs', profile: 'motdoi.profile' };
@@ -31403,15 +32538,16 @@ const UID_EM = {
 };
 const ARC_EM = { bestie: '🤜', rival: '😤', firstlove: '💌', mentor: '🎓', secret: '🗝️', pet: '🐾' };
 const evEmoji = (ev) => (!ev ? null : ev.big ? '🌟' : ev.arc ? ARC_EM[ev.arc] || '📖' : UID_EM[ev.uid] || CAT_EM[ev.category] || null);
-const GROUP_EM = { fun: '🎬', shop: '🛍️', life: '🌈', pet: '🐾', money: '🏦', net: '📱', kid: '🧸', teen: '🎒', mind: '🧠', night: '🌃', love: '💘', crime: '🦹', prison: '⛓️' };
+const GROUP_EM = { fun: '🎬', shop: '🛍️', life: '🌈', pet: '🐾', money: '🏦', net: '📱', kid: '🧸', teen: '🎒', mind: '🧠', night: '🌃', love: '💘', adult: '🔞', crime: '🦹', prison: '⛓️' };
 const ACT_EM = {
+  adultshop: '🛍️', club25: '🎭', sugarfind: '💎', fling: '✈️', ropeclass: '🪢', memoir: '📓',
   language: '🗣️', instrument: '🎹', martial: '🥋', yoga: '🧘', hike: '🥾', diet: '🥗', spa: '💆', movie: '🍿', concert: '🎤', cook: '🍳', garden: '🌱', comics: '📚', boardgame: '🎲', luxury: '👜', thrift: '🧥', tattoo: '🖋️', hairdye: '💇', license: '🚗', travel: '🧳', comeout: '🏳️‍🌈', donate: '🤲', will: '📜', rename: '🪪', adopt_pet: '🐾', loan: '🏦', repay: '💳', insure: '🛡️',
   cry: '😭', toys: '🧸', mischief: '😈', cartoons: '📺', friends: '🧑‍🤝‍🧑', art: '🎨', sleepover: '🛏️', swim: '🏊', tutor: '📚', sportclub: '⚽', band: '🎸', volunteer: '🤲', chores: '🧹', games: '🎮',
   net_photo: '📸', net_video: '🎥', net_live: '📡', net_sponsor: '🤑', races: '🏇', blackjack: '🃏', social: '📱', gym: '🏋️', library: '📖', meditate: '🧘', doctor: '🩺', vacation: '✈️', surgery: '💉', bar: '🍺', club: '🪩', casino: '🎰', lottery: '🎟️', date: '💐', app: '📲', hookup: '🔥', affair: '🤫',
   prison_escape: '🏃', prison_parole: '📝', prison_work: '🔨', prison_riot: '🔥', crime_pickpocket: '👛', crime_shoplift: '🛍️', crime_burglary: '🏚️', crime_cartheft: '🚗', crime_fraud: '💳', crime_bank: '🏦',
 };
-const PA_EM = { walk: '🦮', vet: '🩺', treat: '🦴', outing: '🎡', care: '🫶', familytrip: '🧳', inherit: '💰', read: '📖', play: '🧸', teach: '✏️', allowance: '🪙', tutor: '👩‍🏫', praise: '👏', punish: '⛔', drinks: '🍻', borrow: '🤲', lend: '💸', collect: '🧾', payback: '💵', setup: '💘', prank: '🤡', counsel: '🛋️', photo: '📸', insult: '🗯️', fight: '👊', cutoff: '✂️', seduce: '😏', trip: '🏝️', official: '💑', askopen: '🔓', closeopen: '🔐', confess: '🙏', talk: '💬', compliment: '🌹', flirt: '😘', gift: '🎁', date: '🍷', intimate: '🔥', baby: '👶', adopt: '🍼', askmoney: '💸', money: '💸', movein: '🏡', propose: '💍', wedding: '💒', vows: '💞', breakup: '💔', divorce: '⚖️', endaffair: '✋', argue: '😠', askout: '💐' };
-const DANGER_PA = ['breakup', 'divorce', 'argue', 'endaffair', 'insult', 'fight', 'cutoff', 'punish'];
+const PA_EM = { hangout: '🎡', hug: '🤗', deeptalk: '🫂', favor: '🤝', invite: '🎉', gossip: '🗣️', flirtx: '😘', confessx: '💌', ixtalk: '🕯️', kink: '🗝️', pos: '📕', sext: '📱', group: '👥', clubtogether: '🎭', spoil: '💎', rules: '📜', endbaby: '✋', walk: '🦮', vet: '🩺', treat: '🦴', outing: '🎡', care: '🫶', familytrip: '🧳', inherit: '💰', read: '📖', play: '🧸', teach: '✏️', allowance: '🪙', tutor: '👩‍🏫', praise: '👏', punish: '⛔', drinks: '🍻', borrow: '🤲', lend: '💸', collect: '🧾', payback: '💵', setup: '💘', prank: '🤡', counsel: '🛋️', photo: '📸', insult: '🗯️', fight: '👊', cutoff: '✂️', seduce: '😏', trip: '🏝️', official: '💑', askopen: '🔓', closeopen: '🔐', confess: '🙏', talk: '💬', compliment: '🌹', flirt: '😘', gift: '🎁', date: '🍷', intimate: '🔥', baby: '👶', adopt: '🍼', askmoney: '💸', money: '💸', movein: '🏡', propose: '💍', wedding: '💒', vows: '💞', breakup: '💔', divorce: '⚖️', endaffair: '✋', argue: '😠', askout: '💐' };
+const DANGER_PA = ['endbaby', 'breakup', 'divorce', 'argue', 'endaffair', 'insult', 'fight', 'cutoff', 'punish'];
 const JOB_EM = { fast_food: '🍔', delivery: '🛵', babysitter: '🍼', retail: '🛒', waiter: '🍽️', factory: '🏭', driver: '🚕', cleaner: '🧽', bartender: '🍸', model: '📸', office_clerk: '🗂️', sales: '🤝', police: '👮', nurse: '🩹', teacher: '🧑‍🏫', marketing: '📣', accountant: '🧮', engineer: '🛠️', developer: '💻', lawyer: '⚖️', doctor: '🩺', chef: '👨‍🍳', electrician: '⚡', mechanic: '🔧', hairdresser: '💇', it_tech: '🖥️', designer: '🎨', journalist: '📰', architect: '📐', analyst: '📈', pharmacist: '💊', psychologist: '🛋️', scientist: '🔬', professor: '🧑‍🏫' };
 const ASSET_EM = { savings: '🏦', index: '📊', gold: '🥇', tech: '💻', bank: '🏛️', energy: '⚡', crypto: '🪙' };
 const HOME_EM = { studio: '🛏️', apartment: '🏢', house: '🏠', villa: '🏰' };
@@ -31620,6 +32756,7 @@ function deathCard() {
       </dl>
       ${L.goals ? `<div style="width:100%;text-align:left">${goalsBlock(L)}</div>` : ''}
       ${ui.newAch && ui.newAch.length ? `<div class="box newach" style="width:100%"><b>🏆 ${t('newAch')}</b>${ui.newAch.map((a) => `<div class="row" style="justify-content:center"><span style="font-size:22px">${a.em}</span><b>${esc(tx(a.name))}</b></div>`).join('')}</div>` : ''}
+      ${L.funeral && L.funeral.length ? `<div class="box funeral" style="width:100%;text-align:left"><b>🕯️ ${t('funeral')}</b>${L.funeral.map((x) => `<p class="note" style="margin:6px 0 0">${esc(tx(x))}</p>`).join('')}</div>` : ''}
       <div class="eyebrow">${t('ribbons')}</div>
       <div class="stamps">${ribs}</div>
       ${lifeChart(L)}
@@ -32099,15 +33236,18 @@ function sheetPerson(id) {
   const L = game.life;
   const p = L.people.find((x) => x.id === id);
   if (!p) return head('—');
-  const acts = personActions(L, p).map(([k, label]) => li(`pa:${p.id}:${k}`, PA_EM[k] || '•', esc(tx(label)), '', { danger: DANGER_PA.includes(k) })).join('');
+  const acts = personActions(L, p, settings).map(([k, label]) => li(`pa:${p.id}:${k}`, PA_EM[k] || '•', esc(tx(label)), '', { danger: DANGER_PA.includes(k) })).join('');
   const romantic = ['partner', 'spouse', 'lover'].includes(p.role);
   const status = p.role === 'spouse' ? `${t('married')}${L.marriage && L.marriage.spouseId === p.id && L.marriage.prenup ? ` · ${t('prenupYes')}` : ''}` : p.engaged ? t('engaged') : p.cohab ? t('cohab') : '';
   return `${head(esc(personName(L, p)), 'var(--b-people)', 'sheet:people')}
     <div class="profile"><span class="avatar lg">${face(p.gender, p.age, p.role, p.alive, p.species)}</span><div class="tx"><b>${esc(personName(L, p))}</b><small class="muted">${roleName(L, p)} · ${t(p.gender)} · ${p.age}${p.alive ? '' : ' †'}</small>${status ? `<span class="tag">${status}</span>` : ''}</div></div>
     <dl class="kv"><dt>🤝 ${t('closeness')}</dt><dd>${lvl(p.closeness)}</dd><dt>✨ ${t('looks')}</dt><dd>${lvl(p.looks)}</dd><dt>🧠 ${t('smarts')}</dt><dd>${lvl(p.smarts)}</dd>
     ${p.age >= 18 ? `<dt>💼 ${t('job')}</dt><dd>${p.job ? esc(tx(p.job)) : t('unemployed')}</dd>${p.income ? `<dt>💵 ${t('salary')}</dt><dd class="mono">${money(p.income)}</dd>` : ''}${p.wealth ? `<dt>💰 ${t('netWorth')}</dt><dd class="mono">${money(p.wealth)}</dd>` : ''}` : ''}
-    ${romantic ? `<dt>⏳ ${t('together')}</dt><dd>${p.years || 0} ${t('years')}</dd>` : ''}</dl>
+    ${romantic ? `<dt>⏳ ${t('together')}</dt><dd>${p.years || 0} ${t('years')}</dd>` : ''}
+    ${p.alive && p.role !== 'pet' && (settings.godEnabled || p.attKnown) ? `<dt>💭 ${t('attitude')}</dt><dd>${ATT[attOf(p)].em} ${esc(tx(ATT[attOf(p)].name))}</dd>` : ''}
+    ${p.alive && p.role !== 'pet' && settings.godEnabled ? `<dt>🪨 ${t('firm')}</dt><dd>${lvl(firmOf(p))}</dd>` : ''}</dl>
     ${intimateKv(L, p)}
+    ${knownKv(L, p)}
     ${acts ? `<div class="list">${acts}</div>` : ''}
     ${settings.godEnabled && p.alive ? `<div class="list">${li(`godp:${p.id}`, '⚡', t('godPerson'), t('godPersonSub'))}</div>` : ''}`;
 }
@@ -32115,23 +33255,40 @@ function intimateKv(L, p) {
   if (!settings.adult25 || p.age < 18 || !settings.godEnabled || !p.alive) return '';
   return `<dl class="kv"><dt>💞 ${t('poly')}</dt><dd>${lvl(p.poly ?? 30)}</dd><dt>🔥 ${t('skill')}</dt><dd>${lvl(p.skill ?? 50)}</dd><dt>🌱 ${t('fert')}</dt><dd>${lvl(p.fert ?? 70)}</dd>${p.gender === 'male' ? `<dt>📏 ${t('size')}</dt><dd>${lvl(p.size ?? 50)}</dd>` : ''}<dt>🔒 ${t('fidelity')}</dt><dd>${lvl(p.fidelity ?? 60)}</dd><dt>😤 ${t('jealous')}</dt><dd>${lvl(p.crazy ?? 50)}</dd></dl>`;
 }
+function knownKv(L, p) {
+  if (!settings.adult25 || !p.ix || p.age < 18 || L.age < 18 || !ROM_ROLES.includes(p.role)) return '';
+  const x = p.ix;
+  const nmK = (ids) => ids.map((k) => esc(tx(kinkById[k].name))).join(', ');
+  const rows = [];
+  if (x.known.length) rows.push(`<dt>♥ ${t('likes')}</dt><dd>${nmK(x.known)}</dd>`);
+  if (x.knownLim.length) rows.push(`<dt>⛔ ${t('limits')}</dt><dd>${nmK(x.knownLim)}</dd>`);
+  if (x.fav != null) rows.push(`<dt>⭐ ${t('favPos')}</dt><dd>${esc(tx(POSITIONS[x.fav]))}</dd>`);
+  if (p.baby) rows.push(`<dt>💎 ${t('allowance')}</dt><dd class="mono">${money(p.allow || 0)}</dd>`);
+  return rows.length ? `<dl class="kv">${rows.join('')}</dl>` : '';
+}
 function sheetGodPerson(id) {
   const L = game.life;
   const p = L.people.find((x) => x.id === id);
   if (!p) return head('—');
   const g = ui.godp || {};
-  const sl = (k, em) => `<div class="slider"><span>${em}</span><label for="gp-${k}">${t(k === 'crazy' ? 'jealous' : k === 'closeness' ? 'closeness' : k)}</label><input id="gp-${k}" type="range" min="0" max="100" value="${g[k] ?? 50}" data-gp="${k}"><output class="mono">${g[k] ?? 50}</output></div>`;
+  const sl = (k, em) => `<div class="slider"><span>${em}</span><label for="gp-${k}">${t(k === 'crazy' ? 'jealous' : k === 'closeness' ? 'closeness' : k === 'jeal' ? 'jealNet' : k)}</label><input id="gp-${k}" type="range" min="0" max="100" value="${g[k] ?? 50}" data-gp="${k}"><output class="mono">${g[k] ?? 50}</output></div>`;
   const adult = p.age >= 18 && settings.adult25;
+  const attSel = `<div class="field"><label for="gp-att">💭 ${t('attitude')}</label><select id="gp-att" data-gps="att">${attOptions(L, p).map((k) => `<option value="${k}" ${g.att === k ? 'selected' : ''}>${ATT[k].em} ${esc(tx(ATT[k].name))}</option>`).join('')}</select></div>`;
+  const chk = (k, label) => `<label class="toggle" for="gpc-${k}"><span><b>${label}</b></span><input id="gpc-${k}" type="checkbox" data-gpc="${k}" ${g[k] ? 'checked' : ''}></label>`;
+  const kinkRows = adult ? KINK_GROUPS.map(([gid, em, gl]) => `<div class="kgrp"><b>${em} ${esc(tx(gl))}</b>${KINKS.filter((k) => k.grp === gid).map((k) => `<div class="krow"><span>${esc(tx(k.name))}</span><select data-gpk="${k.id}" aria-label="${esc(tx(k.name))}"><option value="" ${!g.kinks[k.id] ? 'selected' : ''}>—</option><option value="want" ${g.kinks[k.id] === 'want' ? 'selected' : ''}>♥ ${t('kWant')}</option><option value="never" ${g.kinks[k.id] === 'never' ? 'selected' : ''}>⛔ ${t('kNever')}</option></select></div>`).join('')}</div>`).join('') : '';
+  const favSel = adult ? `<div class="field"><label for="gp-fav">⭐ ${t('favPos')}</label><select id="gp-fav" data-gps="fav"><option value="">—</option>${POSITIONS.map((q, i) => `<option value="${i}" ${String(g.fav) === String(i) ? 'selected' : ''}>${esc(tx(POS_LEVELS[posLevel(i)]))} · ${esc(tx(q))}</option>`).join('')}</select></div>` : '';
   return `${head(`⚡ ${esc(personName(L, p))}`, '#a16207', `person:${p.id}`)}
     <p class="note">${t('godPersonNote')}</p>
     <div class="box">${sl('closeness', '🤝')}${sl('looks', '✨')}${sl('smarts', '🧠')}</div>
-    ${adult ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${sl('poly', '💞')}${sl('skill', '🔥')}${sl('fert', '🌱')}${p.gender === 'male' ? sl('size', '📏') : ''}${sl('fidelity', '🔒')}${sl('crazy', '😤')}</div></div>` : ''}
+    <div class="section"><h3>💭 ${t('attitudeTitle')}</h3><div class="box">${attSel}${sl('firm', '🪨')}<p class="note" style="margin:0">${t('firmNote')}</p></div></div>
+    ${adult ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${sl('poly', '💞')}${sl('skill', '🔥')}${sl('fert', '🌱')}${p.gender === 'male' ? sl('size', '📏') : ''}${sl('fidelity', '🔒')}${sl('crazy', '😤')}${sl('chem', '🧪')}${sl('fire', '🔥')}${sl('libido', '💓')}${sl('flex', '🤸')}${p.role === 'lover' ? sl('jeal', '👀') : ''}${p.baby ? sl('sincere', '💎') : ''}${p.role === 'lover' ? chk('knows', t('knowsOthers')) : ''}${favSel}</div></div>
+    <div class="section"><details class="box"><summary><b>🗝️ ${t('kinksTitle')}</b></summary>${kinkRows}${chk('reveal', t('revealAll'))}</details></div>` : ''}
     <button class="btn primary" data-a="godp-apply:${p.id}">${t('godApply')}</button>`;
 }
-const ACT_GROUPS = ['prison', 'kid', 'teen', 'mind', 'fun', 'shop', 'life', 'pet', 'net', 'night', 'love', 'money', 'crime'];
+const ACT_GROUPS = ['prison', 'kid', 'teen', 'mind', 'fun', 'shop', 'life', 'pet', 'net', 'night', 'love', 'adult', 'money', 'crime'];
 function sheetActs() {
   const L = game.life;
-  const acts = availableActivities(L);
+  const acts = availableActivities(L, settings);
   const groups = ACT_GROUPS.filter((g) => acts.some((a) => a.group === g));
   const g = groups.includes(ui.sub) ? ui.sub : groups.length === 1 ? groups[0] : null;
   if (!g) {
@@ -32170,8 +33327,25 @@ function sheetSelf() {
       ${L.ill ? `<dt>🤒 ${t('ill')}</dt><dd>${esc(tx(L.ill.name))}</dd>` : ''}
       ${L.record ? `<dt>📁 ${t('record')}</dt><dd>✓</dd>` : ''}
     </dl>
+    ${privateBlock(L)}
     ${L.age >= 18 && !L.prison ? emigrateBlock(L) : ''}
     ${cobornBlock(L)}`;
+}
+function privateBlock(L) {
+  if (!settings.adult25 || L.age < 18 || !L.ix) return '';
+  const m = L.ix;
+  const chest = m.chest.length ? m.chest.map((k) => `<span title="${esc(tx(CHEST[k].name))}">${CHEST[k].em}</span>`).join(' ') : t('none');
+  return `<div class="section"><h3>🔞 ${t('privateLife')}</h3><dl class="kv">
+    <dt>📕 ${t('positions')}</dt><dd class="mono">${m.pos.length}/36</dd>
+    <dt>🗝️ ${t('tried')}</dt><dd class="mono">${m.tried.length}/${KINKS.length}</dd>
+    <dt>🧰 ${t('chest')}</dt><dd>${chest}</dd>
+    <dt>💓 ${t('libido')}</dt><dd>${lvl(m.libido)}</dd>
+    <dt>🤸 ${t('flex')}</dt><dd>${lvl(m.flex)}</dd>
+    <dt>🌹 ${t('charm')}</dt><dd>${lvl(m.charm)}</dd>
+    <dt>💍 ${t('loyal')}</dt><dd>${lvl(m.loyal)}</dd>
+    <dt>📰 ${t('scandal')}</dt><dd>${lvl(m.scandal)}</dd>
+    ${m.club ? `<dt>🎭 ${t('clubCard')}</dt><dd>✓</dd>` : ''}
+  </dl></div>`;
 }
 function emigrateBlock(L) {
   const sel = ui.emig && ui.emig !== L.country ? ui.emig : COUNTRIES.find((c) => c.code !== L.country).code;
@@ -32254,7 +33428,9 @@ function sheetGod() {
   return `${head(`⚡ ${t('god')}`, '#a16207')}
     <p class="note">${t('godNote')}</p>
     ${L.dead ? '' : `<div class="box">${STAT_KEYS.map(slider).join('')}</div><div class="section"><h3>${t('hidden')}</h3><div class="box">${HIDDEN_KEYS.map(slider).join('')}</div></div>
-    ${settings.adult25 && L.age >= 18 ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${['skill', 'fert'].concat(L.gender === 'male' ? ['size'] : []).map((k) => `<div class="slider"><span>${{ skill: '🔥', fert: '🌱', size: '📏' }[k]}</span><label for="gb-${k}">${t(k)}</label><input id="gb-${k}" type="range" min="0" max="100" value="${g.body[k] ?? 50}" data-gb="${k}"><output class="mono">${g.body[k] ?? 50}</output></div>`).join('')}</div></div>` : ''}
+    ${settings.adult25 && L.age >= 18 ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${['skill', 'fert'].concat(L.gender === 'male' ? ['size'] : []).map((k) => `<div class="slider"><span>${{ skill: '🔥', fert: '🌱', size: '📏' }[k]}</span><label for="gb-${k}">${t(k)}</label><input id="gb-${k}" type="range" min="0" max="100" value="${g.body[k] ?? 50}" data-gb="${k}"><output class="mono">${g.body[k] ?? 50}</output></div>`).join('')}${[['libido', '💓'], ['flex', '🤸'], ['charm', '🌹'], ['loyal', '💍'], ['scandal', '📰']].map(([k, em]) => `<div class="slider"><span>${em}</span><label for="gx-${k}">${t(k)}</label><input id="gx-${k}" type="range" min="0" max="100" value="${g.ix[k]}" data-gx="${k}"><output class="mono">${g.ix[k]}</output></div>`).join('')}</div></div>
+    <div class="section"><details class="box"><summary><b>🧰 ${t('chest')}</b></summary><div class="traits">${Object.entries(CHEST).map(([k, it]) => `<label><input type="checkbox" data-gxc="${k}" ${g.ix.chest.includes(k) ? 'checked' : ''}>${it.em} ${esc(tx(it.name))}</label>`).join('')}</div>
+      ${[['allPos', t('allPos')], ['club', t('clubCard')], ['rope', t('ropeDone')]].map(([k, lb]) => `<label class="toggle" for="gxb-${k}"><span><b>${lb}</b></span><input id="gxb-${k}" type="checkbox" data-gxb="${k}" ${g.ix[k] ? 'checked' : ''}></label>`).join('')}</details></div>` : ''}
     <div class="box"><div class="field"><label for="g-money">💵 ${t('money')} (${c.cur})</label><input id="g-money" type="number" step="1" value="${Math.round(g.money)}" data-gm="1"></div></div>
     <button class="btn primary" data-a="god-apply">${t('godApply')}</button>
     <div class="list">${li('god-cure', '💊', t('cure'))}${li('god-debt', '🧾', t('clearDebt'))}</div>
@@ -32362,15 +33538,28 @@ $app.addEventListener('click', (e) => {
     }
     case 'sheet':
       ui.sheet = arg; ui.resetArmed = false; ui.packMsg = null; ui.sub = null;
-      if (arg === 'god' && L) ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate, body: { fert: L.fert ?? 70, skill: L.skill ?? 50, size: L.size ?? 50 } };
+      if (arg === 'god' && L) { const m = me(L); ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate, body: { fert: L.fert ?? 70, skill: L.skill ?? 50, size: L.size ?? 50 }, ix: { libido: m.libido, flex: m.flex, charm: m.charm, loyal: m.loyal, scandal: m.scandal, chest: [...m.chest], allPos: false, club: m.club, rope: m.rope } }; }
       break;
     case 'close': ui.sheet = null; break;
     case 'person': ui.sheet = `person:${arg}`; break;
-    case 'godp': { const p = L.people.find((x) => x.id === arg); if (p) { ui.godp = { closeness: p.closeness, looks: p.looks, smarts: p.smarts, poly: p.poly ?? 30, skill: p.skill ?? 50, fert: p.fert ?? 70, size: p.size ?? 50, fidelity: p.fidelity ?? 60, crazy: p.crazy ?? 50 }; ui.sheet = `godp:${arg}`; } break; }
-    case 'godp-apply': godPerson(L, arg, ui.godp); ui.sheet = `person:${arg}`; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
+    case 'godp': {
+      const p = L.people.find((x) => x.id === arg);
+      if (p) {
+        ui.godp = { closeness: p.closeness, looks: p.looks, smarts: p.smarts, poly: p.poly ?? 30, skill: p.skill ?? 50, fert: p.fert ?? 70, size: p.size ?? 50, fidelity: p.fidelity ?? 60, crazy: p.crazy ?? 50, firm: firmOf(p), att: attOf(p), kinks: {} };
+        if (p.age >= 18) {
+          const x = prof(p);
+          Object.assign(ui.godp, { chem: x.chem, fire: x.fire, libido: x.libido, flex: x.flex, jeal: x.jeal, sincere: x.sincere, knows: x.knows, fav: x.fav ?? '', reveal: false });
+          for (const k of x.kinks) ui.godp.kinks[k] = 'want';
+          for (const k of x.limits) ui.godp.kinks[k] = 'never';
+        }
+        ui.sheet = `godp:${arg}`;
+      }
+      break;
+    }
+    case 'godp-apply': { const gv = { ...ui.godp }; const gp = L.people.find((x) => x.id === arg); if (gp && gp.age < 18) { delete gv.kinks; } godPerson(L, arg, gv); } ui.sheet = `person:${arg}`; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
     case 'pa': {
       const p = L.people.find((x) => x.id === arg);
-      const lab = p && personActions(L, p).find(([k]) => k === arg2);
+      const lab = p && personActions(L, p, settings).find(([k]) => k === arg2);
       record(doPersonAction(L, settings, arg, arg2), lab ? { vi: `${lab[1].vi} · ${personName(L, p)}`, en: `${lab[1].en} · ${personName(L, p)}` } : null, true, PA_EM[arg2]);
       break;
     }
@@ -32387,7 +33576,7 @@ $app.addEventListener('click', (e) => {
     }
     case 'job': record(applyJob(L, arg), { vi: `${STRINGS.vi.apply}: ${careerById[arg].title.vi}`, en: `${STRINGS.en.apply}: ${careerById[arg].title.en}` }, false, JOB_EM[arg]); break;
     case 'w': record(workAction(L, arg), { vi: STRINGS.vi[W_LABEL[arg]], en: STRINGS.en[W_LABEL[arg]] }, false, { exam: '📝', overtime: '⏰', bossdrinks: '🍻', transfer: '🔁', leave: '🏖️', strike: '✊', whistle: '📣', promote: '⬆️', study: '📚', skip: '🛹', dropout: '🚪', uni: '🎓', trade: '🧰', grad: '📜', switch: '🔀', club: '🎭', parttime: '☕', scholar: '🏅', exchange: '✈️', intern: '🗂️', olympiad: '🏆', hard: '💪', raise: '💰', quit: '🚪' }[arg]); break;
-    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate, body: ui.god.body }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
+    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate, body: ui.god.body, ix: settings.adult25 && L.age >= 18 ? ui.god.ix : undefined }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
     case 'god-cure': godApply(L, { cure: true }); ui.god.stats = { ...L.stats }; ui.result = { text: t('cure'), tone: 'good', emoji: '💊' }; break;
     case 'god-debt': godApply(L, { clearDebt: true }); ui.god.money = L.money * country(L).rate; ui.result = { text: t('clearDebt'), tone: 'good', emoji: '🧾' }; break;
     case 'god-move': { const v = document.getElementById('g-country').value; godApply(L, { country: v }); ui.god.money = L.money * country(L).rate; ui.result = { text: `${byCode[v].flag} ${tx(byCode[v].name)}`, tone: 'good', emoji: '🌍' }; break; }
@@ -32452,6 +33641,9 @@ $app.addEventListener('input', (e) => {
   } else if (el.dataset.gp) {
     ui.godp[el.dataset.gp] = Number(el.value);
     el.nextElementSibling.textContent = el.value;
+  } else if (el.dataset.gx) {
+    ui.god.ix[el.dataset.gx] = Number(el.value);
+    el.nextElementSibling.textContent = el.value;
   } else if (el.dataset.gb) {
     ui.god.body[el.dataset.gb] = Number(el.value);
     el.nextElementSibling.textContent = el.value;
@@ -32466,6 +33658,17 @@ $app.addEventListener('change', (e) => {
     const k = el.dataset.trait;
     ui.draft.traits = el.checked ? [...new Set([...ui.draft.traits, k])].slice(0, 2) : ui.draft.traits.filter((x) => x !== k);
     render();
+  } else if (el.dataset.gps) {
+    ui.godp[el.dataset.gps] = el.value;
+  } else if (el.dataset.gpk) {
+    ui.godp.kinks[el.dataset.gpk] = el.value;
+  } else if (el.dataset.gpc) {
+    ui.godp[el.dataset.gpc] = el.checked;
+  } else if (el.dataset.gxc) {
+    const k = el.dataset.gxc;
+    ui.god.ix.chest = el.checked ? [...new Set([...ui.god.ix.chest, k])] : ui.god.ix.chest.filter((x) => x !== k);
+  } else if (el.dataset.gxb) {
+    ui.god.ix[el.dataset.gxb] = el.checked;
   } else if (el.dataset.set) {
     settings[el.dataset.set] = el.checked;
     persist();

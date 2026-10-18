@@ -11,6 +11,7 @@ import { buildArcEvent, applyArc } from './arcs.js';
 import { choiceLocked } from './events.js';
 import { assignGoals } from './goals.js';
 import { buildCareerSys } from './career.js';
+import { buildIxSys, inheritSecrets } from './intimacy.js';
 import big from '../data/packs/core_big.json';
 import love from '../data/packs/love_core.json';
 import coreLife from '../data/packs/core_life.json';
@@ -107,7 +108,7 @@ export function currentEvent(game) {
   while (life.queue.length) {
     const item = life.queue[0];
     if (item.sys) {
-      const ev = buildSysEvent(life, item, game.settings) || buildCrimeSys(life, item) || buildLoveSys(life, item) || buildArcEvent(life, item) || buildCareerSys(life, item);
+      const ev = buildSysEvent(life, item, game.settings) || buildCrimeSys(life, item) || buildLoveSys(life, item) || buildArcEvent(life, item) || buildCareerSys(life, item) || buildIxSys(life, item, game.settings);
       if (ev && ev.choices.every((c) => choiceLocked(life, c))) ev.choices = ev.choices.map((c, i) => (i === ev.choices.length - 1 ? { ...c, requires: undefined } : c));
       if (ev) return ev;
       life.queue.shift();
@@ -196,6 +197,7 @@ export function continueAsChild(game, childId) {
   if (kid.age >= 6 && kid.age < 18) life.edu.stage = kid.age >= 11 ? 'secondary' : 'primary';
   if (kid.age >= 18) life.edu.level = 'highschool';
   life.log = [{ age: kid.age, items: [{ text: L(`Bạn là ${personName(old, kid)}, con của ${old.first}. Bạn được thừa kế tài sản sau thuế.`, `You are ${personName(old, kid)}, child of ${old.first}. You inherit the estate after taxes.`) }] }];
+  inheritSecrets(old, life, kid);
   game.life = life;
   return life;
 }

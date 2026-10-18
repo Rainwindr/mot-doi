@@ -7,6 +7,7 @@ import {
 } from './life.js';
 import { tryConceive, protectChance, breakUp, addChild } from './events.js';
 import { netWorth } from './economy.js';
+import { agree, intimateScene25, prof } from './intimacy.js';
 
 const res = (text, changes = [], tone) => ({ text, changes, tone });
 const u = (life, n) => n * unit(life);
@@ -59,7 +60,9 @@ function profileScene(life, p, left) {
     text: L(`${nm(life, p)}: ${profileLine(life, p).vi}.${p.sugar ? ' Tài sản rất lớn.' : ''}`, `${nm(life, p)}: ${profileLine(life, p).en}.${p.sugar ? ' Extremely wealthy.' : ''}`),
     choices: [
       { label: L('Nhắn tin làm quen', 'Send a message'), outcomes: [
-        { chance: ok, effects: { happy: 10 }, text: L(`${nm(life, p)} trả lời ngay. Hai người bắt đầu hẹn hò.`, `${nm(life, p)} replies right away. You start dating.`), run: (lf) => startDating(lf, p) },
+        { chance: ok * 0.88, effects: { happy: 10 }, text: L(`${nm(life, p)} trả lời ngay. Hai người bắt đầu hẹn hò.`, `${nm(life, p)} replies right away. You start dating.`), run: (lf) => startDating(lf, p) },
+        { chance: ok * 0.07, effects: { happy: -6 }, text: L('Đến buổi hẹn, người ngồi đó trông khác hẳn ảnh. Bạn vừa bị catfish.', 'At the date, the person waiting looks nothing like their photos. You\'ve been catfished.') },
+        { chance: ok * 0.05, effects: { happy: 6 }, text: L(`Hóa ra ${nm(life, p)} làm cùng công ty. Hai người hẹn hò, và thống nhất giấu kín ở văn phòng.`, `Turns out ${nm(life, p)} works at your company. You start dating and agree to keep it quiet at the office.`), run: (lf) => startDating(lf, p) },
         { chance: 1 - ok, effects: { happy: -4 }, text: L('Tin nhắn đã xem nhưng không trả lời.', 'Seen, but no reply.') },
       ] },
       ...(nextOne ? [{ label: L('Vuốt qua người khác', 'Swipe to the next one'), outcomes: [{ chance: 1, effects: {}, text: '', next: nextOne }] }] : []),
@@ -169,7 +172,7 @@ export function partnerAction(life, settings, p, act) {
     }
     case 'gift': return giftScene(life, p);
     case 'date': return dateScene(life, p);
-    case 'intimate': return intimateScene(life, settings, p);
+    case 'intimate': return settings.adult25 && life.age >= 18 && p.age >= 18 ? intimateScene25(life, settings, p, closer) : intimateScene(life, settings, p);
     case 'baby': {
       if (n > 2) return tired;
       if (!tryConceive(life, p, 0.3)) { life.stats.happy = clamp(life.stats.happy - 2); return res(L('Tháng này chưa có tin vui.', 'No luck this month.'), []); }
@@ -179,7 +182,7 @@ export function partnerAction(life, settings, p, act) {
     case 'adopt': if (n > 1) return tired; return adoptScene(life, p);
     case 'askmoney': {
       if (n > 1) return tired;
-      if (chance(life, p.closeness / 140 + (p.sugar ? 0.25 : 0))) {
+      if (chance(life, agree(life, p, p.closeness / 140 + (p.sugar ? 0.25 : 0)))) {
         const amt = Math.min(p.wealth * 0.05, u(life, p.sugar ? 120 : 30));
         p.wealth -= amt; life.money += amt; p.closeness = clamp(p.closeness - 3);
         return res(L(`${name} chuyển cho bạn một khoản tiền.`, `${name} sends you some money.`), [['money', amt]], 'good');
@@ -189,7 +192,7 @@ export function partnerAction(life, settings, p, act) {
     }
     case 'movein': {
       if (n > 1) return tired;
-      if (chance(life, clamp(p.closeness / 100 - 0.1, 0.05, 0.95))) { p.cohab = true; p.closeness = clamp(p.closeness + 6); addLog(life, L(`Bạn và ${name} dọn về sống chung.`, `You and ${name} move in together.`), 'good'); return res(L(`${name} đồng ý! Hai người dọn về sống chung.`, `${name} says yes! You move in together.`), [['happy', 8]], 'good'); }
+      if (chance(life, agree(life, p, clamp(p.closeness / 100 - 0.1, 0.05, 0.95), true))) { p.cohab = true; p.closeness = clamp(p.closeness + 6); addLog(life, L(`Bạn và ${name} dọn về sống chung.`, `You and ${name} move in together.`), 'good'); return res(L(`${name} đồng ý! Hai người dọn về sống chung.`, `${name} says yes! You move in together.`), [['happy', 8]], 'good'); }
       p.closeness = clamp(p.closeness - 6); return res(L(`${name} muốn chậm lại một chút.`, `${name} wants to take things slower.`), [], 'bad');
     }
     case 'propose': return proposeScene(life, p);
@@ -218,7 +221,7 @@ export function partnerAction(life, settings, p, act) {
       return res(settings.adult25 ? L(`Ba ngày ở một thành phố biển với ${name}. Rèm đóng gần như suốt.`, `Three days by the sea with ${name}. The curtains stay closed most of the time.`) : L(`Ba ngày ở một thành phố biển với ${name}.`, `Three days by the sea with ${name}.`), [['money', -u(life, 10)], ['happy', 12]], 'good');
     }
     case 'official': {
-      if (chance(life, clamp(p.closeness / 100 + 0.1, 0.1, 0.95))) {
+      if (chance(life, agree(life, p, clamp(p.closeness / 100 + 0.1, 0.1, 0.95), true))) {
         if (partner(life)) breakUp(life, 'affair');
         p.role = 'partner'; p.closeness = Math.max(p.closeness, 65); p.years = 0; life.counts.partners++;
         syncAffair(life);
@@ -230,7 +233,7 @@ export function partnerAction(life, settings, p, act) {
     }
     case 'askopen': {
       if (n > 1) return tired;
-      const pp = clamp(((p.poly ?? 30) / 100) * 0.85 + p.closeness / 500, 0.03, 0.92);
+      const pp = agree(life, p, clamp(((p.poly ?? 30) / 100) * 0.85 + p.closeness / 500, 0.03, 0.92), true);
       if (chance(life, pp)) { setFlag(life, 'open_rel'); p.closeness = clamp(p.closeness + 3); addLog(life, L(`Bạn và ${name} đồng ý thử mối quan hệ mở.`, `You and ${name} agree to try an open relationship.`), 'good'); return res(L(`${name} suy nghĩ một lúc rồi gật đầu: "Mình thử, có luật rõ ràng."`, `${name} thinks it over and nods: "Let's try. With clear rules."`), [['happy', 6]], 'good'); }
       p.closeness = clamp(p.closeness - 12);
       if ((p.crazy ?? 50) > 80 && chance(life, 0.3)) { breakUp(life, 'choice'); return res(L(`${name} coi đó là lời chia tay. Họ đi luôn.`, `${name} takes it as a breakup. They leave.`), [['happy', -10]], 'bad'); }
@@ -312,7 +315,7 @@ function adoptScene(life, p) {
 }
 
 function proposeScene(life, p) {
-  const base = clamp(p.closeness / 110 + (p.cohab ? 0.08 : 0) + Math.min(p.years || 0, 4) * 0.03 - 0.15, 0.05, 0.95);
+  const base = clamp(p.closeness / 110 + (p.cohab ? 0.08 : 0) + Math.min(p.years || 0, 4) * 0.03 - 0.15 + (50 - (prof(p), p.firm ?? 50)) / 250, 0.05, 0.95);
   const ring = (label, units, bonus) => ({
     label,
     outcomes: [

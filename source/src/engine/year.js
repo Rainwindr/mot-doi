@@ -11,6 +11,7 @@ import { FLAG_TTL, pickYearEvents } from './events.js';
 import { economyYear, netWorth, livesInOwnHome } from './economy.js';
 import { prisonYear, cobornYear } from './crime.js';
 import { loveYear } from './love.js';
+import { ixYear, funeral } from './intimacy.js';
 import { arcYear } from './arcs.js';
 
 /** Xác suất chết trong năm. */
@@ -193,6 +194,7 @@ export function ageUp(life, events, settings) {
   prisonYear(life);
   economyYear(life);
   loveYear(life);
+  ixYear(life, settings);
   arcYear(life);
   cobornYear(life, mortality);
   life.counts.maxMoney = Math.max(life.counts.maxMoney, netWorth(life));
@@ -219,6 +221,7 @@ export function die(life, cause) {
   life.queue = [];
   life.cause = cause || causeFor(life);
   addLog(life, L(`Bạn qua đời ở tuổi ${life.age} vì ${life.cause.vi}.`, `You die at age ${life.age} from ${life.cause.en}.`), 'bad');
+  funeral(life);
   life.ribbons = ribbonsFor(life);
 }
 
@@ -247,6 +250,11 @@ export const RIBBONS = {
   golddigger: { name: L('Đào mỏ', 'Gold digger'), why: L('Cưới hoặc hẹn hò nhiều người giàu', 'Married or dated big money') },
   devoted: { name: L('Thủy chung', 'Devoted'), why: L('Một cuộc hôn nhân kéo dài 40 năm', 'One marriage lasting 40 years') },
   serial: { name: L('Hôn nhân chớp nhoáng', 'Serial spouse'), why: L('Ly hôn từ 3 lần', 'Divorced three or more times') },
+  nolimits: { name: L('Không có gì là cấm', 'Nothing off-limits'), why: L('Đã thử từ 20 điều mới trở lên', 'Tried 20 or more new things') },
+  carer: { name: L('Bậc thầy chăm sóc', 'Aftercare expert'), why: L('Chăm sóc người ấy sau cảnh từ 30 lần', 'Gave aftercare 30 or more times') },
+  posmaster: { name: L('Bậc thầy sổ tay', 'Handbook master'), why: L('Đã thử đủ 36/36 tư thế', 'Tried all 36 positions') },
+  sugarlegend: { name: L('Sugar huyền thoại', 'Sugar legend'), why: L('Bao bọc từ 5 sugar baby', 'Kept five or more sugar babies') },
+  crowdfuneral: { name: L('Đám tang đông nhất', 'Packed funeral'), why: L('Từ 5 người tình dự đám tang', 'Five or more lovers at the funeral') },
   mediocre: { name: L('Bình thường', 'Ordinary'), why: L('Một đời không có gì đặc biệt', 'An unremarkable life') },
 };
 
@@ -276,6 +284,14 @@ export function ribbonsFor(life) {
   if (life.marriage && life.age - life.marriage.since >= 40 && !life.counts.affairsExposed) r.push('devoted');
   if (life.counts.divorces >= 3) r.push('serial');
   if ((life.counts.maxBiz || 0) > 50 * gdp) r.push('tycoon');
+  const ix = life.ix;
+  if (ix) {
+    if (ix.tried.length >= 20) r.push('nolimits');
+    if (ix.care >= 30) r.push('carer');
+    if (ix.pos.length >= 36) r.push('posmaster');
+    if (ix.babies >= 5) r.push('sugarlegend');
+  }
+  if ((life.counts.funeralLovers || 0) >= 5) r.push('crowdfuneral');
   // Đời tùy chỉnh (God Mode / Tự do) không nhận ribbon khó
   const HARD = ['loaded', 'academic', 'longlived', 'saint', 'famous', 'tycoon', 'houdini', 'cunning'];
   const out = life.customized ? r.filter((k) => !HARD.includes(k)) : r;

@@ -13,6 +13,7 @@ import {
 import { applyEffects, tryConceive, protectChance, newContact, startAffair, breakUp } from './events.js';
 import { CRIMES, commitCrime, prisonAction } from './crime.js';
 import { ROMANTIC, partnerActionList, partnerAction, datingApp, blindDate } from './love.js';
+import { ixPersonActions, doIxPersonAction, IX_ACTIVITIES, agree, prof, godIxPerson, godIxSelf, me } from './intimacy.js';
 
 const fx = (life, effects) => applyEffects(life, effects);
 const res = (text, changes = [], tone) => ({ text, changes, tone });
@@ -145,12 +146,13 @@ export const ACTIVITIES = [
 ];
 
 const PRISON_OK = new Set(['gym', 'library', 'meditate']);
-ACTIVITIES.push(...EXTRA_ACTIVITIES);
+ACTIVITIES.push(...EXTRA_ACTIVITIES, ...IX_ACTIVITIES);
 
-export function availableActivities(life) {
+export function availableActivities(life, settings) {
   if (life.prison) return ACTIVITIES.filter((a) => a.group === 'prison' || PRISON_OK.has(a.id));
-  return ACTIVITIES.filter((a) => a.group !== 'prison' && life.age >= a.min && life.age <= a.max && (!a.when || a.when(life)));
+  return ACTIVITIES.filter((a) => a.group !== 'prison' && life.age >= a.min && life.age <= a.max && (!a.when || a.when(life, settings)));
 }
+const FLEX_ACTS = new Set(['gym', 'yoga', 'martial', 'hike']);
 
 export function doActivity(life, settings, id) {
   const a = ACTIVITIES.find((x) => x.id === id);
@@ -161,18 +163,21 @@ export function doActivity(life, settings, id) {
   if (a.units && !canAfford(life, a.units)) return res(L('Bạn không đủ tiền.', 'You can\'t afford it.'), [], 'bad');
   const n = (life.yearActs[id] = (life.yearActs[id] || 0) + 1);
   if (n > 3) return res(L('Bạn đã làm việc này đủ nhiều trong năm nay.', 'You\'ve done this enough for one year.'), []);
+  if (a.when && !a.when(life, settings)) return null;
   if (a.units) life.money -= cost(life, a.units);
+  if (FLEX_ACTS.has(id) && life.age >= 16) { const m = me(life); m.flex = clamp(m.flex + randint(life, 1, 3)); }
   return a.run(life, settings);
 }
 
 // ───────── Quan hệ ─────────
-export function personActions(life, p) {
+const dedupe = (list) => { const seen = new Set(); return list.filter(([k]) => (seen.has(k) ? false : seen.add(k))); };
+export function personActions(life, p, settings) {
   const out = [];
   if (!p.alive) return out;
   out.push(['talk', L('Trò chuyện', 'Talk')]);
   if (life.prison) return out.concat([['argue', L('Cãi nhau', 'Argue')]]);
   if (p.role === 'pet') return extraPersonActions(life, p);
-  if (ROMANTIC.includes(p.role)) return partnerActionList(life, p).concat(extraPersonActions(life, p));
+  if (ROMANTIC.includes(p.role)) return dedupe(partnerActionList(life, p).concat(ixPersonActions(life, p, settings), extraPersonActions(life, p)));
   if (life.age >= 10) out.push(['gift', L('Tặng quà', 'Give a gift')]);
   out.push(['argue', L('Cãi nhau', 'Argue')]);
   if ((p.role === 'mother' || p.role === 'father') && life.age >= 6) out.push(['money', L('Xin tiền', 'Ask for money')]);
@@ -181,9 +186,9 @@ export function personActions(life, p) {
   if (p.role === 'partner') out.push(['breakup', L('Chia tay', 'Break up')]);
   if (p.role === 'spouse') out.push(['divorce', L('Ly hôn', 'Divorce')]);
   if (p.role === 'lover') out.push(['endaffair', L('Chấm dứt', 'End it')]);
-  if ((p.role === 'contact' || p.role === 'ex') && life.age >= 18 && !partner(life)) out.push(['askout', L('Rủ hẹn hò', 'Ask out')]);
+  if (canSeduce(life, p) && !partner(life)) out.push(['askout', L('Rủ hẹn hò', 'Ask out')]);
   if (canSeduce(life, p)) out.push(['seduce', L('Quyến rũ', 'Seduce')]);
-  return out.concat(extraPersonActions(life, p));
+  return dedupe(out.concat(ixPersonActions(life, p, settings), extraPersonActions(life, p)));
 }
 
 export function doPersonAction(life, settings, personId, act) {
@@ -194,6 +199,8 @@ export function doPersonAction(life, settings, personId, act) {
   const key = `p:${act}:${p.id}`;
   const n = (life.yearActs[key] = (life.yearActs[key] || 0) + 1);
   if (n > 3 && ['talk', 'gift', 'money'].includes(act)) return res(L('Năm nay như vậy là đủ rồi.', 'That\'s enough for this year.'), []);
+  const rx = doIxPersonAction(life, settings, p, act, n);
+  if (rx) return rx;
   switch (act) {
     case 'talk': p.closeness = clamp(p.closeness + randint(life, 2, 7)); return res(L(`Bạn và ${name} nói chuyện rất lâu.`, `You and ${name} talk for a long time.`), [['happy', 0]]);
     case 'gift':
@@ -204,7 +211,7 @@ export function doPersonAction(life, settings, personId, act) {
     case 'argue': p.closeness = clamp(p.closeness - randint(life, 6, 14)); return res(L(`Bạn và ${name} cãi nhau to.`, `You and ${name} have a big fight.`), fx(life, { happy: -3 }), 'bad');
     case 'money': {
       const mult = { poor: 1, middle: 4, well: 12, rich: 40 }[life.wealth];
-      if (chance(life, p.closeness / 130)) {
+      if (chance(life, agree(life, p, p.closeness / 130))) {
         const u = randint(life, 1, 3) * mult;
         return res(L(`${name} cho bạn một ít tiền.`, `${name} gives you some money.`), fx(life, { money: u }), 'good');
       }
@@ -229,9 +236,14 @@ export function doPersonAction(life, settings, personId, act) {
     case 'seduce': {
       if (!canSeduce(life, p)) return res(L('Bạn không thể làm vậy với người này.', "You can't do that with this person."), [], 'bad');
       if (n > 2) return res(L('Năm nay như vậy là đủ rồi.', "That's enough for this year."), []);
-      const pr = clamp(0.15 + life.stats.looks / 250 + p.closeness / 250 + (p.poly ?? 30) / 400 + life.stats.fame / 500 + (life.skill ?? 50) / 600 - (p.fidelity ?? 60) / 400, 0.05, 0.92);
+      const x = prof(p);
+      const pr = agree(life, p, 0.15 + life.stats.looks / 250 + p.closeness / 250 + (p.poly ?? 30) / 400 + life.stats.fame / 500 + (life.skill ?? 50) / 600 - (p.fidelity ?? 60) / 400 + x.fire / 400 - 0.05, true);
       if (chance(life, pr)) {
+        const slow = x.fire >= 80;
+        x.fire = clamp(x.fire + 20);
+        if (slow) life.stats.happy = clamp(life.stats.happy + 6);
         makeLover(life, p);
+        p.wasLover = true;
         setFlag(life, 'recent_intimate');
         const taken = partner(life) && !polyOk(life);
         if (taken) life.stats.karma = clamp(life.stats.karma - 6);
@@ -246,7 +258,7 @@ export function doPersonAction(life, settings, personId, act) {
       return res(L(`${name} lịch sự lùi lại một bước. Không khí hơi ngượng.`, `${name} politely steps back. It's a bit awkward.`), [['happy', -4]], 'bad');
     }
     case 'askout':
-      if (chance(life, p.closeness / 100 + 0.1)) { p.role = 'partner'; p.closeness = 65; life.counts.partners++; return res(L(`${name} đồng ý hẹn hò với bạn.`, `${name} agrees to date you.`), fx(life, { happy: 8 }), 'good'); }
+      if (chance(life, agree(life, p, p.closeness / 100 + 0.1, true))) { p.role = 'partner'; p.closeness = 65; life.counts.partners++; return res(L(`${name} đồng ý hẹn hò với bạn.`, `${name} agrees to date you.`), fx(life, { happy: 8 }), 'good'); }
       return res(L(`${name} không muốn.`, `${name} isn't interested.`), fx(life, { happy: -3 }));
   }
   return doExtraPersonAction(life, p, act, n);
@@ -357,6 +369,7 @@ export function godApply(life, change) {
   if (change.money != null) life.money = Number(change.money) || 0;
   if (change.cure) { life.ill = null; life.addicted = false; life.stats.health = Math.max(life.stats.health, 80); }
   if (change.clearDebt && life.money < 0) life.money = 0;
+  if (change.ix) godIxSelf(life, change.ix);
   if (change.body) for (const k of ['fert', 'skill', 'size']) if (change.body[k] != null && (k !== 'size' || life.gender === 'male')) life[k] = clamp(Number(change.body[k]));
   if (change.country && byCode[change.country] && change.country !== life.country) {
     const from = country(life);
@@ -379,6 +392,7 @@ export function godPerson(life, id, vals) {
     for (const k of ['poly', 'fert', 'skill', 'fidelity', 'crazy']) if (vals[k] != null) p[k] = clamp(Number(vals[k]));
     if (p.gender === 'male' && vals.size != null) p.size = clamp(Number(vals.size));
   }
+  godIxPerson(life, p, vals);
   return p;
 }
 
