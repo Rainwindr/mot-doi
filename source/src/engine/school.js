@@ -17,7 +17,7 @@ function edu(life) {
 
 /** Khả năng đỗ một ngành, theo trí tuệ và điểm phổ thông. */
 export function admitChance(life, m) {
-  return clamp(0.3 + (life.stats.smarts - m.min) / 35 + (life.edu.gpa - 50) / 150, 0.05, 0.97);
+  return clamp(0.3 + (life.stats.smarts - m.min) / 35 + (life.edu.gpa - 50) / 150 + (life.edu.examBonus || 0), 0.05, 0.97);
 }
 
 export function canStudy(life) {

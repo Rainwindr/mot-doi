@@ -321,3 +321,11 @@ details.box summary::-webkit-details-marker { display: none; }
 details.box summary::after { content: ' ▾'; color: var(--muted); }
 .ladder li.cur span:last-child { color: var(--sky); font-weight: 800; }
 .ladder li.done span:last-child { color: var(--good); }
+.track { display: grid; gap: 6px; background: color-mix(in srgb, var(--lvl-hi) 18%, var(--soft)); border-radius: 12px; padding: 8px; }
+.lane { position: relative; height: 34px; border-bottom: 1px dashed var(--rule); }
+.lane:last-child { border-bottom: 0; }
+.lane .hn { position: absolute; left: 4px; top: 0; font-size: 11px; font-weight: 700; color: var(--muted); }
+.lane.mine .hn { color: var(--sky); }
+.lane i { position: absolute; bottom: 0; font-style: normal; font-size: 24px; transform: scaleX(-1); transition: left .12s linear; }
+.pcard.sm { width: 64px; height: 90px; } .pcard.sm b { font-size: 26px; } .pcard.sm span { font-size: 20px; }
+.pcard.back { width: 64px; height: 90px; background: repeating-linear-gradient(45deg, #2563eb, #2563eb 6px, #1d4ed8 6px, #1d4ed8 12px); color: #fff; }

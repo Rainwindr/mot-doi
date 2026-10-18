@@ -7,16 +7,16 @@ import {
   makeGame, defaultSettings, refreshEvents, loadPackText, newLife, ageUpGame, currentEvent, chooseEvent, chooseModal, continueAsChild, BUILTIN,
 } from '../engine/game.js';
 import { normalizePack, validatePack } from '../engine/validate.js';
-import { STAT_KEYS, HIDDEN_KEYS, TRAITS, WEALTH, country, tier, personName, partner, people, addLog } from '../engine/life.js';
+import { STAT_KEYS, HIDDEN_KEYS, TRAITS, WEALTH, country, tier, personName, partner, people, addLog, polyOk } from '../engine/life.js';
 import { ACTIVITIES } from '../engine/actions.js';
 import { profileLine } from '../engine/love.js';
 import { choiceLocked } from '../engine/events.js';
-import { availableActivities, doActivity, personActions, doPersonAction, jobOpenings, jobsLocked, applyJob, workAction, godApply, godRewind } from '../engine/actions.js';
+import { availableActivities, doActivity, personActions, doPersonAction, godPerson, jobOpenings, jobsLocked, applyJob, workAction, godApply, godRewind } from '../engine/actions.js';
 import { RIBBONS } from '../engine/year.js';
 import { PHASES, ASSETS, HOMES, CARS, INDUSTRIES, holdingValue, netWorth, savingsRate, homePrice, bizCapital, invest, divest, buyHome, sellHome, toggleRent, buyCar, sellCar, startBiz, bizAction } from '../engine/economy.js';
 import { majorById, tradeById } from '../data/majors.js';
 import { degreeName, stageLength } from '../engine/school.js';
-import { resolveEscape, resolveCasino, resolveOlympiad } from '../engine/minigames.js';
+import { resolveEscape, resolveCasino, resolveOlympiad, resolveRace, resolveBlackjack, resolveExam, INTERVIEW_QS } from '../engine/minigames.js';
 import { SPECIALS, canJoin, specialAction, followersText } from '../engine/specials.js';
 import { GOALS, goalById, checkGoals, ACHIEVEMENTS, archiveLife, emptyProfile } from '../engine/goals.js';
 import { emigrate, emigrationOdds, emigrationCost, cobornName } from '../engine/crime.js';
@@ -85,8 +85,8 @@ const lvlCls = (v) => (v >= 66 ? 'hi' : v >= 33 ? 'mid' : 'lo');
 const lvl = (v, thin) => { const n = Math.max(0, Math.min(100, Math.round(v))); return `<div class="lvl${thin ? ' thin' : ''}"><i class="${lvlCls(n)}" style="width:${n}%"></i><span>${n}%</span></div>`; };
 const bar = (v) => lvl(v);
 const prog = (v) => `<div class="lvl thin"><i class="prog" style="width:${Math.max(4, Math.min(100, Math.round(v)))}%"></i></div>`;
-function face(gender, age, role, alive = true) {
-  if (role === 'pet') return '🐾';
+function face(gender, age, role, alive = true, species) {
+  if (role === 'pet') return species ? ({ dog: '🐶', cat: '🐱', rabbit: '🐰', parrot: '🦜', turtle: '🐢' }[species] || '🐾') : '🐾';
   if (!alive) return '🪦';
   if (age < 3) return '👶';
   const f = gender === 'female';
@@ -98,18 +98,19 @@ const CAT_EM = { childhood: '🧸', school: '🎒', teen: '🛹', love: '💘', 
 const UID_EM = {
   'sys/pregnancy': '🤰', 'sys/affair': '💔', 'sys/after_hs': '🎓', 'sys/tax': '🧾', 'sys/partner_proposes': '💍', 'sys/move_in': '🏡', 'sys/want_kids': '👶', 'sys/partner_cheats': '💔',
   'act/ons': '🌙', 'act/intimate': '🔥', 'act/casino': '🎰', 'act/affair': '🤫', 'crime/court': '⚖️', 'prison/escape': '🏃',
-  'love/profile': '📲', 'love/app': '📲', 'love/blind': '💐', 'love/gift': '🎁', 'love/date': '🍷', 'love/intimate': '🔥', 'love/adopt': '🍼', 'love/propose': '💍', 'love/wedding_size': '💒', 'love/prenup': '📜', 'love/honeymoon': '🏝️', 'love/divorce': '⚖️', 'love/nomatch': '🤷', 'school/major': '🎓', 'sys/job_offers': '💼', 'sys/headhunt': '📞', 'school/trade': '🧰', 'school/grad': '📜',
+  'love/profile': '📲', 'love/app': '📲', 'love/blind': '💐', 'love/gift': '🎁', 'love/date': '🍷', 'love/intimate': '🔥', 'love/adopt': '🍼', 'love/propose': '💍', 'love/wedding_size': '💒', 'love/prenup': '📜', 'love/honeymoon': '🏝️', 'love/divorce': '⚖️', 'love/nomatch': '🤷', 'school/major': '🎓', 'pet/adopt': '🐾', 'money/loan': '🏦', 'money/insure': '🛡️', 'sys/lover_ultimatum': '💔', 'sys/job_offers': '💼', 'sys/headhunt': '📞', 'school/trade': '🧰', 'school/grad': '📜',
 };
 const ARC_EM = { bestie: '🤜', rival: '😤', firstlove: '💌', mentor: '🎓', secret: '🗝️', pet: '🐾' };
 const evEmoji = (ev) => (!ev ? null : ev.big ? '🌟' : ev.arc ? ARC_EM[ev.arc] || '📖' : UID_EM[ev.uid] || CAT_EM[ev.category] || null);
-const GROUP_EM = { net: '📱', kid: '🧸', teen: '🎒', mind: '🧠', night: '🌃', love: '💘', crime: '🦹', prison: '⛓️' };
+const GROUP_EM = { fun: '🎬', shop: '🛍️', life: '🌈', pet: '🐾', money: '🏦', net: '📱', kid: '🧸', teen: '🎒', mind: '🧠', night: '🌃', love: '💘', crime: '🦹', prison: '⛓️' };
 const ACT_EM = {
+  language: '🗣️', instrument: '🎹', martial: '🥋', yoga: '🧘', hike: '🥾', diet: '🥗', spa: '💆', movie: '🍿', concert: '🎤', cook: '🍳', garden: '🌱', comics: '📚', boardgame: '🎲', luxury: '👜', thrift: '🧥', tattoo: '🖋️', hairdye: '💇', license: '🚗', travel: '🧳', comeout: '🏳️‍🌈', donate: '🤲', will: '📜', rename: '🪪', adopt_pet: '🐾', loan: '🏦', repay: '💳', insure: '🛡️',
   cry: '😭', toys: '🧸', mischief: '😈', cartoons: '📺', friends: '🧑‍🤝‍🧑', art: '🎨', sleepover: '🛏️', swim: '🏊', tutor: '📚', sportclub: '⚽', band: '🎸', volunteer: '🤲', chores: '🧹', games: '🎮',
-  net_photo: '📸', net_video: '🎥', net_live: '📡', net_sponsor: '🤑', social: '📱', gym: '🏋️', library: '📖', meditate: '🧘', doctor: '🩺', vacation: '✈️', surgery: '💉', bar: '🍺', club: '🪩', casino: '🎰', lottery: '🎟️', date: '💐', app: '📲', hookup: '🔥', affair: '🤫',
+  net_photo: '📸', net_video: '🎥', net_live: '📡', net_sponsor: '🤑', races: '🏇', blackjack: '🃏', social: '📱', gym: '🏋️', library: '📖', meditate: '🧘', doctor: '🩺', vacation: '✈️', surgery: '💉', bar: '🍺', club: '🪩', casino: '🎰', lottery: '🎟️', date: '💐', app: '📲', hookup: '🔥', affair: '🤫',
   prison_escape: '🏃', prison_parole: '📝', prison_work: '🔨', prison_riot: '🔥', crime_pickpocket: '👛', crime_shoplift: '🛍️', crime_burglary: '🏚️', crime_cartheft: '🚗', crime_fraud: '💳', crime_bank: '🏦',
 };
-const PA_EM = { talk: '💬', compliment: '🌹', flirt: '😘', gift: '🎁', date: '🍷', intimate: '🔥', baby: '👶', adopt: '🍼', askmoney: '💸', money: '💸', movein: '🏡', propose: '💍', wedding: '💒', vows: '💞', breakup: '💔', divorce: '⚖️', endaffair: '✋', argue: '😠', askout: '💐' };
-const DANGER_PA = ['breakup', 'divorce', 'argue', 'endaffair'];
+const PA_EM = { walk: '🦮', vet: '🩺', treat: '🦴', outing: '🎡', care: '🫶', familytrip: '🧳', inherit: '💰', read: '📖', play: '🧸', teach: '✏️', allowance: '🪙', tutor: '👩‍🏫', praise: '👏', punish: '⛔', drinks: '🍻', borrow: '🤲', lend: '💸', collect: '🧾', payback: '💵', setup: '💘', prank: '🤡', counsel: '🛋️', photo: '📸', insult: '🗯️', fight: '👊', cutoff: '✂️', seduce: '😏', trip: '🏝️', official: '💑', askopen: '🔓', closeopen: '🔐', confess: '🙏', talk: '💬', compliment: '🌹', flirt: '😘', gift: '🎁', date: '🍷', intimate: '🔥', baby: '👶', adopt: '🍼', askmoney: '💸', money: '💸', movein: '🏡', propose: '💍', wedding: '💒', vows: '💞', breakup: '💔', divorce: '⚖️', endaffair: '✋', argue: '😠', askout: '💐' };
+const DANGER_PA = ['breakup', 'divorce', 'argue', 'endaffair', 'insult', 'fight', 'cutoff', 'punish'];
 const JOB_EM = { fast_food: '🍔', delivery: '🛵', babysitter: '🍼', retail: '🛒', waiter: '🍽️', factory: '🏭', driver: '🚕', cleaner: '🧽', bartender: '🍸', model: '📸', office_clerk: '🗂️', sales: '🤝', police: '👮', nurse: '🩹', teacher: '🧑‍🏫', marketing: '📣', accountant: '🧮', engineer: '🛠️', developer: '💻', lawyer: '⚖️', doctor: '🩺', chef: '👨‍🍳', electrician: '⚡', mechanic: '🔧', hairdresser: '💇', it_tech: '🖥️', designer: '🎨', journalist: '📰', architect: '📐', analyst: '📈', pharmacist: '💊', psychologist: '🛋️', scientist: '🔬', professor: '🧑‍🏫' };
 const ASSET_EM = { savings: '🏦', index: '📊', gold: '🥇', tech: '💻', bank: '🏛️', energy: '⚡', crypto: '🪙' };
 const HOME_EM = { studio: '🛏️', apartment: '🏢', house: '🏠', villa: '🏰' };
@@ -241,6 +242,7 @@ function resultCard(r) {
 }
 
 function sheetBody() {
+  if (ui.sheet.startsWith('godp:')) return sheetGodPerson(ui.sheet.slice(5));
   return ({ work: sheetWork, people: sheetPeople, acts: sheetActs, self: sheetSelf, god: sheetGod, settings: sheetSettings, assets: sheetAssets, trophies: sheetTrophies, graveyard: sheetGraveyard }[ui.sheet] || (() => sheetPerson(ui.sheet.slice(7))))();
 }
 
@@ -451,7 +453,7 @@ function startQuizTimer() {
   clearInterval(quizTimer);
   quizTimer = setInterval(() => {
     const m = ui.mini;
-    if (!m || m.kind !== 'quiz') { clearInterval(quizTimer); return; }
+    if (!m || (m.kind !== 'quiz' && m.kind !== 'exam')) { clearInterval(quizTimer); return; }
     m.t--;
     const el = document.querySelector('.mg-timer');
     if (el) { el.textContent = `⏱ ${m.t}s`; el.classList.toggle('hot', m.t <= 3); }
@@ -466,11 +468,13 @@ function quizAnswer(v) {
   m.last = ok ? 'ok' : 'no';
   m.i++;
   m.t = 8;
-  if (m.i >= m.qs.length) { clearInterval(quizTimer); finishMini(resolveOlympiad(game.life, m.score, m.total)); }
+  if (m.i >= m.qs.length) { clearInterval(quizTimer); finishMini(m.kind === 'exam' ? resolveExam(game.life, m.score, m.total) : resolveOlympiad(game.life, m.score, m.total)); }
   persist();
   render();
 }
 function initMini(spec, title, emoji) {
+  const m2 = initMini2(spec, title, emoji);
+  if (m2) return m2;
   if (spec.kind === 'maze') return { ...makeMaze(spec.guards || 1, 10), title, emoji: emoji || '🏃' };
   if (spec.kind === 'cards') return { kind: 'cards', bets: spec.bets, bet: null, card: null, pot: 0, streak: 0, msg: null, title, emoji: emoji || '🎰' };
   if (spec.kind === 'quiz') { const m = { ...makeQuiz(spec.total, spec.level), title, emoji: emoji || '🏆' }; setTimeout(startQuizTimer, 0); return m; }
@@ -486,6 +490,7 @@ function mgClick(a, b) {
   const m = ui.mini;
   const L = game.life;
   if (!m) return;
+  if (a !== 'quit' && mgClick2(m, a, b)) return;
   if (a === 'quit') {
     if (m.kind === 'maze') { finishMini({ text: { vi: 'Bạn lặng lẽ quay về phòng giam trước khi ai đó phát hiện.', en: 'You quietly slip back to your cell before anyone notices.' }, changes: [], tone: '' }); return; }
     if (m.kind === 'cards' && m.bet) { finishMini(resolveCasino(L, m.bet, m.pot)); return; }
@@ -509,13 +514,15 @@ function mgClick(a, b) {
     if (!ok) { m.pot = 0; m.lost = true; finishMini(resolveCasino(L, m.bet, 0)); return; }
     m.pot *= 2; m.streak++; m.msg = { vi: `Đúng! Tiền cược nhân đôi.`, en: 'Correct! Pot doubled.' };
     if (m.streak >= 5) finishMini(resolveCasino(L, m.bet, m.pot));
-  } else if (m.kind === 'quiz' && a === 'ans') {
+  } else if ((m.kind === 'quiz' || m.kind === 'exam') && a === 'ans') {
     quizAnswer(Number(b));
   }
 }
 function miniCard(m) {
   const L = game.life;
   const unitMoney = (u) => money(u * country(L).gdp / 100);
+  const c2 = miniCard2(m);
+  if (c2) return c2;
   if (m.kind === 'maze') {
     const cells = [];
     for (let y = 0; y < MZ; y++) for (let x = 0; x < MZ; x++) {
@@ -541,13 +548,112 @@ function miniCard(m) {
       <div class="grid2"><button class="choice" data-a="mg:hi">⬆️ ${t('mgHi')}</button><button class="choice" data-a="mg:lo">⬇️ ${t('mgLo')}</button></div>
       ${m.streak ? `<button class="btn primary" data-a="mg:cash">💵 ${t('mgCash')} ${unitMoney(m.pot)}</button>` : ''}`;
   }
-  if (m.kind === 'quiz') {
+  if (m.kind === 'quiz' || m.kind === 'exam') {
     const q = m.qs[Math.min(m.i, m.qs.length - 1)];
-    return `<div class="hero">🏆</div><div class="eyebrow">${t('mgQuiz')}</div>
+    return `<div class="hero">${m.kind === 'exam' ? '📝' : '🏆'}</div><div class="eyebrow">${t(m.kind === 'exam' ? 'mgExam' : 'mgQuiz')}</div>
       <div class="mg-top"><span>${t('mgQ', { n: m.i + 1, m: m.total })} · ✅ ${m.score}</span><span class="mg-timer${m.t <= 3 ? ' hot' : ''}">⏱ ${m.t}s</span></div>
       ${m.last ? `<p class="q small" style="color:${m.last === 'ok' ? 'var(--good)' : 'var(--bad)'}">${m.last === 'ok' ? '✅' : '❌'}</p>` : ''}
       <p class="quizq mono">${q.q} = ?</p>
       <div class="grid2">${q.opts.map((o) => `<button class="choice mono" data-a="mg:ans:${o}">${o}</button>`).join('')}</div>`;
+  }
+  return '';
+}
+
+// ───────── Trò chơi nhỏ: đua ngựa, xì dách, phỏng vấn, luyện thi ─────────
+const HORSES = [['Gió', 'Wind', 2], ['Sấm', 'Thunder', 3], ['Mây Trắng', 'White Cloud', 4], ['Bánh Bao', 'Dumpling', 6], ['Ông Già', 'Old Timer', 10]];
+let raceTimer = null;
+function startRace(m) {
+  const w = HORSES.map((h) => 1 / h[2]);
+  const tot = w.reduce((a, b) => a + b, 0);
+  let r = Math.random() * tot, win = 0;
+  for (let i = 0; i < w.length; i++) { r -= w[i]; if (r <= 0) { win = i; break; } }
+  m.winner = win;
+  m.pos = HORSES.map(() => 0);
+  m.running = true;
+  clearInterval(raceTimer);
+  raceTimer = setInterval(() => {
+    const mm = ui.mini;
+    if (!mm || mm.kind !== 'race') { clearInterval(raceTimer); return; }
+    mm.pos = mm.pos.map((p, i) => Math.min(100, p + Math.random() * 9 + (i === mm.winner ? 3.2 : 1.5)));
+    const lead = mm.pos.indexOf(Math.max(...mm.pos));
+    if (mm.pos[lead] >= 100) {
+      if (lead !== mm.winner) { mm.pos[mm.winner] = 100; mm.pos[lead] = 98.5; }
+      clearInterval(raceTimer);
+      mm.running = false;
+      setTimeout(() => { const h = HORSES[mm.pick]; finishMini(resolveRace(game.life, mm.bet, mm.pick === mm.winner, h[2], settings.lang === 'vi' ? h[0] : h[1])); persist(); render(); }, 700);
+    }
+    document.querySelectorAll('.lane i').forEach((el, i) => { el.style.left = `calc(${mm.pos[i]}% - 26px)`; });
+  }, 120);
+}
+function bjValue(cards) {
+  let v = 0, aces = 0;
+  for (const c of cards) { if (c.v === 1) { aces++; v += 11; } else v += Math.min(10, c.v); }
+  while (v > 21 && aces) { v -= 10; aces--; }
+  return v;
+}
+function bjFinish(m) {
+  const pv = bjValue(m.player);
+  while (bjValue(m.dealer) < 17) m.dealer.push(drawCard());
+  const dv = bjValue(m.dealer);
+  m.reveal = true;
+  const out = pv > 21 ? 'lose' : dv > 21 || pv > dv ? 'win' : pv === dv ? 'push' : 'lose';
+  setTimeout(() => { finishMini(resolveBlackjack(game.life, m.bet, out)); persist(); render(); }, 900);
+}
+function initMini2(spec, title, emoji) {
+  if (spec.kind === 'race') return { kind: 'race', bet: null, pick: null, pos: HORSES.map(() => 0), title, emoji: emoji || '🏇' };
+  if (spec.kind === 'blackjack') return { kind: 'blackjack', bets: spec.bets, bet: null, player: [], dealer: [], title, emoji: emoji || '🃏' };
+  if (spec.kind === 'interview') {
+    const pool = [...INTERVIEW_QS].sort(() => Math.random() - 0.5).slice(0, 3);
+    return { kind: 'interview', job: spec.job, qs: pool.map((q) => ({ q: q.q, a: [...q.a].sort(() => Math.random() - 0.5) })), i: 0, score: 0, title, emoji: emoji || '🤝' };
+  }
+  if (spec.kind === 'exam') { const m = { ...makeQuiz(spec.total, spec.level), kind: 'exam', title, emoji: emoji || '📝' }; setTimeout(startQuizTimer, 0); return m; }
+  return null;
+}
+function mgClick2(m, a, b) {
+  const L = game.life;
+  if (m.kind === 'race') {
+    if (a === 'bet') { const uu = Number(b); if (L.money < uu * country(L).gdp / 100) { m.msg = { vi: 'Bạn không đủ tiền cho mức cược này.', en: "You can't cover that bet." }; return true; } m.bet = uu; m.msg = null; return true; }
+    if (a === 'horse' && m.bet && !m.running) { m.pick = Number(b); setTimeout(() => startRace(m), 50); m.running = true; return true; }
+    return true;
+  }
+  if (m.kind === 'blackjack') {
+    if (a === 'bet') { const uu = Number(b); if (L.money < uu * country(L).gdp / 100) { m.msg = { vi: 'Bạn không đủ tiền cho mức cược này.', en: "You can't cover that bet." }; return true; } m.bet = uu; m.player = [drawCard(), drawCard()]; m.dealer = [drawCard(), drawCard()]; m.msg = null; if (bjValue(m.player) === 21) { m.reveal = true; setTimeout(() => { finishMini(resolveBlackjack(L, m.bet, bjValue(m.dealer) === 21 ? 'push' : 'bj')); persist(); render(); }, 900); } return true; }
+    if (a === 'hit') { m.player.push(drawCard()); if (bjValue(m.player) > 21) { m.reveal = true; m.done = true; setTimeout(() => { finishMini(resolveBlackjack(L, m.bet, 'lose')); persist(); render(); }, 900); } return true; }
+    if (a === 'stand') { m.done = true; bjFinish(m); return true; }
+    return true;
+  }
+  if (m.kind === 'interview' && a === 'ans') {
+    const q = m.qs[m.i];
+    m.score += q.a[Number(b)].s;
+    m.i++;
+    if (m.i >= m.qs.length) {
+      const ratio = m.score / m.qs.length;
+      const r = applyJob(L, m.job, { interview: ratio });
+      finishMini(r);
+    }
+    return true;
+  }
+  return false;
+}
+function miniCard2(m) {
+  const L = game.life;
+  const unitMoney = (u2) => money(u2 * country(L).gdp / 100);
+  if (m.kind === 'race') {
+    if (!m.bet) return `<div class="hero">🏇</div><div class="eyebrow">${t('mgRace')}</div><p class="q small">${t('mgRaceHelp')}</p>${m.msg ? `<p class="err" style="text-align:center;margin:0">${esc(tx(m.msg))}</p>` : ''}<div class="choices">${[5, 25].map((u2, i) => `<button class="choice" data-a="mg:bet:${u2}">${i ? '💰💰' : '💰'} ${t('mgBet')} ${unitMoney(u2)}</button>`).join('')}<button class="btn small" data-a="mg:quit">${t('mgLeave')}</button></div>`;
+    const lanes = HORSES.map((h, i) => `<div class="lane${m.pick === i ? ' mine' : ''}"><span class="hn">${settings.lang === 'vi' ? h[0] : h[1]} · x${h[2]}</span><i style="left:calc(${m.pos[i]}% - 26px)">🏇</i></div>`).join('');
+    return `<div class="eyebrow">${t('mgRace')} · ${t('mgBet')} ${unitMoney(m.bet)}</div>${m.pick == null ? `<p class="q small">${t('mgPickHorse')}</p><div class="choices">${HORSES.map((h, i) => `<button class="choice" data-a="mg:horse:${i}">🐎 ${settings.lang === 'vi' ? h[0] : h[1]} · ${t('mgOdds')} x${h[2]}</button>`).join('')}</div>` : `<div class="track">${lanes}</div>`}`;
+  }
+  if (m.kind === 'blackjack') {
+    const card = (c, hide) => hide ? `<div class="pcard back"><b>?</b></div>` : `<div class="pcard sm ${c.s === '♥' || c.s === '♦' ? 'red' : ''}"><b>${RANKS[c.v - 1]}</b><span>${c.s}</span></div>`;
+    if (!m.bet) return `<div class="hero">🃏</div><div class="eyebrow">${t('mgBJ')}</div><p class="q small">${t('mgBJHelp')}</p>${m.msg ? `<p class="err" style="text-align:center;margin:0">${esc(tx(m.msg))}</p>` : ''}<div class="choices">${m.bets.map((u2, i) => `<button class="choice" data-a="mg:bet:${u2}">${i ? '💰💰' : '💰'} ${t('mgBet')} ${unitMoney(u2)}</button>`).join('')}<button class="btn small" data-a="mg:quit">${t('mgLeave')}</button></div>`;
+    return `<div class="eyebrow">${t('mgBJ')} · ${t('mgBet')} ${unitMoney(m.bet)}</div>
+      <div class="mg-top"><span>${t('mgDealer')}</span><span>${m.reveal ? bjValue(m.dealer) : '?'}</span></div><div class="cardrow">${m.dealer.map((c, i) => card(c, i === 1 && !m.reveal)).join('')}</div>
+      <div class="mg-top"><span>${t('mgYou')}</span><span>${bjValue(m.player)}</span></div><div class="cardrow">${m.player.map((c) => card(c)).join('')}</div>
+      ${!m.reveal && !m.done ? `<div class="grid2"><button class="choice" data-a="mg:hit">➕ ${t('mgHit')}</button><button class="choice" data-a="mg:stand">✋ ${t('mgStand')}</button></div>` : ''}`;
+  }
+  if (m.kind === 'interview') {
+    const q = m.qs[Math.min(m.i, m.qs.length - 1)];
+    return `<div class="hero">🤝</div><div class="eyebrow">${t('mgInterview')} · ${t('mgQ', { n: m.i + 1, m: m.qs.length })}</div><p class="q">${esc(tx(q.q))}</p><div class="choices">${q.a.map((x, i) => `<button class="choice" data-a="mg:ans:${i}">${esc(tx(x.t))}</button>`).join('')}</div>`;
   }
   return '';
 }
@@ -610,13 +716,13 @@ function sheetWork() {
     ${e.scholarship ? `<dt>🏅</dt><dd>${t('scholarship')}</dd>` : ''}${e.intern ? `<dt>🗂️</dt><dd>${t('internTag')}</dd>` : ''}</dl>
     ${degs ? `<div class="box"><b>${t('degrees')}</b><ul class="degs">${degs}</ul></div>` : ''}`;
   if (e.stage === 'primary' || e.stage === 'secondary') {
-    html += `<div class="section"><h3>${t('school')}</h3><div class="list">${li('w:study', '📚', t('study'))}${li('w:skip', '🛹', t('skip'))}${e.stage === 'secondary' ? li('w:olympiad', '🏆', t('olympiad')) : ''}${L.age >= 16 ? li('w:dropout', '🚪', t('dropout'), '', { danger: true }) : ''}</div></div>`;
+    html += `<div class="section"><h3>${t('school')}</h3><div class="list">${li('w:study', '📚', t('study'))}${li('w:skip', '🛹', t('skip'))}${e.stage === 'secondary' ? li('w:olympiad', '🏆', t('olympiad')) : ''}${e.stage === 'secondary' && L.age >= 15 ? li('w:exam', '📝', t('examPrep'), t('examPrepSub')) : ''}${L.age >= 16 ? li('w:dropout', '🚪', t('dropout'), '', { danger: true }) : ''}</div></div>`;
   } else if (e.stage === 'uni' || e.stage === 'grad') {
     html += `<div class="section"><h3>${t('student')}</h3><div class="list">${li('w:study', '📚', t('study'))}${li('w:skip', '🛌', t('skip'))}${li('w:club', '🎭', t('club'))}${li('w:parttime', '☕', t('parttime'))}${!e.scholarship ? li('w:scholar', '🏅', t('scholar')) : ''}${e.stage === 'uni' && !e.exchanged ? li('w:exchange', '✈️', t('exchange')) : ''}${e.years + 1 >= stageLength(L) - 1 ? li('w:intern', '🗂️', t('intern')) : ''}${e.stage === 'uni' ? li('w:switch', '🔀', t('switchMajor')) : ''}${li('w:dropout', '🚪', t('dropout'), '', { danger: true })}</div></div>`;
   } else if (e.stage === 'trade') {
     html += `<div class="section"><h3>${t('trade')}</h3><div class="list">${li('w:study', '🧰', t('study'))}${li('w:parttime', '☕', t('parttime'))}${li('w:dropout', '🚪', t('dropout'), '', { danger: true })}</div></div>`;
   } else if (L.age >= 17 && e.level !== 'none') {
-    html += `<div class="section"><h3>${t('studyOptions')}</h3><div class="list">${li('w:uni', '🎓', t('enrolUni'), t('uniSub'))}${li('w:trade', '🧰', t('enrolTrade'), t('tradeSub'))}${['bachelor', 'master', 'phd'].includes(e.level) ? li('w:grad', '📜', t('enrolGrad'), t('gradSub')) : ''}</div></div>`;
+    html += `<div class="section"><h3>${t('studyOptions')}</h3><div class="list">${li('w:exam', '📝', t('examPrep'), t('examPrepSub'))}${li('w:uni', '🎓', t('enrolUni'), t('uniSub'))}${li('w:trade', '🧰', t('enrolTrade'), t('tradeSub'))}${['bachelor', 'master', 'phd'].includes(e.level) ? li('w:grad', '📜', t('enrolGrad'), t('gradSub')) : ''}</div></div>`;
   }
   if (L.job) html += jobBlock(L);
   html += specialBlock(L);
@@ -651,7 +757,7 @@ function jobBlock(L) {
     <div class="profile"><span class="avatar">${JOB_EM[j.id] || '💼'}</span><div class="tx"><b>${esc(tx(rankName(j)))}</b><small class="muted">${esc(tx(c.title))} · ${co.em} ${esc(tx(co.name))}</small><small class="muted">💵 ${money(j.salary)}/${t('yearWord')} · ⏳ ${t('expYears', { n: effExp(L, j.id) })}</small></div></div>
     <dl class="kv"><dt>📈 ${t('perf')}</dt><dd>${lvl(j.perf)}</dd></dl>
     ${next}
-    <div class="list">${li('w:hard', '💪', t('workHard'))}${!nx.top ? li('w:promote', '⬆️', t('promoteAsk'), nx.eligible ? t('promoteReady') : '') : ''}${li('w:raise', '💰', t('raise'))}${li('w:quit', '🚪', t('quit'), '', { danger: true })}</div>
+    <div class="list">${li('w:hard', '💪', t('workHard'))}${!nx.top ? li('w:promote', '⬆️', t('promoteAsk'), nx.eligible ? t('promoteReady') : '') : ''}${li('w:raise', '💰', t('raise'))}${li('w:overtime', '⏰', t('overtime'))}${li('w:bossdrinks', '🍻', t('bossdrinks'))}${li('w:transfer', '🔁', t('transfer'))}${li('w:leave', '🏖️', t('leaveWork'))}${li('w:strike', '✊', t('strike'))}${li('w:whistle', '📣', t('whistle'))}${li('w:quit', '🚪', t('quit'), '', { danger: true })}</div>
     <details class="box"><summary><b>🪜 ${t('ladder')}</b></summary><ul class="goallist ladder">${steps}</ul></details></div>`;
 }
 function specialBlock(L) {
@@ -667,8 +773,9 @@ function specialBlock(L) {
   const rows = Object.entries(SPECIALS).filter(([, s]) => !s.adult || settings.adult25).map(([id, s]) => li(`sp:join:${id}`, s.em, esc(tx(s.join)), `${esc(tx(s.name))} · ${STAT_EM[s.stat]} ${s.req}+ · ${t('ageRange', { a: s.minAge, b: s.maxAge })}`, { disabled: !canJoin(L, id, settings) })).join('');
   return `<div class="section"><h3>🌟 ${t('special')}</h3><div class="list">${rows}</div></div>`;
 }
+const roleName = (L, p) => t(p.role === 'lover' && polyOk(L) ? 'roles.loverPoly' : 'roles.' + p.role);
 function personRow(L, p) {
-  return `<button class="item ${p.alive ? '' : 'dead'}" data-a="person:${p.id}"><span class="avatar sm">${face(p.gender, p.age, p.role, p.alive)}</span><div class="main"><b>${esc(personName(L, p))}</b><small>${t('roles.' + p.role)} · ${p.age}${p.alive ? '' : ' †'}</small></div><div class="side">${p.alive ? lvl(p.closeness) : ''}</div></button>`;
+  return `<button class="item ${p.alive ? '' : 'dead'}" data-a="person:${p.id}"><span class="avatar sm">${face(p.gender, p.age, p.role, p.alive, p.species)}</span><div class="main"><b>${esc(personName(L, p))}</b><small>${roleName(L, p)} · ${p.age}${p.alive ? '' : ' †'}</small></div><div class="side">${p.alive ? lvl(p.closeness) : ''}</div></button>`;
 }
 function sheetPeople() {
   const L = game.life;
@@ -677,11 +784,11 @@ function sheetPeople() {
     ['family', '👪', ['mother', 'father', 'sibling', 'half', 'pet']],
     ['children', '🧒', ['child']],
     ['friends', '🤝', ['bestie', 'friend']],
-    ['others', '👥', ['mentor', 'rival', 'contact', 'ex']],
+    ['others', '👥', ['mentor', 'rival', 'coworker', 'neighbor', 'contact', 'ex']],
   ];
   let html = head(`❤️ ${t('tabPeople')}`, 'var(--b-people)');
   for (const [g, em, roles] of groups) {
-    const list = L.people.filter((p) => roles.includes(p.role) && (p.alive || g !== 'others')).sort((a, b) => roles.indexOf(a.role) - roles.indexOf(b.role));
+    const list = L.people.filter((p) => !p.cut && roles.includes(p.role) && (p.alive || g !== 'others')).sort((a, b) => roles.indexOf(a.role) - roles.indexOf(b.role));
     if (!list.length && g !== 'love') continue;
     html += `<div class="section"><h3>${em} ${t(g)}</h3>${list.length ? `<div class="list">${list.slice(-12).map((p) => personRow(L, p)).join('')}</div>` : `<p class="note">${t('alone')}</p>`}</div>`;
   }
@@ -695,13 +802,32 @@ function sheetPerson(id) {
   const romantic = ['partner', 'spouse', 'lover'].includes(p.role);
   const status = p.role === 'spouse' ? `${t('married')}${L.marriage && L.marriage.spouseId === p.id && L.marriage.prenup ? ` · ${t('prenupYes')}` : ''}` : p.engaged ? t('engaged') : p.cohab ? t('cohab') : '';
   return `${head(esc(personName(L, p)), 'var(--b-people)', 'sheet:people')}
-    <div class="profile"><span class="avatar lg">${face(p.gender, p.age, p.role, p.alive)}</span><div class="tx"><b>${esc(personName(L, p))}</b><small class="muted">${t('roles.' + p.role)} · ${t(p.gender)} · ${p.age}${p.alive ? '' : ' †'}</small>${status ? `<span class="tag">${status}</span>` : ''}</div></div>
+    <div class="profile"><span class="avatar lg">${face(p.gender, p.age, p.role, p.alive, p.species)}</span><div class="tx"><b>${esc(personName(L, p))}</b><small class="muted">${roleName(L, p)} · ${t(p.gender)} · ${p.age}${p.alive ? '' : ' †'}</small>${status ? `<span class="tag">${status}</span>` : ''}</div></div>
     <dl class="kv"><dt>🤝 ${t('closeness')}</dt><dd>${lvl(p.closeness)}</dd><dt>✨ ${t('looks')}</dt><dd>${lvl(p.looks)}</dd><dt>🧠 ${t('smarts')}</dt><dd>${lvl(p.smarts)}</dd>
     ${p.age >= 18 ? `<dt>💼 ${t('job')}</dt><dd>${p.job ? esc(tx(p.job)) : t('unemployed')}</dd>${p.income ? `<dt>💵 ${t('salary')}</dt><dd class="mono">${money(p.income)}</dd>` : ''}${p.wealth ? `<dt>💰 ${t('netWorth')}</dt><dd class="mono">${money(p.wealth)}</dd>` : ''}` : ''}
     ${romantic ? `<dt>⏳ ${t('together')}</dt><dd>${p.years || 0} ${t('years')}</dd>` : ''}</dl>
-    ${acts ? `<div class="list">${acts}</div>` : ''}`;
+    ${intimateKv(L, p)}
+    ${acts ? `<div class="list">${acts}</div>` : ''}
+    ${settings.godEnabled && p.alive ? `<div class="list">${li(`godp:${p.id}`, '⚡', t('godPerson'), t('godPersonSub'))}</div>` : ''}`;
 }
-const ACT_GROUPS = ['prison', 'kid', 'teen', 'mind', 'net', 'night', 'love', 'crime'];
+function intimateKv(L, p) {
+  if (!settings.adult25 || p.age < 18 || !settings.godEnabled || !p.alive) return '';
+  return `<dl class="kv"><dt>💞 ${t('poly')}</dt><dd>${lvl(p.poly ?? 30)}</dd><dt>🔥 ${t('skill')}</dt><dd>${lvl(p.skill ?? 50)}</dd><dt>🌱 ${t('fert')}</dt><dd>${lvl(p.fert ?? 70)}</dd>${p.gender === 'male' ? `<dt>📏 ${t('size')}</dt><dd>${lvl(p.size ?? 50)}</dd>` : ''}<dt>🔒 ${t('fidelity')}</dt><dd>${lvl(p.fidelity ?? 60)}</dd><dt>😤 ${t('jealous')}</dt><dd>${lvl(p.crazy ?? 50)}</dd></dl>`;
+}
+function sheetGodPerson(id) {
+  const L = game.life;
+  const p = L.people.find((x) => x.id === id);
+  if (!p) return head('—');
+  const g = ui.godp || {};
+  const sl = (k, em) => `<div class="slider"><span>${em}</span><label for="gp-${k}">${t(k === 'crazy' ? 'jealous' : k === 'closeness' ? 'closeness' : k)}</label><input id="gp-${k}" type="range" min="0" max="100" value="${g[k] ?? 50}" data-gp="${k}"><output class="mono">${g[k] ?? 50}</output></div>`;
+  const adult = p.age >= 18 && settings.adult25;
+  return `${head(`⚡ ${esc(personName(L, p))}`, '#a16207', `person:${p.id}`)}
+    <p class="note">${t('godPersonNote')}</p>
+    <div class="box">${sl('closeness', '🤝')}${sl('looks', '✨')}${sl('smarts', '🧠')}</div>
+    ${adult ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${sl('poly', '💞')}${sl('skill', '🔥')}${sl('fert', '🌱')}${p.gender === 'male' ? sl('size', '📏') : ''}${sl('fidelity', '🔒')}${sl('crazy', '😤')}</div></div>` : ''}
+    <button class="btn primary" data-a="godp-apply:${p.id}">${t('godApply')}</button>`;
+}
+const ACT_GROUPS = ['prison', 'kid', 'teen', 'mind', 'fun', 'shop', 'life', 'pet', 'net', 'night', 'love', 'money', 'crime'];
 function sheetActs() {
   const L = game.life;
   const acts = availableActivities(L);
@@ -773,12 +899,14 @@ function sheetAssets() {
   const top = (back) => head(`🏠 ${t('tabAssets')}`, 'var(--b-assets)', back);
   const summary = `<dl class="kv"><dt>💵 ${t('cash')}</dt><dd class="mono">${money(L.money)}</dd><dt>💰 ${t('netWorth2')}</dt><dd class="mono">${money(netWorth(L))}</dd><dt>${PH_EM[e.phase] || '🌍'} ${t('economy')}</dt><dd style="color:${e.phase === 'growth' ? 'var(--good)' : e.phase === 'crisis' || e.phase === 'recession' ? 'var(--bad)' : 'var(--gold)'}">${esc(tx(ph.name))}</dd></dl>`;
   if (L.age < 18) return top() + summary + `<p class="note">${t('minorAssets')}</p>`;
+  const loansLeft = (L.loans || []).reduce((s, x) => s + x.left, 0);
+  const finBox = loansLeft > 0 || L.insurance?.health || L.insurance?.life ? `<dl class="kv">${loansLeft > 0 ? `<dt>🏦 ${t('loanLeft')}</dt><dd class="mono" style="color:var(--bad)">${money(loansLeft)}</dd>` : ''}${L.insurance?.health ? `<dt>🛡️</dt><dd>${t('insHealth')}</dd>` : ''}${L.insurance?.life ? `<dt>🛡️</dt><dd>${t('insLife')}</dd>` : ''}</dl>` : '';
   const sub = ['inv', 'homes', 'cars', 'biz'].includes(ui.sub) ? ui.sub : null;
   const item = (em, title, small, btns) => `<div class="item stack"><span class="em" style="width:40px;height:40px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:22px;flex:none">${em}</span><div class="main"><b>${title}</b><small>${small}</small></div><div class="row" style="flex-wrap:nowrap">${btns}</div></div>`;
   if (!sub) {
     const invTotal = Object.keys(ASSETS).reduce((s, k) => s + holdingValue(L, k), 0);
     const b = L.biz;
-    return top() + summary + `<div class="list">
+    return top() + summary + finBox + `<div class="list">
       ${li('sub:inv', '📈', t('invest'), invTotal > 0 ? t('holdTotal', { v: money(invTotal) }) : t('noneYet'))}
       ${li('sub:homes', '🏠', t('homes'), L.homes.length ? t('owned', { n: L.homes.length }) : t('noneYet'))}
       ${li('sub:cars', '🚗', t('cars'), L.cars.length ? t('owned', { n: L.cars.length }) : t('noneYet'))}
@@ -825,6 +953,7 @@ function sheetGod() {
   return `${head(`⚡ ${t('god')}`, '#a16207')}
     <p class="note">${t('godNote')}</p>
     ${L.dead ? '' : `<div class="box">${STAT_KEYS.map(slider).join('')}</div><div class="section"><h3>${t('hidden')}</h3><div class="box">${HIDDEN_KEYS.map(slider).join('')}</div></div>
+    ${settings.adult25 && L.age >= 18 ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${['skill', 'fert'].concat(L.gender === 'male' ? ['size'] : []).map((k) => `<div class="slider"><span>${{ skill: '🔥', fert: '🌱', size: '📏' }[k]}</span><label for="gb-${k}">${t(k)}</label><input id="gb-${k}" type="range" min="0" max="100" value="${g.body[k] ?? 50}" data-gb="${k}"><output class="mono">${g.body[k] ?? 50}</output></div>`).join('')}</div></div>` : ''}
     <div class="box"><div class="field"><label for="g-money">💵 ${t('money')} (${c.cur})</label><input id="g-money" type="number" step="1" value="${Math.round(g.money)}" data-gm="1"></div></div>
     <button class="btn primary" data-a="god-apply">${t('godApply')}</button>
     <div class="list">${li('god-cure', '💊', t('cure'))}${li('god-debt', '🧾', t('clearDebt'))}</div>
@@ -883,7 +1012,7 @@ function record(r, title, keepSheet, emoji) {
   ui.result = { text: r.text, changes: r.changes, tone: r.tone || toneOf(r.changes), title, emoji };
   if (!keepSheet) ui.sheet = null;
 }
-const W_LABEL = { promote: 'promoteAsk', study: 'study', skip: 'skip', dropout: 'dropout', uni: 'enrolUni', trade: 'enrolTrade', grad: 'enrolGrad', switch: 'switchMajor', club: 'club', parttime: 'parttime', scholar: 'scholar', exchange: 'exchange', intern: 'intern', olympiad: 'olympiad', hard: 'workHard', raise: 'raise', quit: 'quit' };
+const W_LABEL = { exam: 'examPrep', overtime: 'overtime', bossdrinks: 'bossdrinks', transfer: 'transfer', leave: 'leaveWork', strike: 'strike', whistle: 'whistle', promote: 'promoteAsk', study: 'study', skip: 'skip', dropout: 'dropout', uni: 'enrolUni', trade: 'enrolTrade', grad: 'enrolGrad', switch: 'switchMajor', club: 'club', parttime: 'parttime', scholar: 'scholar', exchange: 'exchange', intern: 'intern', olympiad: 'olympiad', hard: 'workHard', raise: 'raise', quit: 'quit' };
 
 // ───────── Sự kiện người dùng ─────────
 $app.addEventListener('click', (e) => {
@@ -895,7 +1024,7 @@ $app.addEventListener('click', (e) => {
   ui.scroll = led ? led.scrollTop : null;
   const [cmd, arg, arg2] = a.split(':');
   const L = game.life;
-  const UI_ONLY = ['sheet', 'close', 'person', 'lang', 'home', 'result-ok', 'sub'];
+  const UI_ONLY = ['sheet', 'close', 'person', 'lang', 'home', 'result-ok', 'sub', 'godp'];
   if (L && !UI_ONLY.includes(cmd)) { before = { fp: fingerprint(L), n: itemCount(L), stats: { ...L.stats }, life: L, age: L.age }; ui.freshFrom = before.n; }
   ui.ageTick = false;
   switch (cmd) {
@@ -932,20 +1061,32 @@ $app.addEventListener('click', (e) => {
     }
     case 'sheet':
       ui.sheet = arg; ui.resetArmed = false; ui.packMsg = null; ui.sub = null;
-      if (arg === 'god' && L) ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate };
+      if (arg === 'god' && L) ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate, body: { fert: L.fert ?? 70, skill: L.skill ?? 50, size: L.size ?? 50 } };
       break;
     case 'close': ui.sheet = null; break;
     case 'person': ui.sheet = `person:${arg}`; break;
+    case 'godp': { const p = L.people.find((x) => x.id === arg); if (p) { ui.godp = { closeness: p.closeness, looks: p.looks, smarts: p.smarts, poly: p.poly ?? 30, skill: p.skill ?? 50, fert: p.fert ?? 70, size: p.size ?? 50, fidelity: p.fidelity ?? 60, crazy: p.crazy ?? 50 }; ui.sheet = `godp:${arg}`; } break; }
+    case 'godp-apply': godPerson(L, arg, ui.godp); ui.sheet = `person:${arg}`; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
     case 'pa': {
       const p = L.people.find((x) => x.id === arg);
       const lab = p && personActions(L, p).find(([k]) => k === arg2);
       record(doPersonAction(L, settings, arg, arg2), lab ? { vi: `${lab[1].vi} · ${personName(L, p)}`, en: `${lab[1].en} · ${personName(L, p)}` } : null, true, PA_EM[arg2]);
       break;
     }
-    case 'act': record(doActivity(L, settings, arg), ACTIVITIES.find((x) => x.id === arg)?.label, false, ACT_EM[arg]); break;
+    case 'act': {
+      const r0 = doActivity(L, settings, arg);
+      if (r0 && r0.input === 'rename') {
+        let nv = null;
+        try { nv = window.prompt(t('renamePrompt'), L.first); } catch { nv = null; }
+        if (nv && nv.trim()) { const old = L.first; L.first = nv.trim().slice(0, 24); addLog(L, { vi: `Bạn đổi tên từ ${old} thành ${L.first}.`, en: `You change your name from ${old} to ${L.first}.` }); ui.result = { text: { vi: `Từ giờ bạn tên là ${L.first}.`, en: `From now on, you're ${L.first}.` }, tone: 'good', emoji: '🪪' }; ui.sheet = null; }
+        break;
+      }
+      record(r0, ACTIVITIES.find((x) => x.id === arg)?.label, false, ACT_EM[arg]);
+      break;
+    }
     case 'job': record(applyJob(L, arg), { vi: `${STRINGS.vi.apply}: ${careerById[arg].title.vi}`, en: `${STRINGS.en.apply}: ${careerById[arg].title.en}` }, false, JOB_EM[arg]); break;
-    case 'w': record(workAction(L, arg), { vi: STRINGS.vi[W_LABEL[arg]], en: STRINGS.en[W_LABEL[arg]] }, false, { promote: '⬆️', study: '📚', skip: '🛹', dropout: '🚪', uni: '🎓', trade: '🧰', grad: '📜', switch: '🔀', club: '🎭', parttime: '☕', scholar: '🏅', exchange: '✈️', intern: '🗂️', olympiad: '🏆', hard: '💪', raise: '💰', quit: '🚪' }[arg]); break;
-    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
+    case 'w': record(workAction(L, arg), { vi: STRINGS.vi[W_LABEL[arg]], en: STRINGS.en[W_LABEL[arg]] }, false, { exam: '📝', overtime: '⏰', bossdrinks: '🍻', transfer: '🔁', leave: '🏖️', strike: '✊', whistle: '📣', promote: '⬆️', study: '📚', skip: '🛹', dropout: '🚪', uni: '🎓', trade: '🧰', grad: '📜', switch: '🔀', club: '🎭', parttime: '☕', scholar: '🏅', exchange: '✈️', intern: '🗂️', olympiad: '🏆', hard: '💪', raise: '💰', quit: '🚪' }[arg]); break;
+    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate, body: ui.god.body }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
     case 'god-cure': godApply(L, { cure: true }); ui.god.stats = { ...L.stats }; ui.result = { text: t('cure'), tone: 'good', emoji: '💊' }; break;
     case 'god-debt': godApply(L, { clearDebt: true }); ui.god.money = L.money * country(L).rate; ui.result = { text: t('clearDebt'), tone: 'good', emoji: '🧾' }; break;
     case 'god-move': { const v = document.getElementById('g-country').value; godApply(L, { country: v }); ui.god.money = L.money * country(L).rate; ui.result = { text: `${byCode[v].flag} ${tx(byCode[v].name)}`, tone: 'good', emoji: '🌍' }; break; }
@@ -1006,6 +1147,12 @@ $app.addEventListener('input', (e) => {
     else ui.draft[path[0]] = el.value;
   } else if (el.dataset.g) {
     ui.god.stats[el.dataset.g] = Number(el.value);
+    el.nextElementSibling.textContent = el.value;
+  } else if (el.dataset.gp) {
+    ui.godp[el.dataset.gp] = Number(el.value);
+    el.nextElementSibling.textContent = el.value;
+  } else if (el.dataset.gb) {
+    ui.god.body[el.dataset.gb] = Number(el.value);
     el.nextElementSibling.textContent = el.value;
   } else if (el.dataset.gm) {
     ui.god.money = Number(el.value) || 0;

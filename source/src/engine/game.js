@@ -1,7 +1,7 @@
 // Điều phối: gói nội dung, đời hiện tại, hàng đợi sự kiện.
 import { L } from './util.js';
 import { validatePack, normalizePack } from './validate.js';
-import { createLife, addLog, people, personName, byId, milestone } from './life.js';
+import { createLife, addLog, people, personName, byId, milestone, country } from './life.js';
 import { ageUp, die, recordHistory } from './year.js';
 import { pickOutcome, applyOutcome, applyEffects, buildSysEvent, applySys, resolveEngineFlags } from './events.js';
 import { initEconomy, netWorth } from './economy.js';
@@ -27,8 +27,9 @@ import healthPack from '../data/packs/health.json';
 import parentPack from '../data/packs/parenting.json';
 import afterDark from '../data/packs/after_dark.json';
 import adultFilm from '../data/packs/adult_industry.json';
+import manyLovers from '../data/packs/many_lovers.json';
 
-export const BUILTIN = [core, coreLife, school, weird, workPack, oldPack, healthPack, parentPack, afterDark, adultFilm, big, love, uni, ons, adult, kinks].map((p) => ({ ...normalizePack(p), builtin: true }));
+export const BUILTIN = [core, coreLife, school, weird, workPack, oldPack, healthPack, parentPack, afterDark, adultFilm, manyLovers, big, love, uni, ons, adult, kinks].map((p) => ({ ...normalizePack(p), builtin: true }));
 
 export function defaultSettings() {
   return { lang: 'vi', adult25: false, alwaysProtect: true, godEnabled: true, packs: {}, packWeight: {} };
@@ -66,6 +67,7 @@ export function newLife(game, opts) {
   game.life = createLife(opts);
   game.life.birthCountry = game.life.country;
   game.life.gen = 1;
+  if (game.life.gender === 'male') game.life.size = 20 + Math.floor(Math.random() * 70);
   assignGoals(game.life);
   initEconomy(game.life);
   createCoborns(game.life);
@@ -186,7 +188,7 @@ export function continueAsChild(game, childId) {
   initEconomy(life);
   if (old.econ) life.econ = old.econ;
   life.coborns = [];
-  life.money = Math.max(0, netWorth(old)) * 0.7;
+  life.money = Math.max(0, netWorth(old)) * 0.7 + (old.insurance?.life ? 30 * country(old).gdp : 0);
   life.stats.smarts = kid.smarts;
   life.stats.looks = kid.looks;
   life.people = life.people.filter((p) => p.role !== 'mother' && p.role !== 'father');

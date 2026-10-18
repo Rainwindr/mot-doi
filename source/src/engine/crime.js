@@ -22,7 +22,6 @@ function sentence(life, years, crime) {
   life.fugitive = false;
   if (life.job) { life.job = null; }
   life.edu.stage = null;
-  life.affair = null;
   milestone(life, L(`Vào tù ${years} năm`, `Sent to prison for ${years} years`), 'bad');
   addLog(life, L(`Tòa tuyên án ${years} năm tù vì tội ${crime.vi.toLowerCase()}.`, `You're sentenced to ${years} years for ${crime.en.toLowerCase()}.`), 'bad');
 }
@@ -137,6 +136,7 @@ export function emigrationOdds(life, code) {
   let p = 0.45 + (life.stats.smarts - 50) / 200 + (['bachelor', 'master', 'phd'].includes(life.edu.level) ? 0.15 : 0);
   if (tierOf(to) === 'high' && tierOf(from) !== 'high') p -= 0.25;
   if (life.record) p -= 0.2;
+  p += Math.min(0.15, (life.langs || 0) * 0.03);
   if (life.money > 3 * to.gdp) p += 0.1;
   return clamp(p, 0.05, 0.9);
 }

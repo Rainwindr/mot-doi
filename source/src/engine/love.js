@@ -3,6 +3,7 @@
 import { L, clamp, rand, chance, randint, pick } from './util.js';
 import {
   country, unit, partner, spouse, people, byId, randomPerson, enrichAdult, partnerGender, personName, addLog, setFlag, milestone,
+  lovers, polyOk, makeLover, endLover, endAllLovers, syncAffair,
 } from './life.js';
 import { tryConceive, protectChance, breakUp, addChild } from './events.js';
 import { netWorth } from './economy.js';
@@ -133,7 +134,16 @@ export function partnerActionList(life, p) {
     if ((p.married ?? 0) + 5 <= life.age) a.push(['vows', L('Làm mới lời thề', 'Renew vows')]);
     a.push(['divorce', L('Ly hôn', 'Divorce')]);
   }
-  if (p.role === 'lover') a.push(['endaffair', L('Chấm dứt', 'End it')]);
+  if (p.role === 'lover') {
+    a.push(['trip', L('Đi du lịch bí mật cùng nhau', 'Take a secret trip together')]);
+    a.push(['official', partner(life) ? L('Bỏ người yêu, chọn người này', 'Leave your partner for them') : L('Chính thức hẹn hò', 'Make it official')]);
+    a.push(['endaffair', L('Chấm dứt', 'End it')]);
+  }
+  if (p.role === 'partner' || p.role === 'spouse') {
+    if (!polyOk(life)) a.push(['askopen', L('Đề nghị mối quan hệ mở', 'Suggest an open relationship')]);
+    else a.push(['closeopen', L('Đóng mối quan hệ mở', 'Close the relationship')]);
+    if (lovers(life).length && !polyOk(life)) a.push(['confess', L('Thú nhận chuyện ngoại tình', 'Confess your affairs')]);
+  }
   a.push(['argue', L('Cãi nhau', 'Argue')]);
   return a;
 }
@@ -191,7 +201,49 @@ export function partnerAction(life, settings, p, act) {
     }
     case 'breakup': breakUp(life, 'choice'); life.stats.happy = clamp(life.stats.happy - 8); return res(L(`Bạn chia tay ${name}.`, `You break up with ${name}.`), [['happy', -8]], 'bad');
     case 'divorce': return divorceScene(life, p);
-    case 'endaffair': p.role = 'ex'; life.affair = null; delete life.flags.has_affair; life.stats.karma = clamp(life.stats.karma + 3); return res(L(`Bạn chấm dứt với ${name}.`, `You end things with ${name}.`), []);
+    case 'endaffair': {
+      endLover(life, p);
+      life.stats.karma = clamp(life.stats.karma + 3);
+      if ((p.crazy ?? 50) > 85 && partner(life) && !polyOk(life) && chance(life, 0.35)) { life.queue.unshift({ sys: 'affair_exposed' }); return res(L(`${name} không chịu buông. Họ nói sẽ cho người yêu bạn biết tất cả.`, `${name} won't let go. They say they'll tell your partner everything.`), [], 'bad'); }
+      return res(L(`Bạn chấm dứt với ${name}.`, `You end things with ${name}.`), [['karma', 3]]);
+    }
+    case 'trip': {
+      if (n > 1) return tired;
+      life.money -= u(life, 10);
+      closer(life, p, 8, 14);
+      life.stats.happy = clamp(life.stats.happy + 12);
+      setFlag(life, 'recent_intimate');
+      tryConceive(life, p, protectChance(settings.alwaysProtect));
+      if (partner(life) && !polyOk(life) && chance(life, 0.2)) { life.queue.unshift({ sys: 'affair_exposed' }); return res(L(`Ở resort, bạn chạm mặt một người quen của người yêu mình. Họ đã chụp ảnh.`, `At the resort you bump into a friend of your partner's. They took a photo.`), [['money', -u(life, 10)], ['happy', 12]], 'bad'); }
+      return res(settings.adult25 ? L(`Ba ngày ở một thành phố biển với ${name}. Rèm đóng gần như suốt.`, `Three days by the sea with ${name}. The curtains stay closed most of the time.`) : L(`Ba ngày ở một thành phố biển với ${name}.`, `Three days by the sea with ${name}.`), [['money', -u(life, 10)], ['happy', 12]], 'good');
+    }
+    case 'official': {
+      if (chance(life, clamp(p.closeness / 100 + 0.1, 0.1, 0.95))) {
+        if (partner(life)) breakUp(life, 'affair');
+        p.role = 'partner'; p.closeness = Math.max(p.closeness, 65); p.years = 0; life.counts.partners++;
+        syncAffair(life);
+        addLog(life, L(`Bạn và ${name} chính thức thành người yêu.`, `You and ${name} become an official couple.`), 'good');
+        return res(L(`${name} ôm chầm lấy bạn. Không phải giấu nữa.`, `${name} throws their arms around you. No more hiding.`), [['happy', 10]], 'good');
+      }
+      p.closeness = clamp(p.closeness - 8);
+      return res(L(`${name} lắc đầu: họ thích mọi thứ như bây giờ hơn.`, `${name} shakes their head: they like things as they are.`), [], 'bad');
+    }
+    case 'askopen': {
+      if (n > 1) return tired;
+      const pp = clamp(((p.poly ?? 30) / 100) * 0.85 + p.closeness / 500, 0.03, 0.92);
+      if (chance(life, pp)) { setFlag(life, 'open_rel'); p.closeness = clamp(p.closeness + 3); addLog(life, L(`Bạn và ${name} đồng ý thử mối quan hệ mở.`, `You and ${name} agree to try an open relationship.`), 'good'); return res(L(`${name} suy nghĩ một lúc rồi gật đầu: "Mình thử, có luật rõ ràng."`, `${name} thinks it over and nods: "Let's try. With clear rules."`), [['happy', 6]], 'good'); }
+      p.closeness = clamp(p.closeness - 12);
+      if ((p.crazy ?? 50) > 80 && chance(life, 0.3)) { breakUp(life, 'choice'); return res(L(`${name} coi đó là lời chia tay. Họ đi luôn.`, `${name} takes it as a breakup. They leave.`), [['happy', -10]], 'bad'); }
+      return res(L(`${name} từ chối thẳng, và nhìn bạn khác đi.`, `${name} says no, and looks at you differently.`), [['happy', -4]], 'bad');
+    }
+    case 'closeopen':
+      delete life.flags.open_rel;
+      p.closeness = clamp(p.closeness + ((p.poly ?? 30) > 60 ? -6 : 6));
+      if (lovers(life).length) addLog(life, L('Những người yêu phụ giờ lại thành người tình bí mật.', 'Your other partners are secret lovers again.'));
+      return res(L('Hai người quay lại chỉ có nhau.', "It's just the two of you again."), []);
+    case 'confess':
+      life.queue.unshift({ sys: 'affair_exposed', confess: true });
+      return res(L('Bạn hít một hơi thật sâu và bắt đầu nói.', 'You take a deep breath and start talking.'), []);
     case 'argue': p.closeness = clamp(p.closeness - randint(life, 6, 14)); life.stats.happy = clamp(life.stats.happy - 3); return res(L(`Bạn và ${name} cãi nhau to đến mức hàng xóm gõ cửa.`, `You and ${name} fight so loudly the neighbours knock.`), [['happy', -3]], 'bad');
   }
   return null;
@@ -235,7 +287,7 @@ function intimateScene(life, settings, p) {
     text: settings.adult25
       ? L(`Bạn và ${nm(life, p)} dành cả buổi tối cho nhau, chậm rãi và không vội vàng.`, `You and ${nm(life, p)} spend the whole evening on each other, slow and unhurried.`)
       : L(`Bạn và ${nm(life, p)} có một buổi tối riêng tư bên nhau.`, `You and ${nm(life, p)} share a private evening together.`),
-    run: (lf) => { closer(lf, p, 4, 10); setFlag(lf, 'recent_intimate'); tryConceive(lf, p, protectChance(protect)); },
+    run: (lf) => { closer(lf, p, 4, 10); setFlag(lf, 'recent_intimate'); tryConceive(lf, p, protectChance(protect)); lf.stats.happy = clamp(lf.stats.happy + Math.round(((p.skill ?? 50) - 50) / 12 + (p.gender === 'male' ? ((p.size ?? 50) - 50) / 25 : 0))); },
   });
   return { event: { uid: 'love/intimate', text: L(`Bạn muốn gần gũi với ${nm(life, p)}.`, `You want some intimacy with ${nm(life, p)}.`), choices: [{ label: L('Dùng biện pháp', 'Use protection'), outcomes: [go(true)] }, { label: L('Không dùng biện pháp', 'Skip protection'), outcomes: [go(false)] }] } };
 }
@@ -370,6 +422,16 @@ export function loveYear(life) {
 }
 
 export function buildLoveSys(life, item) {
+  if (item.sys === 'lover_ultimatum') {
+    const lv = byId(life, item.id);
+    if (!lv || lv.role !== 'lover' || !lv.alive || !partner(life)) return null;
+    const ln = nm(life, lv);
+    return { uid: 'sys/lover_ultimatum', sys: true, text: L(`${ln} nói nhỏ: "Mình không muốn làm người bí mật mãi. Chọn đi: mình hoặc người kia."`, `${ln} says quietly: "I don't want to be your secret forever. Choose: me or them."`), choices: [
+      { label: L(`Chọn ${ln}`, `Choose ${ln}`), outcomes: [{ chance: 1, effects: { happy: 6, karma: -6 }, run: (lf) => { breakUp(lf, 'affair'); lv.role = 'partner'; lv.closeness = Math.max(lv.closeness, 70); lf.counts.partners++; syncAffair(lf); }, text: L('Bạn về nhà, nói lời chia tay, rồi dọn đi.', 'You go home, end it, and move out.') }] },
+      { label: L('Hứa sẽ sớm rời đi', 'Promise to leave soon'), outcomes: [{ chance: 0.6, effects: { karma: -3 }, run: () => { lv.closeness = clamp(lv.closeness - 5); }, text: L('Một lời hứa nữa. Họ tạm tin.', 'Another promise. They believe you, for now.') }, { chance: 0.4, effects: {}, run: (lf) => lf.queue.unshift({ sys: 'affair_exposed' }), text: L('Họ không tin nữa và tự đi tìm người yêu bạn.', "They're done waiting and go find your partner themselves.") }] },
+      { label: L('Chấm dứt với họ', 'End it with them'), outcomes: [{ chance: 1, effects: { happy: -6, karma: 4 }, run: (lf) => endLover(lf, lv), text: L('Bạn mặc áo, nhìn họ lần cuối, và đi.', 'You dress, look at them one last time, and leave.') }] },
+    ] };
+  }
   const p = partner(life);
   if (!p) return null;
   const name = nm(life, p);

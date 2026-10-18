@@ -38,7 +38,11 @@ export function randomPerson(s, life, { role, gender, age, last, closeness = 60 
     looks: randint(s, 20, 100),
     smarts: randint(s, 10, 100),
     alive: true,
+    poly: Math.round(rand(s) ** 2 * 100),
+    fert: randint(s, 40, 95),
+    skill: randint(s, 20, 90),
   };
+  if (g === 'male') p.size = randint(s, 20, 90);
   if (age >= 18) enrichAdult(s, life, p);
   return p;
 }
@@ -140,6 +144,8 @@ export function createLife(opts = {}) {
     done: [],
     pregnancy: null,
     affair: null,
+    fert: randint(s, 45, 95),
+    skill: randint(s, 20, 80),
     counts: { ons: 0, partners: 0, affairsExposed: 0, divorces: 0, children: 0, godUses: 0, rewinds: 0, maxMoney: 0 },
     addicted: false,
     ill: null,
@@ -217,3 +223,33 @@ export function adjustRel(life, role, delta) {
 }
 
 export { rand };
+
+// ───────── Người tình (không giới hạn số lượng) ─────────
+export const lovers = (life) => life.people.filter((p) => p.role === 'lover' && p.alive);
+export const polyOk = (life) => 'open_rel' in life.flags;
+export function syncAffair(life) {
+  const ls = lovers(life);
+  if (!ls.length) { life.affair = null; delete life.flags.has_affair; return; }
+  const last = ls.reduce((a, b) => ((b.loverSince ?? 0) >= (a.loverSince ?? 0) ? b : a));
+  life.affair = { id: last.id, since: Math.min(...ls.map((x) => x.loverSince ?? life.age)) };
+  if (!('has_affair' in life.flags)) life.flags.has_affair = life.age;
+  life.counts.maxLovers = Math.max(life.counts.maxLovers || 0, ls.length);
+}
+export function makeLover(life, p) {
+  p.role = 'lover';
+  p.loverSince = life.age;
+  p.closeness = Math.max(p.closeness, 55);
+  syncAffair(life);
+}
+export function endLover(life, p, cap = 20) {
+  p.role = 'ex';
+  p.closeness = Math.min(p.closeness, cap);
+  syncAffair(life);
+}
+export function endAllLovers(life) {
+  for (const p of lovers(life)) { p.role = 'ex'; p.closeness = Math.min(p.closeness, 20); }
+  syncAffair(life);
+}
+/** Ai có thể quyến rũ: người lớn ngoài gia đình. Không bao giờ có bố mẹ, anh chị em, con cái, thú cưng hay người dưới 18. */
+export const SEDUCIBLE = ['friend', 'bestie', 'contact', 'ex', 'rival', 'mentor', 'coworker', 'neighbor'];
+export const canSeduce = (life, p) => p.alive && life.age >= 18 && p.age >= 18 && SEDUCIBLE.includes(p.role);

@@ -6,7 +6,7 @@ import { majorEvent, tradeEvent } from './school.js';
 import { illnessById } from '../data/illness.js';
 import {
   country, tier, unit, partner, spouse, people, byId, randomPerson, partnerGender, personName,
-  addLog, setFlag, clearFlag, readStat, adjustRel, milestone,
+  addLog, setFlag, clearFlag, readStat, adjustRel, milestone, lovers, polyOk, makeLover, endLover, endAllLovers, syncAffair,
 } from './life.js';
 
 // Cờ tạm thời: hết hạn sau số năm này nếu không sự kiện nào xóa.
@@ -39,11 +39,12 @@ export function eligible(ev, life, settings) {
     cohabiting: !!partner(life)?.cohab,
     addicted: !!life.addicted,
     pregnant: !!(life.pregnancy && life.pregnancy.carrier === 'self'),
-    hasAffair: !!life.affair,
+    hasAffair: lovers(life).length > 0,
   };
   for (const k of Object.keys(bools)) if (k in r && r[k] !== bools[k]) return false;
   if (r.incomeTier && !r.incomeTier.includes(tier(life))) return false;
   if (r.eduStage && !r.eduStage.includes(life.edu.stage)) return false;
+  if (r.lovers != null && lovers(life).length < r.lovers) return false;
   if (r.job && !(life.job && r.job.includes(life.job.id))) return false;
   if (r.special && !(life.special && r.special.includes(life.special.id))) return false;
   if ('retired' in r && r.retired !== (!life.job && life.pension > 0)) return false;
@@ -113,7 +114,8 @@ export function tryConceive(life, other, p) {
   const carrierAge = life.gender === 'female' ? life.age : other.age;
   if (carrierAge > 48 || carrierAge < 18) return false;
   const ageFactor = carrierAge > 40 ? 0.35 : carrierAge > 35 ? 0.7 : 1;
-  if (!chance(life, p * ageFactor)) return false;
+  const fert = clamp(((life.fert ?? 70) / 70) * ((other.fert ?? 70) / 70), 0.05, 2);
+  if (!chance(life, clamp(p * ageFactor * fert, 0, 0.95))) return false;
   life.pregnancy = { carrier: life.gender === 'female' ? 'self' : 'other', otherId: other.id, age: life.age };
   return true;
 }
@@ -140,7 +142,9 @@ export function applyEffects(life, effects = {}, ctx = {}) {
   if (effects.salaryPct && life.job) { const d = Math.round(life.job.salary * effects.salaryPct / 100); life.job.salary += d; changes.push(['salary', d]); }
   if (effects.illness && illnessById[effects.illness] && !life.ill) { const x = illnessById[effects.illness]; life.ill = { id: x.id, name: x.name, drain: x.drain, mood: x.mood, smarts: x.smarts, cure: x.cure }; addLog(life, L(`Bạn được chẩn đoán ${x.name.vi}.`, `You're diagnosed with ${x.name.en}.`), 'bad'); }
   if (effects.cure && life.ill) life.ill = null;
-  if (effects.endAffair && life.affair) { const lv = byId(life, life.affair.id); if (lv) { lv.role = 'ex'; lv.closeness = 20; } life.affair = null; clearFlag(life, 'has_affair'); }
+  if (effects.endAffair && life.affair) { const lv = byId(life, life.affair.id); if (lv) endLover(life, lv); else syncAffair(life); }
+  if (effects.endAllAffairs) endAllLovers(life);
+  if (effects.promoteLover && life.affair) { const lv = byId(life, life.affair.id); if (lv) { if (partner(life)) breakUp(life, 'affair'); lv.role = 'partner'; lv.closeness = Math.max(lv.closeness, 65); life.counts.partners++; syncAffair(life); } }
   if (effects.retire && life.job) life.flags.retire_now = life.age;
   if (effects.loseJob && life.job) { life.job = null; addLog(life, L('Bạn mất việc.', 'You lose your job.'), 'bad'); }
   if (effects.newContact) {
@@ -243,11 +247,10 @@ function takeAssets(life, amount) {
 }
 
 export function startAffair(life) {
-  if (life.affair || !partner(life)) return null;
-  const p = randomPerson(life, life, { role: 'lover', gender: partnerGender(life, life), age: clamp(life.age + randint(life, -8, 6), 18, 90), closeness: 55 });
+  if (life.age < 18) return null;
+  const p = randomPerson(life, life, { role: 'contact', gender: partnerGender(life, life), age: clamp(life.age + randint(life, -8, 6), 18, 90), closeness: 55 });
   life.people.push(p);
-  life.affair = { id: p.id, since: life.age };
-  setFlag(life, 'has_affair');
+  makeLover(life, p);
   return p;
 }
 
@@ -298,15 +301,23 @@ export function buildSysEvent(life, item, settings) {
   }
   if (item.sys === 'affair_exposed') {
     const sp = partner(life);
+    const ls = lovers(life);
+    if (!sp || !ls.length || polyOk(life)) return null;
     const lover = life.affair && byId(life, life.affair.id);
-    const sn = sp ? personName(life, sp) : '';
+    const sn = personName(life, sp);
+    const ln = lover ? personName(life, lover) : '';
+    const n = ls.length;
+    const fp = clamp((item.confess ? 0.6 : 0.45) - (n - 1) * 0.1, 0.1, 0.7);
+    const kp = n > 1 ? -10 * n : 0;
     return {
       uid: 'sys/affair', sys: true,
-      text: L(`${sn} phát hiện bạn ngoại tình với ${lover ? personName(life, lover) : 'người khác'}.`, `${sn} finds out about your affair with ${lover ? personName(life, lover) : 'someone else'}.`),
+      text: n > 1
+        ? L(`${sn} ${item.confess ? 'nghe bạn thú nhận' : 'phát hiện'} bạn đang qua lại với ${n} người cùng lúc, trong đó có ${ln}.`, `${sn} ${item.confess ? 'hears your confession' : 'discovers'}: you've been seeing ${n} people at once, including ${ln}.`)
+        : L(`${sn} ${item.confess ? 'nghe bạn thú nhận chuyện' : 'phát hiện'} bạn ngoại tình với ${ln}.`, `${sn} ${item.confess ? 'hears you confess' : 'finds out'} about your affair with ${ln}.`),
       choices: [
         { label: L('Quỳ xuống xin tha thứ', 'Beg for forgiveness'), outcomes: [
-          { chance: 0.45, sys: 'affair_forgiven', effects: { rel_partner: -30, happy: -8 }, text: L('Họ tha thứ, nhưng niềm tin đã sứt mẻ.', 'They forgive you, but the trust is broken.') },
-          { chance: 0.55, sys: 'affair_split', effects: { happy: -15 }, text: L('Họ thu dọn đồ đạc và rời đi.', 'They pack their things and leave.') },
+          { chance: fp, sys: 'affair_forgiven', effects: { rel_partner: -30, happy: -8, karma: kp / 2 }, text: L('Họ tha thứ, nhưng niềm tin đã sứt mẻ. Bạn phải cắt đứt với tất cả.', 'They forgive you, but the trust is broken. You have to cut everyone else off.') },
+          { chance: 1 - fp, sys: 'affair_split', effects: { happy: -15, karma: kp }, text: L('Họ thu dọn đồ đạc và rời đi.', 'They pack their things and leave.') },
         ] },
         { label: L('Chọn người tình', 'Choose your lover'), outcomes: [{ chance: 1, sys: 'affair_switch', effects: { karma: -10, happy: 4 }, text: L('Bạn rời đi để sống với người tình.', 'You leave to be with your lover.') }] },
         { label: L('Chối đến cùng', 'Deny everything'), outcomes: [
@@ -359,20 +370,23 @@ export function applySys(life, sysKey) {
       life.pregnancy = null;
       break;
     case 'affair_forgiven':
-      endAffair(life);
+      if (lovers(life).length > 1) life.counts.multiExposed = (life.counts.multiExposed || 0) + 1;
+      endAllLovers(life);
       break;
     case 'affair_split':
       life.counts.affairsExposed++;
+      if (lovers(life).length > 1) life.counts.multiExposed = (life.counts.multiExposed || 0) + 1;
       breakUp(life, 'affair');
-      endAffair(life);
+      endAllLovers(life);
       break;
     case 'affair_switch': {
       life.counts.affairsExposed++;
+      if (lovers(life).length > 1) life.counts.multiExposed = (life.counts.multiExposed || 0) + 1;
       const lover = life.affair && byId(life, life.affair.id);
       breakUp(life, 'affair');
-      life.affair = null;
-      clearFlag(life, 'has_affair');
+      for (const p of lovers(life)) if (p !== lover) endLover(life, p);
       if (lover) { lover.role = 'partner'; lover.closeness = 70; life.counts.partners++; }
+      syncAffair(life);
       break;
     }
     case 'affair_denied':
@@ -390,10 +404,7 @@ export function applySys(life, sysKey) {
 }
 
 function endAffair(life) {
-  const lover = life.affair && byId(life, life.affair.id);
-  if (lover) { lover.role = 'ex'; lover.closeness = 20; }
-  life.affair = null;
-  clearFlag(life, 'has_affair');
+  endAllLovers(life);
 }
 
 export { pick };

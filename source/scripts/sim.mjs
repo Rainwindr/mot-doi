@@ -1,6 +1,6 @@
 // Mô phỏng nhiều đời ngẫu nhiên để kiểm tra lỗi và cân bằng tuổi thọ.
 import { makeGame, defaultSettings, newLife, ageUpGame, currentEvent, chooseEvent, chooseModal } from '../src/engine/game.js';
-import { availableActivities, doActivity, workAction, applyJob, jobOpenings } from '../src/engine/actions.js';
+import { availableActivities, doActivity, workAction, applyJob, jobOpenings, personActions, doPersonAction, godPerson } from '../src/engine/actions.js';
 import { country } from '../src/engine/life.js';
 import { invest, divest, buyHome, buyCar, startBiz, bizAction, ASSETS, HOMES, CARS, INDUSTRIES, netWorth } from '../src/engine/economy.js';
 import { emigrate } from '../src/engine/crime.js';
@@ -41,9 +41,21 @@ for (let i = 0; i < N; i++) {
         const r = workAction(life, R(['promote', 'promote', 'hard', 'uni', 'trade', 'grad', 'club', 'scholar', 'intern', 'switch', 'study', 'parttime', 'exchange', 'olympiad']));
         if (r && r.mini) autoPlay(life, r.mini);
         if (r && r.event) { const ok = r.event.choices.map((c, i) => [c, i]).filter(([c]) => !choiceLocked(life, c)); chooseModal(game, r.event, ok.length ? R(ok)[1] : r.event.choices.length - 1); }
-        if (!life.job && life.age >= 18 && !life.edu.stage) { const o = jobOpenings(life); if (o.length) applyJob(life, R(o).id); }
+        if (!life.job && life.age >= 18 && !life.edu.stage) { const o = jobOpenings(life); if (o.length) applyJob(life, R(o).id, { interview: Math.random() }); }
       }
       goalsHit += checkGoals(life).length;
+      for (let k = 0; k < 3 && !life.dead; k++) {
+        const ppl = life.people.filter((x) => x.alive && !x.cut);
+        if (!ppl.length) break;
+        const q = R(ppl);
+        const acts2 = personActions(life, q);
+        if (!acts2.length) continue;
+        const r2 = doPersonAction(life, st, q.id, R(acts2)[0]);
+        if (r2 && r2.event) { let rr = r2, g = 0; while (rr && rr.event && g++ < 5) { const m = chooseModal(game, rr.event, Math.floor(Math.random() * rr.event.choices.length)); rr = m.next ? { event: m.next } : null; } }
+        if (r2 && r2.mini) autoPlay(life, r2.mini);
+        if (Math.random() < 0.02) godPerson(life, q.id, { poly: 90, fert: 90, skill: 80, size: 70 });
+      }
+      if (life.job && Math.random() < 0.3) workAction(life, R(['overtime', 'bossdrinks', 'transfer', 'leave', 'strike', 'whistle']));
       if (!life.dead && life.age >= 14) {
         if (!life.special && !life.job && Math.random() < 0.15) { const id = R(Object.keys(SPECIALS)); if (canJoin(life, id, st)) specialAction(life, 'join', id, st); }
         if (life.special) specialAction(life, R(['train', 'big', 'promo', 'train', 'big']));
@@ -112,7 +124,6 @@ const total = game.events.length;
 console.log('degrees', JSON.stringify(degs));
 console.log('max followers', maxFollow);
 console.log('goals hit', goalsHit, 'of', N * 3, '· achievements', Object.keys(profile.ach).join(','), '· ribbons', Object.keys(profile.ribbons).length);
-console.log('jobs at death', JSON.stringify(jobs));
 console.log('stuck lives', stuck, '· arcs finished', JSON.stringify(arcDone));
 console.log(`marriages ${marriages} · divorces ${divorces} · prenup-years ${prenups} · sugar partners ${sugar} · adopted kids ${adopted}`);
 console.log(`jailed ${jailed} · escaped ${escaped} · businesses ${bizs} · homeowners ${homes} · emigrated ${moved} · coborn deaths ${cobornDead}`);

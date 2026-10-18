@@ -72,6 +72,7 @@ export const ACHIEVEMENTS = [
   A('goals25', '🏹', 'Bách phát bách trúng', 'Sharpshooter', 'Hoàn thành tổng cộng 25 mục tiêu', 'Complete 25 goals in total', (p) => p.goalsDone >= 25),
   A('dynasty', '👑', 'Dòng tộc', 'Dynasty', 'Sống tiếp qua 3 thế hệ', 'Play through 3 generations', (p) => p.lives.some((x) => (x.gen || 1) >= 3)),
   A('doctor', '🧑‍🔬', 'Tiến sĩ', 'Doctorate', 'Có bằng tiến sĩ', 'Earn a PhD', (p) => p.lives.some((x) => x.edu === 'phd' && !x.custom)),
+  A('nobodyknew', '🤫', 'Không ai biết', 'Nobody knew', 'Mất khi vẫn còn người tình mà chưa từng bị lộ', 'Die with a secret lover, never caught', (p) => p.lives.some((x) => x.secretLovers && !x.custom)),
   A('rags', '🚀', 'Từ hai bàn tay trắng', 'Rags to riches', 'Sinh ra nghèo, chết giàu', 'Born poor, die rich', (p) => p.lives.some((x) => x.wealth === 'poor' && x.worthX >= 50 && !x.custom)),
 ];
 
@@ -89,6 +90,7 @@ export function archiveLife(profile, life, extra = {}) {
     age: life.age, cause: life.cause, ribbons: life.ribbons || [], worth: netWorth(life), worthX: netWorth(life) / c.gdp,
     wealth: life.wealth, edu: life.edu.level, goals, custom: !!life.customized, gen: life.gen || 1, kids: life.counts.children,
     job: life.job ? life.job.id : null,
+    secretLovers: life.people.filter((p) => p.role === 'lover' && p.alive).length > 0 && !life.counts.affairsExposed && !life.counts.multiExposed,
   };
   profile.lives.unshift(entry);
   profile.lives = profile.lives.slice(0, 200);

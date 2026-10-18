@@ -2,10 +2,11 @@
 import { higherEdYear } from './school.js';
 import { specialYear } from './specials.js';
 import { careerYear } from './career.js';
+import { financeYear, petYear } from './extras.js';
 import { EDU_RANK } from '../data/careers.js';
 import { L, clamp, rand, chance, randint, pick } from './util.js';
 import { careerById } from '../data/careers.js';
-import { country, tier, unit, partner, people, byId, personName, addLog, clearFlag, milestone } from './life.js';
+import { country, tier, unit, partner, people, byId, personName, addLog, clearFlag, milestone, lovers, polyOk } from './life.js';
 import { FLAG_TTL, pickYearEvents } from './events.js';
 import { economyYear, netWorth, livesInOwnHome } from './economy.js';
 import { prisonYear, cobornYear } from './crime.js';
@@ -131,7 +132,7 @@ function relations(life) {
     p.age++;
     if (p.role !== 'child') p.closeness = clamp(p.closeness + Math.round((50 - p.closeness) * 0.05) + randint(life, -3, 1));
     const fake = { ...life, age: p.age, stats: { ...life.stats, health: 60 }, addicted: false };
-    if (p.age > 3 && chance(life, mortality(fake, p.age, 60))) {
+    if (p.role !== 'pet' && p.age > 3 && chance(life, mortality(fake, p.age, 60))) {
       p.alive = false;
       const tag = { mother: L('Mẹ', 'Your mother'), father: L('Bố', 'Your father'), spouse: L('Vợ/chồng', 'Your spouse'), partner: L('Người yêu', 'Your partner'), child: L('Con', 'Your child'), sibling: L('Anh/chị/em', 'Your sibling') }[p.role];
       if (p.role === 'spouse') { life.flags.widowed = life.age; life.marriage = null; }
@@ -153,10 +154,19 @@ function relations(life) {
       addLog(life, L(`${personName(life, pt)} chia tay bạn vì cảm thấy bị bỏ bê.`, `${personName(life, pt)} leaves you, feeling neglected.`), 'bad');
     }
   }
-  if (life.affair) {
-    const years = life.age - life.affair.since;
-    const p = clamp(0.12 + 0.06 * years - life.stats.smarts / 500, 0.05, 0.7);
-    if (partner(life) && chance(life, p)) life.queue.unshift({ sys: 'affair_exposed' });
+  const ls = lovers(life);
+  if (ls.length) {
+    const gdp = country(life).gdp;
+    life.money -= 0.03 * gdp * ls.length;
+    if (ls.length >= 2 && !polyOk(life)) { life.stats.happy = clamp(life.stats.happy - (ls.length - 1)); life.stats.willpower = clamp(life.stats.willpower - 1); }
+    if (polyOk(life)) life.counts.polyYears = (life.counts.polyYears || 0) + 1;
+    const pt = partner(life);
+    if (pt && !polyOk(life)) {
+      const yrs = life.age - Math.min(...ls.map((x) => x.loverSince ?? life.age));
+      const p = clamp(0.06 * ls.length + 0.03 * yrs - life.stats.willpower / 800 + life.stats.risk / 600 + (pt.cohab ? 0.03 : 0) - life.stats.smarts / 1000, 0.03, 0.85);
+      if (chance(life, p)) life.queue.unshift({ sys: 'affair_exposed' });
+    }
+    for (const lv of ls) if ((lv.crazy ?? 50) > 85 && lv.closeness > 70 && pt && !polyOk(life) && chance(life, 0.08)) { life.queue.push({ sys: 'lover_ultimatum', id: lv.id }); break; }
   }
 }
 
@@ -177,6 +187,8 @@ export function ageUp(life, events, settings) {
   school(life);
   work(life);
   specialYear(life);
+  financeYear(life);
+  petYear(life);
   relations(life);
   prisonYear(life);
   economyYear(life);
@@ -217,6 +229,9 @@ export const RIBBONS = {
   academic: { name: L('Học giả', 'Academic'), why: L('Có bằng đại học và trí tuệ cao', 'A degree and high smarts') },
   fertile: { name: L('Con đàn cháu đống', 'Fertile'), why: L('Có từ 4 con trở lên', 'Four or more children') },
   heartbreaker: { name: L('Kẻ phản bội', 'Heartbreaker'), why: L('Ngoại tình bị phát hiện', 'An affair came to light') },
+  casanova: { name: L('Cao thủ bắt cá', 'Smooth operator'), why: L('Có 3 người tình cùng lúc mà chưa từng bị lộ', 'Had 3 lovers at once and never got caught') },
+  bigheart: { name: L('Trái tim rộng', 'Big heart'), why: L('Sống đa ái công khai trên 10 năm', 'Lived openly polyamorous for over 10 years') },
+  caught: { name: L('Bị bắt tại trận', 'Caught red-handed'), why: L('Bị lộ cùng lúc từ 2 người tình trở lên', 'Exposed with two or more lovers at once') },
   playboy: { name: L('Phong lưu', 'Free spirit'), why: L('Từ 8 cuộc tình một đêm trở lên', 'Eight or more one-night stands') },
   longlived: { name: L('Trường thọ', 'Long-lived'), why: L('Sống hơn tuổi thọ trung bình 15 năm', 'Outlived the national average by 15 years') },
   saint: { name: L('Người tốt', 'Saint'), why: L('Karma trên 85', 'Karma above 85') },
@@ -244,6 +259,9 @@ export function ribbonsFor(life) {
   if (EDU_RANK[life.edu.level] >= 2 && life.stats.smarts >= 80) r.push('academic');
   if (life.counts.children >= 4) r.push('fertile');
   if (life.counts.affairsExposed > 0) r.push('heartbreaker');
+  if ((life.counts.maxLovers || 0) >= 3 && !life.counts.affairsExposed && !life.counts.multiExposed) r.push('casanova');
+  if ((life.counts.polyYears || 0) >= 10) r.push('bigheart');
+  if (life.counts.multiExposed) r.push('caught');
   if (life.counts.ons >= 8) r.push('playboy');
   if (life.age >= country(life).life + 15) r.push('longlived');
   if (life.stats.karma > 85) r.push('saint');

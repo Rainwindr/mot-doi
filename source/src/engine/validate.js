@@ -6,7 +6,7 @@ export const CATEGORIES = ['childhood', 'school', 'teen', 'love', 'work', 'money
 export const STATS = ['health', 'happy', 'smarts', 'looks', 'karma', 'willpower', 'risk', 'fame'];
 export const REL_KEYS = ['mother', 'father', 'sibling', 'partner', 'spouse', 'child', 'friend', 'boss'];
 const BOOL_REQ = ['retired', 'ill', 'inSchool', 'employed', 'hasPartner', 'married', 'hasChildren', 'inPrison', 'addicted', 'pregnant', 'hasAffair', 'hasBusiness', 'ownsHome', 'fugitive', 'hasRecord', 'engaged', 'cohabiting'];
-const SPECIAL_EFFECTS = ['pregnancyChance', 'newContact', 'startAffair', 'affairExposed', 'breakup', 'divorce', 'cure', 'retire', 'loseJob', 'endAffair'];
+const SPECIAL_EFFECTS = ['pregnancyChance', 'newContact', 'startAffair', 'affairExposed', 'breakup', 'divorce', 'cure', 'retire', 'loseJob', 'endAffair', 'endAllAffairs', 'promoteLover'];
 const OUTCOME_KEYS = ['chance', 'effects', 'text', 'setFlags', 'clearFlags', 'newContact'];
 const EVENT_KEYS = ['id', 'category', 'age', 'weight', 'once', 'rating', 'requires', 'text', 'choices', 'effects', 'setFlags', 'clearFlags', 'sensitive', 'big'];
 import { ILLNESS_IDS } from '../data/illness.js';
@@ -57,6 +57,8 @@ function checkRequires(where, req, errors) {
       for (const s of Object.keys(v)) {
         if (!(STATS.includes(s) || isRel(s) || s === 'money' || s === 'age')) errors.push(`${where}: ${k}.${s} không phải chỉ số hợp lệ`);
       }
+    } else if (k === 'lovers') {
+      if (typeof v !== 'number' || v < 0) errors.push(`${where}: lovers phải là số người tình tối thiểu`);
     } else if (k === 'special') {
       if (!Array.isArray(v) || v.some((x) => !SPECIAL_IDS.includes(x))) errors.push(`${where}: special phải là mảng trong ${SPECIAL_IDS.join(', ')}`);
     } else if (k === 'job') {

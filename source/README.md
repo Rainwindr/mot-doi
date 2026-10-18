@@ -28,6 +28,7 @@ src/engine/   logic thuần, không đụng giao diện
   specials.js   nghề đặc biệt (diễn viên, ca sĩ, vận động viên) và mạng xã hội
   minigames.js  kết quả trò chơi nhỏ (vượt ngục mê cung, cao hay thấp, thi học sinh giỏi)
   career.js     cấp bậc từng nghề theo năm kinh nghiệm, loại công ty, lời mời việc khi ra trường, săn đầu người
+  extras.js     hoạt động mở rộng, thú cưng, hành động với từng người, công việc, vay ngân hàng, bảo hiểm
   goals.js      3 mục tiêu mỗi đời, thành tựu vĩnh viễn, nghĩa trang
   arcs.js       6 mạch truyện dài gắn với nhân vật quay lại (bạn thân, đối thủ, mối tình đầu, thầy cô, bí mật gia đình, thú cưng)
   game.js       điều phối gói + hàng đợi sự kiện
@@ -40,9 +41,9 @@ scripts/      build, bundle, pack-lint, sim
 
 Mỗi gói là một file JSON (`manifest` + `events`). Thêm gói mới vào `src/data/packs/` rồi khai báo trong `src/engine/game.js`, hoặc nạp trực tiếp trong game: Cài đặt → Nạp gói nội dung. Gói lỗi bị từ chối kèm danh sách lỗi cụ thể. Sự kiện có thể gắn "big": true (biến cố lớn, hiếm) và lựa chọn có thể có "requires": { "min": {...} } để khóa theo chỉ số. Luật cố định: sự kiện tình cảm hoặc 25+ phải có tuổi tối thiểu từ 18.
 
-Điều kiện có thể dùng trong `requires`: gender, partnerGender, inSchool, employed, hasPartner, married, hasChildren, inPrison, addicted, pregnant, hasAffair, hasBusiness, ownsHome, fugitive, hasRecord, engaged, cohabiting, incomeTier, min, max, flags, notFlags, job (mảng mã nghề), retired, ill, childAge ([min, max] tuổi của một người con), eduStage (mảng: primary, secondary, uni, grad, trade), major (mảng mã ngành: cs, engineering, medicine, nursing, law, business, finance, science, architecture, psychology, comms, education, arts).
+Điều kiện có thể dùng trong `requires`: gender, partnerGender, inSchool, employed, hasPartner, married, hasChildren, inPrison, addicted, pregnant, hasAffair, hasBusiness, ownsHome, fugitive, hasRecord, engaged, cohabiting, incomeTier, min, max, flags, notFlags, job (mảng mã nghề), special (mảng: actor, musician, athlete, adult_actor, adult_director), lovers (số người tình tối thiểu), retired, ill, childAge ([min, max] tuổi của một người con), eduStage (mảng: primary, secondary, uni, grad, trade), major (mảng mã ngành: cs, engineering, medicine, nursing, law, business, finance, science, architecture, psychology, comms, education, arts).
 
-Hiệu ứng đặc biệt thêm: jobPerf (±50, hiệu suất công việc), salaryPct (±50, % lương), illness (flu_long, back, insomnia, hypertension, diabetes, arthritis, heart, burnout, depression, memory, cancer), cure, retire, loseJob.
+Hiệu ứng đặc biệt thêm: jobPerf (±50, hiệu suất công việc), salaryPct (±50, % lương), illness (flu_long, back, insomnia, hypertension, diabetes, arthritis, heart, burnout, depression, memory, cancer), cure, retire, loseJob, endAffair, endAllAffairs, promoteLover.
 
 ## Chưa có trong bản này
 

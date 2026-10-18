@@ -346,6 +346,14 @@ details.box summary::-webkit-details-marker { display: none; }
 details.box summary::after { content: ' ▾'; color: var(--muted); }
 .ladder li.cur span:last-child { color: var(--sky); font-weight: 800; }
 .ladder li.done span:last-child { color: var(--good); }
+.track { display: grid; gap: 6px; background: color-mix(in srgb, var(--lvl-hi) 18%, var(--soft)); border-radius: 12px; padding: 8px; }
+.lane { position: relative; height: 34px; border-bottom: 1px dashed var(--rule); }
+.lane:last-child { border-bottom: 0; }
+.lane .hn { position: absolute; left: 4px; top: 0; font-size: 11px; font-weight: 700; color: var(--muted); }
+.lane.mine .hn { color: var(--sky); }
+.lane i { position: absolute; bottom: 0; font-style: normal; font-size: 24px; transform: scaleX(-1); transition: left .12s linear; }
+.pcard.sm { width: 64px; height: 90px; } .pcard.sm b { font-size: 26px; } .pcard.sm span { font-size: 20px; }
+.pcard.back { width: 64px; height: 90px; background: repeating-linear-gradient(45deg, #2563eb, #2563eb 6px, #1d4ed8 6px, #1d4ed8 12px); color: #fff; }
 
 </style>
 <div id="app"></div>
@@ -393,9 +401,9 @@ const STRINGS = {
     needs: 'Yêu cầu', tooYoung: 'Bạn còn quá nhỏ để đi làm. Từ 15 tuổi có thể làm thêm.',
     family: 'Gia đình', love: 'Tình cảm', children: 'Con cái', friends: 'Bạn bè', others: 'Người quen & người cũ',
     closeness: 'Thân thiết', alone: 'Chưa có ai ở đây.',
-    roles: { mother: 'Mẹ', father: 'Bố', sibling: 'Anh chị em', partner: 'Người yêu', spouse: 'Vợ/chồng', child: 'Con', friend: 'Bạn', contact: 'Người quen', ex: 'Người cũ', lover: 'Người tình', bestie: 'Bạn thân', rival: 'Đối thủ', mentor: 'Thầy cô', half: 'Anh chị em cùng cha/mẹ khác', pet: 'Thú cưng' },
+    roles: { mother: 'Mẹ', father: 'Bố', sibling: 'Anh chị em', partner: 'Người yêu', spouse: 'Vợ/chồng', child: 'Con', friend: 'Bạn', contact: 'Người quen', ex: 'Người cũ', lover: 'Người tình', bestie: 'Bạn thân', rival: 'Đối thủ', mentor: 'Thầy cô', half: 'Anh chị em cùng cha/mẹ khác', pet: 'Thú cưng', loverPoly: 'Người yêu phụ', coworker: 'Đồng nghiệp', neighbor: 'Hàng xóm' },
     bigMoment: 'Biến cố lớn', lifeChart: 'Cuộc đời qua từng năm', milestones: 'Dấu mốc',
-    actGroups: { net: 'Mạng xã hội', kid: 'Vui chơi', teen: 'Học hỏi & rèn luyện', mind: 'Trí óc & cơ thể', night: 'Ăn chơi', love: 'Tình yêu', crime: 'Phạm tội', prison: 'Trại giam' },
+    actGroups: { fun: 'Giải trí', shop: 'Mua sắm', life: 'Đời sống', pet: 'Thú cưng', money: 'Tài chính', net: 'Mạng xã hội', kid: 'Vui chơi', teen: 'Học hỏi & rèn luyện', mind: 'Trí óc & cơ thể', night: 'Ăn chơi', love: 'Tình yêu', crime: 'Phạm tội', prison: 'Trại giam' },
     cost: 'Chi phí',
     traitsNone: 'Không có đặc điểm đặc biệt',
     lifeExp: 'Tuổi thọ trung bình', incomeTier: 'Mức thu nhập quốc gia', tiers: { low: 'Thấp', mid: 'Trung bình', high: 'Cao' },
@@ -429,6 +437,9 @@ const STRINGS = {
     coborns: '4 người sinh cùng giây với bạn', cbAlive: 'còn sống', cbDead: 'đã mất',
     openSelf: 'Xem hồ sơ',
     grad: 'Sau đại học', trade: 'Trường nghề', eduMa: 'Thạc sĩ', eduPhd: 'Tiến sĩ', majorLbl: 'Chuyên ngành', yearOf: 'Năm {n}/{m}', degrees: 'Bằng cấp', scholarship: 'Có học bổng', enrolTrade: 'Học trường nghề', enrolGrad: 'Học thạc sĩ / tiến sĩ', club: 'Tham gia câu lạc bộ', parttime: 'Đi làm thêm', scholar: 'Xin học bổng', exchange: 'Đi trao đổi nước ngoài', intern: 'Xin thực tập', switchMajor: 'Đổi ngành', olympiad: 'Thi học sinh giỏi', lockedJobs: 'Cần thêm bằng cấp', needDegree: 'Cần bằng {x}', needTrade: 'Cần học nghề {x}', anyMajor: 'ngành bất kỳ', studyOptions: 'Học tiếp', student: 'Sinh viên', internTag: 'Đã thực tập', honors: 'loại giỏi', studentAt: '{s} năm {n}', uniSub: 'Chọn chuyên ngành, 4–6 năm', tradeSub: '2 năm, rẻ, ra trường đi làm ngay', gradSub: 'Thạc sĩ 2 năm, tiến sĩ 4 năm', 
+    mgRace: 'Đua ngựa', mgRaceHelp: 'Chọn mức cược rồi chọn ngựa. Tỷ lệ cược càng cao, ngựa càng khó thắng.', mgPickHorse: 'Chọn ngựa:', mgOdds: 'tỷ lệ', mgBJ: 'Xì dách', mgBJHelp: 'Gần 21 nhất mà không quá 21 thì thắng. Nhà cái rút đến 17.', mgDealer: 'Nhà cái', mgYou: 'Bạn', mgHit: 'Rút', mgStand: 'Dừng', mgInterview: 'Phỏng vấn xin việc', mgExam: 'Luyện thi đại học', examPrep: 'Luyện thi đại học', examPrepSub: 'Làm bài tốt sẽ tăng khả năng đỗ ngành',
+    overtime: 'Làm thêm giờ', bossdrinks: 'Đi nhậu với sếp', transfer: 'Xin chuyển phòng ban', leaveWork: 'Xin nghỉ phép', strike: 'Tham gia đình công', whistle: 'Tố cáo sai phạm của sếp', renamePrompt: 'Tên mới của bạn:', loanLeft: 'Nợ vay còn lại', insHealth: 'Có bảo hiểm sức khỏe', insLife: 'Có bảo hiểm nhân thọ',
+    godPerson: 'Chỉnh nhân vật này (God Mode)', godPersonSub: 'Thân thiết, ngoại hình, trí tuệ và chỉ số thân mật', godPersonNote: 'Không chỉnh được tuổi. Chỉ số thân mật chỉ áp dụng với người từ 18 tuổi khi bật 25+.', intimateStats: 'Chỉ số thân mật', poly: 'Chấp nhận đa ái', skill: 'Kỹ năng chăn gối', fert: 'Khả năng sinh sản', size: 'Kích cỡ', fidelity: 'Độ chung thủy', jealous: 'Độ ghen',
     promoteAsk: 'Xin thăng chức', promoteReady: 'Đã đủ năm kinh nghiệm', nextRank: 'Cấp tiếp theo', topRank: 'Bạn đã ở cấp cao nhất của nghề này.', needYears: 'Kinh nghiệm {a}/{b} năm', needPerf: 'Hiệu suất từ {n}', ladder: 'Lộ trình thăng tiến', yrsShort: '{n} năm', entry: 'mới vào', expYears: '{n} năm kinh nghiệm', yearWord: 'năm',
     special: 'Nghề đặc biệt', followers: 'người theo dõi', netHelp: 'Đăng bài để tăng người theo dõi. Từ 10K có thể nhận quảng cáo.', levelOf: 'Bậc {n}/{m}', quitSpecial: 'Rời nghề', ageRange: 'tuổi {a}–{b}', mgMaze: 'Vượt ngục', mgMazeHelp: 'Đưa 🧍 đến 🚪 trước khi hết bước, tránh 👮.', mgMoves: 'Còn {n} bước', mgGiveUp: 'Bỏ cuộc, quay về phòng giam', mgCards: 'Cao hay thấp', mgCardsHelp: 'Đoán lá tiếp theo cao hơn hay thấp hơn. Đúng thì tiền cược nhân đôi, sai là mất hết. Rút tiền bất cứ lúc nào.', mgBet: 'Cược', mgLeave: 'Thôi, về', mgPot: 'Đang có', mgNext: 'Lá tiếp theo sẽ…', mgHi: 'Cao hơn', mgLo: 'Thấp hơn', mgCash: 'Rút tiền', mgQuiz: 'Thi học sinh giỏi', mgQ: 'Câu {n}/{m}',
     goals: 'Mục tiêu đời này', goalDone: 'Hoàn thành mục tiêu!', trophies: 'Thành tựu', graveyard: 'Nghĩa trang', ribbonBook: 'Bộ sưu tập ribbon', newAch: 'Thành tựu mới mở khóa', livesLived: '{n} đời đã sống', noGraves: 'Chưa có ai ở đây. Hãy sống một đời trước đã.', countriesBorn: 'Đã sinh ra ở {n} quốc gia', lockedAch: 'Chưa mở khóa', achCount: '{n}/{m} thành tựu', ribbonCount: '{n}/{m} ribbon', goalsOf: '{n}/3 mục tiêu', goalsTotal: '{n} mục tiêu đã hoàn thành', gen: 'Thế hệ {n}',
@@ -471,9 +482,9 @@ const STRINGS = {
     needs: 'Needs', tooYoung: "You're too young to work. Part-time jobs open at 15.",
     family: 'Family', love: 'Love', children: 'Children', friends: 'Friends', others: 'Acquaintances & exes',
     closeness: 'Closeness', alone: 'Nobody here yet.',
-    roles: { mother: 'Mother', father: 'Father', sibling: 'Sibling', partner: 'Partner', spouse: 'Spouse', child: 'Child', friend: 'Friend', contact: 'Acquaintance', ex: 'Ex', lover: 'Lover', bestie: 'Best friend', rival: 'Rival', mentor: 'Mentor', half: 'Half-sibling', pet: 'Pet' },
+    roles: { mother: 'Mother', father: 'Father', sibling: 'Sibling', partner: 'Partner', spouse: 'Spouse', child: 'Child', friend: 'Friend', contact: 'Acquaintance', ex: 'Ex', lover: 'Lover', bestie: 'Best friend', rival: 'Rival', mentor: 'Mentor', half: 'Half-sibling', pet: 'Pet', loverPoly: 'Secondary partner', coworker: 'Coworker', neighbor: 'Neighbour' },
     bigMoment: 'Big moment', lifeChart: 'Your life, year by year', milestones: 'Milestones',
-    actGroups: { net: 'Social media', kid: 'Play', teen: 'Learning & training', mind: 'Mind & body', night: 'Nightlife', love: 'Love', crime: 'Crime', prison: 'Prison' },
+    actGroups: { fun: 'Fun', shop: 'Shopping', life: 'Lifestyle', pet: 'Pets', money: 'Finance', net: 'Social media', kid: 'Play', teen: 'Learning & training', mind: 'Mind & body', night: 'Nightlife', love: 'Love', crime: 'Crime', prison: 'Prison' },
     cost: 'Cost',
     traitsNone: 'No special traits',
     lifeExp: 'Life expectancy', incomeTier: 'National income level', tiers: { low: 'Low', mid: 'Middle', high: 'High' },
@@ -507,6 +518,9 @@ const STRINGS = {
     coborns: 'The 4 people born the same second as you', cbAlive: 'alive', cbDead: 'died',
     openSelf: 'View profile',
     grad: 'Graduate school', trade: 'Trade school', eduMa: 'Master', eduPhd: 'PhD', majorLbl: 'Major', yearOf: 'Year {n}/{m}', degrees: 'Degrees', scholarship: 'Scholarship', enrolTrade: 'Go to trade school', enrolGrad: 'Master / PhD', club: 'Join a club', parttime: 'Work part-time', scholar: 'Apply for a scholarship', exchange: 'Study abroad exchange', intern: 'Apply for an internship', switchMajor: 'Switch major', olympiad: 'Enter the academic olympiad', lockedJobs: 'Needs more qualifications', needDegree: 'Needs a {x} degree', needTrade: 'Needs {x} training', anyMajor: 'any major', studyOptions: 'Keep studying', student: 'Student', internTag: 'Interned', honors: 'honours', studentAt: '{s} year {n}', uniSub: 'Pick a major, 4–6 years', tradeSub: '2 years, cheap, work right away', gradSub: 'Master 2 years, PhD 4 years', 
+    mgRace: 'Horse racing', mgRaceHelp: 'Pick a stake, then a horse. Higher odds mean a less likely winner.', mgPickHorse: 'Pick a horse:', mgOdds: 'odds', mgBJ: 'Blackjack', mgBJHelp: 'Get closest to 21 without going over. The dealer draws to 17.', mgDealer: 'Dealer', mgYou: 'You', mgHit: 'Hit', mgStand: 'Stand', mgInterview: 'Job interview', mgExam: 'Entrance exam practice', examPrep: 'Practise for entrance exams', examPrepSub: 'Doing well raises your admission chances',
+    overtime: 'Work overtime', bossdrinks: 'Drinks with the boss', transfer: 'Ask for a transfer', leaveWork: 'Take leave', strike: 'Join a strike', whistle: 'Report your boss', renamePrompt: 'Your new first name:', loanLeft: 'Loan balance', insHealth: 'Health insurance', insLife: 'Life insurance',
+    godPerson: 'Edit this person (God Mode)', godPersonSub: 'Closeness, looks, smarts and intimate stats', godPersonNote: 'Age cannot be changed. Intimate stats only apply to adults 18+ with 25+ content on.', intimateStats: 'Intimate stats', poly: 'Open to polyamory', skill: 'Bedroom skill', fert: 'Fertility', size: 'Size', fidelity: 'Fidelity', jealous: 'Jealousy',
     promoteAsk: 'Ask for a promotion', promoteReady: 'Enough experience now', nextRank: 'Next level', topRank: "You're at the top of this career.", needYears: 'Experience {a}/{b} yrs', needPerf: 'Performance {n}+', ladder: 'Career ladder', yrsShort: '{n} yrs', entry: 'entry', expYears: '{n} yrs experience', yearWord: 'yr',
     special: 'Special career', followers: 'followers', netHelp: 'Post to grow followers. At 10K, brands will pay you.', levelOf: 'Level {n}/{m}', quitSpecial: 'Leave this career', ageRange: 'age {a}–{b}', mgMaze: 'Prison break', mgMazeHelp: 'Get 🧍 to 🚪 before you run out of moves. Avoid 👮.', mgMoves: '{n} moves left', mgGiveUp: 'Give up and go back to your cell', mgCards: 'Higher or lower', mgCardsHelp: 'Guess if the next card is higher or lower. Right doubles your pot, wrong loses it all. Cash out any time.', mgBet: 'Bet', mgLeave: 'Walk away', mgPot: 'Pot', mgNext: 'The next card will be…', mgHi: 'Higher', mgLo: 'Lower', mgCash: 'Cash out', mgQuiz: 'Academic olympiad', mgQ: 'Question {n}/{m}',
     goals: 'Goals for this life', goalDone: 'Goal complete!', trophies: 'Achievements', graveyard: 'Graveyard', ribbonBook: 'Ribbon collection', newAch: 'New achievements unlocked', livesLived: '{n} lives lived', noGraves: 'Nobody here yet. Live a life first.', countriesBorn: 'Born in {n} countries', lockedAch: 'Locked', achCount: '{n}/{m} achievements', ribbonCount: '{n}/{m} ribbons', goalsOf: '{n}/3 goals', goalsTotal: '{n} goals completed', gen: 'Generation {n}',
@@ -776,7 +790,11 @@ function randomPerson(s, life, { role, gender, age, last, closeness = 60 }) {
     looks: randint(s, 20, 100),
     smarts: randint(s, 10, 100),
     alive: true,
+    poly: Math.round(rand(s) ** 2 * 100),
+    fert: randint(s, 40, 95),
+    skill: randint(s, 20, 90),
   };
+  if (g === 'male') p.size = randint(s, 20, 90);
   if (age >= 18) enrichAdult(s, life, p);
   return p;
 }
@@ -878,6 +896,8 @@ function createLife(opts = {}) {
     done: [],
     pregnancy: null,
     affair: null,
+    fert: randint(s, 45, 95),
+    skill: randint(s, 20, 80),
     counts: { ons: 0, partners: 0, affairsExposed: 0, divorces: 0, children: 0, godUses: 0, rewinds: 0, maxMoney: 0 },
     addicted: false,
     ill: null,
@@ -956,7 +976,37 @@ function adjustRel(life, role, delta) {
 
 
 
-return { rand, STAT_KEYS, HIDDEN_KEYS, WEALTH, TRAITS, country, tier, unit, fullName, personName, randomPerson, enrichAdult, partnerGender, people, partner, spouse, byId, createLife, wealthLine, addLog, milestone, setFlag, clearFlag, readStat, adjustRel };
+// ───────── Người tình (không giới hạn số lượng) ─────────
+const lovers = (life) => life.people.filter((p) => p.role === 'lover' && p.alive);
+const polyOk = (life) => 'open_rel' in life.flags;
+function syncAffair(life) {
+  const ls = lovers(life);
+  if (!ls.length) { life.affair = null; delete life.flags.has_affair; return; }
+  const last = ls.reduce((a, b) => ((b.loverSince ?? 0) >= (a.loverSince ?? 0) ? b : a));
+  life.affair = { id: last.id, since: Math.min(...ls.map((x) => x.loverSince ?? life.age)) };
+  if (!('has_affair' in life.flags)) life.flags.has_affair = life.age;
+  life.counts.maxLovers = Math.max(life.counts.maxLovers || 0, ls.length);
+}
+function makeLover(life, p) {
+  p.role = 'lover';
+  p.loverSince = life.age;
+  p.closeness = Math.max(p.closeness, 55);
+  syncAffair(life);
+}
+function endLover(life, p, cap = 20) {
+  p.role = 'ex';
+  p.closeness = Math.min(p.closeness, cap);
+  syncAffair(life);
+}
+function endAllLovers(life) {
+  for (const p of lovers(life)) { p.role = 'ex'; p.closeness = Math.min(p.closeness, 20); }
+  syncAffair(life);
+}
+/** Ai có thể quyến rũ: người lớn ngoài gia đình. Không bao giờ có bố mẹ, anh chị em, con cái, thú cưng hay người dưới 18. */
+const SEDUCIBLE = ['friend', 'bestie', 'contact', 'ex', 'rival', 'mentor', 'coworker', 'neighbor'];
+const canSeduce = (life, p) => p.alive && life.age >= 18 && p.age >= 18 && SEDUCIBLE.includes(p.role);
+
+return { rand, STAT_KEYS, HIDDEN_KEYS, WEALTH, TRAITS, country, tier, unit, fullName, personName, randomPerson, enrichAdult, partnerGender, people, partner, spouse, byId, createLife, wealthLine, addLog, milestone, setFlag, clearFlag, readStat, adjustRel, lovers, polyOk, syncAffair, makeLover, endLover, endAllLovers, SEDUCIBLE, canSeduce };
 };
 __defs["src/engine/career.js"] = () => {
 // Thăng tiến nghề nghiệp: kinh nghiệm theo năm, cấp bậc riêng từng nghề, loại công ty, lời mời việc khi ra trường và săn đầu người.
@@ -1194,7 +1244,7 @@ const CATEGORIES = ['childhood', 'school', 'teen', 'love', 'work', 'money', 'hea
 const STATS = ['health', 'happy', 'smarts', 'looks', 'karma', 'willpower', 'risk', 'fame'];
 const REL_KEYS = ['mother', 'father', 'sibling', 'partner', 'spouse', 'child', 'friend', 'boss'];
 const BOOL_REQ = ['retired', 'ill', 'inSchool', 'employed', 'hasPartner', 'married', 'hasChildren', 'inPrison', 'addicted', 'pregnant', 'hasAffair', 'hasBusiness', 'ownsHome', 'fugitive', 'hasRecord', 'engaged', 'cohabiting'];
-const SPECIAL_EFFECTS = ['pregnancyChance', 'newContact', 'startAffair', 'affairExposed', 'breakup', 'divorce', 'cure', 'retire', 'loseJob', 'endAffair'];
+const SPECIAL_EFFECTS = ['pregnancyChance', 'newContact', 'startAffair', 'affairExposed', 'breakup', 'divorce', 'cure', 'retire', 'loseJob', 'endAffair', 'endAllAffairs', 'promoteLover'];
 const OUTCOME_KEYS = ['chance', 'effects', 'text', 'setFlags', 'clearFlags', 'newContact'];
 const EVENT_KEYS = ['id', 'category', 'age', 'weight', 'once', 'rating', 'requires', 'text', 'choices', 'effects', 'setFlags', 'clearFlags', 'sensitive', 'big'];
 const { ILLNESS_IDS } = __req("src/data/illness.js");
@@ -1245,6 +1295,8 @@ function checkRequires(where, req, errors) {
       for (const s of Object.keys(v)) {
         if (!(STATS.includes(s) || isRel(s) || s === 'money' || s === 'age')) errors.push(`${where}: ${k}.${s} không phải chỉ số hợp lệ`);
       }
+    } else if (k === 'lovers') {
+      if (typeof v !== 'number' || v < 0) errors.push(`${where}: lovers phải là số người tình tối thiểu`);
     } else if (k === 'special') {
       if (!Array.isArray(v) || v.some((x) => !SPECIAL_IDS.includes(x))) errors.push(`${where}: special phải là mảng trong ${SPECIAL_IDS.join(', ')}`);
     } else if (k === 'job') {
@@ -1409,7 +1461,7 @@ function edu(life) {
 
 /** Khả năng đỗ một ngành, theo trí tuệ và điểm phổ thông. */
 function admitChance(life, m) {
-  return clamp(0.3 + (life.stats.smarts - m.min) / 35 + (life.edu.gpa - 50) / 150, 0.05, 0.97);
+  return clamp(0.3 + (life.stats.smarts - m.min) / 35 + (life.edu.gpa - 50) / 150 + (life.edu.examBonus || 0), 0.05, 0.97);
 }
 
 function canStudy(life) {
@@ -1863,7 +1915,7 @@ const { STATS } = __req("src/engine/validate.js");
 const { portfolioValue } = __req("src/engine/economy.js");
 const { majorEvent, tradeEvent } = __req("src/engine/school.js");
 const { illnessById } = __req("src/data/illness.js");
-const { country, tier, unit, partner, spouse, people, byId, randomPerson, partnerGender, personName, addLog, setFlag, clearFlag, readStat, adjustRel, milestone } = __req("src/engine/life.js");
+const { country, tier, unit, partner, spouse, people, byId, randomPerson, partnerGender, personName, addLog, setFlag, clearFlag, readStat, adjustRel, milestone, lovers, polyOk, makeLover, endLover, endAllLovers, syncAffair } = __req("src/engine/life.js");
 
 // Cờ tạm thời: hết hạn sau số năm này nếu không sự kiện nào xóa.
 const FLAG_TTL = { recent_intimate: 1, recent_breakup: 2, ons_potential: 2, ons_happened: 3, ons_awkward: 2, uni_ons: 2, uni_party_met: 2, widowed: 3 };
@@ -1895,11 +1947,12 @@ function eligible(ev, life, settings) {
     cohabiting: !!partner(life)?.cohab,
     addicted: !!life.addicted,
     pregnant: !!(life.pregnancy && life.pregnancy.carrier === 'self'),
-    hasAffair: !!life.affair,
+    hasAffair: lovers(life).length > 0,
   };
   for (const k of Object.keys(bools)) if (k in r && r[k] !== bools[k]) return false;
   if (r.incomeTier && !r.incomeTier.includes(tier(life))) return false;
   if (r.eduStage && !r.eduStage.includes(life.edu.stage)) return false;
+  if (r.lovers != null && lovers(life).length < r.lovers) return false;
   if (r.job && !(life.job && r.job.includes(life.job.id))) return false;
   if (r.special && !(life.special && r.special.includes(life.special.id))) return false;
   if ('retired' in r && r.retired !== (!life.job && life.pension > 0)) return false;
@@ -1969,7 +2022,8 @@ function tryConceive(life, other, p) {
   const carrierAge = life.gender === 'female' ? life.age : other.age;
   if (carrierAge > 48 || carrierAge < 18) return false;
   const ageFactor = carrierAge > 40 ? 0.35 : carrierAge > 35 ? 0.7 : 1;
-  if (!chance(life, p * ageFactor)) return false;
+  const fert = clamp(((life.fert ?? 70) / 70) * ((other.fert ?? 70) / 70), 0.05, 2);
+  if (!chance(life, clamp(p * ageFactor * fert, 0, 0.95))) return false;
   life.pregnancy = { carrier: life.gender === 'female' ? 'self' : 'other', otherId: other.id, age: life.age };
   return true;
 }
@@ -1996,7 +2050,9 @@ function applyEffects(life, effects = {}, ctx = {}) {
   if (effects.salaryPct && life.job) { const d = Math.round(life.job.salary * effects.salaryPct / 100); life.job.salary += d; changes.push(['salary', d]); }
   if (effects.illness && illnessById[effects.illness] && !life.ill) { const x = illnessById[effects.illness]; life.ill = { id: x.id, name: x.name, drain: x.drain, mood: x.mood, smarts: x.smarts, cure: x.cure }; addLog(life, L(`Bạn được chẩn đoán ${x.name.vi}.`, `You're diagnosed with ${x.name.en}.`), 'bad'); }
   if (effects.cure && life.ill) life.ill = null;
-  if (effects.endAffair && life.affair) { const lv = byId(life, life.affair.id); if (lv) { lv.role = 'ex'; lv.closeness = 20; } life.affair = null; clearFlag(life, 'has_affair'); }
+  if (effects.endAffair && life.affair) { const lv = byId(life, life.affair.id); if (lv) endLover(life, lv); else syncAffair(life); }
+  if (effects.endAllAffairs) endAllLovers(life);
+  if (effects.promoteLover && life.affair) { const lv = byId(life, life.affair.id); if (lv) { if (partner(life)) breakUp(life, 'affair'); lv.role = 'partner'; lv.closeness = Math.max(lv.closeness, 65); life.counts.partners++; syncAffair(life); } }
   if (effects.retire && life.job) life.flags.retire_now = life.age;
   if (effects.loseJob && life.job) { life.job = null; addLog(life, L('Bạn mất việc.', 'You lose your job.'), 'bad'); }
   if (effects.newContact) {
@@ -2099,11 +2155,10 @@ function takeAssets(life, amount) {
 }
 
 function startAffair(life) {
-  if (life.affair || !partner(life)) return null;
-  const p = randomPerson(life, life, { role: 'lover', gender: partnerGender(life, life), age: clamp(life.age + randint(life, -8, 6), 18, 90), closeness: 55 });
+  if (life.age < 18) return null;
+  const p = randomPerson(life, life, { role: 'contact', gender: partnerGender(life, life), age: clamp(life.age + randint(life, -8, 6), 18, 90), closeness: 55 });
   life.people.push(p);
-  life.affair = { id: p.id, since: life.age };
-  setFlag(life, 'has_affair');
+  makeLover(life, p);
   return p;
 }
 
@@ -2154,15 +2209,23 @@ function buildSysEvent(life, item, settings) {
   }
   if (item.sys === 'affair_exposed') {
     const sp = partner(life);
+    const ls = lovers(life);
+    if (!sp || !ls.length || polyOk(life)) return null;
     const lover = life.affair && byId(life, life.affair.id);
-    const sn = sp ? personName(life, sp) : '';
+    const sn = personName(life, sp);
+    const ln = lover ? personName(life, lover) : '';
+    const n = ls.length;
+    const fp = clamp((item.confess ? 0.6 : 0.45) - (n - 1) * 0.1, 0.1, 0.7);
+    const kp = n > 1 ? -10 * n : 0;
     return {
       uid: 'sys/affair', sys: true,
-      text: L(`${sn} phát hiện bạn ngoại tình với ${lover ? personName(life, lover) : 'người khác'}.`, `${sn} finds out about your affair with ${lover ? personName(life, lover) : 'someone else'}.`),
+      text: n > 1
+        ? L(`${sn} ${item.confess ? 'nghe bạn thú nhận' : 'phát hiện'} bạn đang qua lại với ${n} người cùng lúc, trong đó có ${ln}.`, `${sn} ${item.confess ? 'hears your confession' : 'discovers'}: you've been seeing ${n} people at once, including ${ln}.`)
+        : L(`${sn} ${item.confess ? 'nghe bạn thú nhận chuyện' : 'phát hiện'} bạn ngoại tình với ${ln}.`, `${sn} ${item.confess ? 'hears you confess' : 'finds out'} about your affair with ${ln}.`),
       choices: [
         { label: L('Quỳ xuống xin tha thứ', 'Beg for forgiveness'), outcomes: [
-          { chance: 0.45, sys: 'affair_forgiven', effects: { rel_partner: -30, happy: -8 }, text: L('Họ tha thứ, nhưng niềm tin đã sứt mẻ.', 'They forgive you, but the trust is broken.') },
-          { chance: 0.55, sys: 'affair_split', effects: { happy: -15 }, text: L('Họ thu dọn đồ đạc và rời đi.', 'They pack their things and leave.') },
+          { chance: fp, sys: 'affair_forgiven', effects: { rel_partner: -30, happy: -8, karma: kp / 2 }, text: L('Họ tha thứ, nhưng niềm tin đã sứt mẻ. Bạn phải cắt đứt với tất cả.', 'They forgive you, but the trust is broken. You have to cut everyone else off.') },
+          { chance: 1 - fp, sys: 'affair_split', effects: { happy: -15, karma: kp }, text: L('Họ thu dọn đồ đạc và rời đi.', 'They pack their things and leave.') },
         ] },
         { label: L('Chọn người tình', 'Choose your lover'), outcomes: [{ chance: 1, sys: 'affair_switch', effects: { karma: -10, happy: 4 }, text: L('Bạn rời đi để sống với người tình.', 'You leave to be with your lover.') }] },
         { label: L('Chối đến cùng', 'Deny everything'), outcomes: [
@@ -2215,20 +2278,23 @@ function applySys(life, sysKey) {
       life.pregnancy = null;
       break;
     case 'affair_forgiven':
-      endAffair(life);
+      if (lovers(life).length > 1) life.counts.multiExposed = (life.counts.multiExposed || 0) + 1;
+      endAllLovers(life);
       break;
     case 'affair_split':
       life.counts.affairsExposed++;
+      if (lovers(life).length > 1) life.counts.multiExposed = (life.counts.multiExposed || 0) + 1;
       breakUp(life, 'affair');
-      endAffair(life);
+      endAllLovers(life);
       break;
     case 'affair_switch': {
       life.counts.affairsExposed++;
+      if (lovers(life).length > 1) life.counts.multiExposed = (life.counts.multiExposed || 0) + 1;
       const lover = life.affair && byId(life, life.affair.id);
       breakUp(life, 'affair');
-      life.affair = null;
-      clearFlag(life, 'has_affair');
+      for (const p of lovers(life)) if (p !== lover) endLover(life, p);
       if (lover) { lover.role = 'partner'; lover.closeness = 70; life.counts.partners++; }
+      syncAffair(life);
       break;
     }
     case 'affair_denied':
@@ -2246,10 +2312,7 @@ function applySys(life, sysKey) {
 }
 
 function endAffair(life) {
-  const lover = life.affair && byId(life, life.affair.id);
-  if (lover) { lover.role = 'ex'; lover.closeness = 20; }
-  life.affair = null;
-  clearFlag(life, 'has_affair');
+  endAllLovers(life);
 }
 
 
@@ -2459,6 +2522,291 @@ function socialAction(life, act) {
 
 return { SPECIALS, canJoin, specialAction, specialYear, followersText, socialAction };
 };
+__defs["src/engine/extras.js"] = () => {
+// Hành động mở rộng: hoạt động mới, thú cưng, hành động với từng người, công việc, vay mượn và bảo hiểm.
+const { L, clamp, rand, chance, randint, pick } = __req("src/engine/util.js");
+const { country, unit, partner, people, byId, randomPerson, personName, addLog, setFlag, milestone } = __req("src/engine/life.js");
+const { applyEffects, newContact } = __req("src/engine/events.js");
+const { COUNTRIES } = __req("src/data/countries.js");
+
+const res = (text, changes = [], tone) => ({ text, changes, tone });
+const fx = (life, e) => applyEffects(life, e);
+const u = (life, n) => n * unit(life);
+const nm = (life, p) => personName(life, p);
+const canPay = (life, units) => life.money >= u(life, units) || life.money - u(life, units) > -2 * country(life).gdp;
+
+// ───────── Hoạt động mới ─────────
+const A = (id, group, min, max, vi, en, run, extra = {}) => ({ id, group, min, max, label: L(vi, en), run, ...extra });
+const EXTRA_ACTIVITIES = [
+  // Rèn luyện
+  A('language', 'mind', 8, 90, 'Học ngoại ngữ', 'Learn a language', (lf) => { lf.langs = (lf.langs || 0) + 1; return res(pick(lf, [L('Bạn học thêm 200 từ mới và quên 150 từ cũ.', 'You learn 200 new words and forget 150 old ones.'), L('Bạn đã có thể gọi món bằng ngôn ngữ mới. Phục vụ trả lời bằng tiếng mẹ đẻ của bạn.', 'You can now order food in the new language. The waiter replies in yours.')]), fx(lf, { smarts: randint(lf, 2, 3) })); }),
+  A('instrument', 'mind', 6, 90, 'Học nhạc cụ', 'Learn an instrument', (lf) => res(pick(lf, [L('Hàng xóm bắt đầu nhận ra giai điệu bạn tập.', 'The neighbours are starting to recognise the tune.'), L('Bạn chơi trọn một bài mà không sai nốt nào. Không ai ở nhà để nghe.', 'You play a whole song without a mistake. Nobody was home to hear it.')]), fx(lf, { smarts: 1, happy: 3 }))),
+  A('martial', 'mind', 8, 70, 'Tập võ', 'Martial arts', (lf) => (chance(lf, 0.1) ? res(L('Bạn lên đai mới! Thầy gật đầu một lần, rất nghiêm.', 'You earn a new belt! Your teacher nods once, very seriously.'), fx(lf, { health: 4, willpower: 4, happy: 6 }), 'good') : res(L('Bạn đá vào bao cát đến khi chân tê.', 'You kick the bag until your shins go numb.'), fx(lf, { health: 3, willpower: 2 })))),
+  A('yoga', 'mind', 14, 100, 'Tập yoga', 'Yoga', (lf) => res(pick(lf, [L('Bạn giữ được tư thế cái cây trong 30 giây. Cái cây thật cũng phải nể.', 'You hold tree pose for 30 seconds. Real trees would be impressed.'), L('Bạn ngủ quên trong tư thế xác chết. Giáo viên bảo thế là đúng.', 'You fall asleep in corpse pose. The teacher says that\'s correct.')]), fx(lf, { health: 2, happy: 3 }))),
+  A('hike', 'mind', 12, 80, 'Leo núi', 'Go hiking', (lf) => (chance(lf, 0.08) ? res(L('Bạn trượt chân ở dốc đá và phải chống gậy về.', 'You slip on a rocky slope and limp home.'), fx(lf, { health: -6, happy: -2 }), 'bad') : res(L('Lên đến đỉnh, bạn chụp 40 tấm ảnh giống hệt nhau.', 'At the summit you take 40 identical photos.'), fx(lf, { health: 4, happy: 5 })))),
+  A('diet', 'mind', 16, 90, 'Ăn kiêng lành mạnh', 'Eat healthy for a while', (lf) => res(L('Một tháng rau củ. Bạn mơ thấy bánh ngọt mỗi đêm.', 'A month of vegetables. You dream of cake every night.'), fx(lf, { health: 3, looks: 1, happy: -2 }))),
+  A('spa', 'mind', 18, 100, 'Đi spa', 'Go to a spa', (lf) => res(L('Đắp mặt nạ dưa leo, nghe nhạc thiền, ngủ quên lúc massage.', 'Cucumber mask, ambient music, asleep halfway through the massage.'), fx(lf, { looks: 2, happy: 5 })), { units: 3 }),
+  // Giải trí
+  A('movie', 'fun', 6, 100, 'Đi xem phim', 'Go to the cinema', (lf) => res(pick(lf, [L('Phim hay. Người ngồi sau đá ghế bạn suốt.', 'Great film. The person behind kicked your seat the whole time.'), L('Bạn khóc ở đoạn cuối và giả vờ bị bụi bay vào mắt.', 'You cry at the end and pretend it\'s dust.')]), fx(lf, { happy: 4 })), { units: 0.5 }),
+  A('concert', 'fun', 14, 90, 'Đi xem hòa nhạc', 'Go to a concert', (lf) => res(L('Bạn hát theo đến mất giọng. Sáng mai họp online chỉ gõ chữ.', 'You sing until you lose your voice. Tomorrow\'s meeting is text-only.'), fx(lf, { happy: 8 })), { units: 2 }),
+  A('cook', 'fun', 10, 100, 'Nấu ăn', 'Cook something', (lf) => (chance(lf, 0.12) ? res(L('Chuông báo cháy kêu. Bữa tối là mì gói.', 'The smoke alarm goes off. Dinner is instant noodles.'), fx(lf, { happy: -2 }), 'bad') : res(L('Món ăn ngon đến mức bạn chụp ảnh trước khi ăn.', 'It\'s good enough that you photograph it first.'), fx(lf, { happy: 4, health: 1 })))),
+  A('garden', 'fun', 8, 110, 'Làm vườn', 'Do some gardening', (lf) => res(L('Bạn nói chuyện với cây cà chua. Nó có vẻ lắng nghe.', 'You talk to the tomato plant. It seems to listen.'), fx(lf, { happy: 3, health: 1 }))),
+  A('comics', 'fun', 6, 100, 'Đọc truyện tranh', 'Read comics', (lf) => res(L('Bạn đọc hết một bộ 40 tập trong một cuối tuần.', 'You binge a 40-volume series in one weekend.'), fx(lf, { happy: 4 }))),
+  A('boardgame', 'fun', 8, 100, 'Chơi board game với bạn', 'Board games with friends', (lf) => res(pick(lf, [L('Một ván cờ tỷ phú kéo dài bốn tiếng và hai tình bạn.', 'A four-hour property game. Two friendships barely survive.'), L('Bạn thắng và không ai muốn chơi tiếp với bạn.', 'You win, and nobody wants to play with you again.')]), fx(lf, { happy: 4, rel_friend: 4 }))),
+  // Mua sắm
+  A('luxury', 'shop', 18, 100, 'Mua đồ hiệu', 'Buy designer clothes', (lf) => res(L('Túi mới, giày mới, tài khoản cũ hơn.', 'New bag, new shoes, older bank balance.'), fx(lf, { looks: 3, happy: 7 })), { units: 20 }),
+  A('thrift', 'shop', 12, 100, 'Săn đồ cũ', 'Go thrifting', (lf) => (chance(lf, 0.06) ? res(L('Bạn mua một bức tranh cũ giá rẻ. Hóa ra nó đáng giá!', 'You buy a cheap old painting. It turns out to be valuable!'), fx(lf, { money: 25, happy: 10 }), 'good') : res(L('Một chiếc áo khoác cũ rất hợp. Túi áo có tờ vé xem phim năm 1998.', 'A perfect vintage jacket. A 1998 cinema ticket in the pocket.'), fx(lf, { happy: 3, looks: 1 }))), { units: 1 }),
+  // Đời sống
+  A('tattoo', 'life', 18, 80, 'Xăm hình', 'Get a tattoo', (lf) => (chance(lf, 0.15) ? res(L('Hình xăm không giống ảnh mẫu lắm. Bạn bảo đó là "nghệ thuật".', 'The tattoo doesn\'t quite match the sample. You call it "art".'), fx(lf, { looks: -2, happy: 1 }), 'bad') : res(L('Hình xăm đẹp. Bạn mặc áo cộc tay cả mùa đông.', 'A great tattoo. You wear short sleeves all winter.'), fx(lf, { looks: 2, happy: 5 }))), { units: 2 }),
+  A('hairdye', 'life', 13, 100, 'Đổi kiểu tóc', 'New hairstyle', (lf) => (chance(lf, 0.2) ? res(L('Thợ hỏi "cắt ngắn chút nhé?" và bạn gật đầu quá nhanh.', 'The stylist asked "a little shorter?" and you nodded too fast.'), fx(lf, { looks: -2, happy: -2 }), 'bad') : res(L('Kiểu tóc mới khiến ba người hỏi bạn có chuyện gì vui.', 'Three people ask what good news you\'ve had.'), fx(lf, { looks: 2, happy: 3 }))), { units: 1 }),
+  A('license', 'life', 16, 80, 'Thi bằng lái xe', 'Take a driving test', (lf) => {
+    if (lf.license) return res(L('Bạn đã có bằng lái rồi.', 'You already have a licence.'), []);
+    if (chance(lf, clamp(0.45 + lf.stats.smarts / 300 + lf.stats.willpower / 400, 0.2, 0.9))) { lf.license = true; milestone(lf, L('Có bằng lái xe', 'Got a driving licence'), 'good'); return res(L('Bạn đỗ! Giám khảo thở phào nhẹ nhõm hơn cả bạn.', 'You pass! The examiner looks more relieved than you.'), fx(lf, { happy: 8 }), 'good'); }
+    return res(pick(lf, [L('Bạn quên bật xi nhan và đỗ xe lên vỉa hè. Trượt.', 'You forget to signal and park on the pavement. Fail.'), L('Bạn lùi vào cọc tiêu duy nhất trong bãi. Trượt.', 'You reverse into the only cone in the car park. Fail.')]), fx(lf, { happy: -4 }), 'bad');
+  }, { units: 2 }),
+  A('travel', 'life', 18, 95, 'Du lịch nước ngoài', 'Travel abroad', (lf) => {
+    const c = pick(lf, COUNTRIES.filter((x) => x.code !== lf.country));
+    lf.visited = [...new Set([...(lf.visited || []), c.code])];
+    return res(L(`Bạn đi du lịch ${c.name.vi} ${c.flag}. ${pick(lf, ['Bạn ăn món lạ và không hỏi trong đó có gì.', 'Bạn lạc đường ba lần và có thêm ba người bạn.', 'Bạn mua quà lưu niệm mà sau này không biết để đâu.'])}`, `You travel to ${c.name.en} ${c.flag}. ${pick(lf, ['You eat something unfamiliar and don\'t ask what\'s in it.', 'You get lost three times and make three new friends.', 'You buy souvenirs you\'ll never find a place for.'])}`), fx(lf, { happy: 12, smarts: 1 }), 'good');
+  }, { units: 15 }),
+  A('comeout', 'life', 14, 90, 'Công khai xu hướng tính dục', 'Come out', (lf) => {
+    if (lf.out) return res(L('Mọi người đều đã biết và yêu thương bạn như cũ.', 'Everyone already knows and loves you just the same.'), []);
+    lf.out = true;
+    const good = chance(lf, 0.7);
+    for (const p of people(lf, 'mother').concat(people(lf, 'father'))) p.closeness = clamp(p.closeness + (good ? 5 : -12));
+    milestone(lf, L('Công khai xu hướng tính dục', 'Came out'), good ? 'good' : undefined);
+    return good ? res(L('Bố mẹ ôm bạn. Mẹ nói "mẹ biết từ lâu rồi".', 'Your parents hug you. Your mum says "I always knew".'), fx(lf, { happy: 12, willpower: 4 }), 'good') : res(L('Gia đình cần thời gian. Nhưng bạn thấy nhẹ lòng vì được là chính mình.', 'Your family needs time. But it feels good to be yourself.'), fx(lf, { happy: 4, willpower: 6 }));
+  }, { when: (lf) => lf.orientation !== 'opposite' && !lf.out }),
+  A('donate', 'life', 16, 120, 'Quyên góp từ thiện', 'Donate to charity', (lf) => res(L('Bạn quyên góp một khoản. Một tổ chức nhỏ gửi thư cảm ơn viết tay.', 'You donate. A small charity sends a handwritten thank-you.'), fx(lf, { karma: randint(lf, 5, 9), happy: 4 })), { units: 5 }),
+  A('will', 'life', 40, 120, 'Viết di chúc', 'Write a will', (lf) => { if (lf.flags.will) return res(L('Bạn đã có di chúc.', 'You already have a will.'), []); lf.flags.will = lf.age; return res(L('Bạn viết di chúc. Luật sư bảo bạn là người chu đáo.', 'You write your will. The lawyer calls you thoughtful.'), fx(lf, { karma: 2, happy: 2 })); }, { units: 2 }),
+  A('rename', 'life', 18, 120, 'Đổi tên', 'Change your name', () => ({ input: 'rename' })),
+  // Thú cưng
+  A('adopt_pet', 'pet', 6, 95, 'Nhận nuôi thú cưng', 'Adopt a pet', (lf) => ({ event: adoptPetEvent(lf) }), { when: (lf) => people(lf, 'pet').filter((p) => p.alive).length < 4 }),
+  // Tài chính
+  A('loan', 'money', 18, 90, 'Vay ngân hàng', 'Take a bank loan', (lf) => ({ event: loanEvent(lf) })),
+  A('repay', 'money', 18, 120, 'Trả nợ vay', 'Repay your loan', (lf) => repayLoan(lf), { when: (lf) => (lf.loans || []).length > 0 }),
+  A('insure', 'money', 18, 90, 'Mua bảo hiểm', 'Buy insurance', (lf) => ({ event: insuranceEvent(lf) })),
+];
+const EXTRA_GROUPS = ['fun', 'shop', 'life', 'pet', 'money'];
+
+// ───────── Thú cưng ─────────
+const SPECIES = {
+  dog: { em: '🐶', name: L('Chó', 'Dog'), life: [10, 15], names: ['Vàng', 'Mực', 'Lucky', 'Bơ', 'Max', 'Bella'] },
+  cat: { em: '🐱', name: L('Mèo', 'Cat'), life: [12, 18], names: ['Mướp', 'Mochi', 'Tôm', 'Luna', 'Simba', 'Miu'] },
+  rabbit: { em: '🐰', name: L('Thỏ', 'Rabbit'), life: [7, 11], names: ['Bông', 'Kem', 'Cà Rốt', 'Snow'] },
+  parrot: { em: '🦜', name: L('Vẹt', 'Parrot'), life: [20, 45], names: ['Kiwi', 'Coco', 'Chíp', 'Rio'] },
+  turtle: { em: '🐢', name: L('Rùa', 'Tortoise'), life: [40, 80], names: ['Chậm', 'Đá', 'Sheldon', 'Rùa Vàng'] },
+};
+function adoptPetEvent(life) {
+  const choice = (sp, units) => ({
+    label: L(`${SPECIES[sp].em} ${SPECIES[sp].name.vi}${units ? ` · ${units === 1 ? 'rẻ' : 'đắt'}` : ' · trạm cứu hộ'}`, `${SPECIES[sp].em} ${SPECIES[sp].name.en}${units ? ` · ${units === 1 ? 'cheap' : 'pricey'}` : ' · shelter'}`),
+    outcomes: [{ chance: 1, effects: { happy: 10, money: -units }, run: (lf) => addPet(lf, sp), text: L(`Bạn có thêm một thành viên mới. Nó chiếm chỗ đẹp nhất trên ghế sofa ngay ngày đầu.`, 'A new family member. It claims the best spot on the sofa on day one.') }],
+  });
+  return { uid: 'pet/adopt', text: L('Bạn muốn nuôi con gì?', 'What kind of pet?'), choices: [choice('dog', 0), choice('cat', 0), choice('rabbit', 1), choice('parrot', 8), choice('turtle', 3), { label: L('Thôi, để sau', 'Not now'), outcomes: [{ chance: 1, effects: {}, text: L('Bạn về nhà, hơi tiếc.', 'You go home, a bit wistful.') }] }] };
+}
+function addPet(life, sp) {
+  const s = SPECIES[sp];
+  const p = randomPerson(life, life, { role: 'pet', age: randint(life, 0, sp === 'turtle' ? 10 : 3), closeness: 70 });
+  Object.assign(p, { first: pick(life, s.names), last: '', pet: true, species: sp, lifespan: randint(life, s.life[0], s.life[1]), health: randint(life, 70, 100) });
+  delete p.poly; delete p.fert; delete p.skill; delete p.size;
+  life.people.push(p);
+  addLog(life, L(`Bạn nhận nuôi ${s.name.vi.toLowerCase()} ${p.first}.`, `You adopt a ${s.name.en.toLowerCase()} named ${p.first}.`), 'good');
+  return p;
+}
+function petYear(life) {
+  for (const p of life.people) {
+    if (p.role !== 'pet' || !p.alive) continue;
+    p.health = clamp((p.health ?? 80) - randint(life, 0, 4));
+    if (p.closeness > 70) life.stats.happy = clamp(life.stats.happy + 1);
+    const span = p.lifespan ?? 14;
+    if ((p.age >= span && chance(life, 0.35)) || p.health <= 0) {
+      p.alive = false;
+      life.stats.happy = clamp(life.stats.happy - 8);
+      addLog(life, L(`${p.first} ra đi ở tuổi ${p.age}. Ngôi nhà bỗng yên tĩnh lạ.`, `${p.first} passes away at ${p.age}. The house is strangely quiet.`), 'bad');
+    }
+  }
+}
+
+// ───────── Hành động với từng người ─────────
+const ADULT_FIGHT = ['friend', 'bestie', 'contact', 'ex', 'rival', 'mentor', 'sibling', 'half', 'coworker', 'neighbor'];
+function extraPersonActions(life, p) {
+  const out = [];
+  if (!p.alive || life.prison) return out;
+  const r = p.role;
+  if (r === 'pet') return [['walk', L('Dắt đi dạo / chơi cùng', 'Walk / play')], ['vet', L('Đưa đi thú y', 'Take to the vet')], ['treat', L('Cho ăn món ngon', 'Give a treat')]];
+  if ((r === 'mother' || r === 'father')) {
+    if (life.age < 18) out.push(['outing', L('Xin đi chơi', 'Ask for an outing')]);
+    if (life.age >= 18 && p.age >= 60) out.push(['care', L('Chăm sóc bố mẹ', 'Care for them')]);
+    if (life.age >= 18) out.push(['familytrip', L('Đưa đi du lịch', 'Take them on a trip')]);
+    if (life.age >= 18 && (p.wealth || 0) > 0) out.push(['inherit', L('Xin thừa kế sớm', 'Ask for an early inheritance')]);
+  }
+  if (r === 'child') {
+    if (p.age < 10) out.push(['read', L('Đọc truyện cho con', 'Read a story')]);
+    if (p.age < 14) out.push(['play', L('Chơi cùng con', 'Play together')]);
+    if (p.age >= 6 && p.age < 18) {
+      out.push(['teach', L('Kèm con học', 'Help with homework')]);
+      out.push(['allowance', L('Cho tiền tiêu vặt', 'Give pocket money')]);
+      out.push(['tutor', L('Cho đi học thêm', 'Pay for tutoring')]);
+    }
+    if (p.age < 18) { out.push(['praise', L('Khen con', 'Praise them')]); out.push(['punish', L('Phạt con', 'Discipline them')]); }
+  }
+  if (['friend', 'bestie'].includes(r) && life.age >= 18) {
+    out.push(['drinks', L('Rủ đi nhậu', 'Go for drinks')]);
+    out.push(['borrow', L('Vay tiền', 'Borrow money')]);
+    out.push(['lend', L('Cho vay tiền', 'Lend money')]);
+    if (!partner(life)) out.push(['setup', L('Nhờ giới thiệu người yêu', 'Ask to be set up')]);
+  }
+  if (['friend', 'bestie', 'sibling'].includes(r) && life.age >= 8) out.push(['prank', L('Chơi khăm', 'Prank them')]);
+  if ((r === 'spouse' || r === 'partner') && life.age >= 18) out.push(['counsel', L('Đi tư vấn hôn nhân', 'Couples counselling')]);
+  if (r !== 'child' || p.age >= 18) out.push(['photo', L('Chụp ảnh chung', 'Take a photo together')]);
+  if (p.age >= 18 && life.age >= 16 && r !== 'child') out.push(['insult', L('Xúc phạm', 'Insult')]);
+  if (p.age >= 18 && life.age >= 16 && ADULT_FIGHT.includes(r)) out.push(['fight', L('Đánh nhau', 'Start a fight')]);
+  if (p.owesYou > 0) out.push(['collect', L('Đòi nợ', 'Ask for your money back')]);
+  if (p.youOwe > 0) out.push(['payback', L('Trả nợ', 'Pay them back')]);
+  if (life.age >= 16 && r !== 'pet') out.push(['cutoff', L('Cắt đứt liên lạc', 'Cut contact')]);
+  return out;
+}
+const closer = (life, p, a, b) => { p.closeness = clamp(p.closeness + randint(life, a, b)); };
+function doExtraPersonAction(life, p, act, n) {
+  const name = nm(life, p);
+  const tired = res(L('Năm nay như vậy là đủ rồi.', "That's enough for this year."), []);
+  switch (act) {
+    case 'walk': if (n > 3) return tired; closer(life, p, 4, 8); p.health = clamp((p.health ?? 80) + 2); return res(L(`${name} vui đến mức chạy vòng quanh bạn ba lần.`, `${name} is so happy it runs circles around you.`), fx(life, { happy: 3, health: 2 }));
+    case 'vet': if (n > 1) return tired; if (!canPay(life, 2)) return res(L('Bạn không đủ tiền.', "You can't afford it."), [], 'bad'); life.money -= u(life, 2); p.health = clamp((p.health ?? 70) + 25); p.closeness = clamp(p.closeness - 3); return res(L(`Bác sĩ thú y nói ${name} khỏe mạnh. ${name} giận bạn cả buổi chiều vì bị tiêm.`, `The vet says ${name} is healthy. ${name} sulks all afternoon about the injection.`), [['money', -u(life, 2)]]);
+    case 'treat': if (n > 3) return tired; closer(life, p, 3, 6); return res(L(`${name} ăn xong rồi nhìn bạn đòi thêm.`, `${name} finishes and stares at you for more.`), fx(life, { happy: 2 }));
+    case 'outing': if (n > 2) return tired; if (chance(life, p.closeness / 120)) { closer(life, p, 4, 8); return res(L(`${name} đưa bạn đi công viên giải trí. Bạn nôn sau trò tàu lượn, nhưng rất vui.`, `${name} takes you to a theme park. You throw up after the coaster, but it's great.`), fx(life, { happy: 8 }), 'good'); } return res(L(`${name} bảo "để cuối tuần sau". Cuối tuần sau không bao giờ đến.`, `${name} says "next weekend". Next weekend never comes.`), fx(life, { happy: -2 }));
+    case 'care': if (n > 1) return tired; life.money -= u(life, 3); closer(life, p, 8, 14); return res(L(`Bạn đưa ${name} đi khám, nấu cơm, ngồi nghe kể chuyện cũ.`, `You take ${name} to the doctor, cook, and listen to old stories.`), fx(life, { karma: 4, happy: 3, money: 0 }), 'good');
+    case 'familytrip': if (n > 1) return tired; if (!canPay(life, 10)) return res(L('Bạn không đủ tiền.', "You can't afford it."), [], 'bad'); life.money -= u(life, 10); closer(life, p, 10, 15); return res(L(`${name} chụp ảnh mọi thứ, kể cả bữa sáng ở khách sạn.`, `${name} photographs everything, including the hotel breakfast.`), [['money', -u(life, 10)], ['happy', 6]].concat(fx(life, { happy: 6 })).slice(0, 2), 'good');
+    case 'inherit': {
+      if (n > 1) return tired;
+      if (chance(life, clamp(p.closeness / 200, 0.03, 0.45))) { const amt = Math.min((p.wealth || 0) * 0.2, u(life, 150)); p.wealth -= amt; life.money += amt; p.closeness = clamp(p.closeness - 5); return res(L(`${name} thở dài rồi chuyển cho bạn một khoản.`, `${name} sighs and transfers you a sum.`), [['money', amt]], 'good'); }
+      p.closeness = clamp(p.closeness - 15); return res(L(`${name} nhìn bạn: "Bố/mẹ còn sống mà."`, `${name} stares: "I'm still alive, you know."`), fx(life, { karma: -2 }), 'bad');
+    }
+    case 'read': if (n > 3) return tired; p.smarts = clamp(p.smarts + 2); closer(life, p, 3, 6); return res(L(`Bạn đọc truyện. ${name} đòi nghe lại lần thứ năm.`, `You read a story. ${name} asks for it a fifth time.`), fx(life, { happy: 3 }));
+    case 'play': if (n > 3) return tired; closer(life, p, 4, 8); return res(L(`Bạn và ${name} xây pháo đài bằng gối. Phòng khách thất thủ.`, `You and ${name} build a pillow fort. The living room falls.`), fx(life, { happy: 4 }));
+    case 'teach': if (n > 2) return tired; if (chance(life, 0.75)) { p.smarts = clamp(p.smarts + randint(life, 2, 4)); closer(life, p, 1, 4); return res(L(`${name} hiểu bài. Bạn cũng vừa hiểu.`, `${name} gets it. So do you, finally.`), fx(life, { smarts: 1 })); } p.closeness = clamp(p.closeness - 3); return res(L(`Buổi học kết thúc bằng nước mắt. Của cả hai.`, `The session ends in tears. Both of you.`), fx(life, { happy: -2 }), 'bad');
+    case 'allowance': if (n > 1) return tired; life.money -= u(life, 1); closer(life, p, 3, 6); return res(L(`${name} cầm tiền và chạy ngay ra tiệm tạp hóa.`, `${name} grabs it and runs straight to the corner shop.`), [['money', -u(life, 1)]]);
+    case 'tutor': if (n > 1) return tired; if (!canPay(life, 3)) return res(L('Bạn không đủ tiền.', "You can't afford it."), [], 'bad'); life.money -= u(life, 3); p.smarts = clamp(p.smarts + randint(life, 4, 7)); p.closeness = clamp(p.closeness - 2); return res(L(`${name} đi học thêm. Điểm lên, thời gian chơi xuống.`, `${name} goes to tutoring. Grades up, playtime down.`), [['money', -u(life, 3)]]);
+    case 'praise': if (n > 3) return tired; closer(life, p, 3, 7); return res(L(`${name} cười tươi cả ngày.`, `${name} beams all day.`), fx(life, { happy: 2 }));
+    case 'punish': if (n > 2) return tired; p.closeness = clamp(p.closeness - randint(life, 4, 9)); p.smarts = clamp(p.smarts + 1); return res(L(`${name} bị cấm xem TV một tuần. Không khí trong nhà rất lạnh.`, `${name} is banned from TV for a week. The house is very chilly.`), []);
+    case 'drinks': if (n > 2) return tired; life.money -= u(life, 1); closer(life, p, 4, 9); return res(pick(life, [L(`Bạn và ${name} kể lại chuyện cũ đến lúc quán đóng cửa.`, `You and ${name} retell old stories until closing time.`), L(`${name} hát karaoke một bài buồn và khóc thật.`, `${name} sings a sad karaoke song and genuinely cries.`)]), fx(life, { happy: 5, health: -1 }));
+    case 'borrow': {
+      if (n > 1) return tired;
+      if (chance(life, clamp(p.closeness / 130, 0.05, 0.8))) { const amt = u(life, randint(life, 5, 20)); life.money += amt; p.youOwe = (p.youOwe || 0) + amt; return res(L(`${name} cho bạn vay. "Khi nào có thì trả."`, `${name} lends you the money. "Pay me back whenever."`), [['money', amt]], 'good'); }
+      p.closeness = clamp(p.closeness - 6); return res(L(`${name} nói dạo này cũng kẹt.`, `${name} says money's tight for them too.`), [], 'bad');
+    }
+    case 'lend': { if (n > 1) return tired; const amt = u(life, 10); if (!canPay(life, 10)) return res(L('Bạn không đủ tiền.', "You can't afford it."), [], 'bad'); life.money -= amt; p.owesYou = (p.owesYou || 0) + amt; closer(life, p, 5, 10); return res(L(`${name} cảm ơn rối rít và hứa trả trong tháng.`, `${name} thanks you profusely and promises to repay within the month.`), [['money', -amt]]); }
+    case 'collect': { if (n > 1) return tired; if (chance(life, 0.55 + p.closeness / 300)) { const amt = p.owesYou; life.money += amt; p.owesYou = 0; return res(L(`${name} trả đủ, kèm lời xin lỗi vì trễ.`, `${name} pays it all back, with an apology for the delay.`), [['money', amt]], 'good'); } p.closeness = clamp(p.closeness - 8); return res(L(`${name} bảo "tuần sau nhé" lần thứ tư.`, `${name} says "next week" for the fourth time.`), [], 'bad'); }
+    case 'payback': { const amt = p.youOwe; life.money -= amt; p.youOwe = 0; closer(life, p, 5, 10); return res(L(`Bạn trả ${name} đủ số tiền đã vay.`, `You pay ${name} back in full.`), [['money', -amt]], 'good'); }
+    case 'setup': { if (n > 1) return tired; if (chance(life, clamp(p.closeness / 120, 0.1, 0.8))) { const c = newContact(life); c.role = 'partner'; c.closeness = 60; life.counts.partners++; return res(L(`${name} giới thiệu bạn với ${nm(life, c)}. Hai người nói chuyện như quen từ lâu.`, `${name} sets you up with ${nm(life, c)}. You click instantly.`), fx(life, { happy: 8 }), 'good'); } return res(L(`Người ${name} giới thiệu nói chuyện về tiền ảo suốt buổi.`, `The person ${name} found talks about crypto all night.`), fx(life, { happy: -2 })); }
+    case 'prank': if (n > 2) return tired; if (chance(life, 0.6)) { closer(life, p, 1, 4); return res(L(`Bạn giấu điện thoại của ${name} trong tủ lạnh. Cả hai cười mãi.`, `You hide ${name}'s phone in the fridge. You both laugh for ages.`), fx(life, { happy: 5 })); } p.closeness = clamp(p.closeness - 8); return res(L(`${name} không thấy buồn cười chút nào.`, `${name} does not find it funny at all.`), fx(life, { happy: -1 }), 'bad');
+    case 'counsel': if (n > 1) return tired; if (!canPay(life, 4)) return res(L('Bạn không đủ tiền.', "You can't afford it."), [], 'bad'); life.money -= u(life, 4); if (chance(life, 0.7)) { closer(life, p, 8, 15); return res(L('Chuyên gia giúp hai người nói ra những điều giữ trong lòng nhiều năm.', 'The counsellor helps you both say things you\'d held in for years.'), [['money', -u(life, 4)], ['happy', 5]], 'good'); } p.closeness = clamp(p.closeness - 5); return res(L('Buổi tư vấn biến thành một trận cãi nhau có người làm chứng.', 'Counselling turns into a fight with a witness.'), [['money', -u(life, 4)]], 'bad');
+    case 'photo': if (n > 2) return tired; closer(life, p, 1, 4); return res(L(`Bạn và ${name} chụp 30 tấm, chọn được đúng 1 tấm cả hai đều đẹp.`, `You and ${name} take 30 photos; exactly one flatters you both.`), fx(life, { happy: 2 }));
+    case 'insult': p.closeness = clamp(p.closeness - randint(life, 12, 22)); return res(pick(life, [L(`Bạn nói một câu cay nghiệt. ${name} im lặng rồi bỏ đi.`, `You say something cruel. ${name} goes quiet, then leaves.`), L(`${name} đáp trả còn sắc hơn. Bạn thua.`, `${name} fires back even sharper. You lose.`)]), fx(life, { karma: -3 }), 'bad');
+    case 'fight': {
+      if (n > 1) return tired;
+      p.closeness = clamp(p.closeness - 25);
+      if (chance(life, 0.12)) { life.record = true; return res(L(`Cảnh sát đến. Bạn bị lập biên bản và có tiền án nhẹ.`, `The police arrive. You're charged and now have a minor record.`), fx(life, { health: -8, karma: -6, happy: -6 }), 'bad'); }
+      return chance(life, 0.5) ? res(L(`Bạn thắng, nhưng tay đau cả tuần.`, `You win, but your hand hurts for a week.`), fx(life, { health: -3, karma: -4, willpower: 2 })) : res(L(`${name} thắng. Bạn về nhà với con mắt tím.`, `${name} wins. You go home with a black eye.`), fx(life, { health: -7, karma: -4, happy: -4 }), 'bad');
+    }
+    case 'cutoff': p.cut = true; p.closeness = 0; return res(L(`Bạn chặn số ${name}. Một chương khép lại.`, `You block ${name}. A chapter closes.`), fx(life, { happy: 1 }));
+  }
+  return null;
+}
+
+// ───────── Công việc ─────────
+const EXTRA_WORK = [['overtime', L('Làm thêm giờ', 'Work overtime')], ['bossdrinks', L('Đi nhậu với sếp', 'Drinks with the boss')], ['transfer', L('Xin chuyển phòng ban', 'Ask for a transfer')], ['leave', L('Xin nghỉ phép', 'Take leave')], ['strike', L('Tham gia đình công', 'Join a strike')], ['whistle', L('Tố cáo sai phạm của sếp', 'Report your boss\'s misconduct')]];
+function extraWorkAction(life, act, n) {
+  const j = life.job;
+  if (!j) return null;
+  const tired = res(L('Năm nay như vậy là đủ rồi.', "That's enough for this year."), []);
+  switch (act) {
+    case 'overtime': if (n > 2) return tired; j.perf = clamp(j.perf + randint(life, 5, 10)); life.money += j.salary * 0.04; return res(L('Bạn ở lại văn phòng đến khi đèn hành lang tự tắt.', 'You stay until the corridor lights switch themselves off.'), [['money', j.salary * 0.04]].concat(fx(life, { health: -2, happy: -2 })));
+    case 'bossdrinks': if (n > 1) return tired; if (chance(life, 0.12)) { j.perf = clamp(j.perf - 8); return res(L('Bạn uống quá chén và gọi sếp bằng biệt danh cả phòng vẫn dùng sau lưng.', 'You overdo it and call your boss by the nickname everyone uses behind their back.'), fx(life, { happy: -5, health: -2 }), 'bad'); } j.perf = clamp(j.perf + randint(life, 4, 8)); return res(L('Sếp kể chuyện đời mình. Bạn gật đầu đúng lúc.', 'Your boss tells their life story. You nod at the right moments.'), fx(life, { health: -2 }));
+    case 'transfer': if (n > 1) return tired; j.perf = 55; return res(L('Bạn chuyển sang phòng mới. Đồng nghiệp mới, bàn mới, máy pha cà phê tốt hơn.', 'You move to a new team. New colleagues, new desk, better coffee machine.'), fx(life, { happy: 4 }));
+    case 'leave': if (n > 1) return tired; j.perf = clamp(j.perf - 4); return res(L('Một tuần nghỉ phép. Bạn tắt thông báo email, rồi bật lại, rồi tắt.', 'A week off. You mute email notifications, unmute them, mute them again.'), fx(life, { happy: 8, health: 3 }));
+    case 'strike': {
+      if (n > 1) return tired;
+      const r = rand(life);
+      if (r < 0.45) { j.salary = Math.round(j.salary * 1.08); return res(L('Cuộc đình công thắng lợi. Lương tăng 8%.', 'The strike wins. Pay goes up 8%.'), fx(life, { happy: 8, karma: 2 }), 'good'); }
+      if (r < 0.9) { j.perf = clamp(j.perf - 15); return res(L('Đình công thất bại. Ban lãnh đạo ghi nhớ từng gương mặt.', 'The strike fails. Management remembers every face.'), fx(life, { happy: -4 }), 'bad'); }
+      life.job = null; addLog(life, L('Bạn bị cho nghỉ việc sau cuộc đình công.', 'You\'re let go after the strike.'), 'bad'); return res(L('Bạn bị đuổi việc vì "gây rối".', 'You\'re fired for "disruption".'), fx(life, { happy: -10 }), 'bad');
+    }
+    case 'whistle': {
+      if (n > 1) return tired;
+      if (chance(life, 0.5)) { j.perf = clamp(j.perf + 15); j.salary = Math.round(j.salary * 1.1); return res(L('Ban giám đốc điều tra và sếp bị cách chức. Bạn được giao thêm trách nhiệm.', 'The board investigates and your boss is removed. You get more responsibility.'), fx(life, { karma: 8, fame: 2 }), 'good'); }
+      life.job = null; addLog(life, L('Bạn mất việc sau khi tố cáo sếp.', 'You lose your job after blowing the whistle.'), 'bad'); return res(L('Công ty bao che. Bạn là người phải ra đi.', 'The company covers it up. You\'re the one who has to go.'), fx(life, { karma: 8, happy: -10 }), 'bad');
+    }
+  }
+  return null;
+}
+
+// ───────── Vay ngân hàng và bảo hiểm ─────────
+function loanEvent(life) {
+  const gdp = country(life).gdp;
+  const score = clamp(0.3 + (life.job ? 0.35 : 0) + life.stats.smarts / 500 - (life.record ? 0.2 : 0) - (life.loans || []).length * 0.15, 0.05, 0.95);
+  const opt = (x, years, rate) => ({
+    label: L(`Vay ${x} lần thu nhập TB · ${years} năm · lãi ${Math.round(rate * 100)}%`, `Borrow ${x}× avg income · ${years} yrs · ${Math.round(rate * 100)}% interest`),
+    outcomes: [
+      { chance: score, effects: { happy: 3 }, run: (lf) => { lf.loans = [...(lf.loans || []), { amt: x * gdp, left: x * gdp, rate, years, paid: 0 }]; lf.money += x * gdp; }, text: L('Ngân hàng duyệt khoản vay. Tiền về tài khoản, nỗi lo về theo.', 'The bank approves. The money arrives, and so does the worry.') },
+      { chance: 1 - score, effects: { happy: -3 }, text: L('Ngân hàng từ chối. Nhân viên tín dụng rất tiếc, theo đúng kịch bản.', 'Rejected. The loan officer is very sorry, as scripted.') },
+    ],
+  });
+  return { uid: 'money/loan', text: L(`Khả năng được duyệt: ${Math.round(score * 100)}%. Trả góp mỗi năm, trễ hạn nhiều có thể bị siết nhà.`, `Approval chance: ${Math.round(score * 100)}%. Repaid yearly; heavy arrears can cost you your home.`), choices: [opt(1, 3, 0.08), opt(5, 10, 0.1), opt(20, 20, 0.09), { label: L('Thôi', 'Never mind'), outcomes: [{ chance: 1, effects: {}, text: L('Bạn quyết định không vay.', 'You decide not to borrow.') }] }] };
+}
+function repayLoan(life) {
+  const ln = (life.loans || [])[0];
+  if (!ln) return res(L('Bạn không có khoản vay nào.', 'You have no loans.'), []);
+  const pay = Math.min(ln.left, Math.max(0, life.money));
+  if (pay <= 0) return res(L('Bạn không có tiền để trả.', "You don't have money to pay."), [], 'bad');
+  ln.left -= pay;
+  life.money -= pay;
+  if (ln.left <= 1) { life.loans.shift(); milestone(life, L('Trả hết một khoản vay', 'Paid off a loan'), 'good'); return res(L('Bạn trả hết khoản vay! Ngân hàng gửi thư chúc mừng kèm lời mời vay tiếp.', 'Loan paid off! The bank congratulates you and offers another loan.'), [['money', -pay]].concat(fx(life, { happy: 8 })), 'good'); }
+  return res(L('Bạn trả bớt một phần nợ.', 'You pay down part of the loan.'), [['money', -pay]]);
+}
+function insuranceEvent(life) {
+  const opt = (kind, vi, en) => ({ label: L(vi, en), outcomes: [{ chance: 1, effects: {}, run: (lf) => { lf.insurance = { ...(lf.insurance || {}), [kind]: true }; }, text: L('Bạn ký hợp đồng bảo hiểm. Phí trừ mỗi năm.', 'You sign the policy. Premiums are taken yearly.') }] });
+  const ins = life.insurance || {};
+  const ch = [];
+  if (!ins.health) ch.push(opt('health', 'Bảo hiểm sức khỏe · đi khám miễn phí, giảm chi phí chữa bệnh', 'Health insurance · free doctor visits, cheaper treatment'));
+  if (!ins.life) ch.push(opt('life', 'Bảo hiểm nhân thọ · con cái nhận thêm tiền khi bạn mất', 'Life insurance · your children receive a payout when you die'));
+  if (ins.health || ins.life) ch.push({ label: L('Hủy tất cả bảo hiểm', 'Cancel all insurance'), outcomes: [{ chance: 1, effects: {}, run: (lf) => { lf.insurance = {}; }, text: L('Bạn hủy hợp đồng. Hy vọng không có gì xảy ra.', 'You cancel. Fingers crossed.') }] });
+  ch.push({ label: L('Thôi', 'Never mind'), outcomes: [{ chance: 1, effects: {}, text: L('Bạn suy nghĩ thêm.', 'You think it over.') }] });
+  return { uid: 'money/insure', text: L('Nhân viên bảo hiểm mỉm cười rất rộng. Bạn muốn mua gói nào?', 'The insurance agent smiles very widely. Which policy?'), choices: ch };
+}
+/** Trả góp, lãi, phí bảo hiểm, bạn bè trả nợ. Gọi mỗi năm. */
+function financeYear(life) {
+  const gdp = country(life).gdp;
+  for (const ln of life.loans || []) {
+    ln.left *= 1 + ln.rate;
+    const due = Math.min(ln.left, (ln.amt * (1 + ln.rate)) / ln.years);
+    life.money -= due;
+    ln.left -= due;
+    ln.paid++;
+  }
+  life.loans = (life.loans || []).filter((ln) => ln.left > 1);
+  if ((life.loans || []).length && life.money < -3 * gdp && chance(life, 0.4)) {
+    if (life.homes && life.homes.length) {
+      const h = life.homes.shift();
+      life.money += h.value * 0.7 - (h.debt || 0);
+      addLog(life, L('Ngân hàng siết nhà vì bạn nợ quá hạn.', 'The bank repossesses your home over unpaid debt.'), 'bad');
+      milestone(life, L('Bị siết nhà', 'Home repossessed'), 'bad');
+    } else {
+      life.stats.happy = clamp(life.stats.happy - 8);
+      addLog(life, L('Ngân hàng gửi thư đòi nợ lần cuối. Điểm tín dụng của bạn rơi tự do.', 'The bank sends a final demand. Your credit score is in free fall.'), 'bad');
+    }
+  }
+  const ins = life.insurance || {};
+  if (ins.health) life.money -= 0.02 * gdp;
+  if (ins.life) life.money -= 0.015 * gdp;
+  for (const p of life.people) {
+    if (p.owesYou > 0 && p.alive && chance(life, 0.25)) { life.money += p.owesYou; addLog(life, L(`${nm(life, p)} trả lại số tiền đã vay.`, `${nm(life, p)} repays what they borrowed.`), 'good'); p.owesYou = 0; }
+    if (p.youOwe > 0 && p.alive) p.closeness = clamp(p.closeness - 2);
+  }
+}
+
+return { EXTRA_ACTIVITIES, EXTRA_GROUPS, SPECIES, addPet, petYear, extraPersonActions, doExtraPersonAction, EXTRA_WORK, extraWorkAction, financeYear };
+};
 __defs["src/engine/crime.js"] = () => {
 // Tội phạm, nhà tù, truy nã, di cư, và 4 người sinh cùng giây.
 const { L, clamp, rand, chance, randint, pick, weighted } = __req("src/engine/util.js");
@@ -2484,7 +2832,6 @@ function sentence(life, years, crime) {
   life.fugitive = false;
   if (life.job) { life.job = null; }
   life.edu.stage = null;
-  life.affair = null;
   milestone(life, L(`Vào tù ${years} năm`, `Sent to prison for ${years} years`), 'bad');
   addLog(life, L(`Tòa tuyên án ${years} năm tù vì tội ${crime.vi.toLowerCase()}.`, `You're sentenced to ${years} years for ${crime.en.toLowerCase()}.`), 'bad');
 }
@@ -2599,6 +2946,7 @@ function emigrationOdds(life, code) {
   let p = 0.45 + (life.stats.smarts - 50) / 200 + (['bachelor', 'master', 'phd'].includes(life.edu.level) ? 0.15 : 0);
   if (tierOf(to) === 'high' && tierOf(from) !== 'high') p -= 0.25;
   if (life.record) p -= 0.2;
+  p += Math.min(0.15, (life.langs || 0) * 0.03);
   if (life.money > 3 * to.gdp) p += 0.1;
   return clamp(p, 0.05, 0.9);
 }
@@ -2697,7 +3045,7 @@ __defs["src/engine/love.js"] = () => {
 // Tình cảm: tìm người yêu, tương tác, sống chung, cầu hôn, cưới, ly hôn, con cái, và các diễn biến hằng năm.
 // Mọi câu chữ trung tính giới: người kia luôn là "người yêu" / "họ".
 const { L, clamp, rand, chance, randint, pick } = __req("src/engine/util.js");
-const { country, unit, partner, spouse, people, byId, randomPerson, enrichAdult, partnerGender, personName, addLog, setFlag, milestone } = __req("src/engine/life.js");
+const { country, unit, partner, spouse, people, byId, randomPerson, enrichAdult, partnerGender, personName, addLog, setFlag, milestone, lovers, polyOk, makeLover, endLover, endAllLovers, syncAffair } = __req("src/engine/life.js");
 const { tryConceive, protectChance, breakUp, addChild } = __req("src/engine/events.js");
 const { netWorth } = __req("src/engine/economy.js");
 
@@ -2827,7 +3175,16 @@ function partnerActionList(life, p) {
     if ((p.married ?? 0) + 5 <= life.age) a.push(['vows', L('Làm mới lời thề', 'Renew vows')]);
     a.push(['divorce', L('Ly hôn', 'Divorce')]);
   }
-  if (p.role === 'lover') a.push(['endaffair', L('Chấm dứt', 'End it')]);
+  if (p.role === 'lover') {
+    a.push(['trip', L('Đi du lịch bí mật cùng nhau', 'Take a secret trip together')]);
+    a.push(['official', partner(life) ? L('Bỏ người yêu, chọn người này', 'Leave your partner for them') : L('Chính thức hẹn hò', 'Make it official')]);
+    a.push(['endaffair', L('Chấm dứt', 'End it')]);
+  }
+  if (p.role === 'partner' || p.role === 'spouse') {
+    if (!polyOk(life)) a.push(['askopen', L('Đề nghị mối quan hệ mở', 'Suggest an open relationship')]);
+    else a.push(['closeopen', L('Đóng mối quan hệ mở', 'Close the relationship')]);
+    if (lovers(life).length && !polyOk(life)) a.push(['confess', L('Thú nhận chuyện ngoại tình', 'Confess your affairs')]);
+  }
   a.push(['argue', L('Cãi nhau', 'Argue')]);
   return a;
 }
@@ -2885,7 +3242,49 @@ function partnerAction(life, settings, p, act) {
     }
     case 'breakup': breakUp(life, 'choice'); life.stats.happy = clamp(life.stats.happy - 8); return res(L(`Bạn chia tay ${name}.`, `You break up with ${name}.`), [['happy', -8]], 'bad');
     case 'divorce': return divorceScene(life, p);
-    case 'endaffair': p.role = 'ex'; life.affair = null; delete life.flags.has_affair; life.stats.karma = clamp(life.stats.karma + 3); return res(L(`Bạn chấm dứt với ${name}.`, `You end things with ${name}.`), []);
+    case 'endaffair': {
+      endLover(life, p);
+      life.stats.karma = clamp(life.stats.karma + 3);
+      if ((p.crazy ?? 50) > 85 && partner(life) && !polyOk(life) && chance(life, 0.35)) { life.queue.unshift({ sys: 'affair_exposed' }); return res(L(`${name} không chịu buông. Họ nói sẽ cho người yêu bạn biết tất cả.`, `${name} won't let go. They say they'll tell your partner everything.`), [], 'bad'); }
+      return res(L(`Bạn chấm dứt với ${name}.`, `You end things with ${name}.`), [['karma', 3]]);
+    }
+    case 'trip': {
+      if (n > 1) return tired;
+      life.money -= u(life, 10);
+      closer(life, p, 8, 14);
+      life.stats.happy = clamp(life.stats.happy + 12);
+      setFlag(life, 'recent_intimate');
+      tryConceive(life, p, protectChance(settings.alwaysProtect));
+      if (partner(life) && !polyOk(life) && chance(life, 0.2)) { life.queue.unshift({ sys: 'affair_exposed' }); return res(L(`Ở resort, bạn chạm mặt một người quen của người yêu mình. Họ đã chụp ảnh.`, `At the resort you bump into a friend of your partner's. They took a photo.`), [['money', -u(life, 10)], ['happy', 12]], 'bad'); }
+      return res(settings.adult25 ? L(`Ba ngày ở một thành phố biển với ${name}. Rèm đóng gần như suốt.`, `Three days by the sea with ${name}. The curtains stay closed most of the time.`) : L(`Ba ngày ở một thành phố biển với ${name}.`, `Three days by the sea with ${name}.`), [['money', -u(life, 10)], ['happy', 12]], 'good');
+    }
+    case 'official': {
+      if (chance(life, clamp(p.closeness / 100 + 0.1, 0.1, 0.95))) {
+        if (partner(life)) breakUp(life, 'affair');
+        p.role = 'partner'; p.closeness = Math.max(p.closeness, 65); p.years = 0; life.counts.partners++;
+        syncAffair(life);
+        addLog(life, L(`Bạn và ${name} chính thức thành người yêu.`, `You and ${name} become an official couple.`), 'good');
+        return res(L(`${name} ôm chầm lấy bạn. Không phải giấu nữa.`, `${name} throws their arms around you. No more hiding.`), [['happy', 10]], 'good');
+      }
+      p.closeness = clamp(p.closeness - 8);
+      return res(L(`${name} lắc đầu: họ thích mọi thứ như bây giờ hơn.`, `${name} shakes their head: they like things as they are.`), [], 'bad');
+    }
+    case 'askopen': {
+      if (n > 1) return tired;
+      const pp = clamp(((p.poly ?? 30) / 100) * 0.85 + p.closeness / 500, 0.03, 0.92);
+      if (chance(life, pp)) { setFlag(life, 'open_rel'); p.closeness = clamp(p.closeness + 3); addLog(life, L(`Bạn và ${name} đồng ý thử mối quan hệ mở.`, `You and ${name} agree to try an open relationship.`), 'good'); return res(L(`${name} suy nghĩ một lúc rồi gật đầu: "Mình thử, có luật rõ ràng."`, `${name} thinks it over and nods: "Let's try. With clear rules."`), [['happy', 6]], 'good'); }
+      p.closeness = clamp(p.closeness - 12);
+      if ((p.crazy ?? 50) > 80 && chance(life, 0.3)) { breakUp(life, 'choice'); return res(L(`${name} coi đó là lời chia tay. Họ đi luôn.`, `${name} takes it as a breakup. They leave.`), [['happy', -10]], 'bad'); }
+      return res(L(`${name} từ chối thẳng, và nhìn bạn khác đi.`, `${name} says no, and looks at you differently.`), [['happy', -4]], 'bad');
+    }
+    case 'closeopen':
+      delete life.flags.open_rel;
+      p.closeness = clamp(p.closeness + ((p.poly ?? 30) > 60 ? -6 : 6));
+      if (lovers(life).length) addLog(life, L('Những người yêu phụ giờ lại thành người tình bí mật.', 'Your other partners are secret lovers again.'));
+      return res(L('Hai người quay lại chỉ có nhau.', "It's just the two of you again."), []);
+    case 'confess':
+      life.queue.unshift({ sys: 'affair_exposed', confess: true });
+      return res(L('Bạn hít một hơi thật sâu và bắt đầu nói.', 'You take a deep breath and start talking.'), []);
     case 'argue': p.closeness = clamp(p.closeness - randint(life, 6, 14)); life.stats.happy = clamp(life.stats.happy - 3); return res(L(`Bạn và ${name} cãi nhau to đến mức hàng xóm gõ cửa.`, `You and ${name} fight so loudly the neighbours knock.`), [['happy', -3]], 'bad');
   }
   return null;
@@ -2929,7 +3328,7 @@ function intimateScene(life, settings, p) {
     text: settings.adult25
       ? L(`Bạn và ${nm(life, p)} dành cả buổi tối cho nhau, chậm rãi và không vội vàng.`, `You and ${nm(life, p)} spend the whole evening on each other, slow and unhurried.`)
       : L(`Bạn và ${nm(life, p)} có một buổi tối riêng tư bên nhau.`, `You and ${nm(life, p)} share a private evening together.`),
-    run: (lf) => { closer(lf, p, 4, 10); setFlag(lf, 'recent_intimate'); tryConceive(lf, p, protectChance(protect)); },
+    run: (lf) => { closer(lf, p, 4, 10); setFlag(lf, 'recent_intimate'); tryConceive(lf, p, protectChance(protect)); lf.stats.happy = clamp(lf.stats.happy + Math.round(((p.skill ?? 50) - 50) / 12 + (p.gender === 'male' ? ((p.size ?? 50) - 50) / 25 : 0))); },
   });
   return { event: { uid: 'love/intimate', text: L(`Bạn muốn gần gũi với ${nm(life, p)}.`, `You want some intimacy with ${nm(life, p)}.`), choices: [{ label: L('Dùng biện pháp', 'Use protection'), outcomes: [go(true)] }, { label: L('Không dùng biện pháp', 'Skip protection'), outcomes: [go(false)] }] } };
 }
@@ -3064,6 +3463,16 @@ function loveYear(life) {
 }
 
 function buildLoveSys(life, item) {
+  if (item.sys === 'lover_ultimatum') {
+    const lv = byId(life, item.id);
+    if (!lv || lv.role !== 'lover' || !lv.alive || !partner(life)) return null;
+    const ln = nm(life, lv);
+    return { uid: 'sys/lover_ultimatum', sys: true, text: L(`${ln} nói nhỏ: "Mình không muốn làm người bí mật mãi. Chọn đi: mình hoặc người kia."`, `${ln} says quietly: "I don't want to be your secret forever. Choose: me or them."`), choices: [
+      { label: L(`Chọn ${ln}`, `Choose ${ln}`), outcomes: [{ chance: 1, effects: { happy: 6, karma: -6 }, run: (lf) => { breakUp(lf, 'affair'); lv.role = 'partner'; lv.closeness = Math.max(lv.closeness, 70); lf.counts.partners++; syncAffair(lf); }, text: L('Bạn về nhà, nói lời chia tay, rồi dọn đi.', 'You go home, end it, and move out.') }] },
+      { label: L('Hứa sẽ sớm rời đi', 'Promise to leave soon'), outcomes: [{ chance: 0.6, effects: { karma: -3 }, run: () => { lv.closeness = clamp(lv.closeness - 5); }, text: L('Một lời hứa nữa. Họ tạm tin.', 'Another promise. They believe you, for now.') }, { chance: 0.4, effects: {}, run: (lf) => lf.queue.unshift({ sys: 'affair_exposed' }), text: L('Họ không tin nữa và tự đi tìm người yêu bạn.', "They're done waiting and go find your partner themselves.") }] },
+      { label: L('Chấm dứt với họ', 'End it with them'), outcomes: [{ chance: 1, effects: { happy: -6, karma: 4 }, run: (lf) => endLover(lf, lv), text: L('Bạn mặc áo, nhìn họ lần cuối, và đi.', 'You dress, look at them one last time, and leave.') }] },
+    ] };
+  }
   const p = partner(life);
   if (!p) return null;
   const name = nm(life, p);
@@ -3486,10 +3895,11 @@ __defs["src/engine/year.js"] = () => {
 const { higherEdYear } = __req("src/engine/school.js");
 const { specialYear } = __req("src/engine/specials.js");
 const { careerYear } = __req("src/engine/career.js");
+const { financeYear, petYear } = __req("src/engine/extras.js");
 const { EDU_RANK } = __req("src/data/careers.js");
 const { L, clamp, rand, chance, randint, pick } = __req("src/engine/util.js");
 const { careerById } = __req("src/data/careers.js");
-const { country, tier, unit, partner, people, byId, personName, addLog, clearFlag, milestone } = __req("src/engine/life.js");
+const { country, tier, unit, partner, people, byId, personName, addLog, clearFlag, milestone, lovers, polyOk } = __req("src/engine/life.js");
 const { FLAG_TTL, pickYearEvents } = __req("src/engine/events.js");
 const { economyYear, netWorth, livesInOwnHome } = __req("src/engine/economy.js");
 const { prisonYear, cobornYear } = __req("src/engine/crime.js");
@@ -3615,7 +4025,7 @@ function relations(life) {
     p.age++;
     if (p.role !== 'child') p.closeness = clamp(p.closeness + Math.round((50 - p.closeness) * 0.05) + randint(life, -3, 1));
     const fake = { ...life, age: p.age, stats: { ...life.stats, health: 60 }, addicted: false };
-    if (p.age > 3 && chance(life, mortality(fake, p.age, 60))) {
+    if (p.role !== 'pet' && p.age > 3 && chance(life, mortality(fake, p.age, 60))) {
       p.alive = false;
       const tag = { mother: L('Mẹ', 'Your mother'), father: L('Bố', 'Your father'), spouse: L('Vợ/chồng', 'Your spouse'), partner: L('Người yêu', 'Your partner'), child: L('Con', 'Your child'), sibling: L('Anh/chị/em', 'Your sibling') }[p.role];
       if (p.role === 'spouse') { life.flags.widowed = life.age; life.marriage = null; }
@@ -3637,10 +4047,19 @@ function relations(life) {
       addLog(life, L(`${personName(life, pt)} chia tay bạn vì cảm thấy bị bỏ bê.`, `${personName(life, pt)} leaves you, feeling neglected.`), 'bad');
     }
   }
-  if (life.affair) {
-    const years = life.age - life.affair.since;
-    const p = clamp(0.12 + 0.06 * years - life.stats.smarts / 500, 0.05, 0.7);
-    if (partner(life) && chance(life, p)) life.queue.unshift({ sys: 'affair_exposed' });
+  const ls = lovers(life);
+  if (ls.length) {
+    const gdp = country(life).gdp;
+    life.money -= 0.03 * gdp * ls.length;
+    if (ls.length >= 2 && !polyOk(life)) { life.stats.happy = clamp(life.stats.happy - (ls.length - 1)); life.stats.willpower = clamp(life.stats.willpower - 1); }
+    if (polyOk(life)) life.counts.polyYears = (life.counts.polyYears || 0) + 1;
+    const pt = partner(life);
+    if (pt && !polyOk(life)) {
+      const yrs = life.age - Math.min(...ls.map((x) => x.loverSince ?? life.age));
+      const p = clamp(0.06 * ls.length + 0.03 * yrs - life.stats.willpower / 800 + life.stats.risk / 600 + (pt.cohab ? 0.03 : 0) - life.stats.smarts / 1000, 0.03, 0.85);
+      if (chance(life, p)) life.queue.unshift({ sys: 'affair_exposed' });
+    }
+    for (const lv of ls) if ((lv.crazy ?? 50) > 85 && lv.closeness > 70 && pt && !polyOk(life) && chance(life, 0.08)) { life.queue.push({ sys: 'lover_ultimatum', id: lv.id }); break; }
   }
 }
 
@@ -3661,6 +4080,8 @@ function ageUp(life, events, settings) {
   school(life);
   work(life);
   specialYear(life);
+  financeYear(life);
+  petYear(life);
   relations(life);
   prisonYear(life);
   economyYear(life);
@@ -3701,6 +4122,9 @@ const RIBBONS = {
   academic: { name: L('Học giả', 'Academic'), why: L('Có bằng đại học và trí tuệ cao', 'A degree and high smarts') },
   fertile: { name: L('Con đàn cháu đống', 'Fertile'), why: L('Có từ 4 con trở lên', 'Four or more children') },
   heartbreaker: { name: L('Kẻ phản bội', 'Heartbreaker'), why: L('Ngoại tình bị phát hiện', 'An affair came to light') },
+  casanova: { name: L('Cao thủ bắt cá', 'Smooth operator'), why: L('Có 3 người tình cùng lúc mà chưa từng bị lộ', 'Had 3 lovers at once and never got caught') },
+  bigheart: { name: L('Trái tim rộng', 'Big heart'), why: L('Sống đa ái công khai trên 10 năm', 'Lived openly polyamorous for over 10 years') },
+  caught: { name: L('Bị bắt tại trận', 'Caught red-handed'), why: L('Bị lộ cùng lúc từ 2 người tình trở lên', 'Exposed with two or more lovers at once') },
   playboy: { name: L('Phong lưu', 'Free spirit'), why: L('Từ 8 cuộc tình một đêm trở lên', 'Eight or more one-night stands') },
   longlived: { name: L('Trường thọ', 'Long-lived'), why: L('Sống hơn tuổi thọ trung bình 15 năm', 'Outlived the national average by 15 years') },
   saint: { name: L('Người tốt', 'Saint'), why: L('Karma trên 85', 'Karma above 85') },
@@ -3728,6 +4152,9 @@ function ribbonsFor(life) {
   if (EDU_RANK[life.edu.level] >= 2 && life.stats.smarts >= 80) r.push('academic');
   if (life.counts.children >= 4) r.push('fertile');
   if (life.counts.affairsExposed > 0) r.push('heartbreaker');
+  if ((life.counts.maxLovers || 0) >= 3 && !life.counts.affairsExposed && !life.counts.multiExposed) r.push('casanova');
+  if ((life.counts.polyYears || 0) >= 10) r.push('bigheart');
+  if (life.counts.multiExposed) r.push('caught');
   if (life.counts.ons >= 8) r.push('playboy');
   if (life.age >= country(life).life + 15) r.push('longlived');
   if (life.stats.karma > 85) r.push('saint');
@@ -3826,6 +4253,7 @@ const ACHIEVEMENTS = [
   A('goals25', '🏹', 'Bách phát bách trúng', 'Sharpshooter', 'Hoàn thành tổng cộng 25 mục tiêu', 'Complete 25 goals in total', (p) => p.goalsDone >= 25),
   A('dynasty', '👑', 'Dòng tộc', 'Dynasty', 'Sống tiếp qua 3 thế hệ', 'Play through 3 generations', (p) => p.lives.some((x) => (x.gen || 1) >= 3)),
   A('doctor', '🧑‍🔬', 'Tiến sĩ', 'Doctorate', 'Có bằng tiến sĩ', 'Earn a PhD', (p) => p.lives.some((x) => x.edu === 'phd' && !x.custom)),
+  A('nobodyknew', '🤫', 'Không ai biết', 'Nobody knew', 'Mất khi vẫn còn người tình mà chưa từng bị lộ', 'Die with a secret lover, never caught', (p) => p.lives.some((x) => x.secretLovers && !x.custom)),
   A('rags', '🚀', 'Từ hai bàn tay trắng', 'Rags to riches', 'Sinh ra nghèo, chết giàu', 'Born poor, die rich', (p) => p.lives.some((x) => x.wealth === 'poor' && x.worthX >= 50 && !x.custom)),
 ];
 
@@ -3843,6 +4271,7 @@ function archiveLife(profile, life, extra = {}) {
     age: life.age, cause: life.cause, ribbons: life.ribbons || [], worth: netWorth(life), worthX: netWorth(life) / c.gdp,
     wealth: life.wealth, edu: life.edu.level, goals, custom: !!life.customized, gen: life.gen || 1, kids: life.counts.children,
     job: life.job ? life.job.id : null,
+    secretLovers: life.people.filter((p) => p.role === 'lover' && p.alive).length > 0 && !life.counts.affairsExposed && !life.counts.multiExposed,
   };
   profile.lives.unshift(entry);
   profile.lives = profile.lives.slice(0, 200);
@@ -28212,11 +28641,1970 @@ return { default: {
  ]
 } };
 };
+__defs["src/data/packs/many_lovers.json"] = () => {
+return { default: {
+ "manifest": {
+  "id": "core.lovers",
+  "name": {
+   "vi": "Gói 25+: nhiều tình nhân",
+   "en": "25+: Many lovers"
+  },
+  "version": "1.0.0",
+  "rating": "25+",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "lv_three_dates",
+   "category": "love",
+   "age": [
+    20,
+    55
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Tuần này bạn có ba buổi hẹn với ba người khác nhau. Không ai biết về ai.",
+    "en": "This week you have three dates with three different people. None of them knows about the others."
+   },
+   "requires": {
+    "hasPartner": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chọn một người, nói thật với hai người kia",
+      "en": "Pick one, be honest with the others"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Hai người kia buồn nhưng cảm ơn sự thẳng thắn. Người còn lại cười rất tươi.",
+        "en": "The other two are sad but thank you for your honesty. The one you chose beams."
+       },
+       "setFlags": [
+        "in_relationship"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ cả ba",
+      "en": "Keep all three"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "risk": 3,
+        "startAffair": true
+       },
+       "text": {
+        "vi": "Bạn mua thêm một cuốn sổ lịch. Cuộc sống bận rộn theo kiểu rất thú vị.",
+        "en": "You buy a second planner. Life gets busy in a very fun way."
+       },
+       "setFlags": [
+        "juggling"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_birthday_clash",
+   "category": "love",
+   "age": [
+    20,
+    60
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Sinh nhật bạn. Hai người bạn đang hẹn hò đều muốn tổ chức riêng cho bạn vào đúng tối nay.",
+    "en": "Your birthday. Two people you're seeing both want to throw you a private dinner tonight."
+   },
+   "requires": {
+    "hasPartner": false,
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hai bữa tối, hai nhà hàng, một tối",
+      "en": "Two dinners, two restaurants, one night"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 10,
+        "health": -2
+       },
+       "text": {
+        "vi": "Bạn ăn hai bữa tối và giả vờ no vừa phải ở cả hai. Trót lọt.",
+        "en": "You eat two dinners and act moderately full at both. You get away with it."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -8,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Một người thấy bạn qua cửa kính nhà hàng bên cạnh, đang thổi nến.",
+        "en": "One of them spots you through the next restaurant's window, blowing out candles."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bịa ra tiệc gia đình",
+      "en": "Invent a family party"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": -2
+       },
+       "text": {
+        "vi": "An toàn. Cả hai đều hơi buồn, và bạn ăn mì một mình.",
+        "en": "Safe. Both are a little sad, and you eat noodles alone."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_wrong_text",
+   "category": "love",
+   "age": [
+    20,
+    65
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn gửi tin \"nhớ cái áo đêm qua của em/anh\" cho nhầm người.",
+    "en": "You text \"still thinking about what you wore last night\" to the wrong person."
+   },
+   "requires": {
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bảo đó là lời bài hát",
+      "en": "Claim it's song lyrics"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Họ tin. Họ còn hỏi tên bài hát.",
+        "en": "They believe you. They even ask for the song title."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": -5,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Họ không biết bài hát nào như vậy. Họ cũng không nhắn lại nữa.",
+        "en": "They know no such song. They also stop replying."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thú nhận",
+      "en": "Confess"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "happy": -3,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Họ rời đi, nhưng tôn trọng sự thật.",
+        "en": "They leave, but respect the truth."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_lovers_friends",
+   "category": "love",
+   "age": [
+    20,
+    60
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Hai người bạn đang hẹn hò hóa ra là bạn thân của nhau. Họ cùng hẹn bạn ra quán cà phê.",
+    "en": "Two people you're seeing turn out to be best friends. They invite you to coffee together."
+   },
+   "requires": {
+    "hasPartner": false,
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ngồi nghe hết",
+      "en": "Sit and take it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -10,
+        "fame": -2,
+        "endAllAffairs": true
+       },
+       "text": {
+        "vi": "Họ thay nhau nói, rất bình tĩnh. Sau đó cả nhóm bạn chung đều biết.",
+        "en": "They take turns speaking, very calmly. Afterwards your whole friend group knows."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_honest_offer",
+   "category": "love",
+   "age": [
+    22,
+    60
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Một người bạn đang qua lại nói thẳng: họ biết bạn hẹn thêm người khác, và không phiền, miễn bạn cũng thành thật.",
+    "en": "Someone you're seeing says it plainly: they know you date others and don't mind, as long as you're honest too."
+   },
+   "requires": {
+    "hasPartner": false,
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đồng ý sống công khai",
+      "en": "Agree to be open"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Không còn bí mật. Bạn thấy nhẹ cả người.",
+        "en": "No more secrets. You feel lighter."
+       },
+       "setFlags": [
+        "open_rel"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chỉ hẹn hò mình họ",
+      "en": "Date only them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "karma": 2,
+        "promoteLover": true,
+        "endAllAffairs": true
+       },
+       "text": {
+        "vi": "Hai người chính thức thành một cặp. Các mối khác khép lại nhẹ nhàng.",
+        "en": "You become an official couple. The others wind down gently."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_spreadsheet",
+   "category": "love",
+   "age": [
+    20,
+    60
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn phải lập bảng tính để nhớ ai thích món gì, ai dị ứng hoa gì, ai sinh nhật ngày nào.",
+    "en": "You need a spreadsheet to track who likes what food, who's allergic to which flowers, and whose birthday is when."
+   },
+   "requires": {
+    "lovers": 2
+   },
+   "effects": {
+    "smarts": 1,
+    "happy": -2
+   }
+  },
+  {
+   "id": "lv_saturday_clash",
+   "category": "love",
+   "age": [
+    22,
+    70
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Hai người tình cùng nhắn \"tối nay gặp nhé\", trong khi người yêu nghĩ bạn đi tập gym.",
+    "en": "Two lovers both text \"see you tonight\", while your partner thinks you're at the gym."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chọn một, hủy một",
+      "en": "Pick one, cancel the other"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Người bị hủy gửi lại một biểu tượng cảm xúc rất lạnh.",
+        "en": "The one you cancelled sends back a very cold emoji."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gặp cả hai, hai quận khác nhau",
+      "en": "See both, across town"
+     },
+     "outcomes": [
+      {
+       "chance": 0.75,
+       "effects": {
+        "happy": 10,
+        "health": -3
+       },
+       "text": {
+        "vi": "Bạn về nhà lúc nửa đêm, mệt nhưng cười.",
+        "en": "You get home at midnight, exhausted but grinning."
+       }
+      },
+      {
+       "chance": 0.25,
+       "effects": {
+        "happy": -4,
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Người yêu thấy bạn trên đường về, không phải từ hướng phòng gym.",
+        "en": "Your partner sees you on the way home, and not from the gym."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_wrong_name",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Trong lúc gần gũi, bạn gọi người tình bằng tên người kia.",
+    "en": "In the heat of the moment, you call your lover by someone else's name."
+   },
+   "requires": {
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bảo đó là tên thân mật mới",
+      "en": "Say it's a new pet name"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Họ nhíu mày, rồi bật cười. Thoát.",
+        "en": "They frown, then laugh. Saved."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -6,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Cửa đóng sầm. Bạn mặc áo ngược.",
+        "en": "The door slams. You put your shirt on inside out."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cười trừ, thú thật",
+      "en": "Laugh nervously, admit it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -3,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Họ đòi biết người kia là ai. Đêm dài.",
+        "en": "They demand to know who. Long night."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_twin_gifts",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn mua hai chiếc vòng tay y hệt nhau cho hai người tình. Họ đăng ảnh cùng một ngày.",
+    "en": "You bought two identical bracelets for two lovers. They post photos the same day."
+   },
+   "requires": {
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cầu trời",
+      "en": "Pray"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Không ai để ý.",
+        "en": "Nobody notices."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -6,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Một người bạn chung bình luận: \"Ủa, giống cái của…\"",
+        "en": "A mutual friend comments: \"Wait, isn't that the same as…\""
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_lovers_meet",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Hai người tình của bạn trùng lớp yoga và phát hiện ra nhau.",
+    "en": "Two of your lovers end up in the same yoga class and figure each other out."
+   },
+   "requires": {
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Xin lỗi cả hai",
+      "en": "Apologise to both"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -5,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Một người ở lại. Một người đi.",
+        "en": "One stays. One walks."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Rủ cả ba cùng ngồi nói chuyện",
+      "en": "Suggest all three sit down and talk"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 6,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Họ đồng ý tiếp tục, biết rõ về nhau. Mọi chuyện kỳ lạ nhưng thành thật.",
+        "en": "They agree to carry on, fully aware of each other. Strange, but honest."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": -10,
+        "endAllAffairs": true
+       },
+       "text": {
+        "vi": "Cả hai bỏ bạn, rồi đi uống cà phê với nhau.",
+        "en": "They both dump you, then go for coffee together."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_threat",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Một người tình ghen tuông nói sẽ nhắn cho người yêu bạn nếu bạn không chọn họ.",
+    "en": "A jealous lover says they'll message your partner unless you choose them."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chọn họ",
+      "en": "Choose them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "karma": -4,
+        "promoteLover": true
+       },
+       "text": {
+        "vi": "Bạn chia tay người yêu. Người tình thành người yêu.",
+        "en": "You end it with your partner. Your lover becomes your partner."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thú nhận trước với người yêu",
+      "en": "Confess to your partner first"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2,
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Ít ra người yêu nghe từ chính bạn.",
+        "en": "At least your partner hears it from you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gọi đó là nói đùa",
+      "en": "Call their bluff"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "karma": -2
+       },
+       "text": {
+        "vi": "Họ lùi lại. Lần này.",
+        "en": "They back down. This time."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Họ không đùa.",
+        "en": "They weren't bluffing."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_detective",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Ba ngày liền có một chiếc xe lạ đậu trước nhà. Người yêu dạo này hỏi nhiều.",
+    "en": "A strange car has been parked outside for three days. Your partner has been asking lots of questions."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tạm dừng mọi cuộc hẹn",
+      "en": "Pause all your meetups"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -4,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Năm nay yên ổn. Những người tình bắt đầu sốt ruột.",
+        "en": "Safe this year. Your lovers grow impatient."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Vẫn gặp như bình thường",
+      "en": "Carry on as usual"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "risk": 3
+       },
+       "text": {
+        "vi": "Chiếc xe biến mất. Có lẽ chỉ là hàng xóm mới.",
+        "en": "The car disappears. Maybe just a new neighbour."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Thám tử có ảnh. Rất nhiều ảnh.",
+        "en": "The detective has photos. Lots of them."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_data_leak",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Ứng dụng hẹn hò bí mật bạn dùng bị hack. Danh sách thành viên lan khắp mạng.",
+    "en": "The secret dating app you use gets hacked. The member list spreads online."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Xóa tài khoản, cầu may",
+      "en": "Delete your account and hope"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Không ai tìm thấy tên bạn trong danh sách. Bạn thở ra.",
+        "en": "Nobody spots your name. You exhale."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "affairExposed": true,
+        "fame": -3
+       },
+       "text": {
+        "vi": "Một người bạn của người yêu tìm thấy bạn trong danh sách.",
+        "en": "A friend of your partner finds you on the list."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thú nhận trước",
+      "en": "Confess first"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Bạn kể trước khi họ tự tìm ra.",
+        "en": "You tell them before they find out themselves."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_resort",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Đang ở resort với người tình trong chuyến \"công tác\", bạn thấy đồng nghiệp cùng công ty ở hồ bơi.",
+    "en": "At a resort with your lover on a \"work trip\", you spot a colleague by the pool."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Trốn trong phòng cả ngày",
+      "en": "Hide in the room all day"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "An toàn. Người tình dỗi một chút, rồi thôi.",
+        "en": "Safe. Your lover sulks briefly, then gets over it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chào hỏi tự nhiên",
+      "en": "Say hi like it's normal"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Hóa ra đồng nghiệp cũng đi với người tình. Hai bên thề giữ bí mật cho nhau.",
+        "en": "Turns out your colleague is also with a lover. You swear mutual silence."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Đồng nghiệp là bạn thân của người yêu bạn.",
+        "en": "Your colleague is your partner's close friend."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_real_love",
+   "category": "love",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn nhận ra mình đã yêu một người tình thật lòng.",
+    "en": "You realise you've truly fallen for one of your lovers."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Rời người yêu để ở bên họ",
+      "en": "Leave your partner for them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "karma": -3,
+        "promoteLover": true
+       },
+       "text": {
+        "vi": "Một quyết định khó, nhưng sáng hôm sau bạn thức dậy bên người mình chọn.",
+        "en": "A hard choice, but you wake up next to the one you chose."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chấm dứt với họ",
+      "en": "End it with them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -10,
+        "karma": 3,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Bạn chặn số họ, rồi bỏ chặn, rồi chặn lại.",
+        "en": "You block their number, unblock it, then block it again."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ nguyên mọi thứ",
+      "en": "Keep things as they are"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Mỗi lần nói 'em/anh yêu' với người yêu, bạn nghĩ đến người kia.",
+        "en": "Every time you say 'I love you' to your partner, you think of someone else."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_pricey_gift",
+   "category": "money",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 2,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Một người tình giàu có tặng bạn chiếc đồng hồ đắt hơn lương cả năm. Người yêu hỏi ở đâu ra.",
+    "en": "A wealthy lover gives you a watch worth more than a year's salary. Your partner asks where it came from."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "\"Hàng nhái\"",
+      "en": "\"It's a knock-off\""
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Người yêu tin, còn khen nhái đẹp.",
+        "en": "Your partner believes you, and says it's a good fake."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Người yêu tra số seri trên mạng.",
+        "en": "Your partner looks up the serial number."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bán đi lấy tiền",
+      "en": "Sell it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 60,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Tiền thật. Người tình phát hiện và giận cả tháng.",
+        "en": "Real money. Your lover finds out and sulks for a month."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_poly_dinner",
+   "category": "love",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Người yêu chính muốn gặp người yêu phụ của bạn.",
+    "en": "Your main partner wants to meet your other partner."
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "hasPartner": true,
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tổ chức bữa tối ở nhà",
+      "en": "Host dinner at home"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 10,
+        "rel_partner": 5
+       },
+       "text": {
+        "vi": "Hai người hợp nhau bất ngờ. Họ trêu bạn cả tối.",
+        "en": "They get on unexpectedly well. They tease you all night."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -6,
+        "rel_partner": -5
+       },
+       "text": {
+        "vi": "Bữa tối im lặng đến mức nghe rõ tiếng nhai.",
+        "en": "Dinner is so quiet you can hear chewing."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hoãn lại",
+      "en": "Put it off"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": -3
+       },
+       "text": {
+        "vi": "Cả hai nghĩ bạn đang giấu điều gì.",
+        "en": "Both think you're hiding something."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_poly_calendar",
+   "category": "love",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Ba người lập một lịch online chung để chia ngày.",
+    "en": "The three of you set up a shared online calendar."
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "effects": {
+    "smarts": 1,
+    "happy": 3
+   }
+  },
+  {
+   "id": "lv_poly_jealous",
+   "category": "love",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Người yêu chính thừa nhận dạo này thấy bị bỏ rơi.",
+    "en": "Your main partner admits they've felt left out lately."
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "hasPartner": true,
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dành cả cuối tuần cho họ",
+      "en": "Give them the whole weekend"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 10,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Hai người đi biển, tắt điện thoại.",
+        "en": "You go to the beach, phones off."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nói chuyện cả ba người",
+      "en": "Talk it out, all three"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_partner": 5,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Mọi thứ cân bằng lại.",
+        "en": "Things rebalance."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_partner": -6
+       },
+       "text": {
+        "vi": "Người yêu chính muốn đóng mối quan hệ.",
+        "en": "Your main partner wants to close the relationship."
+       },
+       "clearFlags": [
+        "open_rel"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_couple_invite",
+   "category": "love",
+   "age": [
+    21,
+    65
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Một cặp đôi bạn quen ở quán bar mời bạn về nhà họ, nói rõ cả hai đều muốn.",
+    "en": "A couple you met at a bar invites you back to their place, making clear they both want you there."
+   },
+   "requires": {
+    "notFlags": [
+     "has_affair"
+    ],
+    "hasPartner": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi",
+      "en": "Go"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "risk": 3,
+        "pregnancyChance": 0.02
+       },
+       "text": {
+        "vi": "Một đêm ba người, cởi mở, cười nhiều và không ai vội. Sáng ra cả ba ăn sáng như bạn cũ.",
+        "en": "A night for three, open and unhurried, with a lot of laughter. In the morning you have breakfast like old friends."
+       },
+       "setFlags": [
+        "ons_happened"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Từ chối lịch sự",
+      "en": "Politely decline"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Họ mời bạn một ly. Không ai ngượng.",
+        "en": "They buy you a drink. Nobody's awkward."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_couple_invite_open",
+   "category": "love",
+   "age": [
+    21,
+    65
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Một cặp đôi quen mời bạn về nhà. Mối quan hệ của bạn đang mở và người yêu bảo \"cứ vui đi\".",
+    "en": "A couple invites you home. Your relationship is open and your partner says \"have fun\"."
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "hasPartner": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi",
+      "en": "Go"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "pregnancyChance": 0.02
+       },
+       "text": {
+        "vi": "Bạn về nhà lúc trời sáng, kể cho người yêu nghe phiên bản rút gọn.",
+        "en": "You get home at dawn and tell your partner the short version."
+       },
+       "setFlags": [
+        "ons_happened"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở nhà với người yêu",
+      "en": "Stay home with your partner"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 6
+       },
+       "text": {
+        "vi": "Hai người xem phim và thấy mình may mắn.",
+        "en": "You watch a film and feel lucky."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_poly_parents",
+   "category": "family",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Bố mẹ hỏi: \"Hai người hay đi cùng con là ai?\"",
+    "en": "Your parents ask: \"Who are the two people you're always with?\""
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nói thật",
+      "en": "Tell the truth"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "karma": 3,
+        "rel_mother": 3
+       },
+       "text": {
+        "vi": "Bố mẹ im lặng một tuần, rồi mời cả ba về ăn cơm.",
+        "en": "Your parents go quiet for a week, then invite all three of you to dinner."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_mother": -12,
+        "rel_father": -12
+       },
+       "text": {
+        "vi": "Bố mẹ không hiểu và không muốn hiểu.",
+        "en": "They don't understand and don't want to."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "\"Bạn cùng phòng\"",
+      "en": "\"Roommates\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": -1
+       },
+       "text": {
+        "vi": "Bố mẹ gật đầu. Không ai tin.",
+        "en": "They nod. Nobody believes it."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_poly_house",
+   "category": "money",
+   "age": [
+    25,
+    80
+   ],
+   "weight": 2,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Ba người muốn cùng đứng tên một căn nhà.",
+    "en": "The three of you want to buy a home together."
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "hasPartner": true,
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đồng ý",
+      "en": "Agree"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -60,
+        "happy": 10
+       },
+       "text": {
+        "vi": "Một căn nhà, ba cái tên trên giấy tờ, một tủ lạnh rất đông.",
+        "en": "One home, three names on the deed, one very full fridge."
+       },
+       "setFlags": [
+        "poly_home"
+       ]
+      }
+     ],
+     "requires": {
+      "min": {
+       "money": 60
+      }
+     }
+    },
+    {
+     "label": {
+      "vi": "Chưa vội",
+      "en": "Not yet"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {},
+       "text": {
+        "vi": "Mọi thứ giữ nguyên.",
+        "en": "Things stay as they are."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_first_night",
+   "category": "love",
+   "age": [
+    20,
+    75
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Đêm đầu tiên với người tình mới. Cửa phòng khách sạn vừa khép, họ đã kéo bạn lại gần.",
+    "en": "Your first night with a new lover. The hotel door has barely closed when they pull you close."
+   },
+   "requires": {
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dùng biện pháp",
+      "en": "Use protection"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "pregnancyChance": 0.02
+       },
+       "text": {
+        "vi": "Áo khoác rơi xuống sàn, rồi đến những thứ khác. Đèn thành phố hắt qua rèm, và cả đêm chẳng ai nhìn đồng hồ.",
+        "en": "Coats hit the floor, then everything else. City light spills through the curtains, and nobody checks the time all night."
+       },
+       "setFlags": [
+        "recent_intimate"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Không dùng",
+      "en": "Skip it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 13,
+        "risk": 2,
+        "pregnancyChance": 0.16
+       },
+       "text": {
+        "vi": "Không ai muốn dừng lại để tìm thứ gì. Sáng ra mới bắt đầu thấy lo.",
+        "en": "Nobody wants to stop and look for anything. The worry only starts in the morning."
+       },
+       "setFlags": [
+        "recent_intimate"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_rain",
+   "category": "love",
+   "age": [
+    20,
+    80
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Trời đổ mưa lúc nửa đêm. Người yêu kéo bạn ra sân thượng.",
+    "en": "Rain at midnight. Your partner pulls you out onto the roof terrace."
+   },
+   "requires": {
+    "hasPartner": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi theo",
+      "en": "Follow them"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "happy": 12,
+        "rel_partner": 8
+       },
+       "text": {
+        "vi": "Mưa lạnh, người ấm, và một đêm cả hai sẽ nhớ mãi.",
+        "en": "Cold rain, warm skin, and a night you'll both remember."
+       },
+       "setFlags": [
+        "recent_intimate"
+       ]
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "health": -4,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Lãng mạn tuyệt đối. Sáng ra cả hai cùng sổ mũi.",
+        "en": "Utterly romantic. You both wake up with colds."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_truth_game",
+   "category": "love",
+   "age": [
+    20,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Hai người chơi trò \"kể một điều mình muốn thử\".",
+    "en": "You play a game: \"tell me something you want to try\"."
+   },
+   "requires": {
+    "hasPartner": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thành thật",
+      "en": "Be honest"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "rel_partner": 10,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Câu trả lời của người ấy làm bạn đỏ mặt. Câu trả lời của bạn làm họ cười. Đêm đó cả hai đều thử.",
+        "en": "Their answer makes you blush. Yours makes them laugh. That night you both try."
+       },
+       "setFlags": [
+        "recent_intimate"
+       ]
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "rel_partner": -3
+       },
+       "text": {
+        "vi": "Người ấy hơi bất ngờ. Cần thời gian suy nghĩ.",
+        "en": "They're a bit taken aback. They need time to think."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nói dối cho an toàn",
+      "en": "Play it safe and fib"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Không có gì xảy ra. An toàn và hơi nhạt.",
+        "en": "Nothing happens. Safe and a bit bland."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_mirror_room",
+   "category": "love",
+   "age": [
+    20,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn đặt nhầm loại \"phòng cặp đôi đặc biệt\". Trên trần có một tấm gương rất to.",
+    "en": "You accidentally book a \"special couples' suite\". There's a huge mirror on the ceiling."
+   },
+   "requires": {
+    "hasPartner": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cười rồi tận dụng luôn",
+      "en": "Laugh, then make the most of it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 10,
+        "rel_partner": 6
+       },
+       "text": {
+        "vi": "Cười năm phút đầu. Sau đó không ai cười nữa.",
+        "en": "Five minutes of laughing. Then nobody's laughing."
+       },
+       "setFlags": [
+        "recent_intimate"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đổi phòng",
+      "en": "Ask for another room"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Lễ tân nháy mắt. Bạn muốn độn thổ.",
+        "en": "The receptionist winks. You want the ground to swallow you."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_group_chat",
+   "category": "work",
+   "age": [
+    20,
+    70
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn gửi một tin nhắn rất riêng tư vào nhóm chat đồng nghiệp.",
+    "en": "You send a very private message to the work group chat."
+   },
+   "requires": {
+    "employed": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thu hồi ngay",
+      "en": "Unsend immediately"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Kịp. Có hai người đã xem nhưng giả vờ chưa.",
+        "en": "Just in time. Two people saw it but pretend they didn't."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -6,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Không kịp. Cả phòng nhìn bạn khác đi.",
+        "en": "Too late. The whole office looks at you differently."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhắn tiếp \"Nhầm nhóm, xin lỗi mọi người\"",
+      "en": "Follow up: \"Wrong chat, sorry all\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -3,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Sếp thả một biểu tượng cười. Không ai biết nên hiểu sao.",
+        "en": "Your boss reacts with a laughing emoji. Nobody knows how to take it."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_morning_after",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Người tình muốn ở lại ăn sáng. Bạn cần về nhà trước khi người yêu thức dậy.",
+    "en": "Your lover wants to stay for breakfast. You need to be home before your partner wakes."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ở lại",
+      "en": "Stay"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bánh mì, cà phê, và một nụ hôn dài trước cửa.",
+        "en": "Toast, coffee, and a long kiss at the door."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Người yêu gọi điện hỏi bạn đang ở đâu, và nghe thấy tiếng người kia.",
+        "en": "Your partner calls to ask where you are, and hears your lover's voice."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Về ngay",
+      "en": "Leave now"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn lẻn vào giường lúc 6 giờ. Người yêu trở mình hỏi \"đi đâu về đấy?\"",
+        "en": "You slip into bed at 6. Your partner rolls over: \"Where've you been?\""
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_anniversary",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Người tình muốn kỷ niệm tròn một năm bên nhau, đúng ngày sinh nhật người yêu bạn.",
+    "en": "Your lover wants to celebrate one year together, on your partner's birthday."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chọn người yêu",
+      "en": "Choose your partner"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 5,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Người tình nhắn \"ok\" lúc 11 giờ đêm.",
+        "en": "Your lover texts \"ok\" at 11pm."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chọn người tình",
+      "en": "Choose your lover"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 8,
+        "rel_partner": -10
+       },
+       "text": {
+        "vi": "Bạn viện cớ công việc. Người yêu thổi nến một mình.",
+        "en": "You claim work. Your partner blows out the candles alone."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Người yêu bất ngờ đến công ty đón bạn. Bạn không ở đó.",
+        "en": "Your partner turns up at your office to surprise you. You're not there."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+} };
+};
 __defs["src/engine/game.js"] = () => {
 // Điều phối: gói nội dung, đời hiện tại, hàng đợi sự kiện.
 const { L } = __req("src/engine/util.js");
 const { validatePack, normalizePack } = __req("src/engine/validate.js");
-const { createLife, addLog, people, personName, byId, milestone } = __req("src/engine/life.js");
+const { createLife, addLog, people, personName, byId, milestone, country } = __req("src/engine/life.js");
 const { ageUp, die, recordHistory } = __req("src/engine/year.js");
 const { pickOutcome, applyOutcome, applyEffects, buildSysEvent, applySys, resolveEngineFlags } = __req("src/engine/events.js");
 const { initEconomy, netWorth } = __req("src/engine/economy.js");
@@ -28242,8 +30630,9 @@ const healthPack = __req("src/data/packs/health.json").default;
 const parentPack = __req("src/data/packs/parenting.json").default;
 const afterDark = __req("src/data/packs/after_dark.json").default;
 const adultFilm = __req("src/data/packs/adult_industry.json").default;
+const manyLovers = __req("src/data/packs/many_lovers.json").default;
 
-const BUILTIN = [core, coreLife, school, weird, workPack, oldPack, healthPack, parentPack, afterDark, adultFilm, big, love, uni, ons, adult, kinks].map((p) => ({ ...normalizePack(p), builtin: true }));
+const BUILTIN = [core, coreLife, school, weird, workPack, oldPack, healthPack, parentPack, afterDark, adultFilm, manyLovers, big, love, uni, ons, adult, kinks].map((p) => ({ ...normalizePack(p), builtin: true }));
 
 function defaultSettings() {
   return { lang: 'vi', adult25: false, alwaysProtect: true, godEnabled: true, packs: {}, packWeight: {} };
@@ -28281,6 +30670,7 @@ function newLife(game, opts) {
   game.life = createLife(opts);
   game.life.birthCountry = game.life.country;
   game.life.gen = 1;
+  if (game.life.gender === 'male') game.life.size = 20 + Math.floor(Math.random() * 70);
   assignGoals(game.life);
   initEconomy(game.life);
   createCoborns(game.life);
@@ -28401,7 +30791,7 @@ function continueAsChild(game, childId) {
   initEconomy(life);
   if (old.econ) life.econ = old.econ;
   life.coborns = [];
-  life.money = Math.max(0, netWorth(old)) * 0.7;
+  life.money = Math.max(0, netWorth(old)) * 0.7 + (old.insurance?.life ? 30 * country(old).gdp : 0);
   life.stats.smarts = kid.smarts;
   life.stats.looks = kid.looks;
   life.people = life.people.filter((p) => p.role !== 'mother' && p.role !== 'father');
@@ -28421,9 +30811,10 @@ const { L, clamp, rand, chance, randint, pick } = __req("src/engine/util.js");
 const { CAREERS, careerById, EDU_RANK, missingFor, ladderOf } = __req("src/data/careers.js");
 const { entryRank, entryBonus, randomCompany, hire, nextRank, promote } = __req("src/engine/career.js");
 const { socialAction } = __req("src/engine/specials.js");
+const { EXTRA_ACTIVITIES, extraPersonActions, doExtraPersonAction, EXTRA_WORK, extraWorkAction } = __req("src/engine/extras.js");
 const { canStudy, majorEvent, tradeEvent, gradEvent, studentAction } = __req("src/engine/school.js");
 const { byCode } = __req("src/data/countries.js");
-const { country, unit, partner, spouse, people, byId, randomPerson, partnerGender, personName, addLog, setFlag, STAT_KEYS, HIDDEN_KEYS, milestone } = __req("src/engine/life.js");
+const { country, unit, partner, spouse, people, byId, randomPerson, partnerGender, personName, addLog, setFlag, STAT_KEYS, HIDDEN_KEYS, milestone, lovers, polyOk, makeLover, canSeduce } = __req("src/engine/life.js");
 const { applyEffects, tryConceive, protectChance, newContact, startAffair, breakUp } = __req("src/engine/events.js");
 const { CRIMES, commitCrime, prisonAction } = __req("src/engine/crime.js");
 const { ROMANTIC, partnerActionList, partnerAction, datingApp, blindDate } = __req("src/engine/love.js");
@@ -28533,14 +30924,18 @@ const ACTIVITIES = [
     return res(L('Bạn nhảy đến khi đèn bật sáng.', 'You dance until the lights come on.'), [['happy', 5]]);
   } },
   { id: 'casino', group: 'night', min: 18, max: 100, label: L('Vào sòng bạc', 'Visit the casino'), run: () => ({ mini: { kind: 'cards', bets: [5, 25] } }) },
+  { id: 'races', group: 'night', min: 18, max: 100, label: L('Cá cược đua ngựa', 'Bet on the horses'), run: () => ({ mini: { kind: 'race' } }) },
+  { id: 'blackjack', group: 'night', min: 18, max: 100, label: L('Chơi xì dách', 'Play blackjack'), run: () => ({ mini: { kind: 'blackjack', bets: [5, 25] } }) },
   { id: 'lottery', group: 'night', min: 18, max: 120, units: 0.5, label: L('Mua vé số', 'Buy a lottery ticket'), run: (lf) => (chance(lf, 0.0008) ? res(L('TRÚNG ĐỘC ĐẮC!', 'JACKPOT!'), fx(lf, { money: 500, happy: 30 }), 'good') : res(pick(lf, [L('Trượt. Như mọi khi.', 'No luck. As usual.'), L('Trượt. Bạn chỉ sai có 6 số.', 'No luck. You were just six numbers off.'), L('Trượt, nhưng bạn đã kịp tiêu hết số tiền đó trong đầu.', 'No luck, but you already spent it all in your head.')]), [])) },
   { id: 'date', group: 'love', min: 18, max: 90, when: (lf) => !partner(lf), label: L('Nhờ bạn bè giới thiệu', 'Get set up by friends'), run: (lf) => blindDate(lf) },
   { id: 'app', group: 'love', min: 18, max: 90, when: (lf) => !partner(lf), label: L('Ứng dụng hẹn hò', 'Dating app'), run: (lf) => datingApp(lf) },
   { id: 'hookup', group: 'love', min: 18, max: 70, label: L('Tìm tình một đêm qua app', 'Find a hookup on an app'), run: (lf, st) => (chance(lf, 0.3 + lf.stats.looks / 200) ? onsModal(lf, st, L('Một người trên app nhắn tin thẳng thắn: tối nay rảnh không?', 'Someone on the app is direct: free tonight?')) : res(L('Không ai trả lời tin nhắn của bạn.', 'Nobody replies to your messages.'), fx(lf, { happy: -2 }))) },
-  { id: 'affair', group: 'love', min: 18, max: 80, when: (lf) => !!partner(lf) && !lf.affair, label: L('Ngoại tình', 'Have an affair'), run: (lf) => ({
+  { id: 'affair', group: 'love', min: 18, max: 85, label: L('Tìm thêm người tình', 'Find another lover'), run: (lf) => ({
     event: {
       uid: 'act/affair',
-      text: L(`Một người đồng nghiệp tỏ ra quan tâm đến bạn hơn mức bình thường, dù ai cũng biết bạn đã có ${spouse(lf) ? 'gia đình' : 'người yêu'}.`, `A coworker shows more interest in you than they should, though everyone knows you're ${spouse(lf) ? 'married' : 'taken'}.`),
+      text: !partner(lf) ? L(`Bạn đang độc thân${lovers(lf).length ? ` và đã có ${lovers(lf).length} người tình` : ''}. Một người ở phòng gym nhìn bạn hơi lâu.`, `You're single${lovers(lf).length ? ` with ${lovers(lf).length} lover(s) already` : ''}. Someone at the gym holds your gaze a little too long.`)
+        : polyOk(lf) ? L('Mối quan hệ của bạn đang mở. Một người dễ thương trên app hẹn hò muốn gặp bạn.', 'Your relationship is open. Someone lovely on a dating app wants to meet.')
+        : L(`Một người đồng nghiệp tỏ ra quan tâm đến bạn hơn mức bình thường, dù ai cũng biết bạn đã có ${spouse(lf) ? 'gia đình' : 'người yêu'}${lovers(lf).length ? `, và bạn còn đang giấu ${lovers(lf).length} người khác` : ''}.`, `A coworker shows more interest than they should, though everyone knows you're ${spouse(lf) ? 'married' : 'taken'}${lovers(lf).length ? `, and you're already hiding ${lovers(lf).length} others` : ''}.`),
       choices: [
         { label: L('Bắt đầu lén lút', 'Start seeing them secretly'), outcomes: [{ chance: 1, effects: { happy: 8, karma: -10, risk: 5 }, text: L('Mối quan hệ bí mật bắt đầu. Mỗi năm đều có nguy cơ bị lộ.', 'A secret relationship begins. Every year it may come out.'), run: (l2) => startAffair(l2) }] },
         { label: L('Giữ khoảng cách', 'Keep your distance'), outcomes: [{ chance: 1, effects: { karma: 4, willpower: 4 }, text: L('Bạn chọn chung thủy.', 'You stay faithful.') }] },
@@ -28555,6 +30950,8 @@ const ACTIVITIES = [
 ];
 
 const PRISON_OK = new Set(['gym', 'library', 'meditate']);
+ACTIVITIES.push(...EXTRA_ACTIVITIES);
+
 function availableActivities(life) {
   if (life.prison) return ACTIVITIES.filter((a) => a.group === 'prison' || PRISON_OK.has(a.id));
   return ACTIVITIES.filter((a) => a.group !== 'prison' && life.age >= a.min && life.age <= a.max && (!a.when || a.when(life)));
@@ -28565,6 +30962,7 @@ function doActivity(life, settings, id) {
   if (!a || life.dead) return null;
   if (a.crime) return commitCrime(life, a.crime);
   if (a.prison) return prisonAction(life, a.prison);
+  if (a.id === 'doctor' && life.insurance?.health) { const r = a.run(life, settings); return r; }
   if (a.units && !canAfford(life, a.units)) return res(L('Bạn không đủ tiền.', 'You can\'t afford it.'), [], 'bad');
   const n = (life.yearActs[id] = (life.yearActs[id] || 0) + 1);
   if (n > 3) return res(L('Bạn đã làm việc này đủ nhiều trong năm nay.', 'You\'ve done this enough for one year.'), []);
@@ -28578,7 +30976,8 @@ function personActions(life, p) {
   if (!p.alive) return out;
   out.push(['talk', L('Trò chuyện', 'Talk')]);
   if (life.prison) return out.concat([['argue', L('Cãi nhau', 'Argue')]]);
-  if (ROMANTIC.includes(p.role)) return partnerActionList(life, p);
+  if (p.role === 'pet') return extraPersonActions(life, p);
+  if (ROMANTIC.includes(p.role)) return partnerActionList(life, p).concat(extraPersonActions(life, p));
   if (life.age >= 10) out.push(['gift', L('Tặng quà', 'Give a gift')]);
   out.push(['argue', L('Cãi nhau', 'Argue')]);
   if ((p.role === 'mother' || p.role === 'father') && life.age >= 6) out.push(['money', L('Xin tiền', 'Ask for money')]);
@@ -28588,13 +30987,14 @@ function personActions(life, p) {
   if (p.role === 'spouse') out.push(['divorce', L('Ly hôn', 'Divorce')]);
   if (p.role === 'lover') out.push(['endaffair', L('Chấm dứt', 'End it')]);
   if ((p.role === 'contact' || p.role === 'ex') && life.age >= 18 && !partner(life)) out.push(['askout', L('Rủ hẹn hò', 'Ask out')]);
-  return out;
+  if (canSeduce(life, p)) out.push(['seduce', L('Quyến rũ', 'Seduce')]);
+  return out.concat(extraPersonActions(life, p));
 }
 
 function doPersonAction(life, settings, personId, act) {
   const p = byId(life, personId);
   if (!p || !p.alive || life.dead) return null;
-  if (ROMANTIC.includes(p.role) && !life.prison) return partnerAction(life, settings, p, act);
+  if (ROMANTIC.includes(p.role) && !life.prison) { const r0 = partnerAction(life, settings, p, act); if (r0) return r0; }
   const name = personName(life, p);
   const key = `p:${act}:${p.id}`;
   const n = (life.yearActs[key] = (life.yearActs[key] || 0) + 1);
@@ -28631,11 +31031,30 @@ function doPersonAction(life, settings, personId, act) {
     case 'breakup':
     case 'divorce': breakUp(life, 'choice'); return res(L('Mọi chuyện đã kết thúc.', 'It\'s over.'), fx(life, { happy: -8 }), 'bad');
     case 'endaffair': p.role = 'ex'; life.affair = null; delete life.flags.has_affair; return res(L(`Bạn chấm dứt với ${name}.`, `You end things with ${name}.`), fx(life, { karma: 3 }));
+    case 'seduce': {
+      if (!canSeduce(life, p)) return res(L('Bạn không thể làm vậy với người này.', "You can't do that with this person."), [], 'bad');
+      if (n > 2) return res(L('Năm nay như vậy là đủ rồi.', "That's enough for this year."), []);
+      const pr = clamp(0.15 + life.stats.looks / 250 + p.closeness / 250 + (p.poly ?? 30) / 400 + life.stats.fame / 500 + (life.skill ?? 50) / 600 - (p.fidelity ?? 60) / 400, 0.05, 0.92);
+      if (chance(life, pr)) {
+        makeLover(life, p);
+        setFlag(life, 'recent_intimate');
+        const taken = partner(life) && !polyOk(life);
+        if (taken) life.stats.karma = clamp(life.stats.karma - 6);
+        life.stats.happy = clamp(life.stats.happy + 10);
+        return res(settings.adult25
+          ? L(`Một ánh nhìn, một câu nói đúng lúc, và ${name} không rời mắt khỏi bạn. Đêm đó cả hai không về nhà riêng.`, `One look, the right words at the right time, and ${name} can't look away. Neither of you goes home alone that night.`)
+          : L(`${name} đáp lại tình cảm của bạn. Hai người bắt đầu qua lại.`, `${name} returns your feelings. You start seeing each other.`), [['happy', 10]].concat(taken ? [['karma', -6]] : []), 'good');
+      }
+      p.closeness = clamp(p.closeness - 10);
+      life.stats.happy = clamp(life.stats.happy - 4);
+      if (['mentor', 'rival'].includes(p.role) && chance(life, 0.15)) { life.stats.fame = clamp(life.stats.fame + 2); return res(L(`${name} từ chối và kể chuyện này với mọi người. Bạn thành chủ đề bàn tán.`, `${name} turns you down and tells everyone. You're the talk of the town.`), [['happy', -4]], 'bad'); }
+      return res(L(`${name} lịch sự lùi lại một bước. Không khí hơi ngượng.`, `${name} politely steps back. It's a bit awkward.`), [['happy', -4]], 'bad');
+    }
     case 'askout':
       if (chance(life, p.closeness / 100 + 0.1)) { p.role = 'partner'; p.closeness = 65; life.counts.partners++; return res(L(`${name} đồng ý hẹn hò với bạn.`, `${name} agrees to date you.`), fx(life, { happy: 8 }), 'good'); }
       return res(L(`${name} không muốn.`, `${name} isn't interested.`), fx(life, { happy: -3 }));
   }
-  return null;
+  return doExtraPersonAction(life, p, act, n);
 }
 
 // ───────── Học & nghề ─────────
@@ -28650,13 +31069,14 @@ function jobsLocked(life) {
   return CAREERS.map((c) => [c, missingFor(life, c)]).filter(([, m]) => m);
 }
 
-function applyJob(life, id) {
+function applyJob(life, id, opts = {}) {
   const c = careerById[id];
   if (!c || life.dead) return null;
   if (life.prison) return res(L('Bạn đang ngồi tù.', "You're in prison."), [], 'bad');
   if (life.job) return res(L('Hãy nghỉ việc hiện tại trước.', 'Quit your current job first.'), []);
   if (life.special) return res(L('Bạn đang theo nghề đặc biệt. Hãy rời nghề đó trước.', 'You have a special career. Leave it first.'), []);
   if (missingFor(life, c)) return res(L('Bạn chưa có bằng cấp phù hợp cho nghề này.', "You don't have the right qualifications for this job."), [], 'bad');
+  if (opts.interview == null && life.age >= 18 && (life.yearActs['apply'] || 0) < 3) return { mini: { kind: 'interview', job: id } };
   const n = (life.yearActs['apply'] = (life.yearActs['apply'] || 0) + 1);
   if (n > 3) return res(L('Bạn đã nộp đủ hồ sơ trong năm nay.', 'You\'ve sent enough applications this year.'), []);
   const meets = Object.entries(c.min).every(([k, v]) => life.stats[k] >= v);
@@ -28664,8 +31084,9 @@ function applyJob(life, id) {
   const fit = c.major && (e.degrees || []).some((d) => c.major.includes(d.major));
   const honors = fit && e.degrees.some((d) => d.honors && c.major.includes(d.major));
   const intern = e.intern && (!c.major || c.major.includes(e.intern));
+  const iv = opts.interview != null ? (opts.interview - 0.5) * 0.4 : 0;
   const stigma = 'adult_past' in life.flags && ['teacher', 'police', 'professor', 'nurse', 'lawyer'].includes(id) ? 0.6 : 1;
-  const p = stigma * (meets ? clamp(0.35 + life.stats.smarts / 200 + life.stats.looks / 400 + (honors ? 0.1 : 0) + (intern ? 0.15 : 0), 0.1, 0.95) : 0.04) * (life.record ? 0.55 : 1);
+  const p = stigma * (meets ? clamp(0.35 + life.stats.smarts / 200 + life.stats.looks / 400 + (honors ? 0.1 : 0) + (intern ? 0.15 : 0) + iv, 0.05, 0.97) : 0.04) * (life.record ? 0.55 : 1);
   if (!chance(life, p)) return res(L(`Hồ sơ ${c.title.vi.toLowerCase()} của bạn bị từ chối.`, `Your application for ${c.title.en.toLowerCase()} is rejected.`), fx(life, { happy: -3 }), 'bad');
   const rank = entryRank(life, id, entryBonus(life, id));
   const company = randomCompany(life);
@@ -28695,6 +31116,14 @@ function workAction(life, act) {
     case 'switch':
       if (e.stage !== 'uni' || n > 1) break;
       return { event: majorEvent(life, true) };
+    case 'overtime': case 'bossdrinks': case 'transfer': case 'leave': case 'strike': case 'whistle': {
+      const r = extraWorkAction(life, act, n);
+      if (r) return r;
+      break;
+    }
+    case 'exam':
+      if (n > 1) break;
+      return { mini: { kind: 'exam', total: 6, level: life.stats.smarts >= 70 ? 2 : 1 } };
     case 'club': case 'parttime': case 'scholar': case 'exchange': case 'intern': case 'olympiad': {
       const r = studentAction(life, act, n, res, fx);
       if (r) return r;
@@ -28733,6 +31162,7 @@ function godApply(life, change) {
   if (change.money != null) life.money = Number(change.money) || 0;
   if (change.cure) { life.ill = null; life.addicted = false; life.stats.health = Math.max(life.stats.health, 80); }
   if (change.clearDebt && life.money < 0) life.money = 0;
+  if (change.body) for (const k of ['fert', 'skill', 'size']) if (change.body[k] != null && (k !== 'size' || life.gender === 'male')) life[k] = clamp(Number(change.body[k]));
   if (change.country && byCode[change.country] && change.country !== life.country) {
     const from = country(life);
     life.country = change.country;
@@ -28743,6 +31173,20 @@ function godApply(life, change) {
 }
 
 /** Quay lại 1 năm (tối đa 3 lần mỗi đời). Trả về đời cũ hoặc null. */
+/** God Mode cho một người: chỉnh chỉ số, không bao giờ chỉnh tuổi. Chỉ số thân mật chỉ áp dụng cho người từ 18 tuổi. */
+function godPerson(life, id, vals) {
+  const p = byId(life, id);
+  if (!p) return null;
+  life.customized = true;
+  life.counts.godUses++;
+  for (const k of ['closeness', 'looks', 'smarts']) if (vals[k] != null) p[k] = clamp(Number(vals[k]));
+  if (p.age >= 18) {
+    for (const k of ['poly', 'fert', 'skill', 'fidelity', 'crazy']) if (vals[k] != null) p[k] = clamp(Number(vals[k]));
+    if (p.gender === 'male' && vals.size != null) p.size = clamp(Number(vals.size));
+  }
+  return p;
+}
+
 function godRewind(life) {
   if (!life.snapshots.length || life.counts.rewinds >= 3) return null;
   const prev = JSON.parse(life.snapshots[life.snapshots.length - 1]);
@@ -28754,11 +31198,11 @@ function godRewind(life) {
   return prev;
 }
 
-return { ACTIVITIES, availableActivities, doActivity, personActions, doPersonAction, jobOpenings, jobsLocked, applyJob, workAction, godApply, godRewind };
+return { ACTIVITIES, availableActivities, doActivity, personActions, doPersonAction, jobOpenings, jobsLocked, applyJob, workAction, godApply, godPerson, godRewind };
 };
 __defs["src/engine/minigames.js"] = () => {
 // Kết quả của các trò chơi nhỏ. Phần chơi nằm ở giao diện; engine chỉ nhận kết quả và áp vào đời.
-const { L, clamp, chance } = __req("src/engine/util.js");
+const { L, clamp, chance, pick } = __req("src/engine/util.js");
 const { milestone, addLog } = __req("src/engine/life.js");
 const { applyEffects } = __req("src/engine/events.js");
 
@@ -28809,10 +31253,52 @@ function autoPlay(life, mini) {
   if (mini.kind === 'maze') return resolveEscape(life, chance(life, 0.35));
   if (mini.kind === 'cards') return resolveCasino(life, mini.bets[0], chance(life, 0.45) ? mini.bets[0] * 2 : 0);
   if (mini.kind === 'quiz') return resolveOlympiad(life, Math.round(Math.random() * mini.total), mini.total);
+  if (mini.kind === 'exam') return resolveExam(life, Math.round(Math.random() * 6), 6);
+  if (mini.kind === 'race') return resolveRace(life, 5, chance(life, 0.25), 3, 'Gió');
+  if (mini.kind === 'blackjack') return resolveBlackjack(life, 5, pick(life, ['win', 'lose', 'lose', 'push', 'bj']));
   return null;
 }
 
-return { resolveEscape, resolveCasino, resolveOlympiad, autoPlay };
+/** Đua ngựa: thắng thì nhận tiền theo tỷ lệ cược. */
+function resolveRace(life, bet, won, odds, horse) {
+  const net = won ? bet * odds - bet : -bet;
+  const fx = applyEffects(life, { money: net, happy: won ? Math.min(15, 5 + odds) : -5, risk: 1 });
+  return won
+    ? res(L(`${horse} về nhất! Bạn hét to đến mức người bên cạnh giật mình.`, `${horse} wins! You scream so loud the person next to you jumps.`), fx, 'good')
+    : res(L(`${horse} dừng lại giữa đường để ngắm khán đài. Bạn mất tiền cược.`, `${horse} stops mid-race to admire the crowd. You lose your bet.`), fx, 'bad');
+}
+
+/** Xì dách: outcome là 'bj' | 'win' | 'push' | 'lose'. */
+function resolveBlackjack(life, bet, outcome) {
+  const net = outcome === 'bj' ? bet * 1.5 : outcome === 'win' ? bet : outcome === 'push' ? 0 : -bet;
+  const fx = applyEffects(life, { money: net, happy: net > 0 ? 6 : net < 0 ? -5 : 0, risk: 1 });
+  const t = { bj: L('Xì dách! Nhà cái trả gấp rưỡi.', 'Blackjack! The house pays 3 to 2.'), win: L('Bạn thắng ván này.', 'You win the hand.'), push: L('Hòa. Tiền cược trả lại.', 'Push. Your bet is returned.'), lose: L('Nhà cái thắng. Như thường lệ.', 'The house wins. As usual.') }[outcome];
+  return res(t, fx, net > 0 ? 'good' : net < 0 ? 'bad' : '');
+}
+
+/** Luyện thi đại học: kết quả cộng vào khả năng đỗ ngành. */
+function resolveExam(life, score, total) {
+  const r = score / total;
+  life.edu.examBonus = Math.max(life.edu.examBonus || 0, Math.round((r - 0.4) * 30) / 100);
+  if (r >= 0.8) return res(L(`${score}/${total} câu. Thầy nói với đà này bạn đỗ ngành nào cũng được.`, `${score}/${total}. Your teacher says at this rate you'll get in anywhere.`), applyEffects(life, { smarts: 2, happy: 6 }), 'good');
+  if (r >= 0.5) return res(L(`${score}/${total} câu. Ổn, nhưng còn phải cố.`, `${score}/${total}. Decent, but keep at it.`), applyEffects(life, { smarts: 1 }));
+  return res(L(`${score}/${total} câu. Bạn cần ôn lại từ đầu.`, `${score}/${total}. Back to basics.`), applyEffects(life, { happy: -3 }), 'bad');
+}
+
+const Q = (vi, en, a) => ({ q: L(vi, en), a });
+const A3 = (good, ok, bad) => [{ t: good, s: 1 }, { t: ok, s: 0.5 }, { t: bad, s: 0 }];
+const INTERVIEW_QS = [
+  Q('Điểm yếu lớn nhất của bạn là gì?', 'What is your greatest weakness?', A3(L('Tôi hay ôm việc, đang học cách giao việc.', "I take on too much; I'm learning to delegate."), L('Tôi quá cầu toàn.', "I'm a perfectionist."), L('Tôi ghét dậy sớm và ghét họp.', 'I hate mornings and meetings.'))),
+  Q('Vì sao bạn muốn làm ở đây?', 'Why do you want to work here?', A3(L('Tôi thích cách công ty làm sản phẩm và muốn đóng góp.', 'I admire how you build things and want to contribute.'), L('Công ty gần nhà tôi.', "It's close to my home."), L('Tôi cần tiền trả nợ.', 'I need money for my debts.'))),
+  Q('5 năm nữa bạn thấy mình ở đâu?', 'Where do you see yourself in 5 years?', A3(L('Dẫn dắt một nhóm nhỏ, giỏi hơn trong chuyên môn.', 'Leading a small team and better at my craft.'), L('Vẫn ở đây, chắc vậy.', 'Still here, probably.'), L('Ngồi ghế của anh/chị.', 'In your chair.'))),
+  Q('Kể về một lần bạn thất bại.', 'Tell me about a time you failed.', A3(L('Một dự án trễ hạn; tôi học được cách lập kế hoạch tốt hơn.', 'A project ran late; I learned to plan better.'), L('Tôi không nhớ mình từng thất bại.', "I can't recall failing."), L('Lần phỏng vấn trước. Và có lẽ lần này.', 'My last interview. And possibly this one.'))),
+  Q('Bạn mong muốn mức lương bao nhiêu?', 'What salary are you expecting?', A3(L('Tôi tin mức lương thị trường cho vị trí này là hợp lý.', 'The market rate for the role seems fair to me.'), L('Bao nhiêu cũng được.', 'Anything is fine.'), L('Gấp đôi mức anh/chị định nói.', "Double whatever you were going to say."))),
+  Q('Bạn xử lý mâu thuẫn với đồng nghiệp thế nào?', 'How do you handle conflict with colleagues?', A3(L('Nói chuyện riêng, bình tĩnh, tìm điểm chung.', 'Talk privately and calmly, find common ground.'), L('Tôi tránh mặt họ.', 'I avoid them.'), L('Tôi đăng bài ẩn ý lên mạng.', 'I post passive-aggressive status updates.'))),
+  Q('Nếu được làm một con vật, bạn sẽ là con gì?', 'If you were an animal, which would you be?', A3(L('Con ong: chăm chỉ và làm việc nhóm tốt.', 'A bee: hard-working and a team player.'), L('Con mèo.', 'A cat.'), L('Con lười. Không cần giải thích.', 'A sloth. No explanation needed.'))),
+  Q('Bạn có câu hỏi gì cho chúng tôi không?', 'Do you have any questions for us?', A3(L('Thành công ở vị trí này trông như thế nào sau 6 tháng?', 'What does success look like in this role after six months?'), L('Không ạ.', 'No.'), L('Có được làm từ nhà mỗi ngày không?', 'Can I work from home every day?'))),
+];
+
+return { resolveEscape, resolveCasino, resolveOlympiad, autoPlay, resolveRace, resolveBlackjack, resolveExam, INTERVIEW_QS };
 };
 __defs["src/ui/main.js"] = () => {
 // Giao diện: dựng lại toàn bộ #app sau mỗi thao tác (đơn giản, đủ nhanh cho game dạng chữ).
@@ -28822,16 +31308,16 @@ const { careerById, ladderOf, COMPANIES } = __req("src/data/careers.js");
 const { entryRank, entryBonus, salaryFor, nextRank, rankName, effExp } = __req("src/engine/career.js");
 const { makeGame, defaultSettings, refreshEvents, loadPackText, newLife, ageUpGame, currentEvent, chooseEvent, chooseModal, continueAsChild, BUILTIN } = __req("src/engine/game.js");
 const { normalizePack, validatePack } = __req("src/engine/validate.js");
-const { STAT_KEYS, HIDDEN_KEYS, TRAITS, WEALTH, country, tier, personName, partner, people, addLog } = __req("src/engine/life.js");
+const { STAT_KEYS, HIDDEN_KEYS, TRAITS, WEALTH, country, tier, personName, partner, people, addLog, polyOk } = __req("src/engine/life.js");
 const { ACTIVITIES } = __req("src/engine/actions.js");
 const { profileLine } = __req("src/engine/love.js");
 const { choiceLocked } = __req("src/engine/events.js");
-const { availableActivities, doActivity, personActions, doPersonAction, jobOpenings, jobsLocked, applyJob, workAction, godApply, godRewind } = __req("src/engine/actions.js");
+const { availableActivities, doActivity, personActions, doPersonAction, godPerson, jobOpenings, jobsLocked, applyJob, workAction, godApply, godRewind } = __req("src/engine/actions.js");
 const { RIBBONS } = __req("src/engine/year.js");
 const { PHASES, ASSETS, HOMES, CARS, INDUSTRIES, holdingValue, netWorth, savingsRate, homePrice, bizCapital, invest, divest, buyHome, sellHome, toggleRent, buyCar, sellCar, startBiz, bizAction } = __req("src/engine/economy.js");
 const { majorById, tradeById } = __req("src/data/majors.js");
 const { degreeName, stageLength } = __req("src/engine/school.js");
-const { resolveEscape, resolveCasino, resolveOlympiad } = __req("src/engine/minigames.js");
+const { resolveEscape, resolveCasino, resolveOlympiad, resolveRace, resolveBlackjack, resolveExam, INTERVIEW_QS } = __req("src/engine/minigames.js");
 const { SPECIALS, canJoin, specialAction, followersText } = __req("src/engine/specials.js");
 const { GOALS, goalById, checkGoals, ACHIEVEMENTS, archiveLife, emptyProfile } = __req("src/engine/goals.js");
 const { emigrate, emigrationOdds, emigrationCost, cobornName } = __req("src/engine/crime.js");
@@ -28900,8 +31386,8 @@ const lvlCls = (v) => (v >= 66 ? 'hi' : v >= 33 ? 'mid' : 'lo');
 const lvl = (v, thin) => { const n = Math.max(0, Math.min(100, Math.round(v))); return `<div class="lvl${thin ? ' thin' : ''}"><i class="${lvlCls(n)}" style="width:${n}%"></i><span>${n}%</span></div>`; };
 const bar = (v) => lvl(v);
 const prog = (v) => `<div class="lvl thin"><i class="prog" style="width:${Math.max(4, Math.min(100, Math.round(v)))}%"></i></div>`;
-function face(gender, age, role, alive = true) {
-  if (role === 'pet') return '🐾';
+function face(gender, age, role, alive = true, species) {
+  if (role === 'pet') return species ? ({ dog: '🐶', cat: '🐱', rabbit: '🐰', parrot: '🦜', turtle: '🐢' }[species] || '🐾') : '🐾';
   if (!alive) return '🪦';
   if (age < 3) return '👶';
   const f = gender === 'female';
@@ -28913,18 +31399,19 @@ const CAT_EM = { childhood: '🧸', school: '🎒', teen: '🛹', love: '💘', 
 const UID_EM = {
   'sys/pregnancy': '🤰', 'sys/affair': '💔', 'sys/after_hs': '🎓', 'sys/tax': '🧾', 'sys/partner_proposes': '💍', 'sys/move_in': '🏡', 'sys/want_kids': '👶', 'sys/partner_cheats': '💔',
   'act/ons': '🌙', 'act/intimate': '🔥', 'act/casino': '🎰', 'act/affair': '🤫', 'crime/court': '⚖️', 'prison/escape': '🏃',
-  'love/profile': '📲', 'love/app': '📲', 'love/blind': '💐', 'love/gift': '🎁', 'love/date': '🍷', 'love/intimate': '🔥', 'love/adopt': '🍼', 'love/propose': '💍', 'love/wedding_size': '💒', 'love/prenup': '📜', 'love/honeymoon': '🏝️', 'love/divorce': '⚖️', 'love/nomatch': '🤷', 'school/major': '🎓', 'sys/job_offers': '💼', 'sys/headhunt': '📞', 'school/trade': '🧰', 'school/grad': '📜',
+  'love/profile': '📲', 'love/app': '📲', 'love/blind': '💐', 'love/gift': '🎁', 'love/date': '🍷', 'love/intimate': '🔥', 'love/adopt': '🍼', 'love/propose': '💍', 'love/wedding_size': '💒', 'love/prenup': '📜', 'love/honeymoon': '🏝️', 'love/divorce': '⚖️', 'love/nomatch': '🤷', 'school/major': '🎓', 'pet/adopt': '🐾', 'money/loan': '🏦', 'money/insure': '🛡️', 'sys/lover_ultimatum': '💔', 'sys/job_offers': '💼', 'sys/headhunt': '📞', 'school/trade': '🧰', 'school/grad': '📜',
 };
 const ARC_EM = { bestie: '🤜', rival: '😤', firstlove: '💌', mentor: '🎓', secret: '🗝️', pet: '🐾' };
 const evEmoji = (ev) => (!ev ? null : ev.big ? '🌟' : ev.arc ? ARC_EM[ev.arc] || '📖' : UID_EM[ev.uid] || CAT_EM[ev.category] || null);
-const GROUP_EM = { net: '📱', kid: '🧸', teen: '🎒', mind: '🧠', night: '🌃', love: '💘', crime: '🦹', prison: '⛓️' };
+const GROUP_EM = { fun: '🎬', shop: '🛍️', life: '🌈', pet: '🐾', money: '🏦', net: '📱', kid: '🧸', teen: '🎒', mind: '🧠', night: '🌃', love: '💘', crime: '🦹', prison: '⛓️' };
 const ACT_EM = {
+  language: '🗣️', instrument: '🎹', martial: '🥋', yoga: '🧘', hike: '🥾', diet: '🥗', spa: '💆', movie: '🍿', concert: '🎤', cook: '🍳', garden: '🌱', comics: '📚', boardgame: '🎲', luxury: '👜', thrift: '🧥', tattoo: '🖋️', hairdye: '💇', license: '🚗', travel: '🧳', comeout: '🏳️‍🌈', donate: '🤲', will: '📜', rename: '🪪', adopt_pet: '🐾', loan: '🏦', repay: '💳', insure: '🛡️',
   cry: '😭', toys: '🧸', mischief: '😈', cartoons: '📺', friends: '🧑‍🤝‍🧑', art: '🎨', sleepover: '🛏️', swim: '🏊', tutor: '📚', sportclub: '⚽', band: '🎸', volunteer: '🤲', chores: '🧹', games: '🎮',
-  net_photo: '📸', net_video: '🎥', net_live: '📡', net_sponsor: '🤑', social: '📱', gym: '🏋️', library: '📖', meditate: '🧘', doctor: '🩺', vacation: '✈️', surgery: '💉', bar: '🍺', club: '🪩', casino: '🎰', lottery: '🎟️', date: '💐', app: '📲', hookup: '🔥', affair: '🤫',
+  net_photo: '📸', net_video: '🎥', net_live: '📡', net_sponsor: '🤑', races: '🏇', blackjack: '🃏', social: '📱', gym: '🏋️', library: '📖', meditate: '🧘', doctor: '🩺', vacation: '✈️', surgery: '💉', bar: '🍺', club: '🪩', casino: '🎰', lottery: '🎟️', date: '💐', app: '📲', hookup: '🔥', affair: '🤫',
   prison_escape: '🏃', prison_parole: '📝', prison_work: '🔨', prison_riot: '🔥', crime_pickpocket: '👛', crime_shoplift: '🛍️', crime_burglary: '🏚️', crime_cartheft: '🚗', crime_fraud: '💳', crime_bank: '🏦',
 };
-const PA_EM = { talk: '💬', compliment: '🌹', flirt: '😘', gift: '🎁', date: '🍷', intimate: '🔥', baby: '👶', adopt: '🍼', askmoney: '💸', money: '💸', movein: '🏡', propose: '💍', wedding: '💒', vows: '💞', breakup: '💔', divorce: '⚖️', endaffair: '✋', argue: '😠', askout: '💐' };
-const DANGER_PA = ['breakup', 'divorce', 'argue', 'endaffair'];
+const PA_EM = { walk: '🦮', vet: '🩺', treat: '🦴', outing: '🎡', care: '🫶', familytrip: '🧳', inherit: '💰', read: '📖', play: '🧸', teach: '✏️', allowance: '🪙', tutor: '👩‍🏫', praise: '👏', punish: '⛔', drinks: '🍻', borrow: '🤲', lend: '💸', collect: '🧾', payback: '💵', setup: '💘', prank: '🤡', counsel: '🛋️', photo: '📸', insult: '🗯️', fight: '👊', cutoff: '✂️', seduce: '😏', trip: '🏝️', official: '💑', askopen: '🔓', closeopen: '🔐', confess: '🙏', talk: '💬', compliment: '🌹', flirt: '😘', gift: '🎁', date: '🍷', intimate: '🔥', baby: '👶', adopt: '🍼', askmoney: '💸', money: '💸', movein: '🏡', propose: '💍', wedding: '💒', vows: '💞', breakup: '💔', divorce: '⚖️', endaffair: '✋', argue: '😠', askout: '💐' };
+const DANGER_PA = ['breakup', 'divorce', 'argue', 'endaffair', 'insult', 'fight', 'cutoff', 'punish'];
 const JOB_EM = { fast_food: '🍔', delivery: '🛵', babysitter: '🍼', retail: '🛒', waiter: '🍽️', factory: '🏭', driver: '🚕', cleaner: '🧽', bartender: '🍸', model: '📸', office_clerk: '🗂️', sales: '🤝', police: '👮', nurse: '🩹', teacher: '🧑‍🏫', marketing: '📣', accountant: '🧮', engineer: '🛠️', developer: '💻', lawyer: '⚖️', doctor: '🩺', chef: '👨‍🍳', electrician: '⚡', mechanic: '🔧', hairdresser: '💇', it_tech: '🖥️', designer: '🎨', journalist: '📰', architect: '📐', analyst: '📈', pharmacist: '💊', psychologist: '🛋️', scientist: '🔬', professor: '🧑‍🏫' };
 const ASSET_EM = { savings: '🏦', index: '📊', gold: '🥇', tech: '💻', bank: '🏛️', energy: '⚡', crypto: '🪙' };
 const HOME_EM = { studio: '🛏️', apartment: '🏢', house: '🏠', villa: '🏰' };
@@ -29056,6 +31543,7 @@ function resultCard(r) {
 }
 
 function sheetBody() {
+  if (ui.sheet.startsWith('godp:')) return sheetGodPerson(ui.sheet.slice(5));
   return ({ work: sheetWork, people: sheetPeople, acts: sheetActs, self: sheetSelf, god: sheetGod, settings: sheetSettings, assets: sheetAssets, trophies: sheetTrophies, graveyard: sheetGraveyard }[ui.sheet] || (() => sheetPerson(ui.sheet.slice(7))))();
 }
 
@@ -29266,7 +31754,7 @@ function startQuizTimer() {
   clearInterval(quizTimer);
   quizTimer = setInterval(() => {
     const m = ui.mini;
-    if (!m || m.kind !== 'quiz') { clearInterval(quizTimer); return; }
+    if (!m || (m.kind !== 'quiz' && m.kind !== 'exam')) { clearInterval(quizTimer); return; }
     m.t--;
     const el = document.querySelector('.mg-timer');
     if (el) { el.textContent = `⏱ ${m.t}s`; el.classList.toggle('hot', m.t <= 3); }
@@ -29281,11 +31769,13 @@ function quizAnswer(v) {
   m.last = ok ? 'ok' : 'no';
   m.i++;
   m.t = 8;
-  if (m.i >= m.qs.length) { clearInterval(quizTimer); finishMini(resolveOlympiad(game.life, m.score, m.total)); }
+  if (m.i >= m.qs.length) { clearInterval(quizTimer); finishMini(m.kind === 'exam' ? resolveExam(game.life, m.score, m.total) : resolveOlympiad(game.life, m.score, m.total)); }
   persist();
   render();
 }
 function initMini(spec, title, emoji) {
+  const m2 = initMini2(spec, title, emoji);
+  if (m2) return m2;
   if (spec.kind === 'maze') return { ...makeMaze(spec.guards || 1, 10), title, emoji: emoji || '🏃' };
   if (spec.kind === 'cards') return { kind: 'cards', bets: spec.bets, bet: null, card: null, pot: 0, streak: 0, msg: null, title, emoji: emoji || '🎰' };
   if (spec.kind === 'quiz') { const m = { ...makeQuiz(spec.total, spec.level), title, emoji: emoji || '🏆' }; setTimeout(startQuizTimer, 0); return m; }
@@ -29301,6 +31791,7 @@ function mgClick(a, b) {
   const m = ui.mini;
   const L = game.life;
   if (!m) return;
+  if (a !== 'quit' && mgClick2(m, a, b)) return;
   if (a === 'quit') {
     if (m.kind === 'maze') { finishMini({ text: { vi: 'Bạn lặng lẽ quay về phòng giam trước khi ai đó phát hiện.', en: 'You quietly slip back to your cell before anyone notices.' }, changes: [], tone: '' }); return; }
     if (m.kind === 'cards' && m.bet) { finishMini(resolveCasino(L, m.bet, m.pot)); return; }
@@ -29324,13 +31815,15 @@ function mgClick(a, b) {
     if (!ok) { m.pot = 0; m.lost = true; finishMini(resolveCasino(L, m.bet, 0)); return; }
     m.pot *= 2; m.streak++; m.msg = { vi: `Đúng! Tiền cược nhân đôi.`, en: 'Correct! Pot doubled.' };
     if (m.streak >= 5) finishMini(resolveCasino(L, m.bet, m.pot));
-  } else if (m.kind === 'quiz' && a === 'ans') {
+  } else if ((m.kind === 'quiz' || m.kind === 'exam') && a === 'ans') {
     quizAnswer(Number(b));
   }
 }
 function miniCard(m) {
   const L = game.life;
   const unitMoney = (u) => money(u * country(L).gdp / 100);
+  const c2 = miniCard2(m);
+  if (c2) return c2;
   if (m.kind === 'maze') {
     const cells = [];
     for (let y = 0; y < MZ; y++) for (let x = 0; x < MZ; x++) {
@@ -29356,13 +31849,112 @@ function miniCard(m) {
       <div class="grid2"><button class="choice" data-a="mg:hi">⬆️ ${t('mgHi')}</button><button class="choice" data-a="mg:lo">⬇️ ${t('mgLo')}</button></div>
       ${m.streak ? `<button class="btn primary" data-a="mg:cash">💵 ${t('mgCash')} ${unitMoney(m.pot)}</button>` : ''}`;
   }
-  if (m.kind === 'quiz') {
+  if (m.kind === 'quiz' || m.kind === 'exam') {
     const q = m.qs[Math.min(m.i, m.qs.length - 1)];
-    return `<div class="hero">🏆</div><div class="eyebrow">${t('mgQuiz')}</div>
+    return `<div class="hero">${m.kind === 'exam' ? '📝' : '🏆'}</div><div class="eyebrow">${t(m.kind === 'exam' ? 'mgExam' : 'mgQuiz')}</div>
       <div class="mg-top"><span>${t('mgQ', { n: m.i + 1, m: m.total })} · ✅ ${m.score}</span><span class="mg-timer${m.t <= 3 ? ' hot' : ''}">⏱ ${m.t}s</span></div>
       ${m.last ? `<p class="q small" style="color:${m.last === 'ok' ? 'var(--good)' : 'var(--bad)'}">${m.last === 'ok' ? '✅' : '❌'}</p>` : ''}
       <p class="quizq mono">${q.q} = ?</p>
       <div class="grid2">${q.opts.map((o) => `<button class="choice mono" data-a="mg:ans:${o}">${o}</button>`).join('')}</div>`;
+  }
+  return '';
+}
+
+// ───────── Trò chơi nhỏ: đua ngựa, xì dách, phỏng vấn, luyện thi ─────────
+const HORSES = [['Gió', 'Wind', 2], ['Sấm', 'Thunder', 3], ['Mây Trắng', 'White Cloud', 4], ['Bánh Bao', 'Dumpling', 6], ['Ông Già', 'Old Timer', 10]];
+let raceTimer = null;
+function startRace(m) {
+  const w = HORSES.map((h) => 1 / h[2]);
+  const tot = w.reduce((a, b) => a + b, 0);
+  let r = Math.random() * tot, win = 0;
+  for (let i = 0; i < w.length; i++) { r -= w[i]; if (r <= 0) { win = i; break; } }
+  m.winner = win;
+  m.pos = HORSES.map(() => 0);
+  m.running = true;
+  clearInterval(raceTimer);
+  raceTimer = setInterval(() => {
+    const mm = ui.mini;
+    if (!mm || mm.kind !== 'race') { clearInterval(raceTimer); return; }
+    mm.pos = mm.pos.map((p, i) => Math.min(100, p + Math.random() * 9 + (i === mm.winner ? 3.2 : 1.5)));
+    const lead = mm.pos.indexOf(Math.max(...mm.pos));
+    if (mm.pos[lead] >= 100) {
+      if (lead !== mm.winner) { mm.pos[mm.winner] = 100; mm.pos[lead] = 98.5; }
+      clearInterval(raceTimer);
+      mm.running = false;
+      setTimeout(() => { const h = HORSES[mm.pick]; finishMini(resolveRace(game.life, mm.bet, mm.pick === mm.winner, h[2], settings.lang === 'vi' ? h[0] : h[1])); persist(); render(); }, 700);
+    }
+    document.querySelectorAll('.lane i').forEach((el, i) => { el.style.left = `calc(${mm.pos[i]}% - 26px)`; });
+  }, 120);
+}
+function bjValue(cards) {
+  let v = 0, aces = 0;
+  for (const c of cards) { if (c.v === 1) { aces++; v += 11; } else v += Math.min(10, c.v); }
+  while (v > 21 && aces) { v -= 10; aces--; }
+  return v;
+}
+function bjFinish(m) {
+  const pv = bjValue(m.player);
+  while (bjValue(m.dealer) < 17) m.dealer.push(drawCard());
+  const dv = bjValue(m.dealer);
+  m.reveal = true;
+  const out = pv > 21 ? 'lose' : dv > 21 || pv > dv ? 'win' : pv === dv ? 'push' : 'lose';
+  setTimeout(() => { finishMini(resolveBlackjack(game.life, m.bet, out)); persist(); render(); }, 900);
+}
+function initMini2(spec, title, emoji) {
+  if (spec.kind === 'race') return { kind: 'race', bet: null, pick: null, pos: HORSES.map(() => 0), title, emoji: emoji || '🏇' };
+  if (spec.kind === 'blackjack') return { kind: 'blackjack', bets: spec.bets, bet: null, player: [], dealer: [], title, emoji: emoji || '🃏' };
+  if (spec.kind === 'interview') {
+    const pool = [...INTERVIEW_QS].sort(() => Math.random() - 0.5).slice(0, 3);
+    return { kind: 'interview', job: spec.job, qs: pool.map((q) => ({ q: q.q, a: [...q.a].sort(() => Math.random() - 0.5) })), i: 0, score: 0, title, emoji: emoji || '🤝' };
+  }
+  if (spec.kind === 'exam') { const m = { ...makeQuiz(spec.total, spec.level), kind: 'exam', title, emoji: emoji || '📝' }; setTimeout(startQuizTimer, 0); return m; }
+  return null;
+}
+function mgClick2(m, a, b) {
+  const L = game.life;
+  if (m.kind === 'race') {
+    if (a === 'bet') { const uu = Number(b); if (L.money < uu * country(L).gdp / 100) { m.msg = { vi: 'Bạn không đủ tiền cho mức cược này.', en: "You can't cover that bet." }; return true; } m.bet = uu; m.msg = null; return true; }
+    if (a === 'horse' && m.bet && !m.running) { m.pick = Number(b); setTimeout(() => startRace(m), 50); m.running = true; return true; }
+    return true;
+  }
+  if (m.kind === 'blackjack') {
+    if (a === 'bet') { const uu = Number(b); if (L.money < uu * country(L).gdp / 100) { m.msg = { vi: 'Bạn không đủ tiền cho mức cược này.', en: "You can't cover that bet." }; return true; } m.bet = uu; m.player = [drawCard(), drawCard()]; m.dealer = [drawCard(), drawCard()]; m.msg = null; if (bjValue(m.player) === 21) { m.reveal = true; setTimeout(() => { finishMini(resolveBlackjack(L, m.bet, bjValue(m.dealer) === 21 ? 'push' : 'bj')); persist(); render(); }, 900); } return true; }
+    if (a === 'hit') { m.player.push(drawCard()); if (bjValue(m.player) > 21) { m.reveal = true; m.done = true; setTimeout(() => { finishMini(resolveBlackjack(L, m.bet, 'lose')); persist(); render(); }, 900); } return true; }
+    if (a === 'stand') { m.done = true; bjFinish(m); return true; }
+    return true;
+  }
+  if (m.kind === 'interview' && a === 'ans') {
+    const q = m.qs[m.i];
+    m.score += q.a[Number(b)].s;
+    m.i++;
+    if (m.i >= m.qs.length) {
+      const ratio = m.score / m.qs.length;
+      const r = applyJob(L, m.job, { interview: ratio });
+      finishMini(r);
+    }
+    return true;
+  }
+  return false;
+}
+function miniCard2(m) {
+  const L = game.life;
+  const unitMoney = (u2) => money(u2 * country(L).gdp / 100);
+  if (m.kind === 'race') {
+    if (!m.bet) return `<div class="hero">🏇</div><div class="eyebrow">${t('mgRace')}</div><p class="q small">${t('mgRaceHelp')}</p>${m.msg ? `<p class="err" style="text-align:center;margin:0">${esc(tx(m.msg))}</p>` : ''}<div class="choices">${[5, 25].map((u2, i) => `<button class="choice" data-a="mg:bet:${u2}">${i ? '💰💰' : '💰'} ${t('mgBet')} ${unitMoney(u2)}</button>`).join('')}<button class="btn small" data-a="mg:quit">${t('mgLeave')}</button></div>`;
+    const lanes = HORSES.map((h, i) => `<div class="lane${m.pick === i ? ' mine' : ''}"><span class="hn">${settings.lang === 'vi' ? h[0] : h[1]} · x${h[2]}</span><i style="left:calc(${m.pos[i]}% - 26px)">🏇</i></div>`).join('');
+    return `<div class="eyebrow">${t('mgRace')} · ${t('mgBet')} ${unitMoney(m.bet)}</div>${m.pick == null ? `<p class="q small">${t('mgPickHorse')}</p><div class="choices">${HORSES.map((h, i) => `<button class="choice" data-a="mg:horse:${i}">🐎 ${settings.lang === 'vi' ? h[0] : h[1]} · ${t('mgOdds')} x${h[2]}</button>`).join('')}</div>` : `<div class="track">${lanes}</div>`}`;
+  }
+  if (m.kind === 'blackjack') {
+    const card = (c, hide) => hide ? `<div class="pcard back"><b>?</b></div>` : `<div class="pcard sm ${c.s === '♥' || c.s === '♦' ? 'red' : ''}"><b>${RANKS[c.v - 1]}</b><span>${c.s}</span></div>`;
+    if (!m.bet) return `<div class="hero">🃏</div><div class="eyebrow">${t('mgBJ')}</div><p class="q small">${t('mgBJHelp')}</p>${m.msg ? `<p class="err" style="text-align:center;margin:0">${esc(tx(m.msg))}</p>` : ''}<div class="choices">${m.bets.map((u2, i) => `<button class="choice" data-a="mg:bet:${u2}">${i ? '💰💰' : '💰'} ${t('mgBet')} ${unitMoney(u2)}</button>`).join('')}<button class="btn small" data-a="mg:quit">${t('mgLeave')}</button></div>`;
+    return `<div class="eyebrow">${t('mgBJ')} · ${t('mgBet')} ${unitMoney(m.bet)}</div>
+      <div class="mg-top"><span>${t('mgDealer')}</span><span>${m.reveal ? bjValue(m.dealer) : '?'}</span></div><div class="cardrow">${m.dealer.map((c, i) => card(c, i === 1 && !m.reveal)).join('')}</div>
+      <div class="mg-top"><span>${t('mgYou')}</span><span>${bjValue(m.player)}</span></div><div class="cardrow">${m.player.map((c) => card(c)).join('')}</div>
+      ${!m.reveal && !m.done ? `<div class="grid2"><button class="choice" data-a="mg:hit">➕ ${t('mgHit')}</button><button class="choice" data-a="mg:stand">✋ ${t('mgStand')}</button></div>` : ''}`;
+  }
+  if (m.kind === 'interview') {
+    const q = m.qs[Math.min(m.i, m.qs.length - 1)];
+    return `<div class="hero">🤝</div><div class="eyebrow">${t('mgInterview')} · ${t('mgQ', { n: m.i + 1, m: m.qs.length })}</div><p class="q">${esc(tx(q.q))}</p><div class="choices">${q.a.map((x, i) => `<button class="choice" data-a="mg:ans:${i}">${esc(tx(x.t))}</button>`).join('')}</div>`;
   }
   return '';
 }
@@ -29425,13 +32017,13 @@ function sheetWork() {
     ${e.scholarship ? `<dt>🏅</dt><dd>${t('scholarship')}</dd>` : ''}${e.intern ? `<dt>🗂️</dt><dd>${t('internTag')}</dd>` : ''}</dl>
     ${degs ? `<div class="box"><b>${t('degrees')}</b><ul class="degs">${degs}</ul></div>` : ''}`;
   if (e.stage === 'primary' || e.stage === 'secondary') {
-    html += `<div class="section"><h3>${t('school')}</h3><div class="list">${li('w:study', '📚', t('study'))}${li('w:skip', '🛹', t('skip'))}${e.stage === 'secondary' ? li('w:olympiad', '🏆', t('olympiad')) : ''}${L.age >= 16 ? li('w:dropout', '🚪', t('dropout'), '', { danger: true }) : ''}</div></div>`;
+    html += `<div class="section"><h3>${t('school')}</h3><div class="list">${li('w:study', '📚', t('study'))}${li('w:skip', '🛹', t('skip'))}${e.stage === 'secondary' ? li('w:olympiad', '🏆', t('olympiad')) : ''}${e.stage === 'secondary' && L.age >= 15 ? li('w:exam', '📝', t('examPrep'), t('examPrepSub')) : ''}${L.age >= 16 ? li('w:dropout', '🚪', t('dropout'), '', { danger: true }) : ''}</div></div>`;
   } else if (e.stage === 'uni' || e.stage === 'grad') {
     html += `<div class="section"><h3>${t('student')}</h3><div class="list">${li('w:study', '📚', t('study'))}${li('w:skip', '🛌', t('skip'))}${li('w:club', '🎭', t('club'))}${li('w:parttime', '☕', t('parttime'))}${!e.scholarship ? li('w:scholar', '🏅', t('scholar')) : ''}${e.stage === 'uni' && !e.exchanged ? li('w:exchange', '✈️', t('exchange')) : ''}${e.years + 1 >= stageLength(L) - 1 ? li('w:intern', '🗂️', t('intern')) : ''}${e.stage === 'uni' ? li('w:switch', '🔀', t('switchMajor')) : ''}${li('w:dropout', '🚪', t('dropout'), '', { danger: true })}</div></div>`;
   } else if (e.stage === 'trade') {
     html += `<div class="section"><h3>${t('trade')}</h3><div class="list">${li('w:study', '🧰', t('study'))}${li('w:parttime', '☕', t('parttime'))}${li('w:dropout', '🚪', t('dropout'), '', { danger: true })}</div></div>`;
   } else if (L.age >= 17 && e.level !== 'none') {
-    html += `<div class="section"><h3>${t('studyOptions')}</h3><div class="list">${li('w:uni', '🎓', t('enrolUni'), t('uniSub'))}${li('w:trade', '🧰', t('enrolTrade'), t('tradeSub'))}${['bachelor', 'master', 'phd'].includes(e.level) ? li('w:grad', '📜', t('enrolGrad'), t('gradSub')) : ''}</div></div>`;
+    html += `<div class="section"><h3>${t('studyOptions')}</h3><div class="list">${li('w:exam', '📝', t('examPrep'), t('examPrepSub'))}${li('w:uni', '🎓', t('enrolUni'), t('uniSub'))}${li('w:trade', '🧰', t('enrolTrade'), t('tradeSub'))}${['bachelor', 'master', 'phd'].includes(e.level) ? li('w:grad', '📜', t('enrolGrad'), t('gradSub')) : ''}</div></div>`;
   }
   if (L.job) html += jobBlock(L);
   html += specialBlock(L);
@@ -29466,7 +32058,7 @@ function jobBlock(L) {
     <div class="profile"><span class="avatar">${JOB_EM[j.id] || '💼'}</span><div class="tx"><b>${esc(tx(rankName(j)))}</b><small class="muted">${esc(tx(c.title))} · ${co.em} ${esc(tx(co.name))}</small><small class="muted">💵 ${money(j.salary)}/${t('yearWord')} · ⏳ ${t('expYears', { n: effExp(L, j.id) })}</small></div></div>
     <dl class="kv"><dt>📈 ${t('perf')}</dt><dd>${lvl(j.perf)}</dd></dl>
     ${next}
-    <div class="list">${li('w:hard', '💪', t('workHard'))}${!nx.top ? li('w:promote', '⬆️', t('promoteAsk'), nx.eligible ? t('promoteReady') : '') : ''}${li('w:raise', '💰', t('raise'))}${li('w:quit', '🚪', t('quit'), '', { danger: true })}</div>
+    <div class="list">${li('w:hard', '💪', t('workHard'))}${!nx.top ? li('w:promote', '⬆️', t('promoteAsk'), nx.eligible ? t('promoteReady') : '') : ''}${li('w:raise', '💰', t('raise'))}${li('w:overtime', '⏰', t('overtime'))}${li('w:bossdrinks', '🍻', t('bossdrinks'))}${li('w:transfer', '🔁', t('transfer'))}${li('w:leave', '🏖️', t('leaveWork'))}${li('w:strike', '✊', t('strike'))}${li('w:whistle', '📣', t('whistle'))}${li('w:quit', '🚪', t('quit'), '', { danger: true })}</div>
     <details class="box"><summary><b>🪜 ${t('ladder')}</b></summary><ul class="goallist ladder">${steps}</ul></details></div>`;
 }
 function specialBlock(L) {
@@ -29482,8 +32074,9 @@ function specialBlock(L) {
   const rows = Object.entries(SPECIALS).filter(([, s]) => !s.adult || settings.adult25).map(([id, s]) => li(`sp:join:${id}`, s.em, esc(tx(s.join)), `${esc(tx(s.name))} · ${STAT_EM[s.stat]} ${s.req}+ · ${t('ageRange', { a: s.minAge, b: s.maxAge })}`, { disabled: !canJoin(L, id, settings) })).join('');
   return `<div class="section"><h3>🌟 ${t('special')}</h3><div class="list">${rows}</div></div>`;
 }
+const roleName = (L, p) => t(p.role === 'lover' && polyOk(L) ? 'roles.loverPoly' : 'roles.' + p.role);
 function personRow(L, p) {
-  return `<button class="item ${p.alive ? '' : 'dead'}" data-a="person:${p.id}"><span class="avatar sm">${face(p.gender, p.age, p.role, p.alive)}</span><div class="main"><b>${esc(personName(L, p))}</b><small>${t('roles.' + p.role)} · ${p.age}${p.alive ? '' : ' †'}</small></div><div class="side">${p.alive ? lvl(p.closeness) : ''}</div></button>`;
+  return `<button class="item ${p.alive ? '' : 'dead'}" data-a="person:${p.id}"><span class="avatar sm">${face(p.gender, p.age, p.role, p.alive, p.species)}</span><div class="main"><b>${esc(personName(L, p))}</b><small>${roleName(L, p)} · ${p.age}${p.alive ? '' : ' †'}</small></div><div class="side">${p.alive ? lvl(p.closeness) : ''}</div></button>`;
 }
 function sheetPeople() {
   const L = game.life;
@@ -29492,11 +32085,11 @@ function sheetPeople() {
     ['family', '👪', ['mother', 'father', 'sibling', 'half', 'pet']],
     ['children', '🧒', ['child']],
     ['friends', '🤝', ['bestie', 'friend']],
-    ['others', '👥', ['mentor', 'rival', 'contact', 'ex']],
+    ['others', '👥', ['mentor', 'rival', 'coworker', 'neighbor', 'contact', 'ex']],
   ];
   let html = head(`❤️ ${t('tabPeople')}`, 'var(--b-people)');
   for (const [g, em, roles] of groups) {
-    const list = L.people.filter((p) => roles.includes(p.role) && (p.alive || g !== 'others')).sort((a, b) => roles.indexOf(a.role) - roles.indexOf(b.role));
+    const list = L.people.filter((p) => !p.cut && roles.includes(p.role) && (p.alive || g !== 'others')).sort((a, b) => roles.indexOf(a.role) - roles.indexOf(b.role));
     if (!list.length && g !== 'love') continue;
     html += `<div class="section"><h3>${em} ${t(g)}</h3>${list.length ? `<div class="list">${list.slice(-12).map((p) => personRow(L, p)).join('')}</div>` : `<p class="note">${t('alone')}</p>`}</div>`;
   }
@@ -29510,13 +32103,32 @@ function sheetPerson(id) {
   const romantic = ['partner', 'spouse', 'lover'].includes(p.role);
   const status = p.role === 'spouse' ? `${t('married')}${L.marriage && L.marriage.spouseId === p.id && L.marriage.prenup ? ` · ${t('prenupYes')}` : ''}` : p.engaged ? t('engaged') : p.cohab ? t('cohab') : '';
   return `${head(esc(personName(L, p)), 'var(--b-people)', 'sheet:people')}
-    <div class="profile"><span class="avatar lg">${face(p.gender, p.age, p.role, p.alive)}</span><div class="tx"><b>${esc(personName(L, p))}</b><small class="muted">${t('roles.' + p.role)} · ${t(p.gender)} · ${p.age}${p.alive ? '' : ' †'}</small>${status ? `<span class="tag">${status}</span>` : ''}</div></div>
+    <div class="profile"><span class="avatar lg">${face(p.gender, p.age, p.role, p.alive, p.species)}</span><div class="tx"><b>${esc(personName(L, p))}</b><small class="muted">${roleName(L, p)} · ${t(p.gender)} · ${p.age}${p.alive ? '' : ' †'}</small>${status ? `<span class="tag">${status}</span>` : ''}</div></div>
     <dl class="kv"><dt>🤝 ${t('closeness')}</dt><dd>${lvl(p.closeness)}</dd><dt>✨ ${t('looks')}</dt><dd>${lvl(p.looks)}</dd><dt>🧠 ${t('smarts')}</dt><dd>${lvl(p.smarts)}</dd>
     ${p.age >= 18 ? `<dt>💼 ${t('job')}</dt><dd>${p.job ? esc(tx(p.job)) : t('unemployed')}</dd>${p.income ? `<dt>💵 ${t('salary')}</dt><dd class="mono">${money(p.income)}</dd>` : ''}${p.wealth ? `<dt>💰 ${t('netWorth')}</dt><dd class="mono">${money(p.wealth)}</dd>` : ''}` : ''}
     ${romantic ? `<dt>⏳ ${t('together')}</dt><dd>${p.years || 0} ${t('years')}</dd>` : ''}</dl>
-    ${acts ? `<div class="list">${acts}</div>` : ''}`;
+    ${intimateKv(L, p)}
+    ${acts ? `<div class="list">${acts}</div>` : ''}
+    ${settings.godEnabled && p.alive ? `<div class="list">${li(`godp:${p.id}`, '⚡', t('godPerson'), t('godPersonSub'))}</div>` : ''}`;
 }
-const ACT_GROUPS = ['prison', 'kid', 'teen', 'mind', 'net', 'night', 'love', 'crime'];
+function intimateKv(L, p) {
+  if (!settings.adult25 || p.age < 18 || !settings.godEnabled || !p.alive) return '';
+  return `<dl class="kv"><dt>💞 ${t('poly')}</dt><dd>${lvl(p.poly ?? 30)}</dd><dt>🔥 ${t('skill')}</dt><dd>${lvl(p.skill ?? 50)}</dd><dt>🌱 ${t('fert')}</dt><dd>${lvl(p.fert ?? 70)}</dd>${p.gender === 'male' ? `<dt>📏 ${t('size')}</dt><dd>${lvl(p.size ?? 50)}</dd>` : ''}<dt>🔒 ${t('fidelity')}</dt><dd>${lvl(p.fidelity ?? 60)}</dd><dt>😤 ${t('jealous')}</dt><dd>${lvl(p.crazy ?? 50)}</dd></dl>`;
+}
+function sheetGodPerson(id) {
+  const L = game.life;
+  const p = L.people.find((x) => x.id === id);
+  if (!p) return head('—');
+  const g = ui.godp || {};
+  const sl = (k, em) => `<div class="slider"><span>${em}</span><label for="gp-${k}">${t(k === 'crazy' ? 'jealous' : k === 'closeness' ? 'closeness' : k)}</label><input id="gp-${k}" type="range" min="0" max="100" value="${g[k] ?? 50}" data-gp="${k}"><output class="mono">${g[k] ?? 50}</output></div>`;
+  const adult = p.age >= 18 && settings.adult25;
+  return `${head(`⚡ ${esc(personName(L, p))}`, '#a16207', `person:${p.id}`)}
+    <p class="note">${t('godPersonNote')}</p>
+    <div class="box">${sl('closeness', '🤝')}${sl('looks', '✨')}${sl('smarts', '🧠')}</div>
+    ${adult ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${sl('poly', '💞')}${sl('skill', '🔥')}${sl('fert', '🌱')}${p.gender === 'male' ? sl('size', '📏') : ''}${sl('fidelity', '🔒')}${sl('crazy', '😤')}</div></div>` : ''}
+    <button class="btn primary" data-a="godp-apply:${p.id}">${t('godApply')}</button>`;
+}
+const ACT_GROUPS = ['prison', 'kid', 'teen', 'mind', 'fun', 'shop', 'life', 'pet', 'net', 'night', 'love', 'money', 'crime'];
 function sheetActs() {
   const L = game.life;
   const acts = availableActivities(L);
@@ -29588,12 +32200,14 @@ function sheetAssets() {
   const top = (back) => head(`🏠 ${t('tabAssets')}`, 'var(--b-assets)', back);
   const summary = `<dl class="kv"><dt>💵 ${t('cash')}</dt><dd class="mono">${money(L.money)}</dd><dt>💰 ${t('netWorth2')}</dt><dd class="mono">${money(netWorth(L))}</dd><dt>${PH_EM[e.phase] || '🌍'} ${t('economy')}</dt><dd style="color:${e.phase === 'growth' ? 'var(--good)' : e.phase === 'crisis' || e.phase === 'recession' ? 'var(--bad)' : 'var(--gold)'}">${esc(tx(ph.name))}</dd></dl>`;
   if (L.age < 18) return top() + summary + `<p class="note">${t('minorAssets')}</p>`;
+  const loansLeft = (L.loans || []).reduce((s, x) => s + x.left, 0);
+  const finBox = loansLeft > 0 || L.insurance?.health || L.insurance?.life ? `<dl class="kv">${loansLeft > 0 ? `<dt>🏦 ${t('loanLeft')}</dt><dd class="mono" style="color:var(--bad)">${money(loansLeft)}</dd>` : ''}${L.insurance?.health ? `<dt>🛡️</dt><dd>${t('insHealth')}</dd>` : ''}${L.insurance?.life ? `<dt>🛡️</dt><dd>${t('insLife')}</dd>` : ''}</dl>` : '';
   const sub = ['inv', 'homes', 'cars', 'biz'].includes(ui.sub) ? ui.sub : null;
   const item = (em, title, small, btns) => `<div class="item stack"><span class="em" style="width:40px;height:40px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:22px;flex:none">${em}</span><div class="main"><b>${title}</b><small>${small}</small></div><div class="row" style="flex-wrap:nowrap">${btns}</div></div>`;
   if (!sub) {
     const invTotal = Object.keys(ASSETS).reduce((s, k) => s + holdingValue(L, k), 0);
     const b = L.biz;
-    return top() + summary + `<div class="list">
+    return top() + summary + finBox + `<div class="list">
       ${li('sub:inv', '📈', t('invest'), invTotal > 0 ? t('holdTotal', { v: money(invTotal) }) : t('noneYet'))}
       ${li('sub:homes', '🏠', t('homes'), L.homes.length ? t('owned', { n: L.homes.length }) : t('noneYet'))}
       ${li('sub:cars', '🚗', t('cars'), L.cars.length ? t('owned', { n: L.cars.length }) : t('noneYet'))}
@@ -29640,6 +32254,7 @@ function sheetGod() {
   return `${head(`⚡ ${t('god')}`, '#a16207')}
     <p class="note">${t('godNote')}</p>
     ${L.dead ? '' : `<div class="box">${STAT_KEYS.map(slider).join('')}</div><div class="section"><h3>${t('hidden')}</h3><div class="box">${HIDDEN_KEYS.map(slider).join('')}</div></div>
+    ${settings.adult25 && L.age >= 18 ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${['skill', 'fert'].concat(L.gender === 'male' ? ['size'] : []).map((k) => `<div class="slider"><span>${{ skill: '🔥', fert: '🌱', size: '📏' }[k]}</span><label for="gb-${k}">${t(k)}</label><input id="gb-${k}" type="range" min="0" max="100" value="${g.body[k] ?? 50}" data-gb="${k}"><output class="mono">${g.body[k] ?? 50}</output></div>`).join('')}</div></div>` : ''}
     <div class="box"><div class="field"><label for="g-money">💵 ${t('money')} (${c.cur})</label><input id="g-money" type="number" step="1" value="${Math.round(g.money)}" data-gm="1"></div></div>
     <button class="btn primary" data-a="god-apply">${t('godApply')}</button>
     <div class="list">${li('god-cure', '💊', t('cure'))}${li('god-debt', '🧾', t('clearDebt'))}</div>
@@ -29698,7 +32313,7 @@ function record(r, title, keepSheet, emoji) {
   ui.result = { text: r.text, changes: r.changes, tone: r.tone || toneOf(r.changes), title, emoji };
   if (!keepSheet) ui.sheet = null;
 }
-const W_LABEL = { promote: 'promoteAsk', study: 'study', skip: 'skip', dropout: 'dropout', uni: 'enrolUni', trade: 'enrolTrade', grad: 'enrolGrad', switch: 'switchMajor', club: 'club', parttime: 'parttime', scholar: 'scholar', exchange: 'exchange', intern: 'intern', olympiad: 'olympiad', hard: 'workHard', raise: 'raise', quit: 'quit' };
+const W_LABEL = { exam: 'examPrep', overtime: 'overtime', bossdrinks: 'bossdrinks', transfer: 'transfer', leave: 'leaveWork', strike: 'strike', whistle: 'whistle', promote: 'promoteAsk', study: 'study', skip: 'skip', dropout: 'dropout', uni: 'enrolUni', trade: 'enrolTrade', grad: 'enrolGrad', switch: 'switchMajor', club: 'club', parttime: 'parttime', scholar: 'scholar', exchange: 'exchange', intern: 'intern', olympiad: 'olympiad', hard: 'workHard', raise: 'raise', quit: 'quit' };
 
 // ───────── Sự kiện người dùng ─────────
 $app.addEventListener('click', (e) => {
@@ -29710,7 +32325,7 @@ $app.addEventListener('click', (e) => {
   ui.scroll = led ? led.scrollTop : null;
   const [cmd, arg, arg2] = a.split(':');
   const L = game.life;
-  const UI_ONLY = ['sheet', 'close', 'person', 'lang', 'home', 'result-ok', 'sub'];
+  const UI_ONLY = ['sheet', 'close', 'person', 'lang', 'home', 'result-ok', 'sub', 'godp'];
   if (L && !UI_ONLY.includes(cmd)) { before = { fp: fingerprint(L), n: itemCount(L), stats: { ...L.stats }, life: L, age: L.age }; ui.freshFrom = before.n; }
   ui.ageTick = false;
   switch (cmd) {
@@ -29747,20 +32362,32 @@ $app.addEventListener('click', (e) => {
     }
     case 'sheet':
       ui.sheet = arg; ui.resetArmed = false; ui.packMsg = null; ui.sub = null;
-      if (arg === 'god' && L) ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate };
+      if (arg === 'god' && L) ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate, body: { fert: L.fert ?? 70, skill: L.skill ?? 50, size: L.size ?? 50 } };
       break;
     case 'close': ui.sheet = null; break;
     case 'person': ui.sheet = `person:${arg}`; break;
+    case 'godp': { const p = L.people.find((x) => x.id === arg); if (p) { ui.godp = { closeness: p.closeness, looks: p.looks, smarts: p.smarts, poly: p.poly ?? 30, skill: p.skill ?? 50, fert: p.fert ?? 70, size: p.size ?? 50, fidelity: p.fidelity ?? 60, crazy: p.crazy ?? 50 }; ui.sheet = `godp:${arg}`; } break; }
+    case 'godp-apply': godPerson(L, arg, ui.godp); ui.sheet = `person:${arg}`; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
     case 'pa': {
       const p = L.people.find((x) => x.id === arg);
       const lab = p && personActions(L, p).find(([k]) => k === arg2);
       record(doPersonAction(L, settings, arg, arg2), lab ? { vi: `${lab[1].vi} · ${personName(L, p)}`, en: `${lab[1].en} · ${personName(L, p)}` } : null, true, PA_EM[arg2]);
       break;
     }
-    case 'act': record(doActivity(L, settings, arg), ACTIVITIES.find((x) => x.id === arg)?.label, false, ACT_EM[arg]); break;
+    case 'act': {
+      const r0 = doActivity(L, settings, arg);
+      if (r0 && r0.input === 'rename') {
+        let nv = null;
+        try { nv = window.prompt(t('renamePrompt'), L.first); } catch { nv = null; }
+        if (nv && nv.trim()) { const old = L.first; L.first = nv.trim().slice(0, 24); addLog(L, { vi: `Bạn đổi tên từ ${old} thành ${L.first}.`, en: `You change your name from ${old} to ${L.first}.` }); ui.result = { text: { vi: `Từ giờ bạn tên là ${L.first}.`, en: `From now on, you're ${L.first}.` }, tone: 'good', emoji: '🪪' }; ui.sheet = null; }
+        break;
+      }
+      record(r0, ACTIVITIES.find((x) => x.id === arg)?.label, false, ACT_EM[arg]);
+      break;
+    }
     case 'job': record(applyJob(L, arg), { vi: `${STRINGS.vi.apply}: ${careerById[arg].title.vi}`, en: `${STRINGS.en.apply}: ${careerById[arg].title.en}` }, false, JOB_EM[arg]); break;
-    case 'w': record(workAction(L, arg), { vi: STRINGS.vi[W_LABEL[arg]], en: STRINGS.en[W_LABEL[arg]] }, false, { promote: '⬆️', study: '📚', skip: '🛹', dropout: '🚪', uni: '🎓', trade: '🧰', grad: '📜', switch: '🔀', club: '🎭', parttime: '☕', scholar: '🏅', exchange: '✈️', intern: '🗂️', olympiad: '🏆', hard: '💪', raise: '💰', quit: '🚪' }[arg]); break;
-    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
+    case 'w': record(workAction(L, arg), { vi: STRINGS.vi[W_LABEL[arg]], en: STRINGS.en[W_LABEL[arg]] }, false, { exam: '📝', overtime: '⏰', bossdrinks: '🍻', transfer: '🔁', leave: '🏖️', strike: '✊', whistle: '📣', promote: '⬆️', study: '📚', skip: '🛹', dropout: '🚪', uni: '🎓', trade: '🧰', grad: '📜', switch: '🔀', club: '🎭', parttime: '☕', scholar: '🏅', exchange: '✈️', intern: '🗂️', olympiad: '🏆', hard: '💪', raise: '💰', quit: '🚪' }[arg]); break;
+    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate, body: ui.god.body }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
     case 'god-cure': godApply(L, { cure: true }); ui.god.stats = { ...L.stats }; ui.result = { text: t('cure'), tone: 'good', emoji: '💊' }; break;
     case 'god-debt': godApply(L, { clearDebt: true }); ui.god.money = L.money * country(L).rate; ui.result = { text: t('clearDebt'), tone: 'good', emoji: '🧾' }; break;
     case 'god-move': { const v = document.getElementById('g-country').value; godApply(L, { country: v }); ui.god.money = L.money * country(L).rate; ui.result = { text: `${byCode[v].flag} ${tx(byCode[v].name)}`, tone: 'good', emoji: '🌍' }; break; }
@@ -29821,6 +32448,12 @@ $app.addEventListener('input', (e) => {
     else ui.draft[path[0]] = el.value;
   } else if (el.dataset.g) {
     ui.god.stats[el.dataset.g] = Number(el.value);
+    el.nextElementSibling.textContent = el.value;
+  } else if (el.dataset.gp) {
+    ui.godp[el.dataset.gp] = Number(el.value);
+    el.nextElementSibling.textContent = el.value;
+  } else if (el.dataset.gb) {
+    ui.god.body[el.dataset.gb] = Number(el.value);
     el.nextElementSibling.textContent = el.value;
   } else if (el.dataset.gm) {
     ui.god.money = Number(el.value) || 0;

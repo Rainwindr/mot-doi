@@ -1,0 +1,1957 @@
+{
+ "manifest": {
+  "id": "core.lovers",
+  "name": {
+   "vi": "Gói 25+: nhiều tình nhân",
+   "en": "25+: Many lovers"
+  },
+  "version": "1.0.0",
+  "rating": "25+",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "lv_three_dates",
+   "category": "love",
+   "age": [
+    20,
+    55
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Tuần này bạn có ba buổi hẹn với ba người khác nhau. Không ai biết về ai.",
+    "en": "This week you have three dates with three different people. None of them knows about the others."
+   },
+   "requires": {
+    "hasPartner": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chọn một người, nói thật với hai người kia",
+      "en": "Pick one, be honest with the others"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Hai người kia buồn nhưng cảm ơn sự thẳng thắn. Người còn lại cười rất tươi.",
+        "en": "The other two are sad but thank you for your honesty. The one you chose beams."
+       },
+       "setFlags": [
+        "in_relationship"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ cả ba",
+      "en": "Keep all three"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "risk": 3,
+        "startAffair": true
+       },
+       "text": {
+        "vi": "Bạn mua thêm một cuốn sổ lịch. Cuộc sống bận rộn theo kiểu rất thú vị.",
+        "en": "You buy a second planner. Life gets busy in a very fun way."
+       },
+       "setFlags": [
+        "juggling"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_birthday_clash",
+   "category": "love",
+   "age": [
+    20,
+    60
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Sinh nhật bạn. Hai người bạn đang hẹn hò đều muốn tổ chức riêng cho bạn vào đúng tối nay.",
+    "en": "Your birthday. Two people you're seeing both want to throw you a private dinner tonight."
+   },
+   "requires": {
+    "hasPartner": false,
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hai bữa tối, hai nhà hàng, một tối",
+      "en": "Two dinners, two restaurants, one night"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 10,
+        "health": -2
+       },
+       "text": {
+        "vi": "Bạn ăn hai bữa tối và giả vờ no vừa phải ở cả hai. Trót lọt.",
+        "en": "You eat two dinners and act moderately full at both. You get away with it."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -8,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Một người thấy bạn qua cửa kính nhà hàng bên cạnh, đang thổi nến.",
+        "en": "One of them spots you through the next restaurant's window, blowing out candles."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bịa ra tiệc gia đình",
+      "en": "Invent a family party"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": -2
+       },
+       "text": {
+        "vi": "An toàn. Cả hai đều hơi buồn, và bạn ăn mì một mình.",
+        "en": "Safe. Both are a little sad, and you eat noodles alone."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_wrong_text",
+   "category": "love",
+   "age": [
+    20,
+    65
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn gửi tin \"nhớ cái áo đêm qua của em/anh\" cho nhầm người.",
+    "en": "You text \"still thinking about what you wore last night\" to the wrong person."
+   },
+   "requires": {
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bảo đó là lời bài hát",
+      "en": "Claim it's song lyrics"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Họ tin. Họ còn hỏi tên bài hát.",
+        "en": "They believe you. They even ask for the song title."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": -5,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Họ không biết bài hát nào như vậy. Họ cũng không nhắn lại nữa.",
+        "en": "They know no such song. They also stop replying."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thú nhận",
+      "en": "Confess"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "happy": -3,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Họ rời đi, nhưng tôn trọng sự thật.",
+        "en": "They leave, but respect the truth."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_lovers_friends",
+   "category": "love",
+   "age": [
+    20,
+    60
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Hai người bạn đang hẹn hò hóa ra là bạn thân của nhau. Họ cùng hẹn bạn ra quán cà phê.",
+    "en": "Two people you're seeing turn out to be best friends. They invite you to coffee together."
+   },
+   "requires": {
+    "hasPartner": false,
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ngồi nghe hết",
+      "en": "Sit and take it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -10,
+        "fame": -2,
+        "endAllAffairs": true
+       },
+       "text": {
+        "vi": "Họ thay nhau nói, rất bình tĩnh. Sau đó cả nhóm bạn chung đều biết.",
+        "en": "They take turns speaking, very calmly. Afterwards your whole friend group knows."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_honest_offer",
+   "category": "love",
+   "age": [
+    22,
+    60
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Một người bạn đang qua lại nói thẳng: họ biết bạn hẹn thêm người khác, và không phiền, miễn bạn cũng thành thật.",
+    "en": "Someone you're seeing says it plainly: they know you date others and don't mind, as long as you're honest too."
+   },
+   "requires": {
+    "hasPartner": false,
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đồng ý sống công khai",
+      "en": "Agree to be open"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Không còn bí mật. Bạn thấy nhẹ cả người.",
+        "en": "No more secrets. You feel lighter."
+       },
+       "setFlags": [
+        "open_rel"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chỉ hẹn hò mình họ",
+      "en": "Date only them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "karma": 2,
+        "promoteLover": true,
+        "endAllAffairs": true
+       },
+       "text": {
+        "vi": "Hai người chính thức thành một cặp. Các mối khác khép lại nhẹ nhàng.",
+        "en": "You become an official couple. The others wind down gently."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_spreadsheet",
+   "category": "love",
+   "age": [
+    20,
+    60
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn phải lập bảng tính để nhớ ai thích món gì, ai dị ứng hoa gì, ai sinh nhật ngày nào.",
+    "en": "You need a spreadsheet to track who likes what food, who's allergic to which flowers, and whose birthday is when."
+   },
+   "requires": {
+    "lovers": 2
+   },
+   "effects": {
+    "smarts": 1,
+    "happy": -2
+   }
+  },
+  {
+   "id": "lv_saturday_clash",
+   "category": "love",
+   "age": [
+    22,
+    70
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Hai người tình cùng nhắn \"tối nay gặp nhé\", trong khi người yêu nghĩ bạn đi tập gym.",
+    "en": "Two lovers both text \"see you tonight\", while your partner thinks you're at the gym."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chọn một, hủy một",
+      "en": "Pick one, cancel the other"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Người bị hủy gửi lại một biểu tượng cảm xúc rất lạnh.",
+        "en": "The one you cancelled sends back a very cold emoji."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gặp cả hai, hai quận khác nhau",
+      "en": "See both, across town"
+     },
+     "outcomes": [
+      {
+       "chance": 0.75,
+       "effects": {
+        "happy": 10,
+        "health": -3
+       },
+       "text": {
+        "vi": "Bạn về nhà lúc nửa đêm, mệt nhưng cười.",
+        "en": "You get home at midnight, exhausted but grinning."
+       }
+      },
+      {
+       "chance": 0.25,
+       "effects": {
+        "happy": -4,
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Người yêu thấy bạn trên đường về, không phải từ hướng phòng gym.",
+        "en": "Your partner sees you on the way home, and not from the gym."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_wrong_name",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Trong lúc gần gũi, bạn gọi người tình bằng tên người kia.",
+    "en": "In the heat of the moment, you call your lover by someone else's name."
+   },
+   "requires": {
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bảo đó là tên thân mật mới",
+      "en": "Say it's a new pet name"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Họ nhíu mày, rồi bật cười. Thoát.",
+        "en": "They frown, then laugh. Saved."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -6,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Cửa đóng sầm. Bạn mặc áo ngược.",
+        "en": "The door slams. You put your shirt on inside out."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cười trừ, thú thật",
+      "en": "Laugh nervously, admit it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -3,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Họ đòi biết người kia là ai. Đêm dài.",
+        "en": "They demand to know who. Long night."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_twin_gifts",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn mua hai chiếc vòng tay y hệt nhau cho hai người tình. Họ đăng ảnh cùng một ngày.",
+    "en": "You bought two identical bracelets for two lovers. They post photos the same day."
+   },
+   "requires": {
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cầu trời",
+      "en": "Pray"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Không ai để ý.",
+        "en": "Nobody notices."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -6,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Một người bạn chung bình luận: \"Ủa, giống cái của…\"",
+        "en": "A mutual friend comments: \"Wait, isn't that the same as…\""
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_lovers_meet",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Hai người tình của bạn trùng lớp yoga và phát hiện ra nhau.",
+    "en": "Two of your lovers end up in the same yoga class and figure each other out."
+   },
+   "requires": {
+    "lovers": 2
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Xin lỗi cả hai",
+      "en": "Apologise to both"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -5,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Một người ở lại. Một người đi.",
+        "en": "One stays. One walks."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Rủ cả ba cùng ngồi nói chuyện",
+      "en": "Suggest all three sit down and talk"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": 6,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Họ đồng ý tiếp tục, biết rõ về nhau. Mọi chuyện kỳ lạ nhưng thành thật.",
+        "en": "They agree to carry on, fully aware of each other. Strange, but honest."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": -10,
+        "endAllAffairs": true
+       },
+       "text": {
+        "vi": "Cả hai bỏ bạn, rồi đi uống cà phê với nhau.",
+        "en": "They both dump you, then go for coffee together."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_threat",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Một người tình ghen tuông nói sẽ nhắn cho người yêu bạn nếu bạn không chọn họ.",
+    "en": "A jealous lover says they'll message your partner unless you choose them."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chọn họ",
+      "en": "Choose them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "karma": -4,
+        "promoteLover": true
+       },
+       "text": {
+        "vi": "Bạn chia tay người yêu. Người tình thành người yêu.",
+        "en": "You end it with your partner. Your lover becomes your partner."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thú nhận trước với người yêu",
+      "en": "Confess to your partner first"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2,
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Ít ra người yêu nghe từ chính bạn.",
+        "en": "At least your partner hears it from you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gọi đó là nói đùa",
+      "en": "Call their bluff"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "karma": -2
+       },
+       "text": {
+        "vi": "Họ lùi lại. Lần này.",
+        "en": "They back down. This time."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Họ không đùa.",
+        "en": "They weren't bluffing."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_detective",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Ba ngày liền có một chiếc xe lạ đậu trước nhà. Người yêu dạo này hỏi nhiều.",
+    "en": "A strange car has been parked outside for three days. Your partner has been asking lots of questions."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tạm dừng mọi cuộc hẹn",
+      "en": "Pause all your meetups"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -4,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Năm nay yên ổn. Những người tình bắt đầu sốt ruột.",
+        "en": "Safe this year. Your lovers grow impatient."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Vẫn gặp như bình thường",
+      "en": "Carry on as usual"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "risk": 3
+       },
+       "text": {
+        "vi": "Chiếc xe biến mất. Có lẽ chỉ là hàng xóm mới.",
+        "en": "The car disappears. Maybe just a new neighbour."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Thám tử có ảnh. Rất nhiều ảnh.",
+        "en": "The detective has photos. Lots of them."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_data_leak",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Ứng dụng hẹn hò bí mật bạn dùng bị hack. Danh sách thành viên lan khắp mạng.",
+    "en": "The secret dating app you use gets hacked. The member list spreads online."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Xóa tài khoản, cầu may",
+      "en": "Delete your account and hope"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Không ai tìm thấy tên bạn trong danh sách. Bạn thở ra.",
+        "en": "Nobody spots your name. You exhale."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "affairExposed": true,
+        "fame": -3
+       },
+       "text": {
+        "vi": "Một người bạn của người yêu tìm thấy bạn trong danh sách.",
+        "en": "A friend of your partner finds you on the list."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thú nhận trước",
+      "en": "Confess first"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Bạn kể trước khi họ tự tìm ra.",
+        "en": "You tell them before they find out themselves."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_resort",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Đang ở resort với người tình trong chuyến \"công tác\", bạn thấy đồng nghiệp cùng công ty ở hồ bơi.",
+    "en": "At a resort with your lover on a \"work trip\", you spot a colleague by the pool."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Trốn trong phòng cả ngày",
+      "en": "Hide in the room all day"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "An toàn. Người tình dỗi một chút, rồi thôi.",
+        "en": "Safe. Your lover sulks briefly, then gets over it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chào hỏi tự nhiên",
+      "en": "Say hi like it's normal"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Hóa ra đồng nghiệp cũng đi với người tình. Hai bên thề giữ bí mật cho nhau.",
+        "en": "Turns out your colleague is also with a lover. You swear mutual silence."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Đồng nghiệp là bạn thân của người yêu bạn.",
+        "en": "Your colleague is your partner's close friend."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_real_love",
+   "category": "love",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn nhận ra mình đã yêu một người tình thật lòng.",
+    "en": "You realise you've truly fallen for one of your lovers."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Rời người yêu để ở bên họ",
+      "en": "Leave your partner for them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "karma": -3,
+        "promoteLover": true
+       },
+       "text": {
+        "vi": "Một quyết định khó, nhưng sáng hôm sau bạn thức dậy bên người mình chọn.",
+        "en": "A hard choice, but you wake up next to the one you chose."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chấm dứt với họ",
+      "en": "End it with them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -10,
+        "karma": 3,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Bạn chặn số họ, rồi bỏ chặn, rồi chặn lại.",
+        "en": "You block their number, unblock it, then block it again."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ nguyên mọi thứ",
+      "en": "Keep things as they are"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Mỗi lần nói 'em/anh yêu' với người yêu, bạn nghĩ đến người kia.",
+        "en": "Every time you say 'I love you' to your partner, you think of someone else."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_pricey_gift",
+   "category": "money",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 2,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Một người tình giàu có tặng bạn chiếc đồng hồ đắt hơn lương cả năm. Người yêu hỏi ở đâu ra.",
+    "en": "A wealthy lover gives you a watch worth more than a year's salary. Your partner asks where it came from."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "\"Hàng nhái\"",
+      "en": "\"It's a knock-off\""
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Người yêu tin, còn khen nhái đẹp.",
+        "en": "Your partner believes you, and says it's a good fake."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Người yêu tra số seri trên mạng.",
+        "en": "Your partner looks up the serial number."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bán đi lấy tiền",
+      "en": "Sell it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 60,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Tiền thật. Người tình phát hiện và giận cả tháng.",
+        "en": "Real money. Your lover finds out and sulks for a month."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_poly_dinner",
+   "category": "love",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 5,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Người yêu chính muốn gặp người yêu phụ của bạn.",
+    "en": "Your main partner wants to meet your other partner."
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "hasPartner": true,
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tổ chức bữa tối ở nhà",
+      "en": "Host dinner at home"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 10,
+        "rel_partner": 5
+       },
+       "text": {
+        "vi": "Hai người hợp nhau bất ngờ. Họ trêu bạn cả tối.",
+        "en": "They get on unexpectedly well. They tease you all night."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -6,
+        "rel_partner": -5
+       },
+       "text": {
+        "vi": "Bữa tối im lặng đến mức nghe rõ tiếng nhai.",
+        "en": "Dinner is so quiet you can hear chewing."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hoãn lại",
+      "en": "Put it off"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": -3
+       },
+       "text": {
+        "vi": "Cả hai nghĩ bạn đang giấu điều gì.",
+        "en": "Both think you're hiding something."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_poly_calendar",
+   "category": "love",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Ba người lập một lịch online chung để chia ngày.",
+    "en": "The three of you set up a shared online calendar."
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "effects": {
+    "smarts": 1,
+    "happy": 3
+   }
+  },
+  {
+   "id": "lv_poly_jealous",
+   "category": "love",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Người yêu chính thừa nhận dạo này thấy bị bỏ rơi.",
+    "en": "Your main partner admits they've felt left out lately."
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "hasPartner": true,
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dành cả cuối tuần cho họ",
+      "en": "Give them the whole weekend"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 10,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Hai người đi biển, tắt điện thoại.",
+        "en": "You go to the beach, phones off."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nói chuyện cả ba người",
+      "en": "Talk it out, all three"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_partner": 5,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Mọi thứ cân bằng lại.",
+        "en": "Things rebalance."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_partner": -6
+       },
+       "text": {
+        "vi": "Người yêu chính muốn đóng mối quan hệ.",
+        "en": "Your main partner wants to close the relationship."
+       },
+       "clearFlags": [
+        "open_rel"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_couple_invite",
+   "category": "love",
+   "age": [
+    21,
+    65
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Một cặp đôi bạn quen ở quán bar mời bạn về nhà họ, nói rõ cả hai đều muốn.",
+    "en": "A couple you met at a bar invites you back to their place, making clear they both want you there."
+   },
+   "requires": {
+    "notFlags": [
+     "has_affair"
+    ],
+    "hasPartner": false
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi",
+      "en": "Go"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "risk": 3,
+        "pregnancyChance": 0.02
+       },
+       "text": {
+        "vi": "Một đêm ba người, cởi mở, cười nhiều và không ai vội. Sáng ra cả ba ăn sáng như bạn cũ.",
+        "en": "A night for three, open and unhurried, with a lot of laughter. In the morning you have breakfast like old friends."
+       },
+       "setFlags": [
+        "ons_happened"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Từ chối lịch sự",
+      "en": "Politely decline"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Họ mời bạn một ly. Không ai ngượng.",
+        "en": "They buy you a drink. Nobody's awkward."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_couple_invite_open",
+   "category": "love",
+   "age": [
+    21,
+    65
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Một cặp đôi quen mời bạn về nhà. Mối quan hệ của bạn đang mở và người yêu bảo \"cứ vui đi\".",
+    "en": "A couple invites you home. Your relationship is open and your partner says \"have fun\"."
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "hasPartner": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi",
+      "en": "Go"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "pregnancyChance": 0.02
+       },
+       "text": {
+        "vi": "Bạn về nhà lúc trời sáng, kể cho người yêu nghe phiên bản rút gọn.",
+        "en": "You get home at dawn and tell your partner the short version."
+       },
+       "setFlags": [
+        "ons_happened"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở nhà với người yêu",
+      "en": "Stay home with your partner"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 6
+       },
+       "text": {
+        "vi": "Hai người xem phim và thấy mình may mắn.",
+        "en": "You watch a film and feel lucky."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_poly_parents",
+   "category": "family",
+   "age": [
+    22,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Bố mẹ hỏi: \"Hai người hay đi cùng con là ai?\"",
+    "en": "Your parents ask: \"Who are the two people you're always with?\""
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nói thật",
+      "en": "Tell the truth"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "karma": 3,
+        "rel_mother": 3
+       },
+       "text": {
+        "vi": "Bố mẹ im lặng một tuần, rồi mời cả ba về ăn cơm.",
+        "en": "Your parents go quiet for a week, then invite all three of you to dinner."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_mother": -12,
+        "rel_father": -12
+       },
+       "text": {
+        "vi": "Bố mẹ không hiểu và không muốn hiểu.",
+        "en": "They don't understand and don't want to."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "\"Bạn cùng phòng\"",
+      "en": "\"Roommates\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": -1
+       },
+       "text": {
+        "vi": "Bố mẹ gật đầu. Không ai tin.",
+        "en": "They nod. Nobody believes it."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_poly_house",
+   "category": "money",
+   "age": [
+    25,
+    80
+   ],
+   "weight": 2,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Ba người muốn cùng đứng tên một căn nhà.",
+    "en": "The three of you want to buy a home together."
+   },
+   "requires": {
+    "flags": [
+     "open_rel"
+    ],
+    "hasPartner": true,
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đồng ý",
+      "en": "Agree"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -60,
+        "happy": 10
+       },
+       "text": {
+        "vi": "Một căn nhà, ba cái tên trên giấy tờ, một tủ lạnh rất đông.",
+        "en": "One home, three names on the deed, one very full fridge."
+       },
+       "setFlags": [
+        "poly_home"
+       ]
+      }
+     ],
+     "requires": {
+      "min": {
+       "money": 60
+      }
+     }
+    },
+    {
+     "label": {
+      "vi": "Chưa vội",
+      "en": "Not yet"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {},
+       "text": {
+        "vi": "Mọi thứ giữ nguyên.",
+        "en": "Things stay as they are."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_first_night",
+   "category": "love",
+   "age": [
+    20,
+    75
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Đêm đầu tiên với người tình mới. Cửa phòng khách sạn vừa khép, họ đã kéo bạn lại gần.",
+    "en": "Your first night with a new lover. The hotel door has barely closed when they pull you close."
+   },
+   "requires": {
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dùng biện pháp",
+      "en": "Use protection"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "pregnancyChance": 0.02
+       },
+       "text": {
+        "vi": "Áo khoác rơi xuống sàn, rồi đến những thứ khác. Đèn thành phố hắt qua rèm, và cả đêm chẳng ai nhìn đồng hồ.",
+        "en": "Coats hit the floor, then everything else. City light spills through the curtains, and nobody checks the time all night."
+       },
+       "setFlags": [
+        "recent_intimate"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Không dùng",
+      "en": "Skip it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 13,
+        "risk": 2,
+        "pregnancyChance": 0.16
+       },
+       "text": {
+        "vi": "Không ai muốn dừng lại để tìm thứ gì. Sáng ra mới bắt đầu thấy lo.",
+        "en": "Nobody wants to stop and look for anything. The worry only starts in the morning."
+       },
+       "setFlags": [
+        "recent_intimate"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_rain",
+   "category": "love",
+   "age": [
+    20,
+    80
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Trời đổ mưa lúc nửa đêm. Người yêu kéo bạn ra sân thượng.",
+    "en": "Rain at midnight. Your partner pulls you out onto the roof terrace."
+   },
+   "requires": {
+    "hasPartner": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi theo",
+      "en": "Follow them"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "happy": 12,
+        "rel_partner": 8
+       },
+       "text": {
+        "vi": "Mưa lạnh, người ấm, và một đêm cả hai sẽ nhớ mãi.",
+        "en": "Cold rain, warm skin, and a night you'll both remember."
+       },
+       "setFlags": [
+        "recent_intimate"
+       ]
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "health": -4,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Lãng mạn tuyệt đối. Sáng ra cả hai cùng sổ mũi.",
+        "en": "Utterly romantic. You both wake up with colds."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_truth_game",
+   "category": "love",
+   "age": [
+    20,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Hai người chơi trò \"kể một điều mình muốn thử\".",
+    "en": "You play a game: \"tell me something you want to try\"."
+   },
+   "requires": {
+    "hasPartner": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thành thật",
+      "en": "Be honest"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "rel_partner": 10,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Câu trả lời của người ấy làm bạn đỏ mặt. Câu trả lời của bạn làm họ cười. Đêm đó cả hai đều thử.",
+        "en": "Their answer makes you blush. Yours makes them laugh. That night you both try."
+       },
+       "setFlags": [
+        "recent_intimate"
+       ]
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "rel_partner": -3
+       },
+       "text": {
+        "vi": "Người ấy hơi bất ngờ. Cần thời gian suy nghĩ.",
+        "en": "They're a bit taken aback. They need time to think."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nói dối cho an toàn",
+      "en": "Play it safe and fib"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Không có gì xảy ra. An toàn và hơi nhạt.",
+        "en": "Nothing happens. Safe and a bit bland."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_mirror_room",
+   "category": "love",
+   "age": [
+    20,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn đặt nhầm loại \"phòng cặp đôi đặc biệt\". Trên trần có một tấm gương rất to.",
+    "en": "You accidentally book a \"special couples' suite\". There's a huge mirror on the ceiling."
+   },
+   "requires": {
+    "hasPartner": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cười rồi tận dụng luôn",
+      "en": "Laugh, then make the most of it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 10,
+        "rel_partner": 6
+       },
+       "text": {
+        "vi": "Cười năm phút đầu. Sau đó không ai cười nữa.",
+        "en": "Five minutes of laughing. Then nobody's laughing."
+       },
+       "setFlags": [
+        "recent_intimate"
+       ]
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đổi phòng",
+      "en": "Ask for another room"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Lễ tân nháy mắt. Bạn muốn độn thổ.",
+        "en": "The receptionist winks. You want the ground to swallow you."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_group_chat",
+   "category": "work",
+   "age": [
+    20,
+    70
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Bạn gửi một tin nhắn rất riêng tư vào nhóm chat đồng nghiệp.",
+    "en": "You send a very private message to the work group chat."
+   },
+   "requires": {
+    "employed": true
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thu hồi ngay",
+      "en": "Unsend immediately"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Kịp. Có hai người đã xem nhưng giả vờ chưa.",
+        "en": "Just in time. Two people saw it but pretend they didn't."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -6,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Không kịp. Cả phòng nhìn bạn khác đi.",
+        "en": "Too late. The whole office looks at you differently."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhắn tiếp \"Nhầm nhóm, xin lỗi mọi người\"",
+      "en": "Follow up: \"Wrong chat, sorry all\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -3,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Sếp thả một biểu tượng cười. Không ai biết nên hiểu sao.",
+        "en": "Your boss reacts with a laughing emoji. Nobody knows how to take it."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_morning_after",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "25+",
+   "text": {
+    "vi": "Người tình muốn ở lại ăn sáng. Bạn cần về nhà trước khi người yêu thức dậy.",
+    "en": "Your lover wants to stay for breakfast. You need to be home before your partner wakes."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ở lại",
+      "en": "Stay"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bánh mì, cà phê, và một nụ hôn dài trước cửa.",
+        "en": "Toast, coffee, and a long kiss at the door."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Người yêu gọi điện hỏi bạn đang ở đâu, và nghe thấy tiếng người kia.",
+        "en": "Your partner calls to ask where you are, and hears your lover's voice."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Về ngay",
+      "en": "Leave now"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn lẻn vào giường lúc 6 giờ. Người yêu trở mình hỏi \"đi đâu về đấy?\"",
+        "en": "You slip into bed at 6. Your partner rolls over: \"Where've you been?\""
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lv_anniversary",
+   "category": "love",
+   "age": [
+    22,
+    75
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "25+",
+   "text": {
+    "vi": "Người tình muốn kỷ niệm tròn một năm bên nhau, đúng ngày sinh nhật người yêu bạn.",
+    "en": "Your lover wants to celebrate one year together, on your partner's birthday."
+   },
+   "requires": {
+    "hasPartner": true,
+    "notFlags": [
+     "open_rel"
+    ],
+    "lovers": 1
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chọn người yêu",
+      "en": "Choose your partner"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 5,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Người tình nhắn \"ok\" lúc 11 giờ đêm.",
+        "en": "Your lover texts \"ok\" at 11pm."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chọn người tình",
+      "en": "Choose your lover"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 8,
+        "rel_partner": -10
+       },
+       "text": {
+        "vi": "Bạn viện cớ công việc. Người yêu thổi nến một mình.",
+        "en": "You claim work. Your partner blows out the candles alone."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "affairExposed": true
+       },
+       "text": {
+        "vi": "Người yêu bất ngờ đến công ty đón bạn. Bạn không ở đó.",
+        "en": "Your partner turns up at your office to surprise you. You're not there."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
