@@ -69,6 +69,8 @@ function checkRequires(where, req, errors) {
       if (!Array.isArray(v) || v.some((x) => !EDU_STAGES.includes(x))) errors.push(`${where}: eduStage phải là mảng trong ${EDU_STAGES.join(', ')}`);
     } else if (k === 'major') {
       if (!Array.isArray(v) || v.some((x) => !MAJOR_IDS.includes(x))) errors.push(`${where}: major phải là mảng trong ${MAJOR_IDS.join(', ')}`);
+    } else if (k === 'country') {
+      if (!Array.isArray(v) || v.some((x) => typeof x !== 'string' || x.length !== 2)) errors.push(`${where}: country phải là mảng mã nước 2 chữ`);
     } else if (k === 'flags' || k === 'notFlags') {
       if (!Array.isArray(v)) errors.push(`${where}: ${k} phải là mảng`);
     } else {

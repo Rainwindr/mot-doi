@@ -803,6 +803,46 @@
        }
       }
      ]
+    },
+    {
+     "label": {
+      "vi": "Kể chuyện đời mình cho đám cháu",
+      "en": "Tell the grandkids your life story"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "rel_child": 5,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Chuyện kéo dài hai tiếng. Đứa nhỏ nhất ngủ, đứa lớn nhất lén ghi âm lại.",
+        "en": "It runs two hours. The youngest falls asleep; the eldest secretly records it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tự thưởng một chuyến đi xa",
+      "en": "Treat yourself to a trip"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "health": -1,
+        "money": -10
+       },
+       "text": {
+        "vi": "80 tuổi, lần đầu đi máy bay một mình. Bạn kể với cả khoang.",
+        "en": "At 80, your first solo flight. You tell the whole cabin."
+       }
+      }
+     ]
     }
    ]
   },
@@ -875,10 +915,46 @@
     "vi": "Bạn trồng một khu vườn nhỏ. Năm nay quả cà chua đầu tiên đã chín.",
     "en": "You've planted a small garden. This year's first tomato is ripe."
    },
-   "effects": {
-    "happy": 6,
-    "health": 2
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Hái ăn ngay tại vườn",
+      "en": "Eat it right there"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "health": 2
+       },
+       "text": {
+        "vi": "Ngọt hơn mọi quả cà chua ngoài chợ.",
+        "en": "Sweeter than any tomato from the market."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mang tặng hàng xóm",
+      "en": "Give it to the neighbours"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Hàng xóm đáp lễ bằng một rổ ớt. Thế là thành trao đổi.",
+        "en": "They return a basket of chillies. A trade route is born."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "old_reunion",

@@ -15,6 +15,10 @@ import { ATT, KINKS, FAMILY, ROM, attOf } from '../src/engine/intimacy.js';
 import { haremActions, members as hMembers } from '../src/engine/harem.js';
 import { doHaremAction, doAll, doGodTrigger } from '../src/engine/actions.js';
 import { dramaHaremActions, SCENARIOS } from '../src/engine/drama.js';
+import { powerActions, pawnsOf, pw } from '../src/engine/power.js';
+import { doPowerAction, godApply } from '../src/engine/actions.js';
+import { heirOK, NOROM, likesG, orientOf } from '../src/engine/intimacy.js';
+const pwStat = { office: 0, leader: 0, shadow: 0, pawnsMax: 0, councils: 0, club: 0, heirKids: 0, pregs2: 0, npcPairs: 0, album: 0, hobbyMax: 0, visited: 0, talentKnown: 0, oldDads: 0 };
 const trig = {};
 let haremMax = 0, haremLives = 0;
 let ruleErr = 0; const ixStat = { pos: 0, tried: 0, babies: 0, groups: 0, funeral: 0, memoir: 0, rom: 0, care: 0 };
@@ -44,6 +48,15 @@ for (let i = 0; i < N; i++) {
         if (ROM.includes(p.role) && (fam.has(p.id) || p.age < 18)) { ruleErr++; if (ruleErr < 4) console.error('RULE romance', p.role, p.age, fam.has(p.id)); }
         if (FAMILY.includes(p.role) && ATT[attOf(p)].rom) { ruleErr++; if (ruleErr < 4) console.error('RULE att', p.role, p.att); }
         if (p.age < 18 && p.att && ATT[p.att].rom) { ruleErr++; if (ruleErr < 4) console.error('RULE att minor', p.age, p.att); }
+        if (NOROM.includes(p.role) && (ROM.includes(p.role) || (p.att && ATT[p.att].rom))) { ruleErr++; if (ruleErr < 6) console.error('RULE norom', p.role, p.att); }
+        if (p.att === 'heir' && p.alive && !heirOK(life, p) && life.age >= 18 && p.age >= 18 && !(life.fcfg && life.fcfg.carrierMax < 48)) { const carrier = p.gender === 'female' ? p.age : life.age; if (NOROM.includes(p.role) || p.gender === life.gender || carrier < 18) { ruleErr++; if (ruleErr < 6) console.error('RULE heir', p.role, p.gender, life.gender, p.age); } }
+        if (p.pawn && p.age < 18) { ruleErr++; if (ruleErr < 6) console.error('RULE pawn minor'); }
+      }
+      for (const pr of (life.soc?.pairs || [])) {
+        const a = life.people.find((x) => x.id === pr.a); const b = life.people.find((x) => x.id === pr.b);
+        if (!a || !b) continue;
+        if (a.age < 18 || b.age < 18 || FAMILY.includes(a.role) || FAMILY.includes(b.role) || fam.has(a.id) || fam.has(b.id)) { ruleErr++; if (ruleErr < 6) console.error('RULE npc pair', a.role, b.role, a.age, b.age); }
+        if (pr.st !== 'split' && (!likesG(orientOf(life, a), a.gender, b.gender) || !likesG(orientOf(life, b), b.gender, a.gender))) { /* xu hướng có thể đổi bằng God Mode sau khi ghép: không tính lỗi */ }
       }
     };
     while (!life.dead && guard++ < 200) {
@@ -83,6 +96,10 @@ for (let i = 0; i < N; i++) {
         }
         haremMax = Math.max(haremMax, hMembers(life).length);
         if (Math.random() < 0.1) doAll(life, st);
+        // Đợt 4: quyền lực
+        if (Math.random() < 0.35) { const pa = powerActions(life); if (pa.length) { let r = doPowerAction(life, st, R(pa)[0]); let g = 0; while (r && r.event && g++ < 8) { const m = chooseModal(game, r.event, Math.floor(Math.random() * r.event.choices.length)); r = m.next ? { event: m.next } : null; } } }
+        if (Math.random() < 0.01) godApply(life, { power: { heirAll: Math.random() < 0.5, aura: R(['', 3, 4]), maleMax: R([60, 90, 121]), noDecline: Math.random() < 0.3, carrierMax: R([48, 52, 55]), shadowOn: true, council: true } });
+        if (Math.random() < 0.02) { const q = R(life.people); if (q && q.age >= 18) godPerson(life, q.id, { pawn: true, pawnVia: R(['money', 'love', 'favor', 'secret']), pawnLoyal: 70, pawnDep: 60 }); }
         if (!process.env.NOTRIG && Math.random() < 0.05) { const sc = R(SCENARIOS); const r = doGodTrigger(life, st, sc.id); if (r.ok) trig[sc.id] = (trig[sc.id] || 0) + 1; }
         if (Math.random() < 0.01) godPerson(life, R(life.people).id, { joinHarem: true, htrait: 'scheme', hrank: 0, hfavor: 90, dyn: 'wild', allowPct: 50, term: 2 });
       }
@@ -125,6 +142,7 @@ for (let i = 0; i < N; i++) {
     }
     check();
     if (life.harem && life.harem.years) haremLives++;
+    { const P = life.pw || {}; if (P.held) pwStat.office++; if (P.held >= 6) pwStat.leader++; if (P.shadow) pwStat.shadow++; pwStat.pawnsMax = Math.max(pwStat.pawnsMax, pawnsOf(life).length); pwStat.councils += P.shadow?.councils || 0; if (P.club) pwStat.club++; pwStat.npcPairs += (life.soc?.pairs || []).length; pwStat.album += (life.album || []).length; pwStat.hobbyMax = Math.max(pwStat.hobbyMax, ...Object.values(life.hob || {}).map((h) => h.lv), 0); pwStat.visited = Math.max(pwStat.visited, (life.visited || []).length); if (life.talent?.known) pwStat.talentKnown++; const moms = new Set(life.people.filter((x) => x.role === 'child').map((k) => k.otherParentId)); pwStat.heirKids = Math.max(pwStat.heirKids, moms.size); }
     if (!life.dead) stuck++;
     if (life.ix) { ixStat.pos = Math.max(ixStat.pos, life.ix.pos.length); ixStat.tried = Math.max(ixStat.tried, life.ix.tried.length); ixStat.babies += life.ix.babies; ixStat.groups += life.ix.groups; ixStat.memoir += life.ix.memoir ? 1 : 0; ixStat.care += life.ix.care; }
     if (life.funeral && life.funeral.length) ixStat.funeral++;
@@ -159,6 +177,7 @@ for (let i = 0; i < N; i++) {
 const total = game.events.length;
 console.log('harem lives', haremLives, 'max members', haremMax, '· triggered', Object.keys(trig).length, '/', SCENARIOS.length, '· seen', (st.seen || []).length);
 console.log('scenario events seen', [...seen].filter((u) => u.startsWith('sc/')).map((u) => u.split('/')[1]).filter((v, i, a) => a.indexOf(v) === i).length);
+console.log('power', JSON.stringify(pwStat));
 console.log('RULE VIOLATIONS', ruleErr, '· ix', JSON.stringify(ixStat));
 console.log('ribbons', JSON.stringify(ribbonsSeen));
 console.log('ix events', [...seen].filter((u) => /ix|h_|cr_|nc_/.test(u)).sort().join(' '));

@@ -1,0 +1,2615 @@
+{
+ "manifest": {
+  "id": "core.culture",
+  "name": {
+   "vi": "Gói gốc: văn hóa các nước",
+   "en": "Core: cultures of the world"
+  },
+  "version": "1.0.0",
+  "rating": "all",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "cul_vn_1",
+   "category": "family",
+   "age": [
+    6,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Tết đến. Cả nhà về quê, bà nội giao bạn nhiệm vụ gói bánh chưng.",
+    "en": "Tet arrives. The family heads to the countryside and Grandma assigns you to wrap banh chung."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gói thật vuông vắn",
+      "en": "Wrap them perfectly square"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "rel_mother": 3
+       },
+       "text": {
+        "vi": "Bánh của bạn vuông như dùng thước. Bà khoe với cả xóm.",
+        "en": "Your cakes are ruler-square. Grandma shows the whole village."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gói theo phong cách riêng",
+      "en": "Freestyle it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Bánh của bạn hình... khó tả. Nhưng ăn vẫn ngon.",
+        "en": "Your cake is... hard to describe. Still delicious."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "VN"
+    ]
+   }
+  },
+  {
+   "id": "cul_vn_2",
+   "category": "money",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đám cưới người quen thứ ba trong tháng. Phong bì mừng cưới bao nhiêu là vừa?",
+    "en": "The third acquaintance wedding this month. How much goes in the envelope?"
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mừng hậu hĩnh",
+      "en": "Give generously"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -3,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Cô dâu chú rể nhớ mãi. Ví bạn cũng nhớ mãi.",
+        "en": "The couple will never forget. Neither will your wallet."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mừng vừa phải",
+      "en": "Give a sensible amount"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -1
+       },
+       "text": {
+        "vi": "Hợp lý, không ai nói gì.",
+        "en": "Reasonable. Nobody comments."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gửi quà, không đi",
+      "en": "Send a gift, skip it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -1,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bạn ở nhà ăn phở. Bình yên.",
+        "en": "You stay home with a bowl of pho. Peaceful."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "VN"
+    ]
+   }
+  },
+  {
+   "id": "cul_vn_3",
+   "category": "random",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Rằm tháng Bảy. Cả khu phố đốt vàng mã, khói mù mịt.",
+    "en": "The Ghost Festival. The whole street burns paper offerings in clouds of smoke."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Phụ bố mẹ chuẩn bị mâm cúng",
+      "en": "Help prepare the offering tray"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3,
+        "rel_father": 3
+       },
+       "text": {
+        "vi": "Bố kể chuyện ông bà ngày xưa. Bạn nghe say mê.",
+        "en": "Your dad tells stories about the ancestors. You listen, rapt."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giành bánh kẹo cúng cô hồn cùng lũ trẻ",
+      "en": "Join the kids grabbing offering sweets"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "risk": 1
+       },
+       "text": {
+        "vi": "Bạn nhanh tay nhất xóm. Vinh quang tuổi thơ.",
+        "en": "Fastest hands on the street. Childhood glory."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "VN"
+    ]
+   }
+  },
+  {
+   "id": "cul_vn_4",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Cà phê vỉa hè buổi sáng, ghế nhựa thấp, bàn bên cạnh đang bàn chuyện thế giới.",
+    "en": "Sidewalk coffee on tiny plastic stools; the next table is solving world politics."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Góp vài câu",
+      "en": "Chime in"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Hai tiếng sau bạn có ba người bạn mới và một ý kiến về giá vàng.",
+        "en": "Two hours later you have three new friends and an opinion on gold prices."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lặng lẽ thưởng thức cà phê",
+      "en": "Quietly enjoy your coffee"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Cà phê sữa đá ngon nhất thế giới. Không cần tranh luận.",
+        "en": "The best iced milk coffee in the world. No debate needed."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "VN"
+    ]
+   }
+  },
+  {
+   "id": "cul_jp_1",
+   "category": "random",
+   "age": [
+    6,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Mùa hoa anh đào. Công ty/trường tổ chức picnic dưới gốc cây.",
+    "en": "Cherry blossom season. Your office or school holds a picnic under the trees."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đến từ 5 giờ sáng giữ chỗ",
+      "en": "Arrive at 5am to save a spot"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Chỗ đẹp nhất công viên. Mọi người coi bạn là anh hùng.",
+        "en": "The best spot in the park. Everyone calls you a hero."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đến muộn, ngồi đâu cũng được",
+      "en": "Show up late, sit anywhere"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Hoa rơi lên cơm hộp của bạn. Vẫn đẹp.",
+        "en": "Petals fall into your bento. Still lovely."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "JP"
+    ]
+   }
+  },
+  {
+   "id": "cul_jp_2",
+   "category": "work",
+   "age": [
+    18,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Sếp rủ cả phòng đi karaoke sau giờ làm, lần thứ ba trong tuần.",
+    "en": "The boss invites the team to karaoke after work, third time this week."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hát bài tủ của sếp",
+      "en": "Sing the boss's favourite"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 4,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Sếp cảm động. Bạn được giao dự án tốt.",
+        "en": "The boss is moved. You get a good project."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lịch sự xin về sớm",
+      "en": "Politely leave early"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Bạn về kịp chuyến tàu cuối. Ngủ ngon.",
+        "en": "You catch the last train. Sound sleep."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "JP"
+    ]
+   }
+  },
+  {
+   "id": "cul_kr_1",
+   "category": "family",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lễ Chuseok. Cả nhà làm bánh songpyeon, ai gói đẹp sẽ \"có con đẹp\".",
+    "en": "Chuseok. The family makes songpyeon; whoever makes the prettiest \"will have beautiful children\"."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gói thật tỉ mỉ",
+      "en": "Shape them carefully"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Cả nhà khen bạn khéo tay. Bà mỉm cười đầy ẩn ý.",
+        "en": "The family praises your skill. Grandma smiles knowingly."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ăn vụng nhân đậu",
+      "en": "Sneak the filling"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "risk": 1
+       },
+       "text": {
+        "vi": "Bị bắt quả tang. Cả nhà cười.",
+        "en": "Caught red-handed. Everyone laughs."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "KR"
+    ]
+   }
+  },
+  {
+   "id": "cul_kr_2",
+   "category": "school",
+   "age": [
+    14,
+    18
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Kỳ thi đại học suneung đến gần. Cả nước bay chậm máy bay để giữ yên lặng.",
+    "en": "The suneung exam approaches. The whole country delays flights for silence."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ôn thi đến sáng",
+      "en": "Study until dawn"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 4,
+        "health": -3
+       },
+       "text": {
+        "vi": "Bạn thuộc lòng cả cuốn sách, và quên ăn sáng.",
+        "en": "You memorise the whole book and forget breakfast."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ngủ đủ giấc trước ngày thi",
+      "en": "Sleep well before the exam"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2,
+        "health": 2
+       },
+       "text": {
+        "vi": "Đầu óc minh mẫn. Bạn làm bài bình tĩnh.",
+        "en": "Clear-headed. You take the exam calmly."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "KR"
+    ]
+   }
+  },
+  {
+   "id": "cul_cn_1",
+   "category": "family",
+   "age": [
+    6,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Tết Nguyên Đán. Họ hàng hỏi bạn về điểm số, lương bổng và chuyện cưới xin.",
+    "en": "Spring Festival. Relatives ask about your grades, salary and marriage plans."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Trả lời khéo léo từng người",
+      "en": "Answer each one diplomatically"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 3,
+        "happy": -1
+       },
+       "text": {
+        "vi": "Bạn sống sót qua bữa cơm. Phong bao đỏ dày hơn năm ngoái.",
+        "en": "You survive dinner. The red envelopes are thicker than last year."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Rủ các anh chị em họ ra ngoài chơi",
+      "en": "Escape outside with your cousins"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Pháo hoa, tiếng cười, và không ai hỏi về lương.",
+        "en": "Fireworks, laughter, and nobody asking about salaries."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "CN"
+    ]
+   }
+  },
+  {
+   "id": "cul_in_1",
+   "category": "random",
+   "age": [
+    6,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lễ Holi. Cả khu phố ném bột màu vào nhau.",
+    "en": "Holi. The whole neighbourhood throws coloured powder."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lao vào cuộc vui",
+      "en": "Dive in"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bạn tím từ đầu đến chân trong ba ngày. Đáng giá.",
+        "en": "You stay purple head to toe for three days. Worth it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đứng ngoài chụp ảnh",
+      "en": "Watch and take photos"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Một đứa trẻ ném bột vào máy ảnh của bạn. Giờ bạn cũng có màu.",
+        "en": "A kid throws powder at your camera. Now you're colourful too."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "IN"
+    ]
+   }
+  },
+  {
+   "id": "cul_in_2",
+   "category": "family",
+   "age": [
+    18,
+    80
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đám cưới của người anh họ kéo dài năm ngày và có voi.",
+    "en": "Your cousin's wedding lasts five days and has an elephant."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhảy hết năm đêm",
+      "en": "Dance all five nights"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "health": -2
+       },
+       "text": {
+        "vi": "Bạn là ngôi sao sàn nhảy. Chân đau một tuần.",
+        "en": "You're the star of the dance floor. Your feet hurt for a week."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giúp tổ chức hậu trường",
+      "en": "Help behind the scenes"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "rel_sibling": 3
+       },
+       "text": {
+        "vi": "Mọi thứ chạy trơn tru nhờ bạn.",
+        "en": "Everything runs smoothly thanks to you."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "IN"
+    ]
+   }
+  },
+  {
+   "id": "cul_us_1",
+   "category": "family",
+   "age": [
+    6,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lễ Tạ ơn. Gà tây khô như giấy, chú bạn bắt đầu bàn chuyện chính trị.",
+    "en": "Thanksgiving. The turkey is bone dry and your uncle starts on politics."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chuyển chủ đề sang bóng bầu dục",
+      "en": "Steer it to football"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3,
+        "willpower": 1
+       },
+       "text": {
+        "vi": "Cả nhà thở phào. Bạn là người hòa giải.",
+        "en": "The family exhales. You're the peacemaker."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lặng lẽ ăn thêm bánh bí",
+      "en": "Quietly eat more pie"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Bánh bí ngon hơn mọi cuộc tranh luận.",
+        "en": "Pie beats any argument."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "US"
+    ]
+   }
+  },
+  {
+   "id": "cul_us_2",
+   "category": "school",
+   "age": [
+    16,
+    25
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Buổi dạ hội cuối cấp. Ai cũng thuê xe limousine.",
+    "en": "Senior prom. Everyone is renting limousines."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi cùng nhóm bạn thân",
+      "en": "Go with your friend group"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 7,
+        "rel_friend": 5
+       },
+       "text": {
+        "vi": "Cả nhóm nhảy như không ai nhìn. Ảnh kỷ niệm đẹp nhất tuổi học trò.",
+        "en": "You dance like nobody's watching. The best photo of your school years."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tổ chức tiệc riêng ở nhà",
+      "en": "Host your own party at home"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Rẻ hơn, vui hơn, và không phải đi giày chật.",
+        "en": "Cheaper, more fun, no tight shoes."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "US"
+    ]
+   }
+  },
+  {
+   "id": "cul_gb_1",
+   "category": "random",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Mưa lần thứ chín trong ngày. Hàng xóm nói \"trời đẹp đấy chứ\" không chút mỉa mai.",
+    "en": "Rain for the ninth time today. Your neighbour says \"lovely day\" without irony."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đồng ý và pha trà",
+      "en": "Agree and put the kettle on"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Một tách trà giải quyết được mọi chuyện.",
+        "en": "A cup of tea fixes everything."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Than phiền về thời tiết",
+      "en": "Complain about the weather"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bạn vừa tham gia môn thể thao quốc gia.",
+        "en": "You've just joined the national sport."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "GB"
+    ]
+   }
+  },
+  {
+   "id": "cul_fr_1",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một tiệm bánh nhỏ ở góc phố. Người bán nhìn bạn khi bạn nói tiếng Pháp bập bẹ.",
+    "en": "A little corner bakery. The baker watches you attempt French."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cố nói trọn câu bằng tiếng Pháp",
+      "en": "Try a full sentence in French"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Họ mỉm cười, tặng thêm một chiếc bánh sừng bò.",
+        "en": "They smile and throw in an extra croissant."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chỉ tay vào bánh",
+      "en": "Just point at the pastry"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Hiệu quả. Người bán gật đầu đầy thông cảm.",
+        "en": "Effective. The baker nods sympathetically."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "FR"
+    ]
+   }
+  },
+  {
+   "id": "cul_de_1",
+   "category": "random",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lễ hội bia mùa thu. Những chiếc lều dài, ly bia to bằng đầu bạn.",
+    "en": "Autumn beer festival. Long tents, mugs the size of your head."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đứng lên bàn hát cùng mọi người",
+      "en": "Stand on the bench and sing along"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "health": -2
+       },
+       "text": {
+        "vi": "Bạn học được ba bài hát dân ca. Không nhớ bài nào sáng hôm sau.",
+        "en": "You learn three folk songs. You remember none next morning."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chỉ ăn bánh xoắn và xúc xích",
+      "en": "Just eat pretzels and sausages"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Bánh xoắn to bằng vô lăng. Bạn hạnh phúc.",
+        "en": "A pretzel the size of a steering wheel. Bliss."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "DE"
+    ]
+   }
+  },
+  {
+   "id": "cul_it_1",
+   "category": "family",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bữa trưa Chủ nhật ở nhà bà kéo dài sáu tiếng.",
+    "en": "Sunday lunch at Nonna's lasts six hours."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ăn mọi món bà đưa",
+      "en": "Eat everything she serves"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 7,
+        "health": -1
+       },
+       "text": {
+        "vi": "Bà hài lòng. Bạn không thể đứng dậy.",
+        "en": "Nonna is satisfied. You can't stand up."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xin công thức món sốt",
+      "en": "Ask for the sauce recipe"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Bà kể công thức, nhưng không bao giờ nói hết.",
+        "en": "She tells you the recipe, but never all of it."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "IT"
+    ]
+   }
+  },
+  {
+   "id": "cul_es_1",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lễ hội ném cà chua La Tomatina. Cả thị trấn đỏ rực.",
+    "en": "La Tomatina. The whole town turns red."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tham gia hết mình",
+      "en": "Go all in"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bạn tìm thấy hạt cà chua trong tai ba ngày sau.",
+        "en": "You find tomato seeds in your ear three days later."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xem từ ban công",
+      "en": "Watch from a balcony"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Một quả cà chua bay lên tận ban công. Không ai an toàn.",
+        "en": "A tomato reaches the balcony. Nobody is safe."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "ES"
+    ]
+   }
+  },
+  {
+   "id": "cul_br_1",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lễ hội Carnival. Cả thành phố nhảy samba suốt bốn ngày.",
+    "en": "Carnival. The whole city dances samba for four days."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhảy theo đoàn diễu hành",
+      "en": "Dance with the parade"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 9,
+        "health": -2
+       },
+       "text": {
+        "vi": "Bạn không biết nhảy samba. Không ai quan tâm.",
+        "en": "You can't samba. Nobody cares."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ngồi xem và ăn bánh pastel",
+      "en": "Watch and eat pastel"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Một góc nhìn hoàn hảo và món ăn ngon.",
+        "en": "A perfect view and great snacks."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "BR"
+    ]
+   }
+  },
+  {
+   "id": "cul_mx_1",
+   "category": "family",
+   "age": [
+    6,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Ngày của người đã khuất. Gia đình dựng bàn thờ đầy hoa cúc vạn thọ.",
+    "en": "Day of the Dead. The family builds an altar full of marigolds."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đặt ảnh và món ăn yêu thích của ông",
+      "en": "Place Grandpa's photo and favourite food"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Cả nhà kể chuyện về ông, vừa cười vừa khóc.",
+        "en": "The family shares stories about him, laughing and crying."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Vẽ mặt đầu lâu cùng lũ trẻ",
+      "en": "Paint skull faces with the kids"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Bạn là người vẽ đẹp nhất. Bọn trẻ xếp hàng.",
+        "en": "You're the best face painter. The kids line up."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "MX"
+    ]
+   }
+  },
+  {
+   "id": "cul_ng_1",
+   "category": "family",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đám cưới truyền thống. Khách tung tiền lên cô dâu chú rể khi họ nhảy.",
+    "en": "A traditional wedding. Guests shower the couple with cash as they dance."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tung tiền thật hào phóng",
+      "en": "Spray generously"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -2,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Bạn nhảy cùng họ giữa mưa tiền. Ai cũng hò reo.",
+        "en": "You dance with them in a rain of notes. Everyone cheers."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Phụ nhặt tiền cho cô dâu",
+      "en": "Help collect the money for the bride"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Gia đình cô dâu quý bạn ngay.",
+        "en": "The bride's family adores you instantly."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "NG"
+    ]
+   }
+  },
+  {
+   "id": "cul_eg_1",
+   "category": "random",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đêm Ramadan, cả phố treo đèn lồng fanous, bàn ăn kéo dài đến tận ngõ.",
+    "en": "A Ramadan night: fanous lanterns along the street, tables stretching down the alley."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận lời mời ngồi ăn cùng hàng xóm",
+      "en": "Join the neighbours at the table"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Bạn được mời ăn nhiều hơn mức có thể ăn.",
+        "en": "You're offered more food than humanly possible."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mang đồ ngọt đến góp",
+      "en": "Bring sweets to share"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Mọi người nhớ tên bạn từ hôm đó.",
+        "en": "Everyone knows your name from that night on."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "EG"
+    ]
+   }
+  },
+  {
+   "id": "cul_tr_1",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một người bán thảm mời bạn uống trà \"chỉ để nói chuyện\".",
+    "en": "A carpet seller invites you for tea \"just to chat\"."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Uống trà, nghe kể chuyện",
+      "en": "Have tea, hear stories"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Bạn rời đi với kiến thức về thảm và không mua gì.",
+        "en": "You leave knowing a lot about carpets and buying nothing."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 4,
+        "money": -5
+       },
+       "text": {
+        "vi": "Bạn rời đi với một tấm thảm. Đẹp thật.",
+        "en": "You leave with a carpet. It is beautiful."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cảm ơn và đi tiếp",
+      "en": "Thank them and move on"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {},
+       "text": {
+        "vi": "Họ mỉm cười: \"Lần sau nhé.\"",
+        "en": "They smile: \"Next time.\""
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "TR"
+    ]
+   }
+  },
+  {
+   "id": "cul_th_1",
+   "category": "random",
+   "age": [
+    6,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Tết té nước Songkran. Cả thành phố là một trận chiến nước khổng lồ.",
+    "en": "Songkran. The whole city is one giant water fight."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mua súng nước to nhất",
+      "en": "Buy the biggest water gun"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bạn ướt như chuột lột và cười không ngớt.",
+        "en": "Soaked through and laughing nonstop."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tạt nước nhẹ nhàng chúc phúc",
+      "en": "Pour water gently as a blessing"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Các cụ già chúc phúc lại cho bạn.",
+        "en": "The elderly bless you in return."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "TH"
+    ]
+   }
+  },
+  {
+   "id": "cul_ph_1",
+   "category": "family",
+   "age": [
+    6,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Giáng sinh ở Philippines bắt đầu từ tháng Chín. Giờ là tháng Mười Hai và cả nhà hát karaoke mỗi tối.",
+    "en": "Christmas in the Philippines starts in September. Now it's December and the family does karaoke nightly."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Song ca với dì",
+      "en": "Duet with your aunt"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Điểm karaoke 98. Dì khoe khắp xóm.",
+        "en": "Karaoke score 98. Your aunt brags to the neighbours."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Phụ làm bánh bibingka",
+      "en": "Help make bibingka"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "rel_mother": 3
+       },
+       "text": {
+        "vi": "Mùi bánh nướng than lan khắp nhà.",
+        "en": "The smell of charcoal-baked cake fills the house."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "PH"
+    ]
+   }
+  },
+  {
+   "id": "cul_id_1",
+   "category": "family",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lebaran. Mọi người về quê, xin lỗi nhau về những lỗi lầm trong năm.",
+    "en": "Lebaran. Everyone goes home and asks forgiveness for the year's mistakes."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Xin lỗi người bạn đã làm buồn",
+      "en": "Apologise to someone you hurt"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 5,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Họ ôm bạn. Một năm mới nhẹ nhõm.",
+        "en": "They hug you. A lighter new year."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ăn ketupat với cả họ",
+      "en": "Eat ketupat with the whole clan"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Bạn ăn đến mức phải nằm nghỉ.",
+        "en": "You eat until you need a lie-down."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "ID"
+    ]
+   }
+  },
+  {
+   "id": "cul_ru_1",
+   "category": "random",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Mùa đông âm 25 độ. Hàng xóm rủ bạn nhảy xuống hố băng.",
+    "en": "Minus 25 in winter. Your neighbour invites you to plunge into an ice hole."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhảy luôn",
+      "en": "Jump in"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "willpower": 4,
+        "health": 1
+       },
+       "text": {
+        "vi": "Ba giây đầu là địa ngục. Sau đó bạn cảm thấy bất tử.",
+        "en": "The first three seconds are hell. Then you feel immortal."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đứng cầm khăn cho họ",
+      "en": "Hold their towel"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Họ gọi bạn là \"người miền Nam\". Bạn chấp nhận.",
+        "en": "They call you a \"southerner\". You accept."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "RU"
+    ]
+   }
+  },
+  {
+   "id": "cul_ke_1",
+   "category": "random",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Mùa di cư lớn. Hàng triệu con linh dương đầu bò vượt sông.",
+    "en": "The Great Migration. Millions of wildebeest cross the river."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi xem cùng đoàn",
+      "en": "Go and watch with a group"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "money": -3
+       },
+       "text": {
+        "vi": "Cảnh tượng hùng vĩ nhất bạn từng thấy.",
+        "en": "The most majestic sight of your life."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nghe ông kể chuyện về những mùa di cư xưa",
+      "en": "Listen to Grandpa's migration stories"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Ông kể như thể chính ông đã chạy cùng đàn thú.",
+        "en": "He tells it as if he ran with the herds himself."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "KE"
+    ]
+   }
+  },
+  {
+   "id": "cul_za_1",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một buổi braai cuối tuần. Ai cũng có ý kiến về cách nướng thịt.",
+    "en": "A weekend braai. Everyone has opinions on grilling."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Giành quyền đứng bếp",
+      "en": "Take over the grill"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 6,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Thịt hoàn hảo. Bạn được mời mọi buổi braai từ nay.",
+        "en": "Perfect meat. You're invited to every braai from now on."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Hơi khét. Ông chủ nhà lặng lẽ lấy lại kẹp gắp.",
+        "en": "A bit burnt. The host quietly takes back the tongs."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lo phần salad",
+      "en": "Handle the salads"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Không ai khen salad, nhưng ai cũng ăn hết.",
+        "en": "Nobody praises the salad, but it all gets eaten."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "ZA"
+    ]
+   }
+  },
+  {
+   "id": "cul_au_1",
+   "category": "random",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một con nhện to bằng bàn tay xuất hiện trong phòng tắm.",
+    "en": "A hand-sized spider appears in the bathroom."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lấy cốc bắt thả ra ngoài",
+      "en": "Catch it with a cup and release it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Nó nhìn bạn như đang ghi nhớ. Bạn hy vọng là để cảm ơn.",
+        "en": "It looks at you as if memorising your face. Hopefully to say thanks."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chuyển sang tắm ở nhà hàng xóm",
+      "en": "Shower at the neighbour's for a week"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -1
+       },
+       "text": {
+        "vi": "Hàng xóm hiểu. Họ cũng từng như vậy.",
+        "en": "Your neighbour understands. They've been there."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "AU"
+    ]
+   }
+  },
+  {
+   "id": "cul_ca_1",
+   "category": "random",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một con nai sừng tấm đứng giữa đường lái xe của bạn.",
+    "en": "A moose stands in the middle of your driveway."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chờ nó đi",
+      "en": "Wait for it to leave"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "45 phút. Nó ăn hết bụi cây của bạn rồi đi.",
+        "en": "45 minutes. It eats your hedge, then leaves."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xin lỗi nó thật lịch sự",
+      "en": "Apologise to it very politely"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Bạn đã hoàn toàn hòa nhập văn hóa Canada.",
+        "en": "You have fully integrated into Canadian culture."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "CA"
+    ]
+   }
+  },
+  {
+   "id": "cul_ar_1",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một buổi asado kéo dài đến 2 giờ sáng, rồi ai đó mở nhạc tango.",
+    "en": "An asado lasts until 2am, then someone puts on tango."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhảy tango với người lạ",
+      "en": "Tango with a stranger"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Bạn giẫm chân họ đúng nhịp. Họ khen bạn có \"linh hồn\".",
+        "en": "You step on their feet in rhythm. They say you have \"soul\"."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Uống mate và nghe kể chuyện",
+      "en": "Drink mate and listen to stories"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Bình mate được chuyền tay cả đêm. Bạn hiểu thêm về tình bạn.",
+        "en": "The mate gourd passes all night. You learn something about friendship."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "AR"
+    ]
+   }
+  },
+  {
+   "id": "cul_co_1",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lễ hội hoa Medellín. Những người mang khung hoa nặng trên lưng diễu hành.",
+    "en": "Medellin's flower festival. Silleteros parade with heavy flower frames on their backs."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thử đeo một khung hoa",
+      "en": "Try carrying a flower frame"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "health": -1
+       },
+       "text": {
+        "vi": "Nặng như cõng một người. Bạn nể họ vô cùng.",
+        "en": "Heavy as carrying a person. You're in awe of them."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mua một bó hoa mang về",
+      "en": "Buy a bouquet to take home"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Căn phòng thơm suốt một tuần.",
+        "en": "The room smells wonderful for a week."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "CO"
+    ]
+   }
+  },
+  {
+   "id": "cul_pl_1",
+   "category": "family",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đêm Giáng sinh, gia đình để trống một ghế cho \"vị khách bất ngờ\".",
+    "en": "On Christmas Eve, the family leaves an empty seat for an \"unexpected guest\"."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mời một người hàng xóm cô đơn",
+      "en": "Invite a lonely neighbour"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 6,
+        "happy": 5
+       },
+       "text": {
+        "vi": "Bà cụ hàng xóm khóc vì cảm động.",
+        "en": "The old lady next door cries, deeply touched."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ truyền thống, ghế để trống",
+      "en": "Keep tradition, leave it empty"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Một cảm giác ấm áp khó tả.",
+        "en": "A warm feeling hard to describe."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "PL"
+    ]
+   }
+  },
+  {
+   "id": "cul_sa_1",
+   "category": "random",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một buổi tối ở sa mạc: lều, lửa trại, cà phê thảo mộc và chà là.",
+    "en": "An evening in the desert: tents, a campfire, cardamom coffee and dates."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nằm ngắm sao",
+      "en": "Lie back and stargaze"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 7
+       },
+       "text": {
+        "vi": "Bầu trời nhiều sao đến mức trông như giả.",
+        "en": "So many stars it looks fake."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nghe kể chuyện cổ",
+      "en": "Listen to old tales"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Một câu chuyện kéo dài đến khi lửa tàn.",
+        "en": "A story that lasts until the fire dies."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "SA"
+    ]
+   }
+  },
+  {
+   "id": "cul_ir_1",
+   "category": "family",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đêm Yalda, đêm dài nhất năm. Cả nhà đọc thơ Hafez và ăn lựu.",
+    "en": "Yalda night, the longest of the year. The family reads Hafez and eats pomegranates."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đọc một bài thơ đoán vận",
+      "en": "Read a poem for your fortune"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Bài thơ nói về một chuyến đi xa. Bạn mỉm cười.",
+        "en": "The poem speaks of a long journey. You smile."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bóc lựu cho cả nhà",
+      "en": "Peel pomegranates for everyone"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Tay bạn đỏ au. Mọi người cảm ơn.",
+        "en": "Your hands are stained red. Everyone thanks you."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "IR"
+    ]
+   }
+  },
+  {
+   "id": "cul_pk_1",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Mùa thả diều Basant. Bầu trời đầy diều đủ màu.",
+    "en": "Basant kite season. The sky full of colourful kites."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thi cắt dây diều",
+      "en": "Join a kite-cutting duel"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 7
+       },
+       "text": {
+        "vi": "Bạn cắt được ba diều. Cả mái nhà reo hò.",
+        "en": "You cut three kites. The whole rooftop cheers."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Diều bạn bị cắt ngay phút đầu. Bạn mua chiếc thứ hai.",
+        "en": "Yours gets cut in the first minute. You buy a second."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thả diều chơi với lũ trẻ",
+      "en": "Fly kites with the kids"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Một buổi chiều hoàn hảo.",
+        "en": "A perfect afternoon."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "PK"
+    ]
+   }
+  },
+  {
+   "id": "cul_bd_1",
+   "category": "family",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Pohela Boishakh, năm mới Bengal. Cả thành phố mặc đỏ trắng.",
+    "en": "Pohela Boishakh, Bengali New Year. The whole city in red and white."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tham gia đoàn diễu hành",
+      "en": "Join the procession"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Bạn cầm một chiếc mặt nạ khổng lồ và nhảy múa.",
+        "en": "You carry a giant mask and dance."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ăn panta ilish với gia đình",
+      "en": "Eat panta ilish with the family"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Cơm ngâm nước và cá ilish. Vị của năm mới.",
+        "en": "Soaked rice and hilsa fish. The taste of new year."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "BD"
+    ]
+   }
+  },
+  {
+   "id": "cul_et_1",
+   "category": "family",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lễ pha cà phê truyền thống ba vòng. Mỗi vòng mang một ý nghĩa.",
+    "en": "The traditional three-round coffee ceremony. Each round has meaning."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ở lại đủ ba vòng",
+      "en": "Stay for all three rounds"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Vòng thứ ba là \"lời chúc phúc\". Bà mỉm cười với bạn.",
+        "en": "The third round is \"the blessing\". Grandma smiles at you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Học cách rang cà phê",
+      "en": "Learn to roast the beans"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Khói thơm, tay bạn đen nhẻm. Vui.",
+        "en": "Fragrant smoke, blackened hands. Fun."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "ET"
+    ]
+   }
+  },
+  {
+   "id": "cul_tz_1",
+   "category": "random",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Leo núi Kilimanjaro cùng một nhóm bạn quốc tế.",
+    "en": "Climbing Kilimanjaro with an international group."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lên đến đỉnh",
+      "en": "Push for the summit"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 10,
+        "health": -2,
+        "willpower": 4
+       },
+       "text": {
+        "vi": "Bình minh trên nóc châu Phi. Bạn khóc mà không biết vì sao.",
+        "en": "Dawn on the roof of Africa. You cry without knowing why."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -3
+       },
+       "text": {
+        "vi": "Say độ cao. Bạn quay xuống ở trại cuối, vẫn tự hào.",
+        "en": "Altitude sickness. You turn back at the last camp, still proud."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đi đến trại giữa ngắm cảnh",
+      "en": "Trek to the middle camp"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Cảnh đẹp không kém, và đầu không đau.",
+        "en": "Views just as good, no headache."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "TZ"
+    ]
+   }
+  },
+  {
+   "id": "cul_ug_1",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đi bộ vào rừng mưa tìm khỉ đột núi.",
+    "en": "Trekking into the rainforest to find mountain gorillas."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi theo kiểm lâm",
+      "en": "Follow the rangers"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 9,
+        "money": -4
+       },
+       "text": {
+        "vi": "Một con khỉ đột con nhìn bạn đầy tò mò. Khoảnh khắc không quên.",
+        "en": "A baby gorilla studies you curiously. An unforgettable moment."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ủng hộ quỹ bảo tồn",
+      "en": "Donate to the conservation fund"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 5,
+        "money": -2
+       },
+       "text": {
+        "vi": "Bạn nhận một tấm thiệp có ảnh \"người bạn khỉ đột\" của mình.",
+        "en": "You get a card with a photo of \"your\" gorilla."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "UG"
+    ]
+   }
+  },
+  {
+   "id": "cul_cd_1",
+   "category": "random",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một đêm nhạc rumba Congo, cả khu phố nhảy múa ngoài trời.",
+    "en": "A Congolese rumba night; the whole block dances outside."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhảy đến sáng",
+      "en": "Dance till morning"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8
+       },
+       "text": {
+        "vi": "Ban nhạc chơi đến khi trời hửng sáng.",
+        "en": "The band plays until first light."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ngồi nghe ban nhạc",
+      "en": "Sit and listen"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Tiếng guitar ngọt đến lạ.",
+        "en": "The guitar is impossibly sweet."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "CD"
+    ]
+   }
+  },
+  {
+   "id": "cul_my_1",
+   "category": "family",
+   "age": [
+    10,
+    90
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Hari Raya, nhà nhà mở cửa đón khách. Bạn được mời đến bảy nhà trong một ngày.",
+    "en": "Hari Raya open house. You're invited to seven homes in one day."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi đủ bảy nhà",
+      "en": "Visit all seven"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 7,
+        "health": -1
+       },
+       "text": {
+        "vi": "Bảy bữa rendang. Bạn hạnh phúc và không thể cử động.",
+        "en": "Seven servings of rendang. Happy and immobile."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chọn ba nhà thân nhất",
+      "en": "Pick the three closest"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Vừa đủ vui, vừa đủ no.",
+        "en": "Just enough fun, just enough food."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "country": [
+     "MY"
+    ]
+   }
+  }
+ ]
+}

@@ -336,3 +336,12 @@ details.box summary::after { content: ' ▾'; color: var(--muted); }
 .krow { display: grid; grid-template-columns: 1fr 132px; gap: 8px; align-items: center; font-size: 13.5px; }
 .krow select { border: 1.5px solid var(--rule); background: var(--sheet); color: inherit; border-radius: 8px; padding: 6px 8px; min-width: 0; width: 100%; }
 .box.funeral { background: var(--soft); }
+
+/* Đợt 4 */
+.choice .ctag { display: inline-block; margin-left: 8px; font-size: 11px; font-weight: 700; color: var(--muted, #64748b); background: color-mix(in srgb, var(--muted, #64748b) 12%, transparent); border-radius: 999px; padding: 1px 8px; vertical-align: middle; }
+.choice .ctag.fit { color: var(--good); background: color-mix(in srgb, var(--good) 15%, transparent); }
+.relmap { display: block; max-width: 420px; margin: 0 auto; }
+.relmap .mnode { cursor: pointer; }
+.relmap .mnode:hover circle, .relmap .mnode:focus circle { stroke-width: 4; }
+.mapkey { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 12px; font-weight: 700; }
+.box.diary b { font-size: 15px; }

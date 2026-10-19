@@ -16,6 +16,9 @@ import { haremYear, haremFuneral } from './harem.js';
 import { worldYear } from './world.js';
 import { dramaYear } from './drama.js';
 import { arcYear } from './arcs.js';
+import { powerYear, pw, shadowPower } from './power.js';
+import { societyYear } from './society.js';
+import { growthYear } from './growth.js';
 
 /** Xác suất chết trong năm. */
 export function mortality(life, age = life.age, health = life.stats.health) {
@@ -201,11 +204,15 @@ export function ageUp(life, events, settings) {
   haremYear(life, settings);
   worldYear(life, settings);
   dramaYear(life, settings);
+  powerYear(life, settings);
+  societyYear(life, settings);
+  growthYear(life, settings);
   arcYear(life);
   cobornYear(life, mortality);
   life.counts.maxMoney = Math.max(life.counts.maxMoney, netWorth(life));
   if (life.biz) life.counts.maxBiz = Math.max(life.counts.maxBiz || 0, life.biz.value);
   if (life.pregnancy && life.pregnancy.age < life.age) life.queue.unshift({ sys: 'pregnancy' });
+  for (const pg of life.pregs || []) if (pg.age < life.age && !pg.queued) { pg.queued = true; life.queue.push({ sys: 'pw_preg2', otherId: pg.otherId }); }
   if (chance(life, mortality(life))) {
     die(life);
     return true;
@@ -269,6 +276,17 @@ export const RIBBONS = {
   fullfamily: { name: L('Gia đình trọn vẹn', 'A complete family'), why: L('Mọi thành viên hậu cung đều có người yêu trong nhà, Hòa hợp từ 70', 'Every harem member had a love inside the house, harmony 70+') },
   passport: { name: L('Hộ chiếu đỏ', 'Red passport'), why: L('Có người tình ở 10 quốc gia', 'Lovers in 10 countries') },
   crowdfuneral: { name: L('Đám tang đông nhất', 'Packed funeral'), why: L('Từ 5 người tình dự đám tang', 'Five or more lovers at the funeral') },
+  shadowking: { name: L('Ông vua không ngai', 'The Uncrowned King'), why: L('Quyền lực ngầm từ 80 mà độ lộ diện dưới 60 đến cuối đời', 'Shadow power 80+ with exposure under 60 to the end') },
+  unmasked: { name: L('Lộ mặt', 'Unmasked'), why: L('Đế chế ngầm bị phơi bày', 'Your shadow empire was exposed') },
+  handover: { name: L('Truyền ngôi', 'The handover'), why: L('Trao cuốn sổ đen cho người kế vị', 'Passed the black notebook to your heir') },
+  kingmaker: { name: L('Người đặt vua', 'Kingmaker'), why: L('Đưa từ 3 quân cờ lên ghế quyền lực', 'Put 3+ pawns into seats of power') },
+  leader: { name: L('Nguyên thủ', 'Head of state'), why: L('Lên đến đỉnh chính trường', 'Reached the top of politics') },
+  clubchair: { name: L('Chủ tọa', 'The Chair'), why: L('Lên cấp cao nhất của hội kín', 'Rose to the top of the secret circle') },
+  dynasty: { name: L('Đại gia tộc', 'Great dynasty'), why: L('Uy tín dòng họ từ 80', 'Family prestige 80+') },
+  generation: { name: L('Cha/Mẹ của cả một thế hệ', 'Parent of a generation'), why: L('Từ 10 con với từ 5 người khác nhau', '10+ children with 5+ different partners') },
+  globetrotter: { name: L('Kẻ lữ hành', 'Globetrotter'), why: L('Du lịch đến 10 nơi nổi tiếng', 'Visited 10 famous places') },
+  master: { name: L('Bậc thầy', 'Master'), why: L('Đạt cấp 10 một sở thích', 'Reached level 10 in a hobby') },
+  unicorn: { name: L('Kỳ lân', 'Unicorn'), why: L('Đưa công ty khởi nghiệp lên sàn', 'Took a startup public') },
   mediocre: { name: L('Bình thường', 'Ordinary'), why: L('Một đời không có gì đặc biệt', 'An unremarkable life') },
 };
 
@@ -315,6 +333,20 @@ export function ribbonsFor(life) {
     if (hh.coup) r.push('coup');
     if (hh.house === 'island' && hh.members.length) r.push('island');
   }
+  const P = life.pw;
+  if (P) {
+    if (P.shadow && !P.shadow.ended && shadowPower(life) >= 80 && P.shadow.exp < 60) r.push('shadowking');
+    if (P.shadow && P.shadow.ended === 'exposed') r.push('unmasked');
+    if (P.shadow && P.shadow.handed) r.push('handover');
+    if (P.kingmade >= 3) r.push('kingmaker');
+    if (P.held >= 6) r.push('leader');
+    if (P.club && P.club.rank >= 5) r.push('clubchair');
+    if (P.clan && P.clan.prestige >= 80) r.push('dynasty');
+  }
+  if (life.counts.generation) r.push('generation');
+  if (life.counts.globetrotter) r.push('globetrotter');
+  if (life.counts.masters) r.push('master');
+  if (life.startup && life.startup.ipo) r.push('unicorn');
   // Đời tùy chỉnh (God Mode / Tự do) không nhận ribbon khó
   const HARD = ['loaded', 'academic', 'longlived', 'saint', 'famous', 'tycoon', 'houdini', 'cunning'];
   const out = life.customized ? r.filter((k) => !HARD.includes(k)) : r;

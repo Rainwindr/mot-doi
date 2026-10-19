@@ -169,10 +169,46 @@
     "vi": "Con mèo hàng xóm ngồi trên tường nhìn bạn mỗi sáng. Hôm nay nó lắc đầu.",
     "en": "The neighbour's cat watches you from the wall every morning. Today it shakes its head."
    },
-   "effects": {
-    "happy": -2,
-    "willpower": 1
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Tự xem lại đời mình",
+      "en": "Re-examine your life choices"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2,
+        "willpower": 1
+       },
+       "text": {
+        "vi": "Bạn bỏ đồ ăn vặt một tuần. Con mèo vẫn lắc đầu.",
+        "en": "You quit snacks for a week. The cat still shakes its head."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mang cá khô đến hối lộ",
+      "en": "Bribe it with dried fish"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3,
+        "money": -1
+       },
+       "text": {
+        "vi": "Con mèo ăn xong, gật đầu một cái rồi bỏ đi.",
+        "en": "The cat eats, nods once and leaves."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "w_fortune",
@@ -317,10 +353,46 @@
     "vi": "Một con chim bồ câu đậu lên đầu bạn và từ chối rời đi.",
     "en": "A pigeon lands on your head and refuses to leave."
    },
-   "effects": {
-    "happy": 3,
-    "fame": 1
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Để yên, chụp ảnh đăng mạng",
+      "en": "Let it be and post a photo"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Ảnh \"vương miện bồ câu\" được chia sẻ khắp xóm.",
+        "en": "Your \"pigeon crown\" photo does the rounds locally."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đi thật chậm đến công viên thả nó",
+      "en": "Walk slowly to the park to drop it off"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Nó bay đi, quay lại nhìn bạn một lần như cảm ơn.",
+        "en": "It flies off, glancing back once as if to say thanks."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "w_typo_tattoo",
@@ -541,10 +613,46 @@
    "requires": {
     "employed": true
    },
-   "effects": {
-    "happy": -3,
-    "willpower": 1
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Ngồi im gật gù",
+      "en": "Sit and nod"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -3,
+        "willpower": 1
+       },
+       "text": {
+        "vi": "Bạn gật gù 112 lần. Không ai hỏi ý kiến bạn.",
+        "en": "You nod 112 times. Nobody asks your opinion."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đề xuất họp lần sau chỉ cần 15 phút",
+      "en": "Propose 15-minute meetings from now on"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 4,
+        "happy": 1
+       },
+       "text": {
+        "vi": "Sếp gật gù. Cuộc họp về đề xuất này kéo dài một tiếng.",
+        "en": "Your boss nods. The meeting about your proposal lasts an hour."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "w_office_fridge",
@@ -694,10 +802,46 @@
     "vi": "Bàn phím tự sửa 'yêu' thành 'nợ' trong tin nhắn bạn gửi cho mẹ.",
     "en": "Autocorrect changes 'love you' to 'owe you' in a message to your mum."
    },
-   "effects": {
-    "happy": 2,
-    "rel_mother": 2
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Gửi tin xin lỗi kèm trái tim",
+      "en": "Send a sorry with a heart"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2,
+        "rel_mother": 2
+       },
+       "text": {
+        "vi": "Mẹ trả lời: \"Mẹ biết con nợ mẹ nhiều mà.\"",
+        "en": "Mum replies: \"I know you owe me a lot, dear.\""
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gọi điện cho mẹ luôn",
+      "en": "Just call Mum"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "rel_mother": 5
+       },
+       "text": {
+        "vi": "Hai mẹ con nói chuyện một tiếng, chủ yếu về bàn phím.",
+        "en": "You talk for an hour, mostly about keyboards."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "w_tourist_photo",
@@ -971,10 +1115,46 @@
     "vi": "Bạn đậu xe xong và quên mất mình đậu ở đâu.",
     "en": "You park and immediately forget where."
    },
-   "effects": {
-    "happy": -2,
-    "health": 1
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi bộ dò từng tầng",
+      "en": "Walk every level"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2,
+        "health": 1
+       },
+       "text": {
+        "vi": "Tìm thấy sau 40 phút. Coi như tập thể dục.",
+        "en": "Found it after 40 minutes. Counts as cardio."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bấm khóa xe liên tục nghe tiếng bíp",
+      "en": "Spam the key fob for the beep"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Năm chiếc xe kêu cùng lúc. Một chiếc là của bạn.",
+        "en": "Five cars beep at once. One of them is yours."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "w_mystery_package",
@@ -990,9 +1170,45 @@
     "vi": "Một gói hàng không ai đặt được giao đến nhà bạn. Bên trong là 40 đôi tất giống hệt nhau.",
     "en": "A package nobody ordered arrives. Inside: 40 identical pairs of socks."
    },
-   "effects": {
-    "happy": 4
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Giữ lại, coi như quà vũ trụ",
+      "en": "Keep them as a gift from the universe"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Bạn sẽ không phải mua tất trong 6 năm.",
+        "en": "You won't need socks for six years."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tìm người gửi để trả lại",
+      "en": "Track down the sender to return them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "happy": 1
+       },
+       "text": {
+        "vi": "Hóa ra của bà cụ tầng trên đặt nhầm. Bà tặng bạn một đôi và một nồi chè.",
+        "en": "It's the old lady upstairs. She gives you a pair and a pot of sweet soup."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "w_ghost",
@@ -1323,10 +1539,46 @@
     "vi": "Bạn ngủ 14 tiếng liền. Bố mẹ vào kiểm tra xem bạn còn thở không.",
     "en": "You sleep 14 hours straight. Your parents check you're still breathing."
    },
-   "effects": {
-    "health": 2,
-    "happy": 3
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Ngủ tiếp, cơ thể đang lớn",
+      "en": "Sleep on, you're growing"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 2,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Bạn tỉnh dậy cao thêm, hoặc ít nhất cảm giác như vậy.",
+        "en": "You wake up taller, or at least it feels like it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đặt báo thức, quyết tâm dậy sớm",
+      "en": "Set an alarm and vow to rise early"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 3,
+        "happy": -1
+       },
+       "text": {
+        "vi": "Bạn dậy lúc 6 giờ, đứng nhìn bình minh, rồi ngủ lại.",
+        "en": "You wake at 6, watch the sunrise, then go back to bed."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "w_old_phone",
@@ -1342,10 +1594,46 @@
     "vi": "Con cháu dạy bạn dùng điện thoại thông minh. Bạn vô tình gửi 40 sticker hoa sen vào nhóm gia đình.",
     "en": "Your grandkids teach you a smartphone. You accidentally send 40 lotus stickers to the family chat."
    },
-   "effects": {
-    "happy": 5,
-    "rel_child": 3
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Cười xòa, gửi thêm vài cái",
+      "en": "Laugh and send a few more"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "rel_child": 3
+       },
+       "text": {
+        "vi": "Cả nhà gửi lại hoa sen. Nhóm chat thành ao sen.",
+        "en": "Everyone sends lotuses back. The chat becomes a lotus pond."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bắt đứa cháu dạy lại từ đầu",
+      "en": "Make the grandkid teach you properly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2,
+        "rel_child": 4
+       },
+       "text": {
+        "vi": "Một tuần sau bạn tự gọi video được. Đứa cháu tự hào hơn cả bạn.",
+        "en": "A week later you video-call on your own. Your grandkid is prouder than you."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "w_old_sayings",
@@ -1361,10 +1649,46 @@
     "vi": "Bạn bắt đầu kể 'hồi xưa' ở mọi câu chuyện, kể cả chuyện thời tiết.",
     "en": "You start every story with 'back in my day', even about the weather."
    },
-   "effects": {
-    "happy": 3,
-    "fame": -1
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Kể tiếp, chuyện hay mà",
+      "en": "Keep going, they're good stories"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3,
+        "fame": -1
+       },
+       "text": {
+        "vi": "Lũ trẻ trợn mắt, nhưng sau này sẽ nhớ từng chuyện.",
+        "en": "The kids roll their eyes, but they'll remember every one."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hỏi chuyện của bọn trẻ thay vì kể",
+      "en": "Ask about their lives instead"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "rel_child": 4
+       },
+       "text": {
+        "vi": "Bạn biết thêm ba điều mới về con cháu và một ứng dụng lạ.",
+        "en": "You learn three new things about your family and one strange app."
+       }
+      }
+     ]
+    }
+   ]
   }
  ]
 }

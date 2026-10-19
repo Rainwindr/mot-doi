@@ -173,10 +173,47 @@
      "primary"
     ]
    },
-   "effects": {
-    "happy": -3,
-    "looks": -1
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Chịu khó gội đầu",
+      "en": "Put up with the wash"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -3,
+        "looks": -1
+       },
+       "text": {
+        "vi": "Hết chấy. Mùi vẫn còn một tuần.",
+        "en": "Lice gone. The smell lingers a week."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đòi cắt tóc thật ngắn",
+      "en": "Ask for a buzz cut"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1,
+        "looks": -2,
+        "willpower": 1
+       },
+       "text": {
+        "vi": "Bạn trông như cầu thủ bóng đá. Cả lớp bắt chước theo.",
+        "en": "You look like a footballer. Half the class copies you."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "sch_lunch_trade",
@@ -1292,6 +1329,25 @@
        }
       }
      ]
+    },
+    {
+     "label": {
+      "vi": "Ở lại hỏi diễn giả cả buổi",
+      "en": "Stay and grill the speaker"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 3,
+        "willpower": 1
+       },
+       "text": {
+        "vi": "Diễn giả đưa bạn danh thiếp. Pizza hết từ lâu.",
+        "en": "The speaker hands you a business card. The pizza is long gone."
+       }
+      }
+     ]
     }
    ]
   },
@@ -2320,6 +2376,26 @@
        }
       }
      ]
+    },
+    {
+     "label": {
+      "vi": "Xin đổi vai, để bạn cùng nhóm tiêm mình trước",
+      "en": "Swap roles and let your partner go first"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2,
+        "health": -1,
+        "rel_friend": 4
+       },
+       "text": {
+        "vi": "Bạn cùng nhóm run tay. Bạn cắn răng mỉm cười. Hai người thành bạn thân.",
+        "en": "Your partner's hand shakes. You grit your teeth and smile. You become close friends."
+       }
+      }
+     ]
     }
    ]
   },
@@ -2373,6 +2449,26 @@
        "text": {
         "vi": "Bạn làm đổ cà phê lên tòa nhà. Giờ nó là 'kiến trúc tái chế'.",
         "en": "You spill coffee on it. It's now 'reclaimed architecture'."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nộp mô hình không mái, gọi là \"kiến trúc mở\"",
+      "en": "Submit it roofless and call it \"open architecture\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 1,
+        "happy": 2,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Giảng viên im lặng hồi lâu rồi cho điểm khá vì \"dũng cảm\".",
+        "en": "The lecturer stares for a while, then gives a decent mark for \"bravery\"."
        }
       }
      ]
@@ -2572,6 +2668,25 @@
        }
       }
      ]
+    },
+    {
+     "label": {
+      "vi": "Gửi người khác trình bày thay, ở nhà làm thí nghiệm",
+      "en": "Send a colleague and stay to run experiments"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 4,
+        "fame": -1
+       },
+       "text": {
+        "vi": "Thí nghiệm ra kết quả đẹp. Đồng nghiệp được khen thay bạn.",
+        "en": "The experiment gives clean results. Your colleague gets the applause."
+       }
+      }
+     ]
     }
    ]
   },
@@ -2675,10 +2790,47 @@
      "trade"
     ]
    },
-   "effects": {
-    "happy": 8,
-    "willpower": 3
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Cảm ơn, rồi làm việc chăm hơn",
+      "en": "Say thanks and work harder"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Bạn ở lại xưởng muộn mỗi ngày.",
+        "en": "You stay late in the workshop every day."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhờ thầy dạy thêm kỹ thuật khó",
+      "en": "Ask for advanced techniques"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 3,
+        "willpower": 4,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Thầy dạy bạn một mẹo nghề mà thầy giữ 20 năm.",
+        "en": "The instructor shares a trick they've kept for 20 years."
+       }
+      }
+     ]
+    }
+   ]
   }
  ]
 }

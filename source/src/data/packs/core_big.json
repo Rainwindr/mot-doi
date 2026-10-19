@@ -1,123 +1,1214 @@
 {
-  "manifest": { "id": "core.big", "name": { "vi": "Gói gốc: biến cố lớn", "en": "Core: big moments" }, "version": "0.1.0", "rating": "18+", "languages": ["vi", "en"] },
-  "events": [
-    { "id": "big_jackpot", "category": "money", "age": [18, 95], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Tờ vé số bạn mua tiện tay trùng cả sáu con số. Bạn đọc đi đọc lại mười lần.", "en": "The lottery ticket you bought on a whim matches all six numbers. You check it ten times." },
-      "choices": [
-        { "label": { "vi": "Nhận giải công khai, mở tiệc", "en": "Claim it publicly and throw a party" }, "outcomes": [ { "chance": 1, "effects": { "money": 500, "happy": 25, "fame": 15 }, "text": { "vi": "Họ hàng xa bỗng nhớ ra bạn là ai.", "en": "Distant relatives suddenly remember who you are." } } ] },
-        { "label": { "vi": "Đeo mặt nạ đi lĩnh, giấu tất cả", "en": "Claim it masked and tell no one" }, "outcomes": [ { "chance": 1, "effects": { "money": 450, "happy": 20, "willpower": 6 }, "text": { "vi": "Không ai biết. Bạn vẫn đi làm như thường, mỉm cười suốt.", "en": "Nobody knows. You still go to work, smiling all day." } } ] },
-        { "label": { "vi": "Tặng một nửa cho từ thiện", "en": "Give half to charity" }, "outcomes": [ { "chance": 1, "effects": { "money": 250, "happy": 22, "karma": 25 }, "text": { "vi": "Một bệnh viện nhi được xây thêm khu mới.", "en": "A children's hospital gets a new wing." } } ] }
-      ] },
-    { "id": "big_house_fire", "category": "random", "age": [8, 100], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Nửa đêm, khói đen tràn vào phòng. Nhà bạn đang cháy.", "en": "Midnight. Black smoke pours into your room. Your home is on fire." },
-      "choices": [
-        { "label": { "vi": "Chạy ra ngoài ngay", "en": "Get out now" }, "outcomes": [ { "chance": 1, "effects": { "money": -60, "happy": -15 }, "text": { "vi": "Bạn đứng ngoài đường nhìn mọi thứ thành tro.", "en": "You watch everything turn to ash from the street." } } ] },
-        { "label": { "vi": "Quay vào lấy album ảnh", "en": "Go back for the photo albums" }, "outcomes": [
-          { "chance": 0.5, "effects": { "money": -60, "happy": -5, "health": -8 }, "text": { "vi": "Bạn ôm được cả chồng album, tóc cháy sém.", "en": "You save every album, hair singed." } },
-          { "chance": 0.5, "effects": { "money": -60, "health": -28, "happy": -18 }, "text": { "vi": "Bạn ngất vì khói và được lính cứu hỏa kéo ra.", "en": "You pass out from the smoke and are dragged out by firefighters." } } ] },
-        { "label": { "vi": "Phá cửa cứu nhà hàng xóm", "en": "Break down the neighbour's door" }, "requires": { "min": { "health": 60 } }, "outcomes": [
-          { "chance": 0.75, "effects": { "money": -60, "karma": 25, "fame": 15, "health": -10 }, "text": { "vi": "Bạn bế một đứa trẻ ra khỏi biển lửa. Báo chí gọi bạn là người hùng.", "en": "You carry a child out of the flames. The papers call you a hero." } },
-          { "chance": 0.25, "effects": { "money": -60, "karma": 20, "health": -25 }, "text": { "vi": "Bạn cứu được người nhưng phải nằm viện cả tháng.", "en": "You save them, but spend a month in hospital." } } ] }
-      ] },
-    { "id": "big_car_crash", "category": "health", "age": [16, 90], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Một chiếc xe vượt đèn đỏ đâm thẳng vào bạn. Bạn tỉnh dậy trong bệnh viện.", "en": "A car runs a red light and slams into you. You wake up in hospital." },
-      "effects": {},
-      "choices": [
-        { "label": { "vi": "Kiện tài xế", "en": "Sue the driver" }, "outcomes": [
-          { "chance": 0.6, "effects": { "health": -25, "money": 120, "happy": -5 }, "text": { "vi": "Tòa xử bạn thắng, bồi thường lớn.", "en": "You win a large settlement." } },
-          { "chance": 0.4, "effects": { "health": -25, "money": -20, "happy": -10 }, "text": { "vi": "Tài xế không có bảo hiểm. Bạn tự gánh viện phí.", "en": "The driver is uninsured. You pay the bills yourself." } } ] },
-        { "label": { "vi": "Tha thứ cho họ", "en": "Forgive them" }, "outcomes": [ { "chance": 1, "effects": { "health": -25, "karma": 15, "happy": 3 }, "text": { "vi": "Họ khóc ở đầu giường bệnh của bạn.", "en": "They weep at your bedside." } } ] }
-      ] },
-    { "id": "big_inheritance", "category": "money", "age": [18, 90], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Một luật sư gọi: người họ hàng xa bạn chưa từng gặp vừa mất và để lại toàn bộ tài sản cho bạn.", "en": "A lawyer calls: a distant relative you never met has died and left you everything." },
-      "choices": [
-        { "label": { "vi": "Nhận hết", "en": "Take it all" }, "outcomes": [ { "chance": 1, "effects": { "money": 280, "happy": 15 }, "text": { "vi": "Kèm theo một con vẹt biết chửi bằng ba thứ tiếng.", "en": "It comes with a parrot that swears in three languages." } } ] },
-        { "label": { "vi": "Chia cho anh chị em", "en": "Share it with your siblings" }, "outcomes": [ { "chance": 1, "effects": { "money": 140, "happy": 12, "karma": 12, "rel_sibling": 20 }, "text": { "vi": "Cả nhà lần đầu tiên tụ họp mà không cãi nhau.", "en": "The family gathers for once without fighting." } } ] }
-      ] },
-    { "id": "big_scammed", "category": "money", "age": [25, 95], "weight": 1, "once": true, "rating": "all", "big": true,
-      "requires": { "min": { "money": 50 } },
-      "text": { "vi": "Quỹ đầu tư \"lãi 30% mỗi tháng\" bạn tham gia biến mất cùng toàn bộ tiền.", "en": "The \"30% a month\" investment fund you joined vanishes with everyone's money." },
-      "choices": [
-        { "label": { "vi": "Thuê thám tử truy tìm", "en": "Hire a private investigator" }, "outcomes": [
-          { "chance": 0.3, "effects": { "money": -60, "happy": 10 }, "text": { "vi": "Thám tử tìm ra kẻ lừa đảo ở một bãi biển. Bạn lấy lại phần lớn.", "en": "The investigator finds the fraudster on a beach. You recover most of it." } },
-          { "chance": 0.7, "effects": { "money": -220, "happy": -20 }, "text": { "vi": "Dấu vết dừng lại ở một tài khoản nước ngoài.", "en": "The trail ends at an offshore account." } } ] },
-        { "label": { "vi": "Chấp nhận, rút kinh nghiệm", "en": "Accept it and learn" }, "outcomes": [ { "chance": 1, "effects": { "money": -200, "happy": -15, "smarts": 6 }, "text": { "vi": "Bạn không bao giờ tin chữ \"cam kết lợi nhuận\" nữa.", "en": "You never trust the words \"guaranteed returns\" again." } } ] }
-      ] },
-    { "id": "big_plane_scare", "category": "random", "age": [12, 95], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Máy bay bạn đi rơi tự do vài giây rồi hạ cánh khẩn cấp. Mọi người vỗ tay, có người khóc.", "en": "Your plane drops for a few seconds, then makes an emergency landing. People clap. Some cry." },
-      "choices": [
-        { "label": { "vi": "Thề sẽ sống trọn từng ngày", "en": "Vow to live every day fully" }, "outcomes": [ { "chance": 1, "effects": { "happy": 10, "willpower": 10, "risk": 8 }, "text": { "vi": "Bạn bắt đầu làm tất cả những việc từng trì hoãn.", "en": "You start doing everything you'd been putting off." } } ] },
-        { "label": { "vi": "Không bao giờ đi máy bay nữa", "en": "Never fly again" }, "outcomes": [ { "chance": 1, "effects": { "happy": -8, "risk": -10 }, "text": { "vi": "Từ nay bạn đi đâu cũng bằng tàu hỏa.", "en": "From now on, trains only." } } ] }
-      ] },
-    { "id": "big_hidden_talent", "category": "random", "age": [25, 60], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Bức tranh bạn vẽ chơi cuối tuần được một phòng tranh hỏi mua giá cao.", "en": "A painting you made for fun gets a big offer from a gallery." },
-      "choices": [
-        { "label": { "vi": "Bỏ việc, theo nghệ thuật", "en": "Quit and become an artist" }, "outcomes": [
-          { "chance": 0.4, "effects": { "money": 150, "fame": 20, "happy": 20 }, "setFlags": ["artist"], "text": { "vi": "Triển lãm đầu tay cháy vé. Bạn là nghệ sĩ thật sự.", "en": "Your first show sells out. You're a real artist now." } },
-          { "chance": 0.6, "effects": { "money": -40, "happy": -10 }, "setFlags": ["artist"], "text": { "vi": "Không ai mua bức thứ hai. Bạn ăn mì gói cả năm.", "en": "Nobody buys a second one. Instant noodles all year." } } ] },
-        { "label": { "vi": "Bán bức này, giữ nghề cũ", "en": "Sell this one, keep your job" }, "outcomes": [ { "chance": 1, "effects": { "money": 30, "happy": 8 }, "text": { "vi": "Bức tranh treo ở sảnh một khách sạn năm sao.", "en": "It now hangs in a five-star hotel lobby." } } ] }
-      ] },
-    { "id": "big_diagnosis", "category": "health", "age": [35, 95], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Bác sĩ đặt kết quả xét nghiệm xuống bàn và im lặng một lúc lâu: bệnh nặng, cần điều trị ngay.", "en": "The doctor puts down your test results and is silent for a long moment: it's serious, treatment must start now." },
-      "choices": [
-        { "label": { "vi": "Điều trị ở bệnh viện tốt nhất", "en": "Go to the best hospital" }, "requires": { "min": { "money": 100 } }, "outcomes": [
-          { "chance": 0.85, "effects": { "money": -120, "health": 10, "happy": 8 }, "text": { "vi": "Sau một năm điều trị, bạn khỏi bệnh.", "en": "After a year of treatment, you're in remission." } },
-          { "chance": 0.15, "effects": { "money": -120, "health": -20 }, "text": { "vi": "Thuốc không hiệu quả như mong đợi.", "en": "The treatment doesn't work as hoped." } } ] },
-        { "label": { "vi": "Điều trị theo bảo hiểm", "en": "Standard treatment" }, "outcomes": [
-          { "chance": 0.55, "effects": { "money": -20, "health": -8 }, "text": { "vi": "Một hành trình dài, nhưng bạn vượt qua.", "en": "A long road, but you make it through." } },
-          { "chance": 0.45, "effects": { "money": -20, "health": -30, "happy": -10 }, "text": { "vi": "Bệnh tái phát. Bạn yếu đi nhiều.", "en": "It comes back. You're much weaker." } } ] },
-        { "label": { "vi": "Thử thuốc lá cây truyền miệng", "en": "Try a herbal remedy from a friend" }, "outcomes": [ { "chance": 1, "effects": { "health": -30, "smarts": -2 }, "text": { "vi": "Thuốc đắng, và vô dụng.", "en": "Bitter, and useless." } } ] }
-      ] },
-    { "id": "big_game_show", "category": "money", "age": [18, 80], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Bạn lọt vào câu hỏi cuối của một gameshow truyền hình. Khán giả nín thở.", "en": "You reach the final question of a TV quiz show. The audience holds its breath." },
-      "choices": [
-        { "label": { "vi": "Trả lời chắc chắn", "en": "Answer with certainty" }, "requires": { "min": { "smarts": 70 } }, "outcomes": [ { "chance": 0.85, "effects": { "money": 250, "fame": 12, "happy": 18 }, "text": { "vi": "Chính xác! Pháo giấy rơi đầy sân khấu.", "en": "Correct! Confetti fills the stage." } }, { "chance": 0.15, "effects": { "fame": 8, "happy": -10 }, "text": { "vi": "Sai một chữ. Cả nước tiếc cho bạn.", "en": "Wrong by a single word. The whole country groans." } } ] },
-        { "label": { "vi": "Đoán bừa", "en": "Guess" }, "outcomes": [ { "chance": 0.25, "effects": { "money": 250, "fame": 12, "happy": 18 }, "text": { "vi": "Đúng! Bạn cũng không tin nổi.", "en": "Correct! You can't believe it either." } }, { "chance": 0.75, "effects": { "money": 10, "fame": 5, "happy": -5 }, "text": { "vi": "Sai. Bạn về nhà với giải khuyến khích.", "en": "Wrong. You go home with a consolation prize." } } ] },
-        { "label": { "vi": "Dừng cuộc chơi, giữ tiền thưởng", "en": "Walk away with what you have" }, "outcomes": [ { "chance": 1, "effects": { "money": 80, "happy": 6 }, "text": { "vi": "Một lựa chọn khôn ngoan, và hơi tiếc.", "en": "A wise choice, and a slightly painful one." } } ] }
-      ] },
-    { "id": "big_lightning", "category": "random", "age": [10, 95], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Bạn bị sét đánh trúng khi đang đi bộ. Và vẫn sống.", "en": "You're struck by lightning while out walking. And you survive." },
-      "effects": { "health": -18, "fame": 8, "karma": 3 } },
-    { "id": "big_buried_treasure", "category": "money", "age": [18, 95], "weight": 1, "once": true, "rating": "all", "big": true,
-      "requires": { "ownsHome": true },
-      "text": { "vi": "Đào vườn trồng cây, bạn đụng phải một chiếc hũ sành đầy đồng tiền cổ.", "en": "Digging in your garden, you hit a clay jar full of ancient coins." },
-      "choices": [
-        { "label": { "vi": "Bán cho nhà sưu tầm", "en": "Sell to a collector" }, "outcomes": [ { "chance": 1, "effects": { "money": 180, "happy": 12 }, "text": { "vi": "Bạn đổi được một khoản lớn.", "en": "You cash in a small fortune." } } ] },
-        { "label": { "vi": "Trao cho bảo tàng", "en": "Donate it to a museum" }, "outcomes": [ { "chance": 1, "effects": { "karma": 20, "fame": 10, "happy": 8 }, "text": { "vi": "Tên bạn được khắc dưới tủ trưng bày.", "en": "Your name is engraved beneath the display case." } } ] }
-      ] },
-    { "id": "big_lockdown", "category": "random", "age": [6, 100], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Một dịch bệnh lan khắp thế giới. Cả thành phố đóng cửa nhiều tháng.", "en": "A pandemic sweeps the world. Your city locks down for months." },
-      "choices": [
-        { "label": { "vi": "Tự học một kỹ năng mới", "en": "Teach yourself a new skill" }, "outcomes": [ { "chance": 1, "effects": { "smarts": 8, "happy": -4 }, "text": { "vi": "Bạn ra khỏi đợt dịch với một chứng chỉ mới.", "en": "You come out of it with a new qualification." } } ] },
-        { "label": { "vi": "Học làm bánh mì", "en": "Learn to bake bread" }, "outcomes": [ { "chance": 1, "effects": { "happy": 6, "health": -3 }, "text": { "vi": "Cả xóm biết đến ổ bánh mì của bạn.", "en": "The whole street knows your loaves." } } ] },
-        { "label": { "vi": "Ngủ và lướt mạng", "en": "Sleep and scroll" }, "outcomes": [ { "chance": 1, "effects": { "happy": -8, "health": -5 }, "text": { "vi": "Ngày tháng nhòe thành một khối.", "en": "The days blur into one." } } ] }
-      ] },
-    { "id": "big_viral_rescue", "category": "random", "age": [14, 80], "weight": 1, "once": true, "rating": "all", "big": true,
-      "text": { "vi": "Một đứa trẻ trượt chân rơi xuống hồ ngay trước mặt bạn.", "en": "A child slips and falls into a lake right in front of you." },
-      "choices": [
-        { "label": { "vi": "Nhảy xuống cứu", "en": "Dive in" }, "requires": { "min": { "health": 50 } }, "outcomes": [ { "chance": 0.85, "effects": { "karma": 22, "fame": 18, "health": -5 }, "text": { "vi": "Bạn kéo được em bé lên bờ. Video lan khắp mạng.", "en": "You pull the child to shore. The video goes everywhere." } }, { "chance": 0.15, "effects": { "karma": 15, "health": -25 }, "text": { "vi": "Đứa bé được cứu, nhưng bạn bị chuột rút và suýt đuối nước.", "en": "The child is saved, but you cramp up and nearly drown." } } ] },
-        { "label": { "vi": "Hét lên gọi người", "en": "Shout for help" }, "outcomes": [ { "chance": 0.7, "effects": { "karma": 6 }, "text": { "vi": "Một người bơi giỏi lao xuống kịp thời.", "en": "A strong swimmer jumps in just in time." } }, { "chance": 0.3, "effects": { "happy": -20 }, "text": { "vi": "Cứu hộ đến quá muộn. Bạn không quên được hình ảnh ấy.", "en": "Help arrives too late. You can't forget it." } } ] }
-      ] },
-    { "id": "big_dream_offer", "category": "work", "age": [22, 60], "weight": 1, "once": true, "rating": "all", "big": true,
-      "requires": { "employed": true, "min": { "smarts": 60 } },
-      "text": { "vi": "Một tập đoàn lớn mời bạn về với mức lương gấp ba, nhưng phải làm 80 giờ mỗi tuần.", "en": "A huge corporation offers you triple the pay, but 80-hour weeks." },
-      "choices": [
-        { "label": { "vi": "Nhận lời", "en": "Accept" }, "outcomes": [ { "chance": 1, "effects": { "money": 120, "health": -12, "happy": -6, "rel_partner": -10 }, "text": { "vi": "Tài khoản dày lên, quầng mắt cũng vậy.", "en": "Your bank balance grows. So do the bags under your eyes." } } ] },
-        { "label": { "vi": "Từ chối, giữ cuộc sống", "en": "Decline and keep your life" }, "outcomes": [ { "chance": 1, "effects": { "happy": 6, "willpower": 5 }, "text": { "vi": "Tối đó bạn ăn cơm với gia đình như mọi ngày.", "en": "That night you have dinner with your family, like always." } } ] }
-      ] },
-    { "id": "big_wrongful_arrest", "category": "crime", "age": [18, 80], "weight": 1, "once": true, "rating": "18+", "big": true,
-      "requires": { "inPrison": false },
-      "text": { "vi": "Cảnh sát bắt nhầm bạn vì trùng tên với một tội phạm bị truy nã.", "en": "Police arrest you by mistake: you share a name with a wanted criminal." },
-      "choices": [
-        { "label": { "vi": "Thuê luật sư làm rõ", "en": "Hire a lawyer to clear it up" }, "outcomes": [ { "chance": 1, "effects": { "money": -15, "happy": -6 }, "text": { "vi": "Ba ngày sau bạn được thả kèm một lời xin lỗi.", "en": "Three days later you're released with an apology." } } ] },
-        { "label": { "vi": "Kiện ngược sở cảnh sát", "en": "Sue the police department" }, "outcomes": [ { "chance": 0.5, "effects": { "money": 90, "fame": 8 }, "text": { "vi": "Bạn thắng kiện và lên báo.", "en": "You win and make the news." } }, { "chance": 0.5, "effects": { "money": -20, "happy": -8 }, "text": { "vi": "Vụ kiện kéo dài và thất bại.", "en": "The case drags on and fails." } } ] }
-      ] },
-    { "id": "big_reunion_sibling", "category": "family", "age": [20, 90], "weight": 1, "once": true, "rating": "all", "big": true,
-      "requires": { "min": { "karma": 60 } },
-      "text": { "vi": "Một người lạ gửi thư cảm ơn: nhiều năm trước bạn đã giúp họ lúc khó khăn, giờ họ thành công và muốn đền đáp.", "en": "A stranger writes to thank you: years ago you helped them when they were down. Now they're successful and want to repay you." },
-      "choices": [
-        { "label": { "vi": "Nhận món quà", "en": "Accept the gift" }, "outcomes": [ { "chance": 1, "effects": { "money": 100, "happy": 14 }, "text": { "vi": "Lòng tốt quay về theo cách bạn không ngờ.", "en": "Kindness comes back in a way you never expected." } } ] },
-        { "label": { "vi": "Nhờ họ giúp người khác", "en": "Ask them to help someone else" }, "outcomes": [ { "chance": 1, "effects": { "karma": 15, "happy": 12 }, "text": { "vi": "Một chuỗi việc tốt bắt đầu từ bạn.", "en": "A chain of good deeds begins with you." } } ] }
-      ] }
+ "manifest": {
+  "id": "core.big",
+  "name": {
+   "vi": "Gói gốc: biến cố lớn",
+   "en": "Core: big moments"
+  },
+  "version": "0.1.0",
+  "rating": "18+",
+  "languages": [
+   "vi",
+   "en"
   ]
+ },
+ "events": [
+  {
+   "id": "big_jackpot",
+   "category": "money",
+   "age": [
+    18,
+    95
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Tờ vé số bạn mua tiện tay trùng cả sáu con số. Bạn đọc đi đọc lại mười lần.",
+    "en": "The lottery ticket you bought on a whim matches all six numbers. You check it ten times."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận giải công khai, mở tiệc",
+      "en": "Claim it publicly and throw a party"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 500,
+        "happy": 25,
+        "fame": 15
+       },
+       "text": {
+        "vi": "Họ hàng xa bỗng nhớ ra bạn là ai.",
+        "en": "Distant relatives suddenly remember who you are."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đeo mặt nạ đi lĩnh, giấu tất cả",
+      "en": "Claim it masked and tell no one"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 450,
+        "happy": 20,
+        "willpower": 6
+       },
+       "text": {
+        "vi": "Không ai biết. Bạn vẫn đi làm như thường, mỉm cười suốt.",
+        "en": "Nobody knows. You still go to work, smiling all day."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tặng một nửa cho từ thiện",
+      "en": "Give half to charity"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 250,
+        "happy": 22,
+        "karma": 25
+       },
+       "text": {
+        "vi": "Một bệnh viện nhi được xây thêm khu mới.",
+        "en": "A children's hospital gets a new wing."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_house_fire",
+   "category": "random",
+   "age": [
+    8,
+    100
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Nửa đêm, khói đen tràn vào phòng. Nhà bạn đang cháy.",
+    "en": "Midnight. Black smoke pours into your room. Your home is on fire."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chạy ra ngoài ngay",
+      "en": "Get out now"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -60,
+        "happy": -15
+       },
+       "text": {
+        "vi": "Bạn đứng ngoài đường nhìn mọi thứ thành tro.",
+        "en": "You watch everything turn to ash from the street."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Quay vào lấy album ảnh",
+      "en": "Go back for the photo albums"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "money": -60,
+        "happy": -5,
+        "health": -8
+       },
+       "text": {
+        "vi": "Bạn ôm được cả chồng album, tóc cháy sém.",
+        "en": "You save every album, hair singed."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "money": -60,
+        "health": -28,
+        "happy": -18
+       },
+       "text": {
+        "vi": "Bạn ngất vì khói và được lính cứu hỏa kéo ra.",
+        "en": "You pass out from the smoke and are dragged out by firefighters."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Phá cửa cứu nhà hàng xóm",
+      "en": "Break down the neighbour's door"
+     },
+     "requires": {
+      "min": {
+       "health": 60
+      }
+     },
+     "outcomes": [
+      {
+       "chance": 0.75,
+       "effects": {
+        "money": -60,
+        "karma": 25,
+        "fame": 15,
+        "health": -10
+       },
+       "text": {
+        "vi": "Bạn bế một đứa trẻ ra khỏi biển lửa. Báo chí gọi bạn là người hùng.",
+        "en": "You carry a child out of the flames. The papers call you a hero."
+       }
+      },
+      {
+       "chance": 0.25,
+       "effects": {
+        "money": -60,
+        "karma": 20,
+        "health": -25
+       },
+       "text": {
+        "vi": "Bạn cứu được người nhưng phải nằm viện cả tháng.",
+        "en": "You save them, but spend a month in hospital."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_car_crash",
+   "category": "health",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Một chiếc xe vượt đèn đỏ đâm thẳng vào bạn. Bạn tỉnh dậy trong bệnh viện.",
+    "en": "A car runs a red light and slams into you. You wake up in hospital."
+   },
+   "effects": {},
+   "choices": [
+    {
+     "label": {
+      "vi": "Kiện tài xế",
+      "en": "Sue the driver"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "health": -25,
+        "money": 120,
+        "happy": -5
+       },
+       "text": {
+        "vi": "Tòa xử bạn thắng, bồi thường lớn.",
+        "en": "You win a large settlement."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "health": -25,
+        "money": -20,
+        "happy": -10
+       },
+       "text": {
+        "vi": "Tài xế không có bảo hiểm. Bạn tự gánh viện phí.",
+        "en": "The driver is uninsured. You pay the bills yourself."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tha thứ cho họ",
+      "en": "Forgive them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -25,
+        "karma": 15,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Họ khóc ở đầu giường bệnh của bạn.",
+        "en": "They weep at your bedside."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_inheritance",
+   "category": "money",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Một luật sư gọi: người họ hàng xa bạn chưa từng gặp vừa mất và để lại toàn bộ tài sản cho bạn.",
+    "en": "A lawyer calls: a distant relative you never met has died and left you everything."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận hết",
+      "en": "Take it all"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 280,
+        "happy": 15
+       },
+       "text": {
+        "vi": "Kèm theo một con vẹt biết chửi bằng ba thứ tiếng.",
+        "en": "It comes with a parrot that swears in three languages."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chia cho anh chị em",
+      "en": "Share it with your siblings"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 140,
+        "happy": 12,
+        "karma": 12,
+        "rel_sibling": 20
+       },
+       "text": {
+        "vi": "Cả nhà lần đầu tiên tụ họp mà không cãi nhau.",
+        "en": "The family gathers for once without fighting."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_scammed",
+   "category": "money",
+   "age": [
+    25,
+    95
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "requires": {
+    "min": {
+     "money": 50
+    }
+   },
+   "text": {
+    "vi": "Quỹ đầu tư \"lãi 30% mỗi tháng\" bạn tham gia biến mất cùng toàn bộ tiền.",
+    "en": "The \"30% a month\" investment fund you joined vanishes with everyone's money."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thuê thám tử truy tìm",
+      "en": "Hire a private investigator"
+     },
+     "outcomes": [
+      {
+       "chance": 0.3,
+       "effects": {
+        "money": -60,
+        "happy": 10
+       },
+       "text": {
+        "vi": "Thám tử tìm ra kẻ lừa đảo ở một bãi biển. Bạn lấy lại phần lớn.",
+        "en": "The investigator finds the fraudster on a beach. You recover most of it."
+       }
+      },
+      {
+       "chance": 0.7,
+       "effects": {
+        "money": -220,
+        "happy": -20
+       },
+       "text": {
+        "vi": "Dấu vết dừng lại ở một tài khoản nước ngoài.",
+        "en": "The trail ends at an offshore account."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chấp nhận, rút kinh nghiệm",
+      "en": "Accept it and learn"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -200,
+        "happy": -15,
+        "smarts": 6
+       },
+       "text": {
+        "vi": "Bạn không bao giờ tin chữ \"cam kết lợi nhuận\" nữa.",
+        "en": "You never trust the words \"guaranteed returns\" again."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_plane_scare",
+   "category": "random",
+   "age": [
+    12,
+    95
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Máy bay bạn đi rơi tự do vài giây rồi hạ cánh khẩn cấp. Mọi người vỗ tay, có người khóc.",
+    "en": "Your plane drops for a few seconds, then makes an emergency landing. People clap. Some cry."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thề sẽ sống trọn từng ngày",
+      "en": "Vow to live every day fully"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 10,
+        "willpower": 10,
+        "risk": 8
+       },
+       "text": {
+        "vi": "Bạn bắt đầu làm tất cả những việc từng trì hoãn.",
+        "en": "You start doing everything you'd been putting off."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Không bao giờ đi máy bay nữa",
+      "en": "Never fly again"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -8,
+        "risk": -10
+       },
+       "text": {
+        "vi": "Từ nay bạn đi đâu cũng bằng tàu hỏa.",
+        "en": "From now on, trains only."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_hidden_talent",
+   "category": "random",
+   "age": [
+    25,
+    60
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Bức tranh bạn vẽ chơi cuối tuần được một phòng tranh hỏi mua giá cao.",
+    "en": "A painting you made for fun gets a big offer from a gallery."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bỏ việc, theo nghệ thuật",
+      "en": "Quit and become an artist"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "money": 150,
+        "fame": 20,
+        "happy": 20
+       },
+       "setFlags": [
+        "artist"
+       ],
+       "text": {
+        "vi": "Triển lãm đầu tay cháy vé. Bạn là nghệ sĩ thật sự.",
+        "en": "Your first show sells out. You're a real artist now."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "money": -40,
+        "happy": -10
+       },
+       "setFlags": [
+        "artist"
+       ],
+       "text": {
+        "vi": "Không ai mua bức thứ hai. Bạn ăn mì gói cả năm.",
+        "en": "Nobody buys a second one. Instant noodles all year."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bán bức này, giữ nghề cũ",
+      "en": "Sell this one, keep your job"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 30,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bức tranh treo ở sảnh một khách sạn năm sao.",
+        "en": "It now hangs in a five-star hotel lobby."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_diagnosis",
+   "category": "health",
+   "age": [
+    35,
+    95
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Bác sĩ đặt kết quả xét nghiệm xuống bàn và im lặng một lúc lâu: bệnh nặng, cần điều trị ngay.",
+    "en": "The doctor puts down your test results and is silent for a long moment: it's serious, treatment must start now."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Điều trị ở bệnh viện tốt nhất",
+      "en": "Go to the best hospital"
+     },
+     "requires": {
+      "min": {
+       "money": 100
+      }
+     },
+     "outcomes": [
+      {
+       "chance": 0.85,
+       "effects": {
+        "money": -120,
+        "health": 10,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Sau một năm điều trị, bạn khỏi bệnh.",
+        "en": "After a year of treatment, you're in remission."
+       }
+      },
+      {
+       "chance": 0.15,
+       "effects": {
+        "money": -120,
+        "health": -20
+       },
+       "text": {
+        "vi": "Thuốc không hiệu quả như mong đợi.",
+        "en": "The treatment doesn't work as hoped."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Điều trị theo bảo hiểm",
+      "en": "Standard treatment"
+     },
+     "outcomes": [
+      {
+       "chance": 0.55,
+       "effects": {
+        "money": -20,
+        "health": -8
+       },
+       "text": {
+        "vi": "Một hành trình dài, nhưng bạn vượt qua.",
+        "en": "A long road, but you make it through."
+       }
+      },
+      {
+       "chance": 0.45,
+       "effects": {
+        "money": -20,
+        "health": -30,
+        "happy": -10
+       },
+       "text": {
+        "vi": "Bệnh tái phát. Bạn yếu đi nhiều.",
+        "en": "It comes back. You're much weaker."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thử thuốc lá cây truyền miệng",
+      "en": "Try a herbal remedy from a friend"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -30,
+        "smarts": -2
+       },
+       "text": {
+        "vi": "Thuốc đắng, và vô dụng.",
+        "en": "Bitter, and useless."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_game_show",
+   "category": "money",
+   "age": [
+    18,
+    80
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Bạn lọt vào câu hỏi cuối của một gameshow truyền hình. Khán giả nín thở.",
+    "en": "You reach the final question of a TV quiz show. The audience holds its breath."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Trả lời chắc chắn",
+      "en": "Answer with certainty"
+     },
+     "requires": {
+      "min": {
+       "smarts": 70
+      }
+     },
+     "outcomes": [
+      {
+       "chance": 0.85,
+       "effects": {
+        "money": 250,
+        "fame": 12,
+        "happy": 18
+       },
+       "text": {
+        "vi": "Chính xác! Pháo giấy rơi đầy sân khấu.",
+        "en": "Correct! Confetti fills the stage."
+       }
+      },
+      {
+       "chance": 0.15,
+       "effects": {
+        "fame": 8,
+        "happy": -10
+       },
+       "text": {
+        "vi": "Sai một chữ. Cả nước tiếc cho bạn.",
+        "en": "Wrong by a single word. The whole country groans."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đoán bừa",
+      "en": "Guess"
+     },
+     "outcomes": [
+      {
+       "chance": 0.25,
+       "effects": {
+        "money": 250,
+        "fame": 12,
+        "happy": 18
+       },
+       "text": {
+        "vi": "Đúng! Bạn cũng không tin nổi.",
+        "en": "Correct! You can't believe it either."
+       }
+      },
+      {
+       "chance": 0.75,
+       "effects": {
+        "money": 10,
+        "fame": 5,
+        "happy": -5
+       },
+       "text": {
+        "vi": "Sai. Bạn về nhà với giải khuyến khích.",
+        "en": "Wrong. You go home with a consolation prize."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Dừng cuộc chơi, giữ tiền thưởng",
+      "en": "Walk away with what you have"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 80,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Một lựa chọn khôn ngoan, và hơi tiếc.",
+        "en": "A wise choice, and a slightly painful one."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_lightning",
+   "category": "random",
+   "age": [
+    10,
+    95
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Bạn bị sét đánh trúng khi đang đi bộ. Và vẫn sống.",
+    "en": "You're struck by lightning while out walking. And you survive."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Kể lại câu chuyện trên báo",
+      "en": "Tell your story to the papers"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -18,
+        "fame": 8,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Bạn lên báo với tiêu đề \"Người không sợ sét\".",
+        "en": "You make the papers as \"The Lightning-Proof Human\"."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ kín, chỉ báo cho gia đình",
+      "en": "Keep it quiet, tell only family"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -18,
+        "karma": 4,
+        "willpower": 4
+       },
+       "text": {
+        "vi": "Bạn hồi phục trong yên lặng, trân trọng từng ngày hơn.",
+        "en": "You recover quietly and treasure every day a little more."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_buried_treasure",
+   "category": "money",
+   "age": [
+    18,
+    95
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "requires": {
+    "ownsHome": true
+   },
+   "text": {
+    "vi": "Đào vườn trồng cây, bạn đụng phải một chiếc hũ sành đầy đồng tiền cổ.",
+    "en": "Digging in your garden, you hit a clay jar full of ancient coins."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bán cho nhà sưu tầm",
+      "en": "Sell to a collector"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 180,
+        "happy": 12
+       },
+       "text": {
+        "vi": "Bạn đổi được một khoản lớn.",
+        "en": "You cash in a small fortune."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Trao cho bảo tàng",
+      "en": "Donate it to a museum"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 20,
+        "fame": 10,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Tên bạn được khắc dưới tủ trưng bày.",
+        "en": "Your name is engraved beneath the display case."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_lockdown",
+   "category": "random",
+   "age": [
+    6,
+    100
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Một dịch bệnh lan khắp thế giới. Cả thành phố đóng cửa nhiều tháng.",
+    "en": "A pandemic sweeps the world. Your city locks down for months."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tự học một kỹ năng mới",
+      "en": "Teach yourself a new skill"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 8,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Bạn ra khỏi đợt dịch với một chứng chỉ mới.",
+        "en": "You come out of it with a new qualification."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Học làm bánh mì",
+      "en": "Learn to bake bread"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "health": -3
+       },
+       "text": {
+        "vi": "Cả xóm biết đến ổ bánh mì của bạn.",
+        "en": "The whole street knows your loaves."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ngủ và lướt mạng",
+      "en": "Sleep and scroll"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -8,
+        "health": -5
+       },
+       "text": {
+        "vi": "Ngày tháng nhòe thành một khối.",
+        "en": "The days blur into one."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_viral_rescue",
+   "category": "random",
+   "age": [
+    14,
+    80
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "text": {
+    "vi": "Một đứa trẻ trượt chân rơi xuống hồ ngay trước mặt bạn.",
+    "en": "A child slips and falls into a lake right in front of you."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhảy xuống cứu",
+      "en": "Dive in"
+     },
+     "requires": {
+      "min": {
+       "health": 50
+      }
+     },
+     "outcomes": [
+      {
+       "chance": 0.85,
+       "effects": {
+        "karma": 22,
+        "fame": 18,
+        "health": -5
+       },
+       "text": {
+        "vi": "Bạn kéo được em bé lên bờ. Video lan khắp mạng.",
+        "en": "You pull the child to shore. The video goes everywhere."
+       }
+      },
+      {
+       "chance": 0.15,
+       "effects": {
+        "karma": 15,
+        "health": -25
+       },
+       "text": {
+        "vi": "Đứa bé được cứu, nhưng bạn bị chuột rút và suýt đuối nước.",
+        "en": "The child is saved, but you cramp up and nearly drown."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hét lên gọi người",
+      "en": "Shout for help"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "karma": 6
+       },
+       "text": {
+        "vi": "Một người bơi giỏi lao xuống kịp thời.",
+        "en": "A strong swimmer jumps in just in time."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -20
+       },
+       "text": {
+        "vi": "Cứu hộ đến quá muộn. Bạn không quên được hình ảnh ấy.",
+        "en": "Help arrives too late. You can't forget it."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_dream_offer",
+   "category": "work",
+   "age": [
+    22,
+    60
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "requires": {
+    "employed": true,
+    "min": {
+     "smarts": 60
+    }
+   },
+   "text": {
+    "vi": "Một tập đoàn lớn mời bạn về với mức lương gấp ba, nhưng phải làm 80 giờ mỗi tuần.",
+    "en": "A huge corporation offers you triple the pay, but 80-hour weeks."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận lời",
+      "en": "Accept"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 120,
+        "health": -12,
+        "happy": -6,
+        "rel_partner": -10
+       },
+       "text": {
+        "vi": "Tài khoản dày lên, quầng mắt cũng vậy.",
+        "en": "Your bank balance grows. So do the bags under your eyes."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Từ chối, giữ cuộc sống",
+      "en": "Decline and keep your life"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "willpower": 5
+       },
+       "text": {
+        "vi": "Tối đó bạn ăn cơm với gia đình như mọi ngày.",
+        "en": "That night you have dinner with your family, like always."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_wrongful_arrest",
+   "category": "crime",
+   "age": [
+    18,
+    80
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "18+",
+   "big": true,
+   "requires": {
+    "inPrison": false
+   },
+   "text": {
+    "vi": "Cảnh sát bắt nhầm bạn vì trùng tên với một tội phạm bị truy nã.",
+    "en": "Police arrest you by mistake: you share a name with a wanted criminal."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thuê luật sư làm rõ",
+      "en": "Hire a lawyer to clear it up"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -15,
+        "happy": -6
+       },
+       "text": {
+        "vi": "Ba ngày sau bạn được thả kèm một lời xin lỗi.",
+        "en": "Three days later you're released with an apology."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Kiện ngược sở cảnh sát",
+      "en": "Sue the police department"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "money": 90,
+        "fame": 8
+       },
+       "text": {
+        "vi": "Bạn thắng kiện và lên báo.",
+        "en": "You win and make the news."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "money": -20,
+        "happy": -8
+       },
+       "text": {
+        "vi": "Vụ kiện kéo dài và thất bại.",
+        "en": "The case drags on and fails."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "big_reunion_sibling",
+   "category": "family",
+   "age": [
+    20,
+    90
+   ],
+   "weight": 1,
+   "once": true,
+   "rating": "all",
+   "big": true,
+   "requires": {
+    "min": {
+     "karma": 60
+    }
+   },
+   "text": {
+    "vi": "Một người lạ gửi thư cảm ơn: nhiều năm trước bạn đã giúp họ lúc khó khăn, giờ họ thành công và muốn đền đáp.",
+    "en": "A stranger writes to thank you: years ago you helped them when they were down. Now they're successful and want to repay you."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận món quà",
+      "en": "Accept the gift"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 100,
+        "happy": 14
+       },
+       "text": {
+        "vi": "Lòng tốt quay về theo cách bạn không ngờ.",
+        "en": "Kindness comes back in a way you never expected."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhờ họ giúp người khác",
+      "en": "Ask them to help someone else"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 15,
+        "happy": 12
+       },
+       "text": {
+        "vi": "Một chuỗi việc tốt bắt đầu từ bạn.",
+        "en": "A chain of good deeds begins with you."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

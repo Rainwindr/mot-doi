@@ -1878,6 +1878,26 @@
        }
       }
      ]
+    },
+    {
+     "label": {
+      "vi": "Chỉ ôm nhau và kể chuyện ngày xưa",
+      "en": "Just hold each other and tell old stories"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "rel_partner": 10,
+        "health": 1
+       },
+       "text": {
+        "vi": "Hai người kể lại ngày đầu gặp nhau, cãi nhau xem ai tỏ tình trước. Không ai thắng.",
+        "en": "You retell the day you met and argue about who confessed first. Nobody wins."
+       }
+      }
+     ]
     }
    ]
   },

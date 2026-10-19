@@ -55,7 +55,7 @@ const cap = (life) => HOUSES[hstate(life).house].cap;
 
 /** Ai có thể vào hậu cung: người lớn ngoài gia đình đang có quan hệ lãng mạn hoặc có cảm tình với bạn. */
 export function candidates(life) {
-  return life.people.filter((p) => adultOK(life, p) && !inHarem(life, p) && !p.cut && (ROM.includes(p.role) || p.baby || ['crush', 'like', 'affair'].includes(attOf(p))));
+  return life.people.filter((p) => adultOK(life, p) && !inHarem(life, p) && !p.cut && (ROM.includes(p.role) || p.baby || ['crush', 'like', 'affair', 'heir'].includes(attOf(p))));
 }
 function consent(life, p) {
   const t = hm(p).trait;

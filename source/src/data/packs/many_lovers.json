@@ -254,6 +254,57 @@
        }
       }
      ]
+    },
+    {
+     "label": {
+      "vi": "Cười trừ rồi đề nghị cả ba thành bạn",
+      "en": "Laugh it off and suggest you all be friends"
+     },
+     "outcomes": [
+      {
+       "chance": 0.25,
+       "effects": {
+        "happy": 4,
+        "karma": -2
+       },
+       "text": {
+        "vi": "Im lặng rất lâu. Rồi một người phì cười. Kỳ lạ thay, họ đồng ý thử.",
+        "en": "A long silence. Then one of them snorts. Strangely, they agree to try."
+       }
+      },
+      {
+       "chance": 0.75,
+       "effects": {
+        "happy": -12,
+        "fame": -3,
+        "endAllAffairs": true
+       },
+       "text": {
+        "vi": "Họ đứng dậy cùng lúc, như đã tập trước.",
+        "en": "They stand up at the same moment, as if rehearsed."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thành thật xin lỗi từng người",
+      "en": "Apologise to each of them honestly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -6,
+        "karma": 4,
+        "endAllAffairs": true
+       },
+       "text": {
+        "vi": "Không ai tha thứ, nhưng cả hai đều nói cảm ơn vì bạn không chối.",
+        "en": "Nobody forgives you, but both thank you for not lying."
+       }
+      }
+     ]
     }
    ]
   },
@@ -338,10 +389,46 @@
    "requires": {
     "lovers": 2
    },
-   "effects": {
-    "smarts": 1,
-    "happy": -2
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Làm bảng tính thật chỉn chu",
+      "en": "Build a proper spreadsheet"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 1,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bảng có màu, có công thức. Bạn tự hào một cách đáng lo.",
+        "en": "Colour-coded, with formulas. You're worryingly proud."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thôi, nhớ trong đầu",
+      "en": "Nah, keep it in your head"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -4,
+        "risk": 3
+       },
+       "text": {
+        "vi": "Bạn tặng nhầm hoa ly cho người dị ứng hoa ly.",
+        "en": "You give lilies to the one allergic to lilies."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "lv_saturday_clash",
@@ -526,6 +613,56 @@
        "text": {
         "vi": "Một người bạn chung bình luận: \"Ủa, giống cái của…\"",
         "en": "A mutual friend comments: \"Wait, isn't that the same as…\""
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mua ngay chiếc thứ ba khác hẳn, nhờ một người đổi",
+      "en": "Buy a different one fast and ask one to swap"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 1,
+        "money": -3
+       },
+       "text": {
+        "vi": "Bạn nói chiếc cũ \"bị lỗi khóa\". Họ tin, còn khen bạn chu đáo.",
+        "en": "You claim the old one has a faulty clasp. They believe you and call you thoughtful."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -5,
+        "endAffair": true
+       },
+       "text": {
+        "vi": "Họ thấy hóa đơn mua hai chiếc trong túi áo bạn.",
+        "en": "They find the receipt for two in your jacket pocket."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đăng ảnh của chính mình đeo chiếc giống hệt, gọi là \"xu hướng\"",
+      "en": "Post yourself wearing the same one and call it a \"trend\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2,
+        "fame": 1,
+        "risk": 2
+       },
+       "text": {
+        "vi": "Bình luận đầy \"đẹp quá mua ở đâu\". Không ai nghi ngờ gì thêm.",
+        "en": "Comments fill with \"so cute where is it from\". Nobody suspects a thing."
        }
       }
      ]
@@ -1150,10 +1287,46 @@
     ],
     "lovers": 1
    },
-   "effects": {
-    "smarts": 1,
-    "happy": 3
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Dùng lịch chung",
+      "en": "Use the shared calendar"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 1,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Mọi thứ trơn tru đến mức bạn bè xin mẫu.",
+        "en": "So smooth your friends ask for the template."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đề nghị cả ba cùng ăn tối mỗi Chủ nhật thay vì xếp lịch",
+      "en": "Suggest a Sunday dinner for all three instead"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Bữa tối Chủ nhật thành truyền thống. Lịch online bị lãng quên.",
+        "en": "Sunday dinner becomes tradition. The calendar is forgotten."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "lv_poly_jealous",
@@ -1607,6 +1780,26 @@
        "text": {
         "vi": "Lãng mạn tuyệt đối. Sáng ra cả hai cùng sổ mũi.",
         "en": "Utterly romantic. You both wake up with colds."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Kéo người ấy vào trong, pha trà nóng",
+      "en": "Pull them inside and make hot tea"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 7,
+        "rel_partner": 5,
+        "health": 1
+       },
+       "text": {
+        "vi": "Hai người ngồi bên cửa sổ nghe mưa, chăn trùm đến cằm.",
+        "en": "You sit by the window listening to the rain, blankets up to your chins."
        }
       }
      ]

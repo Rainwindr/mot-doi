@@ -16,6 +16,9 @@ import { ROMANTIC, partnerActionList, partnerAction, datingApp, blindDate } from
 import { ixPersonActions, doIxPersonAction, IX_ACTIVITIES, agree, prof, godIxPerson, godIxSelf, me } from './intimacy.js';
 import { memberActions, doMemberAction, haremAction, godHaremSelf, godHaremMember } from './harem.js';
 import { DRAMA_ACTIVITIES, doDramaHaremAction, godDramaPerson, godDramaSelf, godTrigger } from './drama.js';
+import { powerPersonActions, doPowerPersonAction, powerAction, godPowerSelf, godPowerPerson } from './power.js';
+import { societyPersonActions, doSocietyPersonAction, godSocietyPerson, godSocietySelf, say } from './society.js';
+import { GROWTH_ACTIVITIES, growthPersonActions, doGrowthPersonAction, revealTalent, habits, godGrowthSelf, godGrowthPerson, SPEND } from './growth.js';
 import { WORLD_ACTIVITIES, workPersonActions, doWorkPersonAction, babyActions, doBabyAction, doAllPeople, godWorldSelf, godWorldPerson, godUnlockAll } from './world.js';
 
 const fx = (life, effects) => applyEffects(life, effects);
@@ -149,7 +152,7 @@ export const ACTIVITIES = [
 ];
 
 const PRISON_OK = new Set(['gym', 'library', 'meditate']);
-ACTIVITIES.push(...EXTRA_ACTIVITIES, ...IX_ACTIVITIES, ...WORLD_ACTIVITIES, ...DRAMA_ACTIVITIES);
+ACTIVITIES.push(...EXTRA_ACTIVITIES, ...IX_ACTIVITIES, ...WORLD_ACTIVITIES, ...DRAMA_ACTIVITIES, ...GROWTH_ACTIVITIES);
 
 export function availableActivities(life, settings) {
   if (life.prison) return ACTIVITIES.filter((a) => a.group === 'prison' || PRISON_OK.has(a.id));
@@ -169,7 +172,12 @@ export function doActivity(life, settings, id) {
   if (a.when && !a.when(life, settings)) return null;
   if (a.units) life.money -= cost(life, a.units);
   if (FLEX_ACTS.has(id) && life.age >= 16) { const m = me(life); m.flex = clamp(m.flex + randint(life, 1, 3)); }
-  return a.run(life, settings);
+  if (FLEX_ACTS.has(id) || ['swim', 'sportclub', 'hob_run', 'hob_dance'].includes(id)) { const H = habits(life); H.move = clamp(H.move + 3); }
+  if (id === 'meditate') { const H = habits(life); H.stress = clamp(H.stress - 4); }
+  const out = a.run(life, settings);
+  const tal = revealTalent(life, id);
+  if (tal && out && out.text && !out.event) return { ...out, text: { vi: `${out.text.vi} ${tal.vi}`, en: `${out.text.en} ${tal.en}` }, tone: 'good' };
+  return out;
 }
 
 // ───────── Quan hệ ─────────
@@ -180,7 +188,7 @@ export function personActions(life, p, settings) {
   out.push(['talk', L('Trò chuyện', 'Talk')]);
   if (life.prison) return out.concat([['argue', L('Cãi nhau', 'Argue')]]);
   if (p.role === 'pet') return extraPersonActions(life, p);
-  if (ROMANTIC.includes(p.role)) return dedupe(partnerActionList(life, p).concat(babyActions(life, p, settings), memberActions(life, p, settings), ixPersonActions(life, p, settings), extraPersonActions(life, p)));
+  if (ROMANTIC.includes(p.role)) return dedupe(partnerActionList(life, p).concat(societyPersonActions(life, p, settings), babyActions(life, p, settings), memberActions(life, p, settings), ixPersonActions(life, p, settings), powerPersonActions(life, p), extraPersonActions(life, p)));
   if (life.age >= 10) out.push(['gift', L('Tặng quà', 'Give a gift')]);
   out.push(['argue', L('Cãi nhau', 'Argue')]);
   if ((p.role === 'mother' || p.role === 'father') && life.age >= 6) out.push(['money', L('Xin tiền', 'Ask for money')]);
@@ -191,7 +199,7 @@ export function personActions(life, p, settings) {
   if (p.role === 'lover') out.push(['endaffair', L('Chấm dứt', 'End it')]);
   if (canSeduce(life, p) && !partner(life)) out.push(['askout', L('Rủ hẹn hò', 'Ask out')]);
   if (canSeduce(life, p)) out.push(['seduce', L('Quyến rũ', 'Seduce')]);
-  return dedupe(out.concat(workPersonActions(life, p), memberActions(life, p, settings), ixPersonActions(life, p, settings), extraPersonActions(life, p)));
+  return dedupe(out.concat(workPersonActions(life, p), memberActions(life, p, settings), ixPersonActions(life, p, settings), powerPersonActions(life, p), growthPersonActions(life, p), extraPersonActions(life, p)));
 }
 
 export function doPersonAction(life, settings, personId, act) {
@@ -202,10 +210,10 @@ export function doPersonAction(life, settings, personId, act) {
   const key = `p:${act}:${p.id}`;
   const n = (life.yearActs[key] = (life.yearActs[key] || 0) + 1);
   if (n > 3 && ['talk', 'gift', 'money'].includes(act)) return res(L('Năm nay như vậy là đủ rồi.', 'That\'s enough for this year.'), []);
-  const rx = doMemberAction(life, settings, p, act, n) || doBabyAction(life, settings, p, act, n) || doWorkPersonAction(life, settings, p, act, n) || doIxPersonAction(life, settings, p, act, n);
+  const rx = doSocietyPersonAction(life, settings, p, act, n) || doPowerPersonAction(life, settings, p, act) || doGrowthPersonAction(life, settings, p, act) || doMemberAction(life, settings, p, act, n) || doBabyAction(life, settings, p, act, n) || doWorkPersonAction(life, settings, p, act, n) || doIxPersonAction(life, settings, p, act, n);
   if (rx) return rx;
   switch (act) {
-    case 'talk': p.closeness = clamp(p.closeness + randint(life, 2, 7)); return res(L(`Bạn và ${name} nói chuyện rất lâu.`, `You and ${name} talk for a long time.`), [['happy', 0]]);
+    case 'talk': { p.closeness = clamp(p.closeness + randint(life, 2, 7)); const v = p.age >= 6 && p.role !== 'pet' ? say(life, p, 'hello') : null; return res(v ? L(`${name}: ${v.vi} Hai người nói chuyện rất lâu.`, `${name}: ${v.en} You talk for a long time.`) : L(`Bạn và ${name} nói chuyện rất lâu.`, `You and ${name} talk for a long time.`), [['happy', 0]]); }
     case 'gift':
       if (!canAfford(life, 3)) return res(L('Bạn không đủ tiền mua quà.', 'You can\'t afford a gift.'), [], 'bad');
       life.money -= cost(life, 3);
@@ -377,6 +385,9 @@ export function godApply(life, change) {
   if (change.world) godWorldSelf(life, change.world);
   if (change.unlockAll) godUnlockAll(life);
   if (change.drama) godDramaSelf(life, change.drama);
+  if (change.power) godPowerSelf(life, change.power);
+  if (change.persona) godSocietySelf(life, change.persona);
+  if (change.growth) godGrowthSelf(life, change.growth);
   if (change.body) for (const k of ['fert', 'skill', 'size']) if (change.body[k] != null && (k !== 'size' || life.gender === 'male')) life[k] = clamp(Number(change.body[k]));
   if (change.country && byCode[change.country] && change.country !== life.country) {
     const from = country(life);
@@ -403,6 +414,9 @@ export function godPerson(life, id, vals) {
   godHaremMember(life, p, vals);
   godWorldPerson(life, p, vals);
   godDramaPerson(life, p, vals);
+  godPowerPerson(life, p, vals);
+  godSocietyPerson(life, p, vals);
+  godGrowthPerson(life, p, vals);
   return p;
 }
 
@@ -419,6 +433,12 @@ export function godRewind(life) {
 
 /** Hành động trên màn hình Hậu cung. */
 export function doHaremAction(life, settings, act, arg) { if (!life || life.dead) return null; return haremAction(life, settings, act, arg) || doDramaHaremAction(life, settings, act); }
+/** Màn hình Quyền lực & Bản thân. */
+export function doPowerAction(life, settings, act, arg) {
+  if (!life || life.dead) return null;
+  if (act.startsWith('spend:')) { const k = act.slice(6); if (!SPEND[k]) return null; life.spend = k; return res(L(`Từ nay bạn tiêu tiền theo kiểu ${SPEND[k].name.vi.toLowerCase()}.`, `From now on your spending style is ${SPEND[k].name.en.toLowerCase()}.`), []); }
+  return powerAction(life, settings, act, arg);
+}
 /** God Mode: kích hoạt một kịch bản ngay. */
 export function doGodTrigger(life, settings, id) { if (!life || life.dead) return { ok: false }; life.customized = true; life.counts.godUses++; return godTrigger(life, settings, id); }
 /** Nút "Làm tất cả": tương tác tích cực với mọi người, rồi chăm sóc cả hậu cung nếu có. */

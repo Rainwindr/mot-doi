@@ -711,6 +711,26 @@
        }
       }
      ]
+    },
+    {
+     "label": {
+      "vi": "Nhường phần thưởng cho cả nhóm",
+      "en": "Share the award with the team"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "karma": 4,
+        "jobPerf": 6
+       },
+       "text": {
+        "vi": "Cả nhóm im lặng một giây rồi vỗ tay to nhất từ trước đến nay.",
+        "en": "The team goes quiet for a second, then claps louder than ever."
+       }
+      }
+     ]
     }
    ]
   },
@@ -1045,6 +1065,26 @@
        }
       }
      ]
+    },
+    {
+     "label": {
+      "vi": "Xin nghỉ 15 phút ăn tối rồi quay lại",
+      "en": "Take a 15-minute dinner break first"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 2,
+        "jobPerf": 4,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bát mì gói ngon nhất đời. Bạn quay lại tỉnh táo hơn hẳn.",
+        "en": "The best instant noodles of your life. You come back sharper."
+       }
+      }
+     ]
     }
    ]
   },
@@ -1376,10 +1416,47 @@
      "professor"
     ]
    },
-   "effects": {
-    "happy": 12,
-    "karma": 3
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Ôm học trò thật chặt",
+      "en": "Hug them tight"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Học trò nói bạn là lý do họ không bỏ học.",
+        "en": "They say you're why they didn't drop out."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mời họ về lớp nói chuyện với học sinh",
+      "en": "Invite them to talk to your class"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 10,
+        "karma": 5,
+        "jobPerf": 5
+       },
+       "text": {
+        "vi": "Học sinh của bạn ngồi nghe không chớp mắt.",
+        "en": "Your students listen without blinking."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "law_big_case",

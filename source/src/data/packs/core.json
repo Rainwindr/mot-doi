@@ -101,10 +101,47 @@
     "vi": "Bạn sốt cao giữa đêm. Bố mẹ tra mạng và chắc chắn bạn mắc đủ 14 loại bệnh.",
     "en": "You spike a fever at night. Your parents google it and conclude you have 14 diseases."
    },
-   "effects": {
-    "health": -8,
-    "happy": -3
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Khóc to cho bố mẹ biết",
+      "en": "Cry loudly so they notice"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -8,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bố mẹ đưa bạn đi viện lúc 2 giờ sáng. Chỉ là cảm sốt.",
+        "en": "They rush you to hospital at 2am. Just a fever."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nằm im ôm gấu bông",
+      "en": "Lie still hugging your teddy"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -10,
+        "happy": -2,
+        "willpower": 1
+       },
+       "text": {
+        "vi": "Bạn ngủ thiếp đi. Sáng ra hạ sốt, gấu bông thì ướt sũng.",
+        "en": "You drift off. By morning the fever breaks; the teddy is soaked."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "child_lost_market",
@@ -273,10 +310,46 @@
     "vi": "Chiếc răng sữa đầu tiên rụng. Bạn đặt nó dưới gối và chờ xem thị trường trả bao nhiêu.",
     "en": "Your first baby tooth falls out. You put it under your pillow to see what the market pays."
    },
-   "effects": {
-    "happy": 4,
-    "looks": -1
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Đặt dưới gối như truyền thống",
+      "en": "Put it under your pillow"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "looks": -1
+       },
+       "text": {
+        "vi": "Sáng ra có một đồng xu. Thị trường răng ổn định.",
+        "en": "In the morning there's a coin. The tooth market holds steady."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ lại làm kỷ niệm",
+      "en": "Keep it as a souvenir"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Bạn cất nó vào hộp. Mười năm sau tìm thấy và hét lên.",
+        "en": "You box it. Ten years later you find it and scream."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "child_pet_request",
@@ -1465,10 +1538,46 @@
     "vi": "Một con chim ị trúng đầu bạn. Người ta bảo thế là may mắn.",
     "en": "A bird poops on your head. People say it's good luck."
    },
-   "effects": {
-    "happy": -2,
-    "karma": 1
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Cười cho qua, coi như may mắn",
+      "en": "Laugh it off as good luck"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Bạn mua một tờ vé số cho đúng tinh thần.",
+        "en": "You buy a lottery ticket in the spirit of things."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lao đi tìm vòi nước gần nhất",
+      "en": "Sprint to the nearest tap"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -3,
+        "health": 1
+       },
+       "text": {
+        "vi": "Ba người lạ chỉ đường cho bạn, ai cũng nín cười.",
+        "en": "Three strangers give you directions, all trying not to laugh."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "random_viral_video",

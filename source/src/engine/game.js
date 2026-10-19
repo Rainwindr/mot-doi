@@ -16,6 +16,14 @@ import { buildHaremSys } from './harem.js';
 import { buildWorldSys } from './world.js';
 import { buildDramaSys } from './drama.js';
 import { markSeen } from './util.js';
+import { buildPowerSys } from './power.js';
+import { buildSocietySys, nudgePersona } from './society.js';
+import { buildGrowthSys, inheritGrowth } from './growth.js';
+import careersA from '../data/packs/careers_a.json';
+import careersB from '../data/packs/careers_b.json';
+import culturePack from '../data/packs/culture.json';
+import kidsPack from '../data/packs/kids_teens.json';
+import dailyPack from '../data/packs/daily_life.json';
 import big from '../data/packs/core_big.json';
 import love from '../data/packs/love_core.json';
 import coreLife from '../data/packs/core_life.json';
@@ -34,7 +42,7 @@ import afterDark from '../data/packs/after_dark.json';
 import adultFilm from '../data/packs/adult_industry.json';
 import manyLovers from '../data/packs/many_lovers.json';
 
-export const BUILTIN = [core, coreLife, school, weird, workPack, oldPack, healthPack, parentPack, afterDark, adultFilm, manyLovers, big, love, uni, ons, adult, kinks].map((p) => ({ ...normalizePack(p), builtin: true }));
+export const BUILTIN = [core, coreLife, school, weird, workPack, oldPack, healthPack, parentPack, afterDark, adultFilm, manyLovers, big, love, uni, ons, adult, kinks, careersA, careersB, culturePack, kidsPack, dailyPack].map((p) => ({ ...normalizePack(p), builtin: true }));
 
 export function defaultSettings() {
   return { lang: 'vi', adult25: false, alwaysProtect: true, godEnabled: true, packs: {}, packWeight: {} };
@@ -113,7 +121,7 @@ export function currentEvent(game) {
   while (life.queue.length) {
     const item = life.queue[0];
     if (item.sys) {
-      const ev = buildSysEvent(life, item, game.settings) || buildCrimeSys(life, item) || buildLoveSys(life, item) || buildArcEvent(life, item) || buildCareerSys(life, item) || buildIxSys(life, item, game.settings) || buildHaremSys(life, item, game.settings) || buildWorldSys(life, item, game.settings) || buildDramaSys(life, item, game.settings);
+      const ev = buildSysEvent(life, item, game.settings) || buildCrimeSys(life, item) || buildLoveSys(life, item) || buildArcEvent(life, item) || buildCareerSys(life, item) || buildIxSys(life, item, game.settings) || buildHaremSys(life, item, game.settings) || buildWorldSys(life, item, game.settings) || buildDramaSys(life, item, game.settings) || buildPowerSys(life, item, game.settings) || buildSocietySys(life, item, game.settings) || buildGrowthSys(life, item, game.settings);
       if (ev && ev.choices.every((c) => choiceLocked(life, c))) ev.choices = ev.choices.map((c, i) => (i === ev.choices.length - 1 ? { ...c, requires: undefined } : c));
       if (ev) return ev;
       life.queue.shift();
@@ -149,6 +157,8 @@ export function chooseEvent(game, idx) {
     if (ev.once) life.done.push(ev.uid);
     changes = applyOutcome(life, ev, outcome, game.settings);
   }
+  // 272/280: lựa chọn đúng tính cách khiến bạn thấy "đúng là mình"; tuổi thơ hình thành tính cách
+  if (nudgePersona(life, choice)) { life.stats.happy = Math.min(100, life.stats.happy + 1); changes = (changes || []).concat([['happy', 1]]); }
   markSeen(game.settings, ev.uid.startsWith('sc/') ? ev.uid.replace(/\/\d+$/, '/1') : ev.uid);
   addLog(life, ev.text);
   if (outcome.text) addLog(life, outcome.text, tone(changes));
@@ -204,6 +214,8 @@ export function continueAsChild(game, childId) {
   if (kid.age >= 18) life.edu.level = 'highschool';
   life.log = [{ age: kid.age, items: [{ text: L(`Bạn là ${personName(old, kid)}, con của ${old.first}. Bạn được thừa kế tài sản sau thuế.`, `You are ${personName(old, kid)}, child of ${old.first}. You inherit the estate after taxes.`) }] }];
   inheritSecrets(old, life, kid);
+  inheritGrowth(old, life, kid);
+  if (old.fcfg) life.fcfg = { ...old.fcfg };
   game.life = life;
   return life;
 }

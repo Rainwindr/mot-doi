@@ -1,0 +1,5503 @@
+{
+ "manifest": {
+  "id": "core.careers_a",
+  "name": {
+   "vi": "Gói gốc: nghề nghiệp (A)",
+   "en": "Core: careers (A)"
+  },
+  "version": "1.0.0",
+  "rating": "all",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "car_fast_food_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Giờ cao điểm trưa, máy chiên hỏng đúng lúc có 40 đơn đang chờ.",
+    "en": "Lunch rush, and the fryer dies with 40 orders waiting."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Xoay xở bằng chảo trên bếp",
+      "en": "Improvise with a pan on the stove"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "jobPerf": 8,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Khoai chiên chảo hóa ra ngon hơn. Quản lý gật gù.",
+        "en": "Pan fries turn out better. The manager nods."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "health": -2,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Dầu bắn lên tay. Bạn dán băng cá nhân hình khủng long.",
+        "en": "Oil splashes your hand. You wear a dinosaur plaster."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xin lỗi khách, mời nước miễn phí",
+      "en": "Apologise and hand out free drinks"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2,
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Khách vui vẻ chờ thêm. Một bà cụ khen bạn lễ phép.",
+        "en": "Customers wait happily. An old lady compliments your manners."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "fast_food"
+    ]
+   }
+  },
+  {
+   "id": "car_fast_food_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một khách quen gọi món \"như mọi khi\". Bạn không nhớ \"mọi khi\" là gì.",
+    "en": "A regular orders \"the usual\". You have no idea what \"the usual\" is."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đoán đại",
+      "en": "Take a guess"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 5,
+        "jobPerf": 3
+       },
+       "text": {
+        "vi": "Trúng phóc! Họ nhìn bạn như thiên tài.",
+        "en": "Spot on! They look at you like a genius."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Họ ăn món bạn đoán và nói \"cũng được\". Không phải \"mọi khi\".",
+        "en": "They eat your guess and say \"fine\". Not the usual."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thú thật là quên",
+      "en": "Admit you forgot"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 1
+       },
+       "text": {
+        "vi": "Họ cười và kể cho bạn. Từ nay bạn ghi vào sổ.",
+        "en": "They laugh and tell you. You write it down from now on."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "fast_food"
+    ]
+   }
+  },
+  {
+   "id": "car_fast_food_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Quản lý ca tối nghỉ đột xuất. Ai đó phải đứng ra điều hành.",
+    "en": "The night manager calls in sick. Someone has to run the shift."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Xung phong",
+      "en": "Volunteer"
+     },
+     "outcomes": [
+      {
+       "chance": 0.75,
+       "effects": {
+        "jobPerf": 10,
+        "salaryPct": 5
+       },
+       "text": {
+        "vi": "Ca tối trơn tru nhất tháng. Bạn được giao làm phó ca.",
+        "en": "Smoothest night of the month. You are made assistant manager."
+       }
+      },
+      {
+       "chance": 0.25,
+       "effects": {
+        "jobPerf": -3,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Hết ống hút, hết đá, hết kiên nhẫn. Nhưng bạn đã cố.",
+        "en": "Out of straws, out of ice, out of patience. But you tried."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Để người khác làm",
+      "en": "Let someone else do it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Ca tối hơi hỗn loạn. Không phải lỗi của bạn.",
+        "en": "The night is a bit chaotic. Not your fault."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "fast_food"
+    ]
+   }
+  },
+  {
+   "id": "car_fast_food_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn phát hiện đồng nghiệp lén mang đồ ăn thừa cho một người vô gia cư sau quán.",
+    "en": "You catch a coworker sneaking leftovers to a homeless man out back."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Giúp họ một tay",
+      "en": "Help them out"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 6,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Hai người lập thành thói quen mỗi tối. Ông cụ gọi bạn là \"cháu\".",
+        "en": "It becomes a nightly routine. The old man calls you \"kid\"."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Làm như không thấy",
+      "en": "Pretend you saw nothing"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 1
+       },
+       "text": {
+        "vi": "Bạn quay lưng, khẽ mỉm cười.",
+        "en": "You turn away with a small smile."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Báo quản lý",
+      "en": "Tell the manager"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": -5,
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Đồng nghiệp bị nhắc nhở. Cả bếp lạnh nhạt với bạn.",
+        "en": "Your coworker gets a warning. The whole kitchen goes cold on you."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "fast_food"
+    ]
+   }
+  },
+  {
+   "id": "car_fast_food_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một video bạn tung bánh burger lên không trung rồi bắt gọn được khách quay và lan truyền.",
+    "en": "A customer films you flipping a burger into the air and catching it. It goes viral."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Làm hẳn một kênh \"đầu bếp nhanh tay\"",
+      "en": "Start a \"fastest hands\" channel"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "fame": 6,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Bạn có 50 nghìn người theo dõi. Quán đông hẳn.",
+        "en": "You get 50,000 followers. The place gets busier."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "fame": 2
+       },
+       "text": {
+        "vi": "Video thứ hai bạn làm rơi bánh. Cũng lan truyền.",
+        "en": "In your second video you drop the burger. Also viral."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cười trừ, làm việc tiếp",
+      "en": "Laugh it off and get back to work"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 3
+       },
+       "text": {
+        "vi": "Quản lý dán ảnh bạn ở quầy: \"Nhân viên của tháng\".",
+        "en": "The manager pins your photo up: \"Employee of the Month\"."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "fast_food"
+    ]
+   }
+  },
+  {
+   "id": "car_delivery_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Trời mưa như trút, đơn hàng là một bát phở nóng giao lên tầng 18 không có thang máy.",
+    "en": "Pouring rain, and the order is hot noodle soup to an 18th floor with no lift."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Leo bộ, giữ phở thật thẳng",
+      "en": "Climb the stairs, keep it level"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 2,
+        "karma": 2,
+        "money": 1
+       },
+       "text": {
+        "vi": "Khách mở cửa, thấy bạn ướt sũng, boa gấp đôi.",
+        "en": "The customer sees you soaked and tips double."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gọi khách xuống lấy",
+      "en": "Ask them to come down"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Họ xuống, cảm ơn bạn đã gọi.",
+        "en": "They come down and thank you for calling."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "jobPerf": -3
+       },
+       "text": {
+        "vi": "Họ chấm bạn một sao vì \"không lên tận cửa\".",
+        "en": "They give you one star for \"not coming to the door\"."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "delivery"
+    ]
+   }
+  },
+  {
+   "id": "car_delivery_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn giao đồ cho cùng một người ba lần một tuần. Hôm nay họ mời bạn vào uống trà.",
+    "en": "You deliver to the same person three times a week. Today they invite you in for tea."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Vào uống một chén",
+      "en": "Have a quick cup"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Họ là ông cụ sống một mình. Bạn trở thành người duy nhất ông nói chuyện cả tuần.",
+        "en": "He is an old man who lives alone. You become the only person he talks to all week."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cảm ơn, còn đơn khác",
+      "en": "Thanks, but more orders"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Bạn đi tiếp. Ông vẫy tay đến khi bạn khuất.",
+        "en": "You ride on. He waves until you are out of sight."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "delivery"
+    ]
+   }
+  },
+  {
+   "id": "car_delivery_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "App giao hàng đổi thuật toán, thu nhập tuần này giảm một nửa.",
+    "en": "The delivery app changes its algorithm. This week your income halves."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chạy thêm giờ bù lại",
+      "en": "Work extra hours to make it up"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 2,
+        "health": -4
+       },
+       "text": {
+        "vi": "Bạn bù được tiền nhưng ngủ gục ở đèn đỏ.",
+        "en": "You make up the money but nod off at red lights."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Rủ các tài xế khác cùng lên tiếng",
+      "en": "Organise the other riders to speak up"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "karma": 4,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Báo chí đưa tin. App phải điều chỉnh lại.",
+        "en": "The press picks it up. The app backs down."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "jobPerf": -5
+       },
+       "text": {
+        "vi": "App khóa tài khoản bạn ba ngày \"để kiểm tra\".",
+        "en": "The app locks your account for three days \"for review\"."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chạy thêm app khác",
+      "en": "Sign up for a second app"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 1,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Hai app, hai điện thoại, một bộ não quá tải.",
+        "en": "Two apps, two phones, one overloaded brain."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "delivery"
+    ]
+   }
+  },
+  {
+   "id": "car_delivery_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn nhặt được một chiếc ví dày cộp rơi trên đường giao hàng.",
+    "en": "You find a fat wallet dropped on your delivery route."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tìm chủ trả lại",
+      "en": "Find the owner"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 8,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Chủ ví là giám đốc một công ty. Họ gửi bạn một phong bì cảm ơn.",
+        "en": "The owner runs a company. They send you a thank-you envelope."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nộp cho đồn gần nhất",
+      "en": "Hand it in at the nearest station"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 5
+       },
+       "text": {
+        "vi": "Cảnh sát ghi nhận. Bạn đi tiếp, lòng nhẹ tênh.",
+        "en": "The police log it. You ride on, light-hearted."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "delivery"
+    ]
+   }
+  },
+  {
+   "id": "car_delivery_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Có người đặt 30 ly trà sữa cho một văn phòng, ghi chú: \"giao trước 3 giờ, sếp đang giận\".",
+    "en": "Someone orders 30 bubble teas for an office: \"before 3pm, the boss is furious\"."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Phóng nhanh hết mức an toàn",
+      "en": "Ride as fast as safely possible"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "jobPerf": 6,
+        "money": 1
+       },
+       "text": {
+        "vi": "2 giờ 58. Cả văn phòng vỗ tay khi bạn bước vào.",
+        "en": "2:58pm. The whole office applauds as you walk in."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "money": -2,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Một ly đổ. Bạn đền ly đó và nghe sếp họ thở dài.",
+        "en": "One cup spills. You pay for it and hear their boss sigh."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Báo trước có thể trễ 10 phút",
+      "en": "Warn them you might be 10 minutes late"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 1
+       },
+       "text": {
+        "vi": "Họ cảm ơn vì thành thật. Sếp họ vẫn giận, nhưng không phải với bạn.",
+        "en": "They thank you for being honest. Their boss is still furious, just not at you."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "delivery"
+    ]
+   }
+  },
+  {
+   "id": "car_babysitter_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đứa trẻ bạn trông tuyên bố không ngủ trừ khi bạn kể chuyện về \"con rồng thích ăn bông cải\".",
+    "en": "The child you mind refuses to sleep unless you tell a story about \"a dragon who loves broccoli\"."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bịa một câu chuyện hoành tráng",
+      "en": "Invent an epic tale"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Đứa trẻ ngủ trước khi con rồng kịp ăn bữa thứ hai. Hôm sau nó đòi phần tiếp theo.",
+        "en": "The kid is asleep before the dragon's second meal. Tomorrow it demands a sequel."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đọc sách có sẵn",
+      "en": "Read a book from the shelf"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Đứa trẻ sửa từng chữ bạn đọc sai. Nó thuộc lòng cuốn này.",
+        "en": "The kid corrects every word you get wrong. It knows the book by heart."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "babysitter"
+    ]
+   }
+  },
+  {
+   "id": "car_babysitter_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bố mẹ đứa bé về muộn ba tiếng mà không báo.",
+    "en": "The parents come home three hours late without a word."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nói chuyện thẳng thắn về giờ giấc",
+      "en": "Talk frankly about timing"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 3,
+        "money": 2
+       },
+       "text": {
+        "vi": "Họ xin lỗi và trả thêm tiền giờ.",
+        "en": "They apologise and pay you for the extra hours."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cười cho qua",
+      "en": "Let it slide"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2,
+        "karma": 1
+       },
+       "text": {
+        "vi": "Tuần sau họ lại về muộn.",
+        "en": "Next week they are late again."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "babysitter"
+    ]
+   }
+  },
+  {
+   "id": "car_babysitter_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đứa trẻ hỏi bạn: \"Tại sao bầu trời màu xanh?\" lần thứ 14 trong ngày.",
+    "en": "The child asks \"Why is the sky blue?\" for the fourteenth time today."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Giải thích nghiêm túc như nhà khoa học",
+      "en": "Explain it properly, like a scientist"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Nó gật gù, rồi hỏi \"Thế tại sao ánh sáng lại tán xạ?\" Bạn phải tra mạng.",
+        "en": "It nods, then asks \"But why does light scatter?\" You have to google it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nói \"vì bầu trời thích màu xanh\"",
+      "en": "Say \"because the sky likes blue\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Nó chấp nhận ngay. Có lẽ đúng thật.",
+        "en": "It accepts that immediately. Maybe it is true."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "babysitter"
+    ]
+   }
+  },
+  {
+   "id": "car_babysitter_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn phát hiện đứa trẻ có năng khiếu vẽ đặc biệt.",
+    "en": "You notice the child has a real gift for drawing."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nói với bố mẹ nó",
+      "en": "Tell the parents"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4
+       },
+       "text": {
+        "vi": "Họ cho con đi học vẽ. Một năm sau nó tặng bạn bức tranh đầu tiên được treo ở triển lãm thiếu nhi.",
+        "en": "They enrol the kid in art class. A year later it gives you the first picture hung at a children's exhibition."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mua cho nó hộp màu mới",
+      "en": "Buy it a new set of paints"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -1,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Nó vẽ bạn thành một siêu anh hùng có áo choàng.",
+        "en": "It paints you as a superhero with a cape."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "babysitter"
+    ]
+   }
+  },
+  {
+   "id": "car_babysitter_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Gia đình đứa bé mời bạn đi cùng chuyến du lịch hè để phụ trông con.",
+    "en": "The family invites you on their summer holiday to help with the kids."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi luôn",
+      "en": "Go"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "money": 3
+       },
+       "text": {
+        "vi": "Biển, nắng, và ba đứa trẻ thay nhau đòi bạn bế. Mệt mà vui.",
+        "en": "Sea, sun, and three kids taking turns demanding piggybacks. Exhausting and fun."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Từ chối, giữ ranh giới công việc",
+      "en": "Decline, keep work boundaries"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Họ hiểu và vẫn giữ bạn làm tiếp.",
+        "en": "They understand and keep you on."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "babysitter"
+    ]
+   }
+  },
+  {
+   "id": "car_retail_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một khách hàng đòi trả lại chiếc áo đã mặc rõ ràng, còn mùi nước hoa.",
+    "en": "A customer tries to return a clearly worn shirt that still smells of perfume."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Từ chối lịch sự",
+      "en": "Politely refuse"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "willpower": 3,
+        "jobPerf": 3
+       },
+       "text": {
+        "vi": "Họ hậm hực bỏ đi. Quản lý khen bạn giữ nguyên tắc.",
+        "en": "They storm off. Your manager praises you for holding firm."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -4
+       },
+       "text": {
+        "vi": "Họ đòi gặp quản lý và đánh giá cửa hàng một sao.",
+        "en": "They demand the manager and leave a one-star review."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cho đổi sang áo khác",
+      "en": "Offer an exchange instead"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 1,
+        "jobPerf": 1
+       },
+       "text": {
+        "vi": "Họ đồng ý, hơi bất ngờ vì không phải cãi.",
+        "en": "They agree, a little surprised not to have to argue."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "retail"
+    ]
+   }
+  },
+  {
+   "id": "car_retail_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đợt giảm giá lớn nhất năm. Cửa mở lúc 8 giờ, hàng người xếp từ 5 giờ sáng.",
+    "en": "The biggest sale of the year. Doors open at 8; the queue started at 5am."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Trực quầy thu ngân",
+      "en": "Run the till"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 6,
+        "health": -2
+       },
+       "text": {
+        "vi": "Bạn quét 1.200 mã vạch. Tay bạn nghe tiếng \"bíp\" trong giấc mơ.",
+        "en": "You scan 1,200 barcodes. You hear beeping in your sleep."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Điều phối đám đông",
+      "en": "Manage the crowd"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 4,
+        "jobPerf": 4
+       },
+       "text": {
+        "vi": "Không ai bị giẫm, không ai giành nhau. Một phép màu nhỏ.",
+        "en": "Nobody gets trampled, nobody fights. A small miracle."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "retail"
+    ]
+   }
+  },
+  {
+   "id": "car_retail_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn thấy một thiếu niên bỏ thỏi son vào túi.",
+    "en": "You see a teenager slip a lipstick into their pocket."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nói chuyện riêng nhẹ nhàng",
+      "en": "Have a quiet word"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 5
+       },
+       "text": {
+        "vi": "Em đỏ mặt trả lại, nói xin lỗi. Bạn không báo ai.",
+        "en": "They blush, hand it back and apologise. You tell no one."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Báo bảo vệ",
+      "en": "Call security"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 3,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Quy trình được thực hiện đúng. Bạn hơi nặng lòng.",
+        "en": "Procedure is followed. It sits a little heavy with you."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "retail"
+    ]
+   }
+  },
+  {
+   "id": "car_retail_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Quản lý giao chỉ tiêu bán gói bảo hành cho mọi khách.",
+    "en": "Your manager sets a target: sell an extended warranty to every customer."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ép khách bằng mọi giá",
+      "en": "Push it hard on everyone"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 8,
+        "karma": -3,
+        "salaryPct": 3
+       },
+       "text": {
+        "vi": "Bạn đạt chỉ tiêu. Vài khách nhìn bạn như kẻ lừa đảo.",
+        "en": "You hit target. A few customers look at you like a con artist."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chỉ giới thiệu khi thật sự cần",
+      "en": "Only offer it when it makes sense"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "jobPerf": -2
+       },
+       "text": {
+        "vi": "Khách tin bạn hơn. Doanh số thì không đẹp lắm.",
+        "en": "Customers trust you more. The numbers, less so."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "retail"
+    ]
+   }
+  },
+  {
+   "id": "car_retail_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một vị khách nổi tiếng ghé cửa hàng, đeo kính râm và mũ.",
+    "en": "A celebrity drops in wearing sunglasses and a cap."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Phục vụ như mọi khách khác",
+      "en": "Serve them like anyone else"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Họ cảm ơn vì được đối xử bình thường. Cuối cùng còn chụp ảnh cùng bạn.",
+        "en": "They thank you for treating them normally, then take a photo with you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xin chữ ký ngay",
+      "en": "Ask for an autograph right away"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Họ ký vào hóa đơn. Bạn đóng khung nó.",
+        "en": "They sign your receipt. You frame it."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Họ cười gượng và rời đi sớm.",
+        "en": "They smile awkwardly and leave early."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "retail"
+    ]
+   }
+  },
+  {
+   "id": "car_waiter_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một cặp đôi cầu hôn ngay tại bàn bạn phục vụ. Nhẫn rơi vào ly nước.",
+    "en": "A couple gets engaged at your table. The ring falls into a glass of water."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Vớt nhẫn thật duyên dáng",
+      "en": "Fish it out with flair"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "money": 2
+       },
+       "text": {
+        "vi": "Cả nhà hàng vỗ tay. Họ boa bạn như khách mời danh dự.",
+        "en": "The restaurant applauds. They tip you like a guest of honour."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mang ly mới, giả vờ không thấy",
+      "en": "Bring a fresh glass, pretend you saw nothing"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Họ tự vớt nhẫn, cười đến chảy nước mắt.",
+        "en": "They fish it out themselves, laughing till they cry."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "waiter"
+    ]
+   }
+  },
+  {
+   "id": "car_waiter_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bàn 7 đã gọi món khác ba lần và giờ muốn \"món gì đó không có trong thực đơn\".",
+    "en": "Table 7 has changed their order three times and now wants \"something not on the menu\"."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thuyết phục bếp làm món đặc biệt",
+      "en": "Persuade the kitchen to improvise"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "jobPerf": 5,
+        "money": 2
+       },
+       "text": {
+        "vi": "Đầu bếp làm một món mới. Nó vào thực đơn tháng sau.",
+        "en": "The chef invents something. It joins the menu next month."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bếp nhìn bạn như thể bạn vừa xúc phạm tổ tiên họ.",
+        "en": "The kitchen looks at you like you insulted their ancestors."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gợi ý món ngon nhất trong thực đơn",
+      "en": "Suggest the best dish on the menu"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Họ thử và ngạc nhiên. Đôi khi khách chỉ cần người chọn hộ.",
+        "en": "They try it and are surprised. Sometimes people just want someone to choose."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "waiter"
+    ]
+   }
+  },
+  {
+   "id": "car_waiter_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn làm rơi khay nước ngay giữa nhà hàng đông khách.",
+    "en": "You drop a full tray right in the middle of a packed restaurant."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cúi chào như diễn viên",
+      "en": "Take a bow like a performer"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Khách cười và vỗ tay. Quản lý thì không.",
+        "en": "Customers laugh and clap. The manager does not."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Dọn dẹp nhanh, xin lỗi từng bàn",
+      "en": "Clean up fast, apologise table by table"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 3,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Mười phút sau không ai nhớ chuyện đó nữa.",
+        "en": "Ten minutes later nobody remembers."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "waiter"
+    ]
+   }
+  },
+  {
+   "id": "car_waiter_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một khách lớn tuổi ăn một mình mỗi Chủ nhật, luôn gọi hai phần, một phần để trống.",
+    "en": "An elderly regular eats alone every Sunday, always ordering for two, one plate untouched."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hỏi chuyện nhẹ nhàng",
+      "en": "Gently ask about it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bà kể về người chồng đã mất. Từ đó bạn ngồi với bà năm phút mỗi tuần.",
+        "en": "She tells you about her late husband. You sit with her five minutes each week from then on."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tôn trọng, không hỏi",
+      "en": "Respect it, ask nothing"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2
+       },
+       "text": {
+        "vi": "Bạn luôn đặt thêm một bông hoa nhỏ trên bàn bà.",
+        "en": "You always place a small flower on her table."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "waiter"
+    ]
+   }
+  },
+  {
+   "id": "car_waiter_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Nhà hàng được một nhà phê bình ẩm thực ghé thăm bí mật. Bạn đoán ra là ai.",
+    "en": "A food critic visits incognito. You figure out who it is."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Phục vụ hoàn hảo, không lộ là đã biết",
+      "en": "Serve flawlessly without letting on"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 10,
+        "salaryPct": 5
+       },
+       "text": {
+        "vi": "Bài phê bình khen \"người phục vụ tinh tế\". Đó là bạn.",
+        "en": "The review praises \"a perceptive server\". That is you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Báo cả bếp",
+      "en": "Alert the whole kitchen"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "jobPerf": 4
+       },
+       "text": {
+        "vi": "Cả bếp dốc sức. Bài phê bình bốn sao.",
+        "en": "The kitchen gives it everything. Four stars."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "jobPerf": -2
+       },
+       "text": {
+        "vi": "Ai cũng run tay. Món tráng miệng bị đổ.",
+        "en": "Everyone gets nervous. Dessert gets dropped."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "waiter"
+    ]
+   }
+  },
+  {
+   "id": "car_factory_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Dây chuyền dừng đột ngột. Bạn là người đầu tiên thấy chỗ kẹt.",
+    "en": "The line stops dead. You are first to spot the jam."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Báo kỹ thuật và chờ",
+      "en": "Call maintenance and wait"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 1,
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Đúng quy trình, an toàn. Ca trưởng ghi nhận.",
+        "en": "By the book, safe. The shift lead notes it."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đề xuất cách sửa nhanh hơn",
+      "en": "Suggest a faster fix"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "jobPerf": 8,
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Cách của bạn được áp dụng cho cả xưởng.",
+        "en": "Your method is adopted across the plant."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Kỹ thuật nói \"để chuyên gia lo\".",
+        "en": "Maintenance says \"leave it to the experts\"."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "factory"
+    ]
+   }
+  },
+  {
+   "id": "car_factory_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Công ty đề nghị làm thêm ca đêm cả tháng, lương gấp rưỡi.",
+    "en": "The company offers night shifts all month at time-and-a-half."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận hết",
+      "en": "Take them all"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 6,
+        "health": -5
+       },
+       "text": {
+        "vi": "Bạn có tiền mua chiếc xe máy mới, và một đôi mắt thâm.",
+        "en": "You can afford a new motorbike, and dark circles."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhận một nửa",
+      "en": "Take half"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 3,
+        "health": -2
+       },
+       "text": {
+        "vi": "Cân bằng. Bạn vẫn kịp ăn cơm với gia đình.",
+        "en": "Balanced. You still make family dinners."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Từ chối",
+      "en": "Decline"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bạn ngủ đủ giấc và không hối hận.",
+        "en": "You sleep well and regret nothing."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "factory"
+    ]
+   }
+  },
+  {
+   "id": "car_factory_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Công nhân mới ở trạm bên cạnh làm sai liên tục và sắp bị đuổi.",
+    "en": "The new worker next to you keeps making mistakes and is about to be let go."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Kèm cặp họ sau giờ làm",
+      "en": "Coach them after hours"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 5,
+        "rel_friend": 5
+       },
+       "text": {
+        "vi": "Một tuần sau họ làm nhanh nhất ca. Họ mời bạn ăn sáng cả tháng.",
+        "en": "A week later they are the fastest on shift. They buy you breakfast for a month."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tập trung việc của mình",
+      "en": "Focus on your own work"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Họ nghỉ việc vào thứ Sáu.",
+        "en": "They leave on Friday."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "factory"
+    ]
+   }
+  },
+  {
+   "id": "car_factory_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn phát hiện quy trình an toàn bị bỏ qua để chạy nhanh hơn.",
+    "en": "You notice a safety procedure being skipped to speed things up."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Báo cáo lên trên",
+      "en": "Report it up the chain"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "karma": 6,
+        "jobPerf": 3
+       },
+       "text": {
+        "vi": "Quy trình được sửa. Không ai bị thương.",
+        "en": "The procedure is fixed. Nobody gets hurt."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "karma": 4,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Bạn bị chuyển sang công việc nhàm chán hơn.",
+        "en": "You get moved to a duller station."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhắc trực tiếp đồng nghiệp",
+      "en": "Remind your coworkers directly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3
+       },
+       "text": {
+        "vi": "Họ càu nhàu nhưng làm lại đúng.",
+        "en": "They grumble but do it properly."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "factory"
+    ]
+   }
+  },
+  {
+   "id": "car_factory_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Xưởng tổ chức cuộc thi sáng kiến tiết kiệm nguyên liệu.",
+    "en": "The factory holds an ideas contest for saving materials."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gửi ý tưởng bạn ấp ủ lâu nay",
+      "en": "Submit the idea you have been nursing"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "jobPerf": 8,
+        "money": 4,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Ý tưởng của bạn đoạt giải nhất. Ảnh bạn dán ở căng tin.",
+        "en": "Your idea wins first prize. Your photo goes up in the canteen."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Không đoạt giải, nhưng giám đốc nhớ tên bạn.",
+        "en": "No prize, but the director remembers your name."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đứng ngoài",
+      "en": "Sit it out"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Bạn ăn bánh miễn phí ở lễ trao giải.",
+        "en": "You eat the free cake at the ceremony."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "factory"
+    ]
+   }
+  },
+  {
+   "id": "car_driver_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một hành khách lên xe, khóc suốt chặng đường.",
+    "en": "A passenger gets in and cries the whole ride."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đưa khăn giấy, im lặng lái",
+      "en": "Hand them tissues, drive quietly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3
+       },
+       "text": {
+        "vi": "Lúc xuống xe họ nói: \"Cảm ơn vì không hỏi gì.\"",
+        "en": "Getting out, they say: \"Thank you for not asking.\""
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hỏi han nhẹ nhàng",
+      "en": "Gently ask if they are okay"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "happy": 1
+       },
+       "text": {
+        "vi": "Họ kể về một ngày tồi tệ. Bạn kể chuyện cười. Họ bật cười trước khi xuống xe.",
+        "en": "They tell you about a terrible day. You tell a joke. They laugh before getting out."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "driver"
+    ]
+   }
+  },
+  {
+   "id": "car_driver_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Có khách quên một chiếc cặp trên ghế sau.",
+    "en": "A passenger leaves a briefcase on the back seat."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Quay lại trả ngay",
+      "en": "Drive back to return it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 6,
+        "money": 2
+       },
+       "text": {
+        "vi": "Đó là hồ sơ hợp đồng quan trọng. Họ nhét vào tay bạn một phong bì cảm ơn.",
+        "en": "It holds important contracts. They press a thank-you envelope into your hand."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gửi lên tổng đài",
+      "en": "Hand it to dispatch"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3
+       },
+       "text": {
+        "vi": "Tổng đài trả lại cho chủ. Bạn nhận một lời cảm ơn qua app.",
+        "en": "Dispatch returns it. You get a thank-you through the app."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "driver"
+    ]
+   }
+  },
+  {
+   "id": "car_driver_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Kẹt xe ba tiếng trên cao tốc. Khách sắp lỡ chuyến bay.",
+    "en": "Three hours of gridlock on the highway. Your passenger is about to miss a flight."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tìm đường tắt qua làng",
+      "en": "Take a back road through the villages"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "jobPerf": 5,
+        "money": 2
+       },
+       "text": {
+        "vi": "Đến sân bay vừa kịp. Khách hứa sẽ gọi bạn lần sau.",
+        "en": "You make the airport just in time. They promise to book you again."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Đường tắt cũng kẹt, vì ai cũng nghĩ giống bạn.",
+        "en": "The shortcut is jammed too; everyone had the same idea."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gọi giúp họ đổi chuyến",
+      "en": "Help them rebook"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2
+       },
+       "text": {
+        "vi": "Họ lỡ chuyến nhưng có vé chuyến sau, và cảm ơn bạn vì bình tĩnh.",
+        "en": "They miss it but get the next flight, and thank you for staying calm."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "driver"
+    ]
+   }
+  },
+  {
+   "id": "car_driver_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn chở một ca sĩ nổi tiếng. Họ hỏi bạn có muốn nghe bài hát chưa phát hành không.",
+    "en": "You drive a famous singer. They ask if you want to hear an unreleased song."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Có chứ!",
+      "en": "Absolutely!"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bài hát hay đến nổi da gà. Bạn hứa giữ bí mật.",
+        "en": "The song gives you goosebumps. You promise to keep it secret."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Khen bài đang phát trên radio trước",
+      "en": "Praise the song on the radio first"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Hóa ra đó cũng là bài của họ. Họ cười ngất.",
+        "en": "Turns out that one is theirs too. They crack up."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "driver"
+    ]
+   }
+  },
+  {
+   "id": "car_driver_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Công ty muốn bạn chạy tuyến đường dài xuyên tỉnh, đi một tuần về một ngày.",
+    "en": "The company wants you on a long cross-country route: a week away, a day home."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận tuyến dài",
+      "en": "Take the long route"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 5,
+        "happy": -2,
+        "rel_partner": -3
+       },
+       "text": {
+        "vi": "Thu nhập tăng. Bạn biết từng quán cơm dọc quốc lộ.",
+        "en": "More money. You learn every roadside diner on the highway."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ tuyến nội thành",
+      "en": "Stay on city routes"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Ít tiền hơn, nhưng tối nào cũng về nhà.",
+        "en": "Less money, but home every night."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "driver"
+    ]
+   }
+  },
+  {
+   "id": "car_cleaner_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn dọn văn phòng lúc nửa đêm và thấy một nhân viên trẻ đang ngủ gục trên bàn.",
+    "en": "Cleaning the office at midnight, you find a young employee asleep at their desk."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đắp áo khoác cho họ",
+      "en": "Drape a jacket over them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4
+       },
+       "text": {
+        "vi": "Sáng hôm sau có một hộp bánh trên xe đẩy của bạn.",
+        "en": "Next morning there is a box of cakes on your cart."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đánh thức, nhắc họ về nhà",
+      "en": "Wake them and tell them to go home"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3
+       },
+       "text": {
+        "vi": "Họ giật mình, cảm ơn bạn rồi bắt taxi về.",
+        "en": "They jump, thank you and grab a taxi home."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "cleaner"
+    ]
+   }
+  },
+  {
+   "id": "car_cleaner_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn tìm thấy một tờ vé số trúng giải nhỏ trong thùng rác phòng họp.",
+    "en": "You find a small-prize winning lottery ticket in the meeting room bin."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hỏi xem của ai",
+      "en": "Ask around whose it is"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 5
+       },
+       "text": {
+        "vi": "Chủ nhân chia đôi tiền thưởng với bạn.",
+        "en": "The owner splits the prize with you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ lại, người ta vứt rồi mà",
+      "en": "Keep it, they threw it away"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 3,
+        "karma": -1
+       },
+       "text": {
+        "vi": "Đủ tiền cho một bữa lẩu. Hơi áy náy.",
+        "en": "Enough for a hotpot dinner. A little guilty."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "cleaner"
+    ]
+   }
+  },
+  {
+   "id": "car_cleaner_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Công ty thuê dịch vụ vệ sinh mới, đang cân nhắc cắt người.",
+    "en": "The company is considering a new cleaning contractor and cutting staff."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Xin gặp quản lý chứng minh năng lực",
+      "en": "Ask to show management what you do"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "jobPerf": 8,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Họ giữ bạn lại và tăng lương nhẹ.",
+        "en": "They keep you on with a small raise."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Họ nói sẽ \"cân nhắc\". Tháng sau mọi thứ vẫn vậy.",
+        "en": "They say they will \"consider it\". Nothing changes."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Âm thầm tìm việc dự phòng",
+      "en": "Quietly look for a backup job"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Bạn có hai lời mời. Yên tâm hơn hẳn.",
+        "en": "You get two offers. Much more at ease."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "cleaner"
+    ]
+   }
+  },
+  {
+   "id": "car_cleaner_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một tòa nhà thuê bạn dọn căn hộ của người vừa mất. Gia đình họ ở xa.",
+    "en": "You are hired to clear the flat of someone who recently died. Their family lives far away."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dọn thật cẩn thận, giữ lại kỷ vật",
+      "en": "Clear it carefully, saving keepsakes"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 6,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn gửi cho gia đình một hộp ảnh và thư. Họ gọi điện khóc cảm ơn.",
+        "en": "You send the family a box of photos and letters. They call in tears to thank you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Làm nhanh cho xong",
+      "en": "Get it done quickly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 2
+       },
+       "text": {
+        "vi": "Xong trong một ngày. Bạn cố không nghĩ nhiều.",
+        "en": "Done in a day. You try not to think about it."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "cleaner"
+    ]
+   }
+  },
+  {
+   "id": "car_cleaner_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn được giao dọn biệt thự của một gia đình giàu có. Họ để quên két sắt mở.",
+    "en": "You are sent to clean a wealthy family's mansion. They left the safe open."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đóng két, nhắn chủ nhà",
+      "en": "Close it and message the owners"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 8,
+        "jobPerf": 5
+       },
+       "text": {
+        "vi": "Họ yêu cầu công ty chỉ gửi bạn từ nay.",
+        "en": "They ask the company to send only you from now on."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Không chạm vào, dọn chỗ khác",
+      "en": "Do not touch it, clean elsewhere"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3
+       },
+       "text": {
+        "vi": "Bạn làm xong và ra về. Không ai biết bạn đã thấy.",
+        "en": "You finish and leave. Nobody knows you saw."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "cleaner"
+    ]
+   }
+  },
+  {
+   "id": "car_bartender_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một khách quen gọi ly thứ năm và bắt đầu nhắn tin cho người yêu cũ.",
+    "en": "A regular orders a fifth drink and starts texting their ex."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Giấu điện thoại họ đi",
+      "en": "Confiscate their phone"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Sáng hôm sau họ quay lại cảm ơn bạn đã cứu họ.",
+        "en": "Next day they come back to thank you for saving them."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Pha cho họ ly nước lọc",
+      "en": "Make them a glass of water"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2
+       },
+       "text": {
+        "vi": "Họ uống nước, khóc một chút, rồi về nhà.",
+        "en": "They drink it, cry a bit, then go home."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "bartender"
+    ]
+   }
+  },
+  {
+   "id": "car_bartender_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Ông chủ quán muốn bạn sáng tạo một ly cocktail đặc trưng.",
+    "en": "The owner wants you to create a signature cocktail."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Pha theo cảm hứng quê nhà",
+      "en": "Mix something inspired by home"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "fame": 3,
+        "jobPerf": 6,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Ly cocktail mang tên bạn thành món bán chạy nhất.",
+        "en": "The cocktail named after you becomes the bestseller."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Ông chủ uống một ngụm, im lặng rất lâu.",
+        "en": "The owner takes a sip and is silent for a long time."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Biến tấu một công thức kinh điển",
+      "en": "Riff on a classic"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 3
+       },
+       "text": {
+        "vi": "An toàn, ngon, không ai phàn nàn.",
+        "en": "Safe, tasty, no complaints."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "bartender"
+    ]
+   }
+  },
+  {
+   "id": "car_bartender_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Hai nhóm khách bắt đầu to tiếng vì một trận bóng.",
+    "en": "Two groups start shouting over a football match."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mời cả hai nhóm một vòng miễn phí",
+      "en": "Buy both groups a round"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 3,
+        "money": -1
+       },
+       "text": {
+        "vi": "Họ nâng ly với nhau. Bạn vừa cứu cả buổi tối.",
+        "en": "They toast each other. You just saved the night."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gọi bảo vệ",
+      "en": "Call security"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Bảo vệ đưa hai nhóm ra. Quán yên trở lại.",
+        "en": "Security walks both groups out. Peace returns."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "bartender"
+    ]
+   }
+  },
+  {
+   "id": "car_bartender_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một người lạ ngồi quầy kể chuyện đời mình suốt ba tiếng.",
+    "en": "A stranger at the bar tells you their life story for three hours."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nghe hết và đưa lời khuyên",
+      "en": "Listen to it all and offer advice"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Họ để lại tiền boa bằng tiền ba ly.",
+        "en": "They leave a tip worth three drinks."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lịch sự quay sang khách khác",
+      "en": "Politely turn to other customers"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Họ chuyển sang kể cho người ngồi cạnh.",
+        "en": "They move on to the person next to them."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "bartender"
+    ]
+   }
+  },
+  {
+   "id": "car_bartender_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Quán được mời tham gia cuộc thi pha chế toàn thành phố.",
+    "en": "The bar is invited to a city-wide cocktail competition."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đại diện quán đi thi",
+      "en": "Represent the bar"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "fame": 6,
+        "money": 5,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bạn giành giải nhất! Quán đông gấp đôi suốt tháng.",
+        "en": "You win first prize! The bar is twice as busy all month."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 2,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Không đạt giải, nhưng bạn học được ba kỹ thuật mới.",
+        "en": "No prize, but you learn three new techniques."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhường đồng nghiệp",
+      "en": "Let a coworker go"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2
+       },
+       "text": {
+        "vi": "Họ đoạt giải ba và mời bạn đi ăn.",
+        "en": "They take third place and take you to dinner."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "bartender"
+    ]
+   }
+  },
+  {
+   "id": "car_model_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Buổi chụp quảng cáo kéo dài 12 tiếng, nhiếp ảnh gia vẫn chưa hài lòng.",
+    "en": "A 12-hour ad shoot, and the photographer still isn't happy."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gợi ý một góc chụp mới",
+      "en": "Suggest a new angle"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "jobPerf": 6,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Tấm ảnh đó lên bìa chiến dịch.",
+        "en": "That shot becomes the campaign cover."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Nhiếp ảnh gia nói \"để tôi lo phần nghệ thuật\".",
+        "en": "The photographer says \"leave the art to me\"."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Kiên nhẫn làm theo",
+      "en": "Patiently follow direction"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 3,
+        "jobPerf": 3
+       },
+       "text": {
+        "vi": "13 tiếng. Tấm cuối cùng là tấm đẹp nhất.",
+        "en": "Thirteen hours. The last shot is the best."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "model"
+    ]
+   }
+  },
+  {
+   "id": "car_model_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một thương hiệu muốn bạn giảm cân thêm cho show diễn.",
+    "en": "A brand wants you to lose more weight for a show."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Từ chối thẳng thắn",
+      "en": "Refuse outright"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 5,
+        "health": 2
+       },
+       "text": {
+        "vi": "Bạn mất show đó. Một thương hiệu khác thuê bạn vì \"vẻ khỏe khoắn tự nhiên\".",
+        "en": "You lose that show. Another brand hires you for your \"healthy, natural look\"."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đổi sang làm việc với thương hiệu khác",
+      "en": "Switch to a different brand"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Bạn ký với một hãng đề cao sự đa dạng.",
+        "en": "You sign with a label that champions diversity."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "model"
+    ]
+   }
+  },
+  {
+   "id": "car_model_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn được mời làm gương mặt đại diện cho một chiến dịch từ thiện.",
+    "en": "You are invited to front a charity campaign."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhận lời không lấy thù lao",
+      "en": "Accept for free"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 8,
+        "fame": 4
+       },
+       "text": {
+        "vi": "Chiến dịch quyên góp vượt chỉ tiêu. Báo chí khen bạn.",
+        "en": "The campaign beats its target. The press praises you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhận lời, lấy phí thấp",
+      "en": "Accept for a small fee"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "fame": 3,
+        "money": 2
+       },
+       "text": {
+        "vi": "Mọi người đều có lợi.",
+        "en": "Everyone benefits."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "model"
+    ]
+   }
+  },
+  {
+   "id": "car_model_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Ảnh của bạn bị một trang mạng chỉnh sửa quá đà, trông như người khác.",
+    "en": "A website edits your photo so much you look like a different person."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đăng ảnh gốc, nói về chuẩn đẹp thật",
+      "en": "Post the original and talk about real beauty"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "fame": 5,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Bài viết của bạn lan truyền. Nhiều người cảm ơn bạn.",
+        "en": "Your post goes viral. Many people thank you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lờ đi",
+      "en": "Ignore it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -1
+       },
+       "text": {
+        "vi": "Ảnh vẫn ở đó. Bạn cố không nhìn.",
+        "en": "The photo stays up. You try not to look."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "model"
+    ]
+   }
+  },
+  {
+   "id": "car_model_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Tuần lễ thời trang ở nước ngoài mời bạn diễn.",
+    "en": "An overseas fashion week invites you to walk."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi",
+      "en": "Go"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "fame": 8,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bạn sải bước trên sàn diễn quốc tế. Mẹ bạn xem livestream và khóc.",
+        "en": "You walk an international runway. Your mum watches the livestream and cries."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "fame": 3,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Giày quá chật, bạn vấp nhẹ. Clip lan truyền, nhưng theo kiểu dễ thương.",
+        "en": "Shoes too tight, you stumble slightly. The clip goes viral, the endearing kind."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở lại làm hợp đồng trong nước",
+      "en": "Stay for a domestic contract"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 4
+       },
+       "text": {
+        "vi": "Ổn định, ít hào nhoáng hơn.",
+        "en": "Steady, less glamorous."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "model"
+    ]
+   }
+  },
+  {
+   "id": "car_office_clerk_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Máy in kẹt giấy đúng lúc bạn cần in 200 trang cho cuộc họp lúc 9 giờ.",
+    "en": "The printer jams just as you need 200 pages for the 9am meeting."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mổ máy in ra sửa",
+      "en": "Take the printer apart"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "jobPerf": 5,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Bạn sửa được! Cả phòng gọi bạn là \"người thì thầm với máy in\".",
+        "en": "You fix it! The office calls you \"the printer whisperer\"."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bạn tháo ra được, lắp lại thì không.",
+        "en": "You get it apart. Not back together."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chạy sang phòng khác in nhờ",
+      "en": "Run to another floor to print"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 2,
+        "health": 1
+       },
+       "text": {
+        "vi": "Kịp giờ, mồ hôi đầm đìa.",
+        "en": "Just in time, drenched in sweat."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "office_clerk"
+    ]
+   }
+  },
+  {
+   "id": "car_office_clerk_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn phát hiện một lỗi nhỏ trong báo cáo đã gửi lên sếp lớn.",
+    "en": "You spot a small error in a report already sent to senior management."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Báo ngay và gửi bản sửa",
+      "en": "Flag it and send a correction"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "jobPerf": 4
+       },
+       "text": {
+        "vi": "Sếp cảm ơn bạn vì sự cẩn thận.",
+        "en": "Your boss thanks you for being careful."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hy vọng không ai để ý",
+      "en": "Hope nobody notices"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {},
+       "text": {
+        "vi": "Không ai để ý thật.",
+        "en": "Nobody notices."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "jobPerf": -6
+       },
+       "text": {
+        "vi": "Sếp lớn để ý.",
+        "en": "Senior management notices."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "office_clerk"
+    ]
+   }
+  },
+  {
+   "id": "car_office_clerk_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đồng nghiệp ngồi cạnh ăn đồ có mùi rất mạnh mỗi trưa.",
+    "en": "The coworker next to you eats something very pungent every lunch."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hỏi công thức",
+      "en": "Ask for the recipe"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3,
+        "rel_friend": 3
+       },
+       "text": {
+        "vi": "Hóa ra rất ngon. Giờ hai người thay nhau mang đồ ăn.",
+        "en": "It is delicious. Now you take turns bringing lunch."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mở cửa sổ, im lặng chịu đựng",
+      "en": "Open a window and suffer in silence"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bạn có sức chịu đựng phi thường.",
+        "en": "Your endurance becomes legendary."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "office_clerk"
+    ]
+   }
+  },
+  {
+   "id": "car_office_clerk_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Công ty chuyển sang phần mềm mới. Không ai biết dùng.",
+    "en": "The company switches to new software. Nobody knows how to use it."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tự học rồi dạy cả phòng",
+      "en": "Learn it and teach everyone"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 3,
+        "jobPerf": 8
+       },
+       "text": {
+        "vi": "Bạn thành \"chuyên gia nội bộ\". Sếp nhớ tên bạn.",
+        "en": "You become the in-house expert. The boss learns your name."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Học vừa đủ dùng",
+      "en": "Learn just enough"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Bạn dùng được ba nút. Đủ rồi.",
+        "en": "You master three buttons. Good enough."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "office_clerk"
+    ]
+   }
+  },
+  {
+   "id": "car_office_clerk_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một vị trí trưởng nhóm đang trống.",
+    "en": "A team lead position opens up."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ứng tuyển",
+      "en": "Apply"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "salaryPct": 12,
+        "jobPerf": 5,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Bạn được chọn! Giờ bạn có thêm trách nhiệm và một cái ghế xoay.",
+        "en": "You get it! More responsibility and a swivel chair."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -3,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Người khác được chọn. Lần sau.",
+        "en": "Someone else gets it. Next time."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chưa sẵn sàng",
+      "en": "Not ready yet"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {},
+       "text": {
+        "vi": "Bạn tiếp tục làm tốt việc của mình.",
+        "en": "You keep doing your job well."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "office_clerk"
+    ]
+   }
+  },
+  {
+   "id": "car_sales_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Khách hàng lớn nhất quý đòi giảm giá thêm 20%, nếu không sẽ chuyển sang đối thủ.",
+    "en": "Your biggest client of the quarter demands 20% more off or they walk."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Giữ giá, nhấn mạnh giá trị",
+      "en": "Hold the price, sell the value"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "jobPerf": 10,
+        "salaryPct": 5
+       },
+       "text": {
+        "vi": "Họ ký. Sếp gọi bạn là \"tay đàm phán thép\".",
+        "en": "They sign. Your boss calls you \"iron negotiator\"."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "jobPerf": -6
+       },
+       "text": {
+        "vi": "Họ đi thật.",
+        "en": "They really walk."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giảm 10% kèm dịch vụ tặng thêm",
+      "en": "Offer 10% plus extra service"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 5
+       },
+       "text": {
+        "vi": "Hai bên đều thấy mình thắng.",
+        "en": "Both sides feel like winners."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "sales"
+    ]
+   }
+  },
+  {
+   "id": "car_sales_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Cuối tháng còn thiếu đúng một hợp đồng để đạt thưởng.",
+    "en": "Month end, and you are one deal short of your bonus."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gọi điện cho mọi khách cũ",
+      "en": "Call every old client"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "money": 5,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Một khách cũ ký đúng 23 giờ 59.",
+        "en": "An old client signs at 11:59pm."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Không ai nghe máy vào tối thứ Sáu.",
+        "en": "Nobody answers on a Friday night."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chấp nhận, tháng sau cố",
+      "en": "Accept it, try next month"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Bạn ngủ ngon, tháng sau vượt chỉ tiêu.",
+        "en": "You sleep well and beat target next month."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "sales"
+    ]
+   }
+  },
+  {
+   "id": "car_sales_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Sếp gợi ý \"tô hồng\" tính năng sản phẩm để chốt khách.",
+    "en": "Your boss hints you should \"embellish\" product features to close."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Từ chối, chỉ nói sự thật",
+      "en": "Refuse, stick to the truth"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 5,
+        "jobPerf": -2
+       },
+       "text": {
+        "vi": "Khách hàng tin bạn. Họ quay lại mua tiếp năm sau.",
+        "en": "Clients trust you. They come back the next year."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Làm theo",
+      "en": "Go along with it"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "money": 3,
+        "karma": -4
+       },
+       "text": {
+        "vi": "Chốt được. Bạn không nhìn vào mắt khách.",
+        "en": "Deal closed. You avoid the client's eyes."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "karma": -4,
+        "jobPerf": -8
+       },
+       "text": {
+        "vi": "Khách phát hiện và hủy hợp đồng.",
+        "en": "The client finds out and cancels."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "sales"
+    ]
+   }
+  },
+  {
+   "id": "car_sales_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn được cử đi hội chợ thương mại ở thành phố khác.",
+    "en": "You are sent to a trade fair in another city."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đứng gian hàng cả ngày",
+      "en": "Work the booth all day"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 6,
+        "health": -2
+       },
+       "text": {
+        "vi": "80 danh thiếp, 3 khách tiềm năng thật.",
+        "en": "80 business cards, 3 real leads."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đi kết giao ở tiệc tối",
+      "en": "Network at the evening party"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "jobPerf": 8,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Một câu chuyện ở quầy bar thành hợp đồng lớn nhất năm.",
+        "en": "A chat at the bar becomes the deal of the year."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "health": -2,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bạn kết bạn với nhiều người. Không ai mua hàng.",
+        "en": "You make lots of friends. Nobody buys anything."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "sales"
+    ]
+   }
+  },
+  {
+   "id": "car_sales_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một đối thủ mời bạn sang làm, lương cao hơn 30%.",
+    "en": "A competitor offers you a job at 30% more."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhảy việc",
+      "en": "Jump ship"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "salaryPct": 25,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Văn phòng mới, khách hàng mới. Bạn mang theo vài khách cũ.",
+        "en": "New office, new clients. A few old ones follow you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Dùng lời mời để xin tăng lương",
+      "en": "Use it to ask for a raise"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "salaryPct": 15
+       },
+       "text": {
+        "vi": "Công ty giữ bạn bằng mọi giá.",
+        "en": "Your company keeps you at any cost."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Sếp nói \"chúc may mắn\". Bạn ở lại, hơi ngượng.",
+        "en": "Your boss says \"good luck\". You stay, awkwardly."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "sales"
+    ]
+   }
+  },
+  {
+   "id": "car_police_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một bà cụ báo mất con mèo, khóc như mất người thân.",
+    "en": "An old lady reports her cat missing, crying as if she lost family."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dành giờ nghỉ trưa đi tìm",
+      "en": "Spend your lunch break searching"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "karma": 6,
+        "happy": 5
+       },
+       "text": {
+        "vi": "Bạn tìm thấy con mèo trên cây. Bà cụ đan tặng bạn chiếc khăn.",
+        "en": "You find the cat up a tree. She knits you a scarf."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "karma": 3
+       },
+       "text": {
+        "vi": "Không tìm thấy. Ba ngày sau con mèo tự về.",
+        "en": "No luck. Three days later the cat comes home on its own."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ghi biên bản, hứa thông báo",
+      "en": "Take a report, promise to call"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 1
+       },
+       "text": {
+        "vi": "Đúng thủ tục. Bà cụ vẫn buồn.",
+        "en": "By the book. She is still sad."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "police"
+    ]
+   }
+  },
+  {
+   "id": "car_police_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn được giao nói chuyện về an toàn giao thông ở một trường tiểu học.",
+    "en": "You are asked to give a road-safety talk at a primary school."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Làm thành trò chơi",
+      "en": "Turn it into a game"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Cả trường hét \"Nhìn trái, nhìn phải!\" theo bạn.",
+        "en": "The whole school chants \"Look left, look right!\" with you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Trình bày nghiêm túc",
+      "en": "Give a serious talk"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Các em ngồi im, một em ngủ gật.",
+        "en": "The kids sit quietly; one dozes off."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "police"
+    ]
+   }
+  },
+  {
+   "id": "car_police_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Đồng nghiệp đề nghị \"bỏ qua\" vi phạm nhỏ của người quen của họ.",
+    "en": "A colleague asks you to \"overlook\" a minor offence by their acquaintance."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Từ chối, xử lý đúng luật",
+      "en": "Refuse and handle it properly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 6,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Đồng nghiệp lạnh nhạt một tuần. Sếp lặng lẽ ghi nhận.",
+        "en": "Your colleague is cold for a week. Your chief quietly notices."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhắc nhở nhẹ rồi cho qua",
+      "en": "A warning, then let it go"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": -2
+       },
+       "text": {
+        "vi": "Mọi người hài lòng, trừ lương tâm bạn.",
+        "en": "Everyone is happy except your conscience."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "police"
+    ]
+   }
+  },
+  {
+   "id": "car_police_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một vụ trộm xe đạp hàng loạt trong khu phố khiến dân tình bức xúc.",
+    "en": "A wave of bicycle thefts has the neighbourhood upset."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tổ chức tổ dân phòng cùng cư dân",
+      "en": "Organise a neighbourhood watch"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "jobPerf": 6,
+        "fame": 1
+       },
+       "text": {
+        "vi": "Số vụ giảm hẳn. Cư dân mời bạn ăn cỗ.",
+        "en": "Thefts drop sharply. Residents invite you to a feast."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xem lại camera từng ngõ",
+      "en": "Review every street camera"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "jobPerf": 8,
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Bạn tìm ra quy luật và bắt được nhóm trộm.",
+        "en": "You find the pattern and catch the gang."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "health": -2
+       },
+       "text": {
+        "vi": "Mỏi mắt mà chưa có kết quả.",
+        "en": "Sore eyes, no result yet."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "police"
+    ]
+   }
+  },
+  {
+   "id": "car_police_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn được đề cử đi học khóa điều tra nâng cao.",
+    "en": "You are nominated for an advanced investigations course."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi học",
+      "en": "Go"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 4,
+        "salaryPct": 8,
+        "jobPerf": 4
+       },
+       "text": {
+        "vi": "Sáu tháng học, một tấm bằng và một biệt danh \"thám tử\".",
+        "en": "Six months, a certificate and the nickname \"Detective\"."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở lại đội tuần tra",
+      "en": "Stay on patrol"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bạn thích được ở gần người dân hơn.",
+        "en": "You prefer being close to the community."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "police"
+    ]
+   }
+  },
+  {
+   "id": "car_nurse_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một bệnh nhân lớn tuổi không chịu uống thuốc trừ khi bạn hát cho họ nghe.",
+    "en": "An elderly patient won't take their pills unless you sing to them."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hát một bài cũ",
+      "en": "Sing an old song"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5,
+        "karma": 3
+       },
+       "text": {
+        "vi": "Cả phòng bệnh hát theo. Bệnh nhân uống thuốc và mỉm cười.",
+        "en": "The whole ward sings along. The patient takes the pills, smiling."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Kiên nhẫn thuyết phục",
+      "en": "Patiently persuade them"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 2,
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Mất 20 phút. Họ uống, nhưng hỏi bạn \"sao không hát?\".",
+        "en": "Twenty minutes. They take them, asking \"why didn't you sing?\""
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "nurse"
+    ]
+   }
+  },
+  {
+   "id": "car_nurse_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Ca trực 16 tiếng, bạn chưa ăn gì từ sáng.",
+    "en": "A 16-hour shift and you haven't eaten since morning."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tranh thủ ăn 5 phút",
+      "en": "Grab five minutes to eat"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 2
+       },
+       "text": {
+        "vi": "Một ổ bánh mì chưa bao giờ ngon đến thế.",
+        "en": "A sandwich has never tasted so good."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cố thêm, bệnh nhân cần bạn",
+      "en": "Push on, patients need you"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 3,
+        "health": -4
+       },
+       "text": {
+        "vi": "Bạn suýt ngất ở hành lang. Đồng nghiệp ép bạn ngồi xuống.",
+        "en": "You nearly faint in the corridor. A colleague makes you sit."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "nurse"
+    ]
+   }
+  },
+  {
+   "id": "car_nurse_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Gia đình bệnh nhân trút giận lên bạn vì phải chờ lâu.",
+    "en": "A patient's family takes out their anger on you over the wait."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Bình tĩnh giải thích",
+      "en": "Calmly explain"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 4,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Họ dịu lại. Hôm sau mang trái cây đến xin lỗi.",
+        "en": "They calm down. Next day they bring fruit to apologise."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhờ bác sĩ trưởng khoa",
+      "en": "Fetch the head doctor"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 1
+       },
+       "text": {
+        "vi": "Bác sĩ xử lý. Bạn đi uống cốc nước.",
+        "en": "The doctor handles it. You get a glass of water."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "nurse"
+    ]
+   }
+  },
+  {
+   "id": "car_nurse_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn nhận ra một triệu chứng bất thường mà bác sĩ trực bỏ qua.",
+    "en": "You notice a symptom the on-call doctor missed."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Báo ngay dù bị khó chịu",
+      "en": "Speak up, even if it's awkward"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "karma": 8,
+        "jobPerf": 8
+       },
+       "text": {
+        "vi": "Bệnh nhân được chẩn đoán kịp thời. Bác sĩ cảm ơn bạn trước cả khoa.",
+        "en": "The patient is diagnosed in time. The doctor thanks you in front of the ward."
+       }
+      },
+      {
+       "chance": 0.2,
+       "effects": {
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Hóa ra không sao. Bác sĩ vẫn khen bạn cẩn thận.",
+        "en": "It turns out to be nothing. The doctor still praises your care."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ghi vào hồ sơ để ca sau xem",
+      "en": "Note it for the next shift"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 1
+       },
+       "text": {
+        "vi": "Ca sau đọc và xử lý. May mắn kịp thời.",
+        "en": "The next shift reads it and acts. Luckily in time."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "nurse"
+    ]
+   }
+  },
+  {
+   "id": "car_nurse_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bệnh viện mở lớp đào tạo chuyên khoa hồi sức.",
+    "en": "The hospital offers specialist intensive care training."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đăng ký học",
+      "en": "Sign up"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 4,
+        "salaryPct": 10
+       },
+       "text": {
+        "vi": "Bạn thành điều dưỡng hồi sức, công việc khó hơn và ý nghĩa hơn.",
+        "en": "You become an ICU nurse; harder work, more meaning."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở lại khoa hiện tại",
+      "en": "Stay where you are"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bạn thân với cả khoa như gia đình.",
+        "en": "Your ward feels like family."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "nurse"
+    ]
+   }
+  },
+  {
+   "id": "car_teacher_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một học sinh cá biệt ngồi cuối lớp, không bao giờ làm bài tập.",
+    "en": "A difficult student at the back never does homework."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gặp riêng tìm hiểu lý do",
+      "en": "Talk privately to find out why"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 6
+       },
+       "text": {
+        "vi": "Em phải trông em nhỏ mỗi tối. Bạn cho em làm bài trong giờ ra chơi.",
+        "en": "They look after siblings every night. You let them do homework at break."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gọi phụ huynh",
+      "en": "Call the parents"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Phụ huynh hứa sẽ để ý. Em vẫn ít nói.",
+        "en": "The parents promise to keep an eye. The student stays quiet."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "teacher"
+    ]
+   }
+  },
+  {
+   "id": "car_teacher_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Ngày Nhà giáo, lớp tặng bạn một tấm thiệp có chữ ký của cả lớp, ghi sai tên bạn.",
+    "en": "Teachers' Day, the class gives you a card signed by everyone, with your name misspelled."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cảm động đến rơi nước mắt",
+      "en": "Get teary anyway"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8
+       },
+       "text": {
+        "vi": "Cả lớp ôm bạn. Tên bạn giờ có biệt danh mới.",
+        "en": "The whole class hugs you. You now have a new nickname."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Sửa tên trên bảng, cười",
+      "en": "Correct it on the board, laughing"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 5
+       },
+       "text": {
+        "vi": "Cả lớp cười theo. Năm sau thiệp ghi đúng tên.",
+        "en": "The class laughs along. Next year they spell it right."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "teacher"
+    ]
+   }
+  },
+  {
+   "id": "car_teacher_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Hiệu trưởng yêu cầu nâng điểm cho con của một nhà tài trợ.",
+    "en": "The principal asks you to bump up a donor's child's grades."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Từ chối",
+      "en": "Refuse"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "karma": 8,
+        "willpower": 4
+       },
+       "text": {
+        "vi": "Hiệu trưởng không nói gì thêm. Học sinh đó tự cố gắng và đỗ thật.",
+        "en": "The principal drops it. The student works hard and passes for real."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "karma": 6,
+        "jobPerf": -6
+       },
+       "text": {
+        "vi": "Bạn bị chuyển sang dạy lớp khó hơn.",
+        "en": "You get moved to a tougher class."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đề nghị kèm thêm cho em đó",
+      "en": "Offer the student extra tutoring"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Một cách giải quyết ai cũng chấp nhận được.",
+        "en": "A solution everyone can live with."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "teacher"
+    ]
+   }
+  },
+  {
+   "id": "car_teacher_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Lớp bạn đạt giải nhất cuộc thi khoa học cấp thành phố.",
+    "en": "Your class wins the city science fair."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Để các em nhận hết công",
+      "en": "Give the kids all the credit"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Các em lên báo. Bạn đứng sau chụp ảnh, cười tít mắt.",
+        "en": "The kids make the paper. You stand at the back beaming."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Trả lời phỏng vấn về phương pháp dạy",
+      "en": "Talk about your teaching methods"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "fame": 4,
+        "jobPerf": 6
+       },
+       "text": {
+        "vi": "Một trường danh tiếng mời bạn về thỉnh giảng.",
+        "en": "A prestigious school invites you to guest lecture."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "teacher"
+    ]
+   }
+  },
+  {
+   "id": "car_teacher_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một phụ huynh nhắn tin cho bạn lúc 11 giờ đêm hỏi bài tập.",
+    "en": "A parent messages you at 11pm about homework."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Trả lời ngay",
+      "en": "Reply now"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 1,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Họ cảm ơn. Đêm sau lại có ba phụ huynh khác nhắn.",
+        "en": "They thank you. The next night three more parents message."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đặt giờ trả lời trong ngày",
+      "en": "Set office hours for messages"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 3,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Phụ huynh tôn trọng. Bạn ngủ ngon.",
+        "en": "Parents respect it. You sleep well."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "teacher"
+    ]
+   }
+  },
+  {
+   "id": "car_marketing_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Chiến dịch quảng cáo của bạn bị cư dân mạng chế ảnh thành trò cười.",
+    "en": "Your ad campaign gets turned into a meme."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chơi theo trend, tự chế luôn",
+      "en": "Lean in and make your own memes"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "fame": 4,
+        "jobPerf": 10
+       },
+       "text": {
+        "vi": "Doanh số tăng 40%. Sếp gọi bạn là thiên tài.",
+        "en": "Sales jump 40%. Your boss calls you a genius."
+       }
+      },
+      {
+       "chance": 0.3,
+       "effects": {
+        "jobPerf": -4
+       },
+       "text": {
+        "vi": "Lần này cư dân mạng chế cả bạn.",
+        "en": "This time the internet memes you too."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Rút quảng cáo, làm lại",
+      "en": "Pull the ad and redo it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": -2,
+        "smarts": 2
+       },
+       "text": {
+        "vi": "An toàn, tốn kém, bài học đắt giá.",
+        "en": "Safe, costly, a pricey lesson."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "marketing"
+    ]
+   }
+  },
+  {
+   "id": "car_marketing_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Khách hàng muốn logo \"to hơn, nhưng cũng nhỏ hơn\".",
+    "en": "The client wants the logo \"bigger, but also smaller\"."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gửi lại đúng bản cũ",
+      "en": "Send back the exact same file"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Họ duyệt ngay: \"Đúng ý rồi!\"",
+        "en": "They approve instantly: \"Perfect!\""
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Họ nhận ra. Cuộc họp kéo dài thêm một tiếng.",
+        "en": "They notice. The meeting runs an extra hour."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hỏi kỹ họ thật sự muốn gì",
+      "en": "Ask what they really want"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2,
+        "jobPerf": 4
+       },
+       "text": {
+        "vi": "Hóa ra họ muốn logo \"nổi bật hơn\". Bạn đổi màu, xong.",
+        "en": "Turns out they wanted it to \"pop\". A colour change, done."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "marketing"
+    ]
+   }
+  },
+  {
+   "id": "car_marketing_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn được giao làm chiến dịch cho một sản phẩm bạn không tin dùng.",
+    "en": "You are assigned a campaign for a product you don't believe in."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Làm chuyên nghiệp, tìm điểm mạnh thật",
+      "en": "Do it professionally, find real strengths"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 5,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Bạn tìm được một góc trung thực. Chiến dịch thành công vừa phải.",
+        "en": "You find an honest angle. The campaign does fine."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xin chuyển dự án",
+      "en": "Ask to switch projects"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 2,
+        "jobPerf": -2
+       },
+       "text": {
+        "vi": "Sếp đồng ý, hơi miễn cưỡng.",
+        "en": "Your boss agrees, reluctantly."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "marketing"
+    ]
+   }
+  },
+  {
+   "id": "car_marketing_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Một người nổi tiếng nhận quảng cáo cho bạn, rồi đăng nhầm nguyên văn câu hướng dẫn.",
+    "en": "An influencer you hired posts your instructions word for word, including \"insert caption here\"."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Biến nó thành chiến dịch hài hước",
+      "en": "Turn it into a funny campaign"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "fame": 5,
+        "jobPerf": 8
+       },
+       "text": {
+        "vi": "Cả mạng nói về thương hiệu bạn trong ba ngày.",
+        "en": "The whole internet talks about your brand for three days."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "jobPerf": -3
+       },
+       "text": {
+        "vi": "Sếp không thấy buồn cười.",
+        "en": "Your boss doesn't find it funny."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Xử lý khủng hoảng nhanh gọn",
+      "en": "Quietly handle the crisis"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bài đăng được sửa sau 4 phút. Chỉ 30 nghìn người kịp chụp màn hình.",
+        "en": "Fixed within four minutes. Only 30,000 people screenshot it."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "marketing"
+    ]
+   }
+  },
+  {
+   "id": "car_marketing_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Chiến dịch của bạn được đề cử giải thưởng quảng cáo khu vực.",
+    "en": "Your campaign is nominated for a regional advertising award."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Dự lễ trao giải",
+      "en": "Attend the ceremony"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "fame": 5,
+        "salaryPct": 10,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Bạn thắng! Bài phát biểu ngắn và hài hước.",
+        "en": "You win! Your speech is short and funny."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Không thắng, nhưng tiệc sau lễ rất vui.",
+        "en": "No win, but the after-party is great."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở nhà xem livestream",
+      "en": "Watch the livestream at home"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Bạn mặc đồ ngủ, ăn mì gói, vẫn hồi hộp như thật.",
+        "en": "In pyjamas with instant noodles, just as nervous."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "marketing"
+    ]
+   }
+  },
+  {
+   "id": "car_accountant_1",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Mùa quyết toán thuế. Bàn bạn ngập giấy tờ đến tận cằm.",
+    "en": "Tax season. Paperwork piled up to your chin."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Làm thêm giờ cả tháng",
+      "en": "Work late all month"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 8,
+        "health": -4,
+        "money": 3
+       },
+       "text": {
+        "vi": "Xong đúng hạn. Bạn ngủ liền 14 tiếng ngày cuối.",
+        "en": "Done on time. You sleep 14 hours on the last day."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đề xuất phần mềm tự động hóa",
+      "en": "Propose automation software"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "smarts": 3,
+        "jobPerf": 10
+       },
+       "text": {
+        "vi": "Năm sau mùa thuế nhẹ đi một nửa.",
+        "en": "Next year, tax season is half the work."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Sếp nói \"để năm sau tính\".",
+        "en": "Your boss says \"let's look at it next year\"."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "accountant"
+    ]
+   }
+  },
+  {
+   "id": "car_accountant_2",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn phát hiện số liệu của một phòng ban không khớp.",
+    "en": "You find a department's numbers don't add up."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Điều tra kỹ",
+      "en": "Dig deeper"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "jobPerf": 10,
+        "karma": 4
+       },
+       "text": {
+        "vi": "Bạn phát hiện một lỗi hệ thống tiết kiệm cho công ty rất nhiều tiền.",
+        "en": "You uncover a system error that saves the company a fortune."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Chỉ là lỗi nhập liệu. Nhưng sếp khen bạn kỹ.",
+        "en": "Just a typo. Your boss still praises your rigour."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Báo lên trên để họ tự xử",
+      "en": "Escalate and let them handle it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 2
+       },
+       "text": {
+        "vi": "Đúng quy trình. Bạn về đúng giờ.",
+        "en": "By the book. You leave on time."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "accountant"
+    ]
+   }
+  },
+  {
+   "id": "car_accountant_3",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn bè liên tục nhờ bạn khai thuế miễn phí.",
+    "en": "Friends keep asking you to do their taxes for free."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Giúp hết",
+      "en": "Help them all"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "karma": 4,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn có rất nhiều bạn bè biết ơn, và không có cuối tuần.",
+        "en": "You gain many grateful friends and lose your weekends."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Thu phí tượng trưng",
+      "en": "Charge a token fee"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 2
+       },
+       "text": {
+        "vi": "Họ trả bằng tiền và bánh. Công bằng.",
+        "en": "They pay in cash and cake. Fair."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "accountant"
+    ]
+   }
+  },
+  {
+   "id": "car_accountant_4",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Công ty có kiểm toán bất ngờ.",
+    "en": "A surprise audit hits the company."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chuẩn bị hồ sơ hoàn hảo",
+      "en": "Prepare flawless files"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 8,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Kiểm toán viên khen hồ sơ của bạn ngăn nắp nhất họ từng thấy.",
+        "en": "The auditor says your files are the tidiest they have ever seen."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bình tĩnh, làm như mọi ngày",
+      "en": "Stay calm, business as usual"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "jobPerf": 3
+       },
+       "text": {
+        "vi": "Mọi thứ ổn. Bạn luôn làm đúng từ đầu.",
+        "en": "All fine. You always did it right."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "accountant"
+    ]
+   }
+  },
+  {
+   "id": "car_accountant_5",
+   "category": "work",
+   "age": [
+    16,
+    70
+   ],
+   "weight": 6,
+   "once": true,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn được đề nghị học chứng chỉ kế toán quốc tế.",
+    "en": "You are offered support to get an international accounting qualification."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Học, dù mất hai năm buổi tối",
+      "en": "Study, even if it takes two years of evenings"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 5,
+        "salaryPct": 15,
+        "happy": -3
+       },
+       "text": {
+        "vi": "Bạn đỗ. Lương tăng và cửa mở ra nhiều nơi.",
+        "en": "You pass. A raise and doors opening everywhere."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chưa phải lúc",
+      "en": "Not the right time"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Bạn dành buổi tối cho gia đình.",
+        "en": "You keep your evenings for family."
+       }
+      }
+     ]
+    }
+   ],
+   "requires": {
+    "job": [
+     "accountant"
+    ]
+   }
+  }
+ ]
+}

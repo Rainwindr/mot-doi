@@ -177,10 +177,47 @@
      2
     ]
    },
-   "effects": {
-    "happy": 6,
-    "rel_child": 3
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Dạy con nói \"bố/mẹ\"",
+      "en": "Teach them to say \"Mum/Dad\""
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "rel_child": 3
+       },
+       "text": {
+        "vi": "Sau một tuần, con nói được. Rồi quay sang gọi con chó lần nữa.",
+        "en": "After a week they say it. Then call for the dog again."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mua cho con một chú cún",
+      "en": "Get them a puppy"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 8,
+        "rel_child": 5,
+        "money": -5
+       },
+       "text": {
+        "vi": "Con nói thêm được chữ thứ hai: tên chú cún mới.",
+        "en": "They learn a second word: the new puppy's name."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "par_daycare",
@@ -1355,11 +1392,47 @@
      60
     ]
    },
-   "effects": {
-    "happy": 15,
-    "rel_child": 5,
-    "fame": 2
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Khóc ở hàng ghế đầu",
+      "en": "Cry in the front row"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 15,
+        "rel_child": 5,
+        "fame": 2
+       },
+       "text": {
+        "vi": "Bạn khóc to đến mức máy quay lia sang.",
+        "en": "You cry so hard the camera pans over."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Nhắn riêng cho con một lời khen",
+      "en": "Send them a private message of pride"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "rel_child": 8
+       },
+       "text": {
+        "vi": "Con gửi lại một tấm ảnh hồi nhỏ ngồi trên vai bạn.",
+        "en": "They reply with a childhood photo of them on your shoulders."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "par_child_trouble",

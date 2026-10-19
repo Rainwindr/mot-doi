@@ -4,6 +4,7 @@ import { STATS } from './validate.js';
 import { portfolioValue } from './economy.js';
 import { majorEvent, tradeEvent } from './school.js';
 import { illnessById } from '../data/illness.js';
+import { maleFactor, carrierFactor } from './fertility.js';
 import {
   country, tier, unit, partner, spouse, people, byId, randomPerson, partnerGender, personName,
   addLog, setFlag, clearFlag, readStat, adjustRel, milestone, lovers, polyOk, makeLover, endLover, endAllLovers, syncAffair,
@@ -43,6 +44,7 @@ export function eligible(ev, life, settings) {
   };
   for (const k of Object.keys(bools)) if (k in r && r[k] !== bools[k]) return false;
   if (r.incomeTier && !r.incomeTier.includes(tier(life))) return false;
+  if (r.country && !r.country.includes(life.country)) return false;
   if (r.eduStage && !r.eduStage.includes(life.edu.stage)) return false;
   if (r.lovers != null && lovers(life).length < r.lovers) return false;
   if (r.job && !(life.job && r.job.includes(life.job.id))) return false;
@@ -112,15 +114,25 @@ export function newContact(life) {
   return p;
 }
 
-/** Thụ thai: cần một nam một nữ, người mang thai dưới 48 tuổi. Chưa báo tin cho đến năm sau. */
+/**
+ * Thụ thai: cần một nam một nữ. Người mang thai 18–48 tuổi (God Mode tới 55), nam theo đường cong tuổi.
+ * Khi người chơi không mang thai, nhiều người có thể mang thai con của bạn cùng lúc (life.pregs).
+ */
 export function tryConceive(life, other, p) {
-  if (!other || life.pregnancy || other.gender === life.gender) return false;
-  const carrierAge = life.gender === 'female' ? life.age : other.age;
-  if (carrierAge > 48 || carrierAge < 18) return false;
-  const ageFactor = carrierAge > 40 ? 0.35 : carrierAge > 35 ? 0.7 : 1;
+  if (!other || other.gender === life.gender || !other.alive) return false;
+  const selfCarrier = life.gender === 'female';
+  const carrierAge = selfCarrier ? life.age : other.age;
+  const cf = carrierFactor(life, carrierAge);
+  if (!cf) return false;
+  const mf = selfCarrier ? maleFactor(life, other.age, other.fert ?? 70, 60) : maleFactor(life, life.age, life.fert ?? 70, life.stats.health);
+  if (!mf) return false;
+  if (selfCarrier) { if (life.pregnancy) return false; }
+  else if ((life.pregnancy && life.pregnancy.otherId === other.id) || (life.pregs || []).some((x) => x.otherId === other.id)) return false;
   const fert = clamp(((life.fert ?? 70) / 70) * ((other.fert ?? 70) / 70), 0.05, 2);
-  if (!chance(life, clamp(p * ageFactor * fert, 0, 0.95))) return false;
-  life.pregnancy = { carrier: life.gender === 'female' ? 'self' : 'other', otherId: other.id, age: life.age };
+  if (!chance(life, clamp(p * cf * mf * fert, 0, 0.95))) return false;
+  const rec = { carrier: selfCarrier ? 'self' : 'other', otherId: other.id, age: life.age };
+  if (!life.pregnancy) life.pregnancy = rec;
+  else (life.pregs ||= []).push(rec);
   return true;
 }
 

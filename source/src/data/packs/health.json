@@ -253,10 +253,47 @@
     "vi": "Món ăn đường phố tối qua rất ngon. Sáng nay thì không.",
     "en": "Last night's street food was delicious. This morning, less so."
    },
-   "effects": {
-    "health": -6,
-    "happy": -4
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Nằm nhà uống nước muối",
+      "en": "Stay home and rehydrate"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -6,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Ba ngày bạn không muốn nghe đến chữ \"ăn\".",
+        "en": "For three days you can't hear the word \"food\"."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đi khám ngay",
+      "en": "See a doctor right away"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -3,
+        "happy": -2,
+        "money": -2
+       },
+       "text": {
+        "vi": "Bác sĩ kê thuốc, bạn đỡ hẳn sau một ngày.",
+        "en": "The doctor prescribes something and you're better in a day."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "hl_sports_injury",
@@ -1141,11 +1178,49 @@
    "requires": {
     "ill": true
    },
-   "effects": {
-    "happy": 10,
-    "health": 6,
-    "cure": true
-   }
+   "choices": [
+    {
+     "label": {
+      "vi": "Ăn mừng với gia đình",
+      "en": "Celebrate with family"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 10,
+        "health": 6,
+        "cure": true
+       },
+       "text": {
+        "vi": "Cả nhà ăn một bữa lớn. Bạn được gắp nhiều nhất.",
+        "en": "A big family meal. You get the best bits."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lập danh sách những điều muốn làm",
+      "en": "Write a list of things you want to do"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 12,
+        "health": 6,
+        "cure": true,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Danh sách dài ba trang. Bạn gạch được dòng đầu tiên ngay tuần sau.",
+        "en": "Three pages long. You cross off the first line the next week."
+       }
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "hl_sleep_apnea",

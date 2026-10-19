@@ -1,1604 +1,1676 @@
 {
-  "manifest": {
-    "id": "core.love",
-    "name": {
-      "vi": "Gói gốc: tình yêu & hôn nhân",
-      "en": "Core: love & marriage"
-    },
-    "version": "0.1.0",
-    "rating": "18+",
-    "languages": [
-      "vi",
-      "en"
-    ]
+ "manifest": {
+  "id": "core.love",
+  "name": {
+   "vi": "Gói gốc: tình yêu & hôn nhân",
+   "en": "Core: love & marriage"
   },
-  "events": [
+  "version": "0.1.0",
+  "rating": "18+",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "love_first_date_nerves",
+   "category": "love",
+   "age": [
+    18,
+    60
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true,
+    "married": false,
+    "max": {
+     "rel_partner": 70
+    }
+   },
+   "text": {
+    "vi": "Buổi hẹn thứ ba. Người yêu hỏi: \"Rốt cuộc mình là gì của nhau?\"",
+    "en": "Third date. Your partner asks: \"So what are we, exactly?\""
+   },
+   "choices": [
     {
-      "id": "love_first_date_nerves",
-      "category": "love",
-      "age": [
-        18,
-        60
-      ],
-      "weight": 6,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": true,
-        "married": false,
-        "max": {
-          "rel_partner": 70
-        }
+     "label": {
+      "vi": "Nghiêm túc yêu nhau",
+      "en": "We're serious"
+     },
+     "outcomes": [
+      {
+       "chance": 0.8,
+       "effects": {
+        "rel_partner": 12,
+        "happy": 8
+       },
+       "text": {
+        "vi": "Họ ôm chầm lấy bạn.",
+        "en": "They throw their arms around you."
+       }
       },
-      "text": {
-        "vi": "Buổi hẹn thứ ba. Người yêu hỏi: \"Rốt cuộc mình là gì của nhau?\"",
-        "en": "Third date. Your partner asks: \"So what are we, exactly?\""
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Nghiêm túc yêu nhau",
-            "en": "We're serious"
-          },
-          "outcomes": [
-            {
-              "chance": 0.8,
-              "effects": {
-                "rel_partner": 12,
-                "happy": 8
-              },
-              "text": {
-                "vi": "Họ ôm chầm lấy bạn.",
-                "en": "They throw their arms around you."
-              }
-            },
-            {
-              "chance": 0.2,
-              "effects": {
-                "rel_partner": -4
-              },
-              "text": {
-                "vi": "Họ hơi giật mình vì bạn nghiêm túc quá sớm.",
-                "en": "They're startled you're so serious so soon."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Cứ để tự nhiên",
-            "en": "Let's see where it goes"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_partner": -3,
-                "willpower": 2
-              },
-              "text": {
-                "vi": "Họ gật đầu, nhưng có vẻ hơi hụt hẫng.",
-                "en": "They nod, a little deflated."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.2,
+       "effects": {
+        "rel_partner": -4
+       },
+       "text": {
+        "vi": "Họ hơi giật mình vì bạn nghiêm túc quá sớm.",
+        "en": "They're startled you're so serious so soon."
+       }
+      }
+     ]
     },
     {
-      "id": "love_meet_parents",
-      "category": "love",
-      "age": [
-        18,
-        60
-      ],
-      "weight": 5,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": true,
-        "married": false,
-        "min": {
-          "rel_partner": 55
-        }
+     "label": {
+      "vi": "Cứ để tự nhiên",
+      "en": "Let's see where it goes"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": -3,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Họ gật đầu, nhưng có vẻ hơi hụt hẫng.",
+        "en": "They nod, a little deflated."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_meet_parents",
+   "category": "love",
+   "age": [
+    18,
+    60
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true,
+    "married": false,
+    "min": {
+     "rel_partner": 55
+    }
+   },
+   "text": {
+    "vi": "Người yêu mời bạn về ra mắt gia đình họ.",
+    "en": "Your partner invites you to meet their family."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mặc lịch sự, mang quà",
+      "en": "Dress up and bring a gift"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_partner": 10,
+        "money": -3
+       },
+       "setFlags": [
+        "inlaws_like"
+       ],
+       "text": {
+        "vi": "Bố mẹ họ khen bạn hết lời.",
+        "en": "Their parents can't stop praising you."
+       }
       },
-      "text": {
-        "vi": "Người yêu mời bạn về ra mắt gia đình họ.",
-        "en": "Your partner invites you to meet their family."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Mặc lịch sự, mang quà",
-            "en": "Dress up and bring a gift"
-          },
-          "outcomes": [
-            {
-              "chance": 0.7,
-              "effects": {
-                "rel_partner": 10,
-                "money": -3
-              },
-              "setFlags": [
-                "inlaws_like"
-              ],
-              "text": {
-                "vi": "Bố mẹ họ khen bạn hết lời.",
-                "en": "Their parents can't stop praising you."
-              }
-            },
-            {
-              "chance": 0.3,
-              "effects": {
-                "rel_partner": 2,
-                "money": -3,
-                "happy": -4
-              },
-              "setFlags": [
-                "inlaws_cold"
-              ],
-              "text": {
-                "vi": "Mẹ họ hỏi lương bạn bao nhiêu ngay câu thứ hai.",
-                "en": "Their mother asks your salary in her second sentence."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Cứ là chính mình",
-            "en": "Just be yourself"
-          },
-          "outcomes": [
-            {
-              "chance": 0.5,
-              "effects": {
-                "rel_partner": 8,
-                "happy": 4
-              },
-              "setFlags": [
-                "inlaws_like"
-              ],
-              "text": {
-                "vi": "Cả nhà cười nghiêng ngả với chuyện của bạn.",
-                "en": "The whole family laughs at your stories."
-              }
-            },
-            {
-              "chance": 0.5,
-              "effects": {
-                "rel_partner": -5
-              },
-              "setFlags": [
-                "inlaws_cold"
-              ],
-              "text": {
-                "vi": "Câu đùa của bạn rơi vào im lặng tuyệt đối.",
-                "en": "Your joke lands in total silence."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_partner": 2,
+        "money": -3,
+        "happy": -4
+       },
+       "setFlags": [
+        "inlaws_cold"
+       ],
+       "text": {
+        "vi": "Mẹ họ hỏi lương bạn bao nhiêu ngay câu thứ hai.",
+        "en": "Their mother asks your salary in her second sentence."
+       }
+      }
+     ]
     },
     {
-      "id": "love_inlaws_pressure",
-      "category": "family",
-      "age": [
-        20,
-        70
-      ],
-      "weight": 5,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": true,
-        "flags": [
-          "inlaws_cold"
-        ]
+     "label": {
+      "vi": "Cứ là chính mình",
+      "en": "Just be yourself"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_partner": 8,
+        "happy": 4
+       },
+       "setFlags": [
+        "inlaws_like"
+       ],
+       "text": {
+        "vi": "Cả nhà cười nghiêng ngả với chuyện của bạn.",
+        "en": "The whole family laughs at your stories."
+       }
       },
-      "text": {
-        "vi": "Gia đình người yêu liên tục góp ý chuyện của hai người.",
-        "en": "Your partner's family keeps meddling in your relationship."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Nhẫn nhịn",
-            "en": "Bite your tongue"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "happy": -5,
-                "rel_partner": 3,
-                "willpower": 3
-              },
-              "text": {
-                "vi": "Người yêu biết ơn vì bạn kiên nhẫn.",
-                "en": "Your partner is grateful for your patience."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Nói thẳng một lần",
-            "en": "Speak up once and for all"
-          },
-          "outcomes": [
-            {
-              "chance": 0.5,
-              "effects": {
-                "willpower": 5,
-                "happy": 4
-              },
-              "clearFlags": [
-                "inlaws_cold"
-              ],
-              "setFlags": [
-                "inlaws_like"
-              ],
-              "text": {
-                "vi": "Họ bất ngờ tôn trọng bạn hơn.",
-                "en": "Surprisingly, they respect you more."
-              }
-            },
-            {
-              "chance": 0.5,
-              "effects": {
-                "rel_partner": -10,
-                "happy": -6
-              },
-              "text": {
-                "vi": "Bữa cơm kết thúc trong tiếng đóng cửa.",
-                "en": "Dinner ends with a slammed door."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Nhờ người yêu đứng ra",
-            "en": "Ask your partner to step in"
-          },
-          "outcomes": [
-            {
-              "chance": 0.6,
-              "effects": {
-                "rel_partner": 5
-              },
-              "text": {
-                "vi": "Người yêu bảo vệ bạn trước cả nhà.",
-                "en": "Your partner stands up for you in front of everyone."
-              }
-            },
-            {
-              "chance": 0.4,
-              "effects": {
-                "rel_partner": -6,
-                "happy": -4
-              },
-              "text": {
-                "vi": "Người yêu nói: \"Họ chỉ muốn tốt cho mình thôi.\"",
-                "en": "Your partner says: \"They only want what's best.\""
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_partner": -5
+       },
+       "setFlags": [
+        "inlaws_cold"
+       ],
+       "text": {
+        "vi": "Câu đùa của bạn rơi vào im lặng tuyệt đối.",
+        "en": "Your joke lands in total silence."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_inlaws_pressure",
+   "category": "family",
+   "age": [
+    20,
+    70
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true,
+    "flags": [
+     "inlaws_cold"
+    ]
+   },
+   "text": {
+    "vi": "Gia đình người yêu liên tục góp ý chuyện của hai người.",
+    "en": "Your partner's family keeps meddling in your relationship."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhẫn nhịn",
+      "en": "Bite your tongue"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -5,
+        "rel_partner": 3,
+        "willpower": 3
+       },
+       "text": {
+        "vi": "Người yêu biết ơn vì bạn kiên nhẫn.",
+        "en": "Your partner is grateful for your patience."
+       }
+      }
+     ]
     },
     {
-      "id": "love_moving_in_chores",
-      "category": "love",
-      "age": [
-        18,
-        80
-      ],
-      "weight": 5,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": true,
-        "cohabiting": true
+     "label": {
+      "vi": "Nói thẳng một lần",
+      "en": "Speak up once and for all"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "willpower": 5,
+        "happy": 4
+       },
+       "clearFlags": [
+        "inlaws_cold"
+       ],
+       "setFlags": [
+        "inlaws_like"
+       ],
+       "text": {
+        "vi": "Họ bất ngờ tôn trọng bạn hơn.",
+        "en": "Surprisingly, they respect you more."
+       }
       },
-      "text": {
-        "vi": "Sống chung được một thời gian, bát đĩa bẩn chất đầy bồn.",
-        "en": "You've been living together a while. The sink is full of dishes."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Lặng lẽ rửa hết",
-            "en": "Quietly wash them all"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_partner": 4,
-                "happy": -2,
-                "karma": 2
-              },
-              "text": {
-                "vi": "Người yêu ôm bạn từ phía sau.",
-                "en": "Your partner hugs you from behind."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Lập bảng phân công",
-            "en": "Draw up a chore rota"
-          },
-          "outcomes": [
-            {
-              "chance": 0.7,
-              "effects": {
-                "rel_partner": 3,
-                "smarts": 1
-              },
-              "text": {
-                "vi": "Tủ lạnh có thêm một tờ giấy, nhà sạch hơn hẳn.",
-                "en": "A new note on the fridge. The flat is spotless."
-              }
-            },
-            {
-              "chance": 0.3,
-              "effects": {
-                "rel_partner": -5
-              },
-              "text": {
-                "vi": "Người yêu thấy bị quản lý như nhân viên.",
-                "en": "Your partner feels managed like an employee."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Để đó xem ai chịu trước",
-            "en": "Leave it and see who cracks"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_partner": -6,
-                "health": -1
-              },
-              "text": {
-                "vi": "Một tuần sau, nhà bếp có mùi lạ.",
-                "en": "A week later, the kitchen smells strange."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_partner": -10,
+        "happy": -6
+       },
+       "text": {
+        "vi": "Bữa cơm kết thúc trong tiếng đóng cửa.",
+        "en": "Dinner ends with a slammed door."
+       }
+      }
+     ]
     },
     {
-      "id": "love_partner_snoring",
-      "category": "love",
-      "age": [
-        20,
-        90
-      ],
-      "weight": 3,
-      "once": true,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": true,
-        "cohabiting": true
+     "label": {
+      "vi": "Nhờ người yêu đứng ra",
+      "en": "Ask your partner to step in"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_partner": 5
+       },
+       "text": {
+        "vi": "Người yêu bảo vệ bạn trước cả nhà.",
+        "en": "Your partner stands up for you in front of everyone."
+       }
       },
-      "text": {
-        "vi": "Người yêu ngáy to như máy cày mỗi đêm.",
-        "en": "Your partner snores like a tractor every night."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Mua nút bịt tai",
-            "en": "Buy earplugs"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "money": -1,
-                "health": 2
-              },
-              "text": {
-                "vi": "Bạn ngủ ngon trở lại.",
-                "en": "You sleep soundly again."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Quay video gửi họ xem",
-            "en": "Film it and show them"
-          },
-          "outcomes": [
-            {
-              "chance": 0.6,
-              "effects": {
-                "happy": 5,
-                "rel_partner": 3
-              },
-              "text": {
-                "vi": "Cả hai cười chảy nước mắt.",
-                "en": "You both laugh until you cry."
-              }
-            },
-            {
-              "chance": 0.4,
-              "effects": {
-                "rel_partner": -5
-              },
-              "text": {
-                "vi": "Họ giận dỗi cả ngày.",
-                "en": "They sulk all day."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.4,
+       "effects": {
+        "rel_partner": -6,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Người yêu nói: \"Họ chỉ muốn tốt cho mình thôi.\"",
+        "en": "Your partner says: \"They only want what's best.\""
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_moving_in_chores",
+   "category": "love",
+   "age": [
+    18,
+    80
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true,
+    "cohabiting": true
+   },
+   "text": {
+    "vi": "Sống chung được một thời gian, bát đĩa bẩn chất đầy bồn.",
+    "en": "You've been living together a while. The sink is full of dishes."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lặng lẽ rửa hết",
+      "en": "Quietly wash them all"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 4,
+        "happy": -2,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Người yêu ôm bạn từ phía sau.",
+        "en": "Your partner hugs you from behind."
+       }
+      }
+     ]
     },
     {
-      "id": "love_forgot_anniversary",
-      "category": "love",
-      "age": [
-        19,
-        90
-      ],
-      "weight": 4,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": true
+     "label": {
+      "vi": "Lập bảng phân công",
+      "en": "Draw up a chore rota"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_partner": 3,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Tủ lạnh có thêm một tờ giấy, nhà sạch hơn hẳn.",
+        "en": "A new note on the fridge. The flat is spotless."
+       }
       },
-      "text": {
-        "vi": "Bạn chợt nhận ra hôm nay là ngày kỷ niệm, và bạn chưa chuẩn bị gì.",
-        "en": "You realise today is your anniversary, and you've planned nothing."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Thú nhận và xin lỗi",
-            "en": "Confess and apologise"
-          },
-          "outcomes": [
-            {
-              "chance": 0.6,
-              "effects": {
-                "rel_partner": -2,
-                "karma": 2
-              },
-              "text": {
-                "vi": "Họ thở dài nhưng cảm kích sự thành thật.",
-                "en": "They sigh but appreciate the honesty."
-              }
-            },
-            {
-              "chance": 0.4,
-              "effects": {
-                "rel_partner": -10
-              },
-              "text": {
-                "vi": "Họ đã chuẩn bị quà cho bạn từ tuần trước.",
-                "en": "They had your gift ready a week ago."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Đặt bàn nhà hàng gấp",
-            "en": "Book a restaurant in a panic"
-          },
-          "outcomes": [
-            {
-              "chance": 0.5,
-              "effects": {
-                "money": -5,
-                "rel_partner": 8
-              },
-              "text": {
-                "vi": "Họ không hề biết bạn suýt quên.",
-                "en": "They never suspect you nearly forgot."
-              }
-            },
-            {
-              "chance": 0.5,
-              "effects": {
-                "money": -5,
-                "rel_partner": -6
-              },
-              "text": {
-                "vi": "Chỉ còn bàn cạnh nhà vệ sinh.",
-                "en": "The only table left is by the toilets."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_partner": -5
+       },
+       "text": {
+        "vi": "Người yêu thấy bị quản lý như nhân viên.",
+        "en": "Your partner feels managed like an employee."
+       }
+      }
+     ]
     },
     {
-      "id": "love_jealous_coworker",
-      "category": "love",
-      "age": [
-        20,
-        65
-      ],
-      "weight": 4,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": true,
-        "employed": true
-      },
-      "text": {
-        "vi": "Người yêu ghen với một đồng nghiệp hay nhắn tin cho bạn.",
-        "en": "Your partner is jealous of a coworker who texts you a lot."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Đưa điện thoại cho họ xem",
-            "en": "Hand them your phone"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_partner": 6,
-                "willpower": -2
-              },
-              "text": {
-                "vi": "Không có gì. Họ ngượng và xin lỗi.",
-                "en": "Nothing there. They're embarrassed and apologise."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Bực mình vì bị nghi ngờ",
-            "en": "Get annoyed at the suspicion"
-          },
-          "outcomes": [
-            {
-              "chance": 0.5,
-              "effects": {
-                "rel_partner": -8,
-                "willpower": 4
-              },
-              "text": {
-                "vi": "Hai người cãi nhau đến nửa đêm.",
-                "en": "You argue until midnight."
-              }
-            },
-            {
-              "chance": 0.5,
-              "effects": {
-                "rel_partner": 2
-              },
-              "text": {
-                "vi": "Họ hiểu ra mình đã quá đáng.",
-                "en": "They realise they went too far."
-              }
-            }
-          ]
-        }
-      ]
+     "label": {
+      "vi": "Để đó xem ai chịu trước",
+      "en": "Leave it and see who cracks"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": -6,
+        "health": -1
+       },
+       "text": {
+        "vi": "Một tuần sau, nhà bếp có mùi lạ.",
+        "en": "A week later, the kitchen smells strange."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_partner_snoring",
+   "category": "love",
+   "age": [
+    20,
+    90
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true,
+    "cohabiting": true
+   },
+   "text": {
+    "vi": "Người yêu ngáy to như máy cày mỗi đêm.",
+    "en": "Your partner snores like a tractor every night."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mua nút bịt tai",
+      "en": "Buy earplugs"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -1,
+        "health": 2
+       },
+       "text": {
+        "vi": "Bạn ngủ ngon trở lại.",
+        "en": "You sleep soundly again."
+       }
+      }
+     ]
     },
     {
-      "id": "love_ex_reappears",
-      "category": "love",
-      "age": [
-        20,
-        70
-      ],
-      "weight": 3,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": true
+     "label": {
+      "vi": "Quay video gửi họ xem",
+      "en": "Film it and show them"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 5,
+        "rel_partner": 3
+       },
+       "text": {
+        "vi": "Cả hai cười chảy nước mắt.",
+        "en": "You both laugh until you cry."
+       }
       },
-      "text": {
-        "vi": "Người yêu cũ của người yêu bạn xuất hiện ở một bữa tiệc và rất thân mật với họ.",
-        "en": "Your partner's ex turns up at a party and is very friendly with them."
+      {
+       "chance": 0.4,
+       "effects": {
+        "rel_partner": -5
+       },
+       "text": {
+        "vi": "Họ giận dỗi cả ngày.",
+        "en": "They sulk all day."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_forgot_anniversary",
+   "category": "love",
+   "age": [
+    19,
+    90
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true
+   },
+   "text": {
+    "vi": "Bạn chợt nhận ra hôm nay là ngày kỷ niệm, và bạn chưa chuẩn bị gì.",
+    "en": "You realise today is your anniversary, and you've planned nothing."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thú nhận và xin lỗi",
+      "en": "Confess and apologise"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_partner": -2,
+        "karma": 2
+       },
+       "text": {
+        "vi": "Họ thở dài nhưng cảm kích sự thành thật.",
+        "en": "They sigh but appreciate the honesty."
+       }
       },
-      "choices": [
-        {
-          "label": {
-            "vi": "Tự tin chào hỏi",
-            "en": "Introduce yourself confidently"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "willpower": 4,
-                "rel_partner": 4
-              },
-              "text": {
-                "vi": "Người yêu nắm tay bạn suốt phần còn lại của buổi tối.",
-                "en": "Your partner holds your hand the rest of the night."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Kéo người yêu về sớm",
-            "en": "Drag your partner home early"
-          },
-          "outcomes": [
-            {
-              "chance": 0.5,
-              "effects": {
-                "rel_partner": -6
-              },
-              "text": {
-                "vi": "Họ thấy bạn thiếu tin tưởng.",
-                "en": "They feel you don't trust them."
-              }
-            },
-            {
-              "chance": 0.5,
-              "effects": {
-                "rel_partner": 3
-              },
-              "text": {
-                "vi": "Họ cũng chẳng muốn ở lại.",
-                "en": "They didn't want to stay either."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.4,
+       "effects": {
+        "rel_partner": -10
+       },
+       "text": {
+        "vi": "Họ đã chuẩn bị quà cho bạn từ tuần trước.",
+        "en": "They had your gift ready a week ago."
+       }
+      }
+     ]
     },
     {
-      "id": "love_money_fight",
-      "category": "love",
-      "age": [
-        20,
-        90
-      ],
-      "weight": 4,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": true,
-        "cohabiting": true
+     "label": {
+      "vi": "Đặt bàn nhà hàng gấp",
+      "en": "Book a restaurant in a panic"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "money": -5,
+        "rel_partner": 8
+       },
+       "text": {
+        "vi": "Họ không hề biết bạn suýt quên.",
+        "en": "They never suspect you nearly forgot."
+       }
       },
-      "text": {
-        "vi": "Cuối tháng, hai người cãi nhau vì ai tiêu hoang hơn.",
-        "en": "End of the month, you fight over who spends too much."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Lập ngân sách chung",
-            "en": "Set a joint budget"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "money": 5,
-                "rel_partner": 3,
-                "smarts": 1
-              },
-              "text": {
-                "vi": "Cuối năm hai người để dành được kha khá.",
-                "en": "By year's end you've saved a decent sum."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Tách riêng tiền ai nấy giữ",
-            "en": "Keep finances separate"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_partner": -2,
-                "willpower": 2
-              },
-              "text": {
-                "vi": "Bớt cãi, nhưng cũng bớt chung.",
-                "en": "Fewer fights, but less togetherness."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.5,
+       "effects": {
+        "money": -5,
+        "rel_partner": -6
+       },
+       "text": {
+        "vi": "Chỉ còn bàn cạnh nhà vệ sinh.",
+        "en": "The only table left is by the toilets."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_jealous_coworker",
+   "category": "love",
+   "age": [
+    20,
+    65
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true,
+    "employed": true
+   },
+   "text": {
+    "vi": "Người yêu ghen với một đồng nghiệp hay nhắn tin cho bạn.",
+    "en": "Your partner is jealous of a coworker who texts you a lot."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đưa điện thoại cho họ xem",
+      "en": "Hand them your phone"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 6,
+        "willpower": -2
+       },
+       "text": {
+        "vi": "Không có gì. Họ ngượng và xin lỗi.",
+        "en": "Nothing there. They're embarrassed and apologise."
+       }
+      }
+     ]
     },
     {
-      "id": "love_double_date",
-      "category": "love",
-      "age": [
-        18,
-        70
-      ],
-      "weight": 3,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": true
+     "label": {
+      "vi": "Bực mình vì bị nghi ngờ",
+      "en": "Get annoyed at the suspicion"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_partner": -8,
+        "willpower": 4
+       },
+       "text": {
+        "vi": "Hai người cãi nhau đến nửa đêm.",
+        "en": "You argue until midnight."
+       }
       },
-      "text": {
-        "vi": "Một cặp bạn rủ hai người đi hẹn hò đôi.",
-        "en": "Friends invite you both on a double date."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Đi",
-            "en": "Go"
-          },
-          "outcomes": [
-            {
-              "chance": 0.7,
-              "effects": {
-                "happy": 6,
-                "rel_partner": 5,
-                "rel_friend": 5
-              },
-              "text": {
-                "vi": "Bốn người chơi bowling đến nửa đêm.",
-                "en": "The four of you bowl until midnight."
-              }
-            },
-            {
-              "chance": 0.3,
-              "effects": {
-                "happy": -3
-              },
-              "text": {
-                "vi": "Cặp kia cãi nhau ngay tại bàn. Rất ngượng.",
-                "en": "The other couple fights at the table. Awkward."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Ở nhà hai người thôi",
-            "en": "Stay in, just the two of you"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_partner": 4
-              },
-              "text": {
-                "vi": "Một tối yên bình với phim và mì gói.",
-                "en": "A quiet night of films and noodles."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_partner": 2
+       },
+       "text": {
+        "vi": "Họ hiểu ra mình đã quá đáng.",
+        "en": "They realise they went too far."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_ex_reappears",
+   "category": "love",
+   "age": [
+    20,
+    70
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true
+   },
+   "text": {
+    "vi": "Người yêu cũ của người yêu bạn xuất hiện ở một bữa tiệc và rất thân mật với họ.",
+    "en": "Your partner's ex turns up at a party and is very friendly with them."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tự tin chào hỏi",
+      "en": "Introduce yourself confidently"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 4,
+        "rel_partner": 4
+       },
+       "text": {
+        "vi": "Người yêu nắm tay bạn suốt phần còn lại của buổi tối.",
+        "en": "Your partner holds your hand the rest of the night."
+       }
+      }
+     ]
     },
     {
-      "id": "love_engagement_doubts",
-      "category": "love",
-      "age": [
-        18,
-        70
-      ],
-      "weight": 6,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "engaged": true
+     "label": {
+      "vi": "Kéo người yêu về sớm",
+      "en": "Drag your partner home early"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_partner": -6
+       },
+       "text": {
+        "vi": "Họ thấy bạn thiếu tin tưởng.",
+        "en": "They feel you don't trust them."
+       }
       },
-      "text": {
-        "vi": "Càng gần ngày cưới, bạn càng thấy lo lắng.",
-        "en": "The closer the wedding gets, the more anxious you feel."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Tâm sự với người yêu",
-            "en": "Talk to your partner"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_partner": 6,
-                "happy": 4
-              },
-              "text": {
-                "vi": "Hóa ra họ cũng lo y hệt.",
-                "en": "Turns out they feel exactly the same."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Đi chơi một đêm với hội bạn",
-            "en": "A wild night out with friends"
-          },
-          "outcomes": [
-            {
-              "chance": 0.7,
-              "effects": {
-                "happy": 8,
-                "health": -3
-              },
-              "text": {
-                "vi": "Bạn quên sạch lo âu, và cả đường về nhà.",
-                "en": "You forget your worries, and the way home."
-              }
-            },
-            {
-              "chance": 0.3,
-              "effects": {
-                "rel_partner": -10,
-                "fame": -2
-              },
-              "text": {
-                "vi": "Ảnh buổi tối đó lọt đến tay người yêu.",
-                "en": "Photos from that night reach your partner."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_partner": 3
+       },
+       "text": {
+        "vi": "Họ cũng chẳng muốn ở lại.",
+        "en": "They didn't want to stay either."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_money_fight",
+   "category": "love",
+   "age": [
+    20,
+    90
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true,
+    "cohabiting": true
+   },
+   "text": {
+    "vi": "Cuối tháng, hai người cãi nhau vì ai tiêu hoang hơn.",
+    "en": "End of the month, you fight over who spends too much."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lập ngân sách chung",
+      "en": "Set a joint budget"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 5,
+        "rel_partner": 3,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Cuối năm hai người để dành được kha khá.",
+        "en": "By year's end you've saved a decent sum."
+       }
+      }
+     ]
     },
     {
-      "id": "love_wedding_planning_fight",
-      "category": "love",
-      "age": [
-        18,
-        70
-      ],
-      "weight": 5,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "engaged": true
+     "label": {
+      "vi": "Tách riêng tiền ai nấy giữ",
+      "en": "Keep finances separate"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": -2,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bớt cãi, nhưng cũng bớt chung.",
+        "en": "Fewer fights, but less togetherness."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_double_date",
+   "category": "love",
+   "age": [
+    18,
+    70
+   ],
+   "weight": 3,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": true
+   },
+   "text": {
+    "vi": "Một cặp bạn rủ hai người đi hẹn hò đôi.",
+    "en": "Friends invite you both on a double date."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi",
+      "en": "Go"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 6,
+        "rel_partner": 5,
+        "rel_friend": 5
+       },
+       "text": {
+        "vi": "Bốn người chơi bowling đến nửa đêm.",
+        "en": "The four of you bowl until midnight."
+       }
       },
-      "text": {
-        "vi": "Hai người không thống nhất được danh sách khách mời đám cưới.",
-        "en": "You can't agree on the wedding guest list."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Nhường người yêu",
-            "en": "Let your partner decide"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_partner": 6,
-                "happy": -2
-              },
-              "text": {
-                "vi": "Bạn sẽ ngồi cạnh một người dì chưa gặp bao giờ.",
-                "en": "You'll be seated next to an aunt you've never met."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Giữ lập trường",
-            "en": "Hold your ground"
-          },
-          "outcomes": [
-            {
-              "chance": 0.5,
-              "effects": {
-                "willpower": 4
-              },
-              "text": {
-                "vi": "Danh sách theo ý bạn.",
-                "en": "The list goes your way."
-              }
-            },
-            {
-              "chance": 0.5,
-              "effects": {
-                "rel_partner": -8
-              },
-              "text": {
-                "vi": "Không ai nói chuyện với ai suốt hai ngày.",
-                "en": "Nobody speaks for two days."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.3,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Cặp kia cãi nhau ngay tại bàn. Rất ngượng.",
+        "en": "The other couple fights at the table. Awkward."
+       }
+      }
+     ]
     },
     {
-      "id": "love_newlywed_bliss",
-      "category": "love",
-      "age": [
-        18,
-        90
-      ],
-      "weight": 5,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "married": true,
-        "min": {
-          "rel_spouse": 70
-        }
+     "label": {
+      "vi": "Ở nhà hai người thôi",
+      "en": "Stay in, just the two of you"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 4
+       },
+       "text": {
+        "vi": "Một tối yên bình với phim và mì gói.",
+        "en": "A quiet night of films and noodles."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_engagement_doubts",
+   "category": "love",
+   "age": [
+    18,
+    70
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "engaged": true
+   },
+   "text": {
+    "vi": "Càng gần ngày cưới, bạn càng thấy lo lắng.",
+    "en": "The closer the wedding gets, the more anxious you feel."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tâm sự với người yêu",
+      "en": "Talk to your partner"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 6,
+        "happy": 4
+       },
+       "text": {
+        "vi": "Hóa ra họ cũng lo y hệt.",
+        "en": "Turns out they feel exactly the same."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đi chơi một đêm với hội bạn",
+      "en": "A wild night out with friends"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "happy": 8,
+        "health": -3
+       },
+       "text": {
+        "vi": "Bạn quên sạch lo âu, và cả đường về nhà.",
+        "en": "You forget your worries, and the way home."
+       }
       },
-      "text": {
-        "vi": "Bạn thức dậy thấy vợ/chồng đã làm sẵn bữa sáng.",
-        "en": "You wake up to find your spouse has made breakfast."
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_partner": -10,
+        "fame": -2
+       },
+       "text": {
+        "vi": "Ảnh buổi tối đó lọt đến tay người yêu.",
+        "en": "Photos from that night reach your partner."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_wedding_planning_fight",
+   "category": "love",
+   "age": [
+    18,
+    70
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "engaged": true
+   },
+   "text": {
+    "vi": "Hai người không thống nhất được danh sách khách mời đám cưới.",
+    "en": "You can't agree on the wedding guest list."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nhường người yêu",
+      "en": "Let your partner decide"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_partner": 6,
+        "happy": -2
+       },
+       "text": {
+        "vi": "Bạn sẽ ngồi cạnh một người dì chưa gặp bao giờ.",
+        "en": "You'll be seated next to an aunt you've never met."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Giữ lập trường",
+      "en": "Hold your ground"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "willpower": 4
+       },
+       "text": {
+        "vi": "Danh sách theo ý bạn.",
+        "en": "The list goes your way."
+       }
       },
-      "effects": {
+      {
+       "chance": 0.5,
+       "effects": {
+        "rel_partner": -8
+       },
+       "text": {
+        "vi": "Không ai nói chuyện với ai suốt hai ngày.",
+        "en": "Nobody speaks for two days."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_newlywed_bliss",
+   "category": "love",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "married": true,
+    "min": {
+     "rel_spouse": 70
+    }
+   },
+   "text": {
+    "vi": "Bạn thức dậy thấy vợ/chồng đã làm sẵn bữa sáng.",
+    "en": "You wake up to find your spouse has made breakfast."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ăn sáng và khen lấy khen để",
+      "en": "Eat and shower them with praise"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
         "happy": 5,
         "rel_spouse": 3
+       },
+       "text": {
+        "vi": "Trứng hơi khét. Bạn khen như món ăn năm sao.",
+        "en": "The eggs are a bit burnt. You praise them like a five-star meal."
+       }
       }
+     ]
     },
     {
-      "id": "love_seven_year_itch",
-      "category": "love",
-      "age": [
-        26,
-        70
-      ],
-      "weight": 4,
-      "once": true,
-      "rating": "18+",
-      "requires": {
-        "married": true
-      },
-      "text": {
-        "vi": "Hôn nhân bắt đầu đều đều. Ngày nào cũng giống ngày nào.",
-        "en": "Married life feels routine. Every day is the same."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Lên kế hoạch hẹn hò hằng tuần",
-            "en": "Schedule a weekly date night"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_spouse": 10,
-                "money": -5,
-                "happy": 5
-              },
-              "text": {
-                "vi": "Hai người lại tìm thấy nhau.",
-                "en": "You find each other again."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Đi tư vấn hôn nhân",
-            "en": "Try couples counselling"
-          },
-          "outcomes": [
-            {
-              "chance": 0.7,
-              "effects": {
-                "rel_spouse": 12,
-                "money": -8
-              },
-              "text": {
-                "vi": "Chuyên gia giúp hai người nói ra những điều giấu kín.",
-                "en": "The counsellor helps you say what you'd held back."
-              }
-            },
-            {
-              "chance": 0.3,
-              "effects": {
-                "rel_spouse": -5,
-                "money": -8
-              },
-              "text": {
-                "vi": "Buổi tư vấn biến thành cuộc cãi vã có người làm chứng.",
-                "en": "The session turns into a fight with a witness."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Mặc kệ",
-            "en": "Ignore it"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_spouse": -8,
-                "happy": -4
-              },
-              "text": {
-                "vi": "Khoảng cách giữa hai người lớn dần.",
-                "en": "The distance between you grows."
-              }
-            }
-          ]
-        }
-      ]
+     "label": {
+      "vi": "Ngày mai đến lượt bạn nấu",
+      "en": "Return the favour tomorrow"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "rel_spouse": 5
+       },
+       "text": {
+        "vi": "Sáng hôm sau bạn dậy sớm nấu. Hai người lập luôn lịch nấu ăn.",
+        "en": "Next morning you cook. You both draw up a cooking rota."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_seven_year_itch",
+   "category": "love",
+   "age": [
+    26,
+    70
+   ],
+   "weight": 4,
+   "once": true,
+   "rating": "18+",
+   "requires": {
+    "married": true
+   },
+   "text": {
+    "vi": "Hôn nhân bắt đầu đều đều. Ngày nào cũng giống ngày nào.",
+    "en": "Married life feels routine. Every day is the same."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lên kế hoạch hẹn hò hằng tuần",
+      "en": "Schedule a weekly date night"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_spouse": 10,
+        "money": -5,
+        "happy": 5
+       },
+       "text": {
+        "vi": "Hai người lại tìm thấy nhau.",
+        "en": "You find each other again."
+       }
+      }
+     ]
     },
     {
-      "id": "love_partner_job_abroad",
-      "category": "love",
-      "age": [
-        22,
-        60
-      ],
-      "weight": 2,
-      "once": true,
-      "rating": "18+",
-      "requires": {
-        "married": true
+     "label": {
+      "vi": "Đi tư vấn hôn nhân",
+      "en": "Try couples counselling"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_spouse": 12,
+        "money": -8
+       },
+       "text": {
+        "vi": "Chuyên gia giúp hai người nói ra những điều giấu kín.",
+        "en": "The counsellor helps you say what you'd held back."
+       }
       },
-      "text": {
-        "vi": "Vợ/chồng được mời làm việc ở nước ngoài với mức lương gấp đôi.",
-        "en": "Your spouse is offered a job abroad at double the pay."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Ủng hộ họ đi",
-            "en": "Support them going"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "money": 30,
-                "rel_spouse": 8,
-                "happy": -6
-              },
-              "setFlags": [
-                "long_distance"
-              ],
-              "text": {
-                "vi": "Hai người yêu xa. Tiền gửi về đều đặn.",
-                "en": "Long distance begins. The money comes in steadily."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Xin họ ở lại",
-            "en": "Ask them to stay"
-          },
-          "outcomes": [
-            {
-              "chance": 0.6,
-              "effects": {
-                "rel_spouse": 2
-              },
-              "text": {
-                "vi": "Họ ở lại, dù hơi tiếc.",
-                "en": "They stay, a little wistful."
-              }
-            },
-            {
-              "chance": 0.4,
-              "effects": {
-                "rel_spouse": -12
-              },
-              "text": {
-                "vi": "Họ trách bạn cản đường sự nghiệp.",
-                "en": "They resent you for holding them back."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_spouse": -5,
+        "money": -8
+       },
+       "text": {
+        "vi": "Buổi tư vấn biến thành cuộc cãi vã có người làm chứng.",
+        "en": "The session turns into a fight with a witness."
+       }
+      }
+     ]
     },
     {
-      "id": "love_baby_sleepless",
-      "category": "family",
-      "age": [
-        18,
-        60
-      ],
-      "weight": 5,
-      "once": false,
-      "rating": "all",
-      "requires": {
-        "hasChildren": true,
-        "max": {
-          "age": 50
-        }
-      },
-      "text": {
-        "vi": "Con nhỏ khóc cả đêm. Hai vợ chồng đều kiệt sức.",
-        "en": "The baby cries all night. You're both exhausted."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Thay phiên trông con",
-            "en": "Take turns"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "health": -2,
-                "rel_partner": 4,
-                "rel_child": 3
-              },
-              "text": {
-                "vi": "Mệt, nhưng là đồng đội.",
-                "en": "Tired, but a team."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Giả vờ ngủ say",
-            "en": "Pretend to be asleep"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "health": 2,
-                "rel_partner": -8
-              },
-              "text": {
-                "vi": "Sáng ra không ai nói với ai câu nào.",
-                "en": "Morning arrives in icy silence."
-              }
-            }
-          ]
-        }
-      ]
+     "label": {
+      "vi": "Mặc kệ",
+      "en": "Ignore it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_spouse": -8,
+        "happy": -4
+       },
+       "text": {
+        "vi": "Khoảng cách giữa hai người lớn dần.",
+        "en": "The distance between you grows."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_partner_job_abroad",
+   "category": "love",
+   "age": [
+    22,
+    60
+   ],
+   "weight": 2,
+   "once": true,
+   "rating": "18+",
+   "requires": {
+    "married": true
+   },
+   "text": {
+    "vi": "Vợ/chồng được mời làm việc ở nước ngoài với mức lương gấp đôi.",
+    "en": "Your spouse is offered a job abroad at double the pay."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ủng hộ họ đi",
+      "en": "Support them going"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": 30,
+        "rel_spouse": 8,
+        "happy": -6
+       },
+       "setFlags": [
+        "long_distance"
+       ],
+       "text": {
+        "vi": "Hai người yêu xa. Tiền gửi về đều đặn.",
+        "en": "Long distance begins. The money comes in steadily."
+       }
+      }
+     ]
     },
     {
-      "id": "love_kid_first_day",
-      "category": "family",
-      "age": [
-        20,
-        70
-      ],
-      "weight": 4,
-      "once": false,
-      "rating": "all",
-      "requires": {
-        "hasChildren": true
+     "label": {
+      "vi": "Xin họ ở lại",
+      "en": "Ask them to stay"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "rel_spouse": 2
+       },
+       "text": {
+        "vi": "Họ ở lại, dù hơi tiếc.",
+        "en": "They stay, a little wistful."
+       }
       },
-      "text": {
-        "vi": "Con bạn khóc không chịu vào lớp ngày đầu đi học.",
-        "en": "Your child refuses to go into class on their first day."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Ngồi lại với con một lúc",
-            "en": "Stay with them a while"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_child": 8,
-                "happy": 3
-              },
-              "text": {
-                "vi": "Con vẫy tay chào bạn khi bước vào lớp.",
-                "en": "They wave goodbye as they walk in."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Dứt khoát đi luôn",
-            "en": "Leave quickly"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_child": -3,
-                "willpower": 2
-              },
-              "text": {
-                "vi": "Cô giáo gọi điện báo con đã nín sau năm phút.",
-                "en": "The teacher calls: they stopped crying in five minutes."
-              }
-            }
-          ]
-        }
-      ]
+      {
+       "chance": 0.4,
+       "effects": {
+        "rel_spouse": -12
+       },
+       "text": {
+        "vi": "Họ trách bạn cản đường sự nghiệp.",
+        "en": "They resent you for holding them back."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_baby_sleepless",
+   "category": "family",
+   "age": [
+    18,
+    60
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "requires": {
+    "hasChildren": true,
+    "max": {
+     "age": 50
+    }
+   },
+   "text": {
+    "vi": "Con nhỏ khóc cả đêm. Hai vợ chồng đều kiệt sức.",
+    "en": "The baby cries all night. You're both exhausted."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Thay phiên trông con",
+      "en": "Take turns"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -2,
+        "rel_partner": 4,
+        "rel_child": 3
+       },
+       "text": {
+        "vi": "Mệt, nhưng là đồng đội.",
+        "en": "Tired, but a team."
+       }
+      }
+     ]
     },
     {
-      "id": "love_empty_nest",
-      "category": "family",
-      "age": [
-        45,
-        80
-      ],
-      "weight": 3,
-      "once": true,
-      "rating": "all",
-      "requires": {
-        "married": true,
-        "hasChildren": true
-      },
-      "text": {
-        "vi": "Đứa con cuối cùng dọn ra ở riêng. Căn nhà bỗng yên ắng.",
-        "en": "Your last child moves out. The house is suddenly quiet."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Đi du lịch cùng vợ/chồng",
-            "en": "Travel with your spouse"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "money": -15,
-                "rel_spouse": 12,
-                "happy": 10
-              },
-              "text": {
-                "vi": "Tuần trăng mật thứ hai.",
-                "en": "A second honeymoon."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Biến phòng con thành phòng sở thích",
-            "en": "Turn their room into a hobby room"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "happy": 6
-              },
-              "text": {
-                "vi": "Cuối cùng bạn cũng có chỗ đặt bàn bóng bàn.",
-                "en": "Finally, space for a ping-pong table."
-              }
-            }
-          ]
-        }
-      ]
+     "label": {
+      "vi": "Giả vờ ngủ say",
+      "en": "Pretend to be asleep"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": 2,
+        "rel_partner": -8
+       },
+       "text": {
+        "vi": "Sáng ra không ai nói với ai câu nào.",
+        "en": "Morning arrives in icy silence."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_kid_first_day",
+   "category": "family",
+   "age": [
+    20,
+    70
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "requires": {
+    "hasChildren": true
+   },
+   "text": {
+    "vi": "Con bạn khóc không chịu vào lớp ngày đầu đi học.",
+    "en": "Your child refuses to go into class on their first day."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ngồi lại với con một lúc",
+      "en": "Stay with them a while"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": 8,
+        "happy": 3
+       },
+       "text": {
+        "vi": "Con vẫy tay chào bạn khi bước vào lớp.",
+        "en": "They wave goodbye as they walk in."
+       }
+      }
+     ]
     },
     {
-      "id": "love_midlife_crisis",
-      "category": "love",
-      "age": [
-        40,
-        60
-      ],
-      "weight": 3,
-      "once": true,
-      "rating": "18+",
-      "requires": {
-        "married": true
-      },
-      "text": {
-        "vi": "Vợ/chồng bỗng mua mô tô, nhuộm tóc và đăng ký học nhảy.",
-        "en": "Your spouse suddenly buys a motorbike, dyes their hair and signs up for dance classes."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Học nhảy cùng họ",
-            "en": "Join the dance class"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "rel_spouse": 10,
-                "health": 3,
-                "happy": 6
-              },
-              "text": {
-                "vi": "Hai người là cặp nhảy vụng nhất lớp, và vui nhất.",
-                "en": "You're the clumsiest couple in class, and the happiest."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Lo lắng hỏi chuyện",
-            "en": "Ask what's going on"
-          },
-          "outcomes": [
-            {
-              "chance": 0.7,
-              "effects": {
-                "rel_spouse": 5
-              },
-              "text": {
-                "vi": "Họ chỉ sợ già đi. Bạn ôm họ thật lâu.",
-                "en": "They're just afraid of getting old. You hold them close."
-              }
-            },
-            {
-              "chance": 0.3,
-              "effects": {
-                "rel_spouse": -6
-              },
-              "text": {
-                "vi": "Họ nói bạn làm họ thấy già.",
-                "en": "They say you make them feel old."
-              }
-            }
-          ]
-        }
-      ]
+     "label": {
+      "vi": "Dứt khoát đi luôn",
+      "en": "Leave quickly"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_child": -3,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Cô giáo gọi điện báo con đã nín sau năm phút.",
+        "en": "The teacher calls: they stopped crying in five minutes."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_empty_nest",
+   "category": "family",
+   "age": [
+    45,
+    80
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "all",
+   "requires": {
+    "married": true,
+    "hasChildren": true
+   },
+   "text": {
+    "vi": "Đứa con cuối cùng dọn ra ở riêng. Căn nhà bỗng yên ắng.",
+    "en": "Your last child moves out. The house is suddenly quiet."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi du lịch cùng vợ/chồng",
+      "en": "Travel with your spouse"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -15,
+        "rel_spouse": 12,
+        "happy": 10
+       },
+       "text": {
+        "vi": "Tuần trăng mật thứ hai.",
+        "en": "A second honeymoon."
+       }
+      }
+     ]
     },
     {
-      "id": "love_old_couple_walk",
-      "category": "old_age",
-      "age": [
-        65,
-        110
-      ],
-      "weight": 5,
-      "once": false,
-      "rating": "all",
-      "requires": {
-        "married": true
+     "label": {
+      "vi": "Biến phòng con thành phòng sở thích",
+      "en": "Turn their room into a hobby room"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6
+       },
+       "text": {
+        "vi": "Cuối cùng bạn cũng có chỗ đặt bàn bóng bàn.",
+        "en": "Finally, space for a ping-pong table."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_midlife_crisis",
+   "category": "love",
+   "age": [
+    40,
+    60
+   ],
+   "weight": 3,
+   "once": true,
+   "rating": "18+",
+   "requires": {
+    "married": true
+   },
+   "text": {
+    "vi": "Vợ/chồng bỗng mua mô tô, nhuộm tóc và đăng ký học nhảy.",
+    "en": "Your spouse suddenly buys a motorbike, dyes their hair and signs up for dance classes."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Học nhảy cùng họ",
+      "en": "Join the dance class"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "rel_spouse": 10,
+        "health": 3,
+        "happy": 6
+       },
+       "text": {
+        "vi": "Hai người là cặp nhảy vụng nhất lớp, và vui nhất.",
+        "en": "You're the clumsiest couple in class, and the happiest."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lo lắng hỏi chuyện",
+      "en": "Ask what's going on"
+     },
+     "outcomes": [
+      {
+       "chance": 0.7,
+       "effects": {
+        "rel_spouse": 5
+       },
+       "text": {
+        "vi": "Họ chỉ sợ già đi. Bạn ôm họ thật lâu.",
+        "en": "They're just afraid of getting old. You hold them close."
+       }
       },
-      "text": {
-        "vi": "Chiều nay hai ông bà nắm tay đi dạo quanh hồ như mọi ngày.",
-        "en": "This afternoon you and your spouse walk hand in hand around the lake, as always."
-      },
-      "effects": {
+      {
+       "chance": 0.3,
+       "effects": {
+        "rel_spouse": -6
+       },
+       "text": {
+        "vi": "Họ nói bạn làm họ thấy già.",
+        "en": "They say you make them feel old."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_old_couple_walk",
+   "category": "old_age",
+   "age": [
+    65,
+    110
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "requires": {
+    "married": true
+   },
+   "text": {
+    "vi": "Chiều nay hai ông bà nắm tay đi dạo quanh hồ như mọi ngày.",
+    "en": "This afternoon you and your spouse walk hand in hand around the lake, as always."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi thêm một vòng nữa",
+      "en": "Go round one more time"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
         "happy": 6,
         "health": 2,
         "rel_spouse": 3
+       },
+       "text": {
+        "vi": "Hai người đếm được 17 con vịt và một đôi trẻ đang cãi nhau.",
+        "en": "You count 17 ducks and one young couple arguing."
+       }
       }
+     ]
     },
     {
-      "id": "love_single_pressure",
-      "category": "family",
-      "age": [
-        27,
-        45
-      ],
-      "weight": 4,
-      "once": false,
-      "rating": "all",
-      "requires": {
-        "hasPartner": false
-      },
-      "text": {
-        "vi": "Họ hàng hỏi bạn câu quen thuộc: \"Bao giờ lấy chồng/vợ?\"",
-        "en": "Relatives ask the usual question: \"When are you getting married?\""
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Cười trừ",
-            "en": "Smile it off"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "happy": -2,
-                "willpower": 2
-              },
-              "text": {
-                "vi": "Bạn đổi chủ đề sang thời tiết.",
-                "en": "You change the subject to the weather."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Đồng ý cho họ mai mối",
-            "en": "Let them set you up"
-          },
-          "outcomes": [
-            {
-              "chance": 0.4,
-              "effects": {
-                "happy": 8
-              },
-              "setFlags": [
-                "in_relationship"
-              ],
-              "text": {
-                "vi": "Người được giới thiệu bất ngờ rất hợp với bạn.",
-                "en": "The match turns out to be surprisingly good."
-              }
-            },
-            {
-              "chance": 0.6,
-              "effects": {
-                "happy": -5
-              },
-              "text": {
-                "vi": "Buổi gặp mặt dài như một kỳ thi.",
-                "en": "The meeting feels like an exam."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Tuyên bố độc thân vui vẻ",
-            "en": "Declare yourself happily single"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "willpower": 5,
-                "happy": 3,
-                "rel_mother": -3
-              },
-              "text": {
-                "vi": "Bàn tiệc im lặng ba giây rồi tiếp tục ăn.",
-                "en": "The table goes quiet for three seconds, then keeps eating."
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "love_crush_neighbour",
-      "category": "love",
-      "age": [
-        18,
-        60
-      ],
-      "weight": 4,
-      "once": false,
-      "rating": "18+",
-      "requires": {
-        "hasPartner": false
-      },
-      "text": {
-        "vi": "Người hàng xóm mới hay chào bạn ở thang máy với nụ cười rất đẹp.",
-        "en": "Your new neighbour keeps smiling at you in the lift."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Rủ đi uống cà phê",
-            "en": "Ask them for coffee"
-          },
-          "outcomes": [
-            {
-              "chance": 0.5,
-              "effects": {
-                "happy": 10
-              },
-              "setFlags": [
-                "in_relationship"
-              ],
-              "text": {
-                "vi": "Họ cũng đang chờ bạn mở lời.",
-                "en": "They'd been waiting for you to ask."
-              }
-            },
-            {
-              "chance": 0.5,
-              "effects": {
-                "happy": -5
-              },
-              "text": {
-                "vi": "Họ đã có người yêu.",
-                "en": "They're already taken."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Chỉ chào lại",
-            "en": "Just smile back"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "happy": 2
-              },
-              "text": {
-                "vi": "Thang máy trở thành phần yêu thích trong ngày của bạn.",
-                "en": "The lift becomes your favourite part of the day."
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "love_widowed_grief",
-      "category": "family",
-      "age": [
-        25,
-        110
-      ],
-      "weight": 6,
-      "once": false,
-      "rating": "all",
-      "requires": {
-        "hasPartner": false,
-        "flags": [
-          "widowed"
-        ]
-      },
-      "text": {
-        "vi": "Căn nhà trống trải. Bạn vẫn quen tay pha hai tách trà.",
-        "en": "The house feels empty. You still make two cups of tea out of habit."
-      },
-      "choices": [
-        {
-          "label": {
-            "vi": "Tham gia câu lạc bộ người cao tuổi",
-            "en": "Join a seniors' club"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "happy": 6,
-                "rel_friend": 8
-              },
-              "text": {
-                "vi": "Bạn có thêm bạn đánh cờ mỗi sáng.",
-                "en": "You find a chess partner for every morning."
-              }
-            }
-          ]
-        },
-        {
-          "label": {
-            "vi": "Ở nhà với kỷ niệm",
-            "en": "Stay home with your memories"
-          },
-          "outcomes": [
-            {
-              "chance": 1,
-              "effects": {
-                "happy": -6
-              },
-              "text": {
-                "vi": "Bạn xem lại album ảnh cưới đến khuya.",
-                "en": "You look through the wedding album until late."
-              }
-            }
-          ]
-        }
-      ]
+     "label": {
+      "vi": "Ngồi ghế đá kể chuyện ngày cưới",
+      "en": "Sit on a bench and talk about your wedding day"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 7,
+        "rel_spouse": 5
+       },
+       "text": {
+        "vi": "Hai người cười đến chảy nước mắt về bộ vest đi mượn năm ấy.",
+        "en": "You laugh till you cry about that borrowed suit."
+       }
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "love_single_pressure",
+   "category": "family",
+   "age": [
+    27,
+    45
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "all",
+   "requires": {
+    "hasPartner": false
+   },
+   "text": {
+    "vi": "Họ hàng hỏi bạn câu quen thuộc: \"Bao giờ lấy chồng/vợ?\"",
+    "en": "Relatives ask the usual question: \"When are you getting married?\""
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Cười trừ",
+      "en": "Smile it off"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2,
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Bạn đổi chủ đề sang thời tiết.",
+        "en": "You change the subject to the weather."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đồng ý cho họ mai mối",
+      "en": "Let them set you up"
+     },
+     "outcomes": [
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": 8
+       },
+       "setFlags": [
+        "in_relationship"
+       ],
+       "text": {
+        "vi": "Người được giới thiệu bất ngờ rất hợp với bạn.",
+        "en": "The match turns out to be surprisingly good."
+       }
+      },
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": -5
+       },
+       "text": {
+        "vi": "Buổi gặp mặt dài như một kỳ thi.",
+        "en": "The meeting feels like an exam."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tuyên bố độc thân vui vẻ",
+      "en": "Declare yourself happily single"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 5,
+        "happy": 3,
+        "rel_mother": -3
+       },
+       "text": {
+        "vi": "Bàn tiệc im lặng ba giây rồi tiếp tục ăn.",
+        "en": "The table goes quiet for three seconds, then keeps eating."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_crush_neighbour",
+   "category": "love",
+   "age": [
+    18,
+    60
+   ],
+   "weight": 4,
+   "once": false,
+   "rating": "18+",
+   "requires": {
+    "hasPartner": false
+   },
+   "text": {
+    "vi": "Người hàng xóm mới hay chào bạn ở thang máy với nụ cười rất đẹp.",
+    "en": "Your new neighbour keeps smiling at you in the lift."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Rủ đi uống cà phê",
+      "en": "Ask them for coffee"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 10
+       },
+       "setFlags": [
+        "in_relationship"
+       ],
+       "text": {
+        "vi": "Họ cũng đang chờ bạn mở lời.",
+        "en": "They'd been waiting for you to ask."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -5
+       },
+       "text": {
+        "vi": "Họ đã có người yêu.",
+        "en": "They're already taken."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Chỉ chào lại",
+      "en": "Just smile back"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Thang máy trở thành phần yêu thích trong ngày của bạn.",
+        "en": "The lift becomes your favourite part of the day."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "love_widowed_grief",
+   "category": "family",
+   "age": [
+    25,
+    110
+   ],
+   "weight": 6,
+   "once": false,
+   "rating": "all",
+   "requires": {
+    "hasPartner": false,
+    "flags": [
+     "widowed"
+    ]
+   },
+   "text": {
+    "vi": "Căn nhà trống trải. Bạn vẫn quen tay pha hai tách trà.",
+    "en": "The house feels empty. You still make two cups of tea out of habit."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Tham gia câu lạc bộ người cao tuổi",
+      "en": "Join a seniors' club"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 6,
+        "rel_friend": 8
+       },
+       "text": {
+        "vi": "Bạn có thêm bạn đánh cờ mỗi sáng.",
+        "en": "You find a chess partner for every morning."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Ở nhà với kỷ niệm",
+      "en": "Stay home with your memories"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -6
+       },
+       "text": {
+        "vi": "Bạn xem lại album ảnh cưới đến khuya.",
+        "en": "You look through the wedding album until late."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

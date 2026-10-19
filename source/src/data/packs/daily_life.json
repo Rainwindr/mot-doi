@@ -1,0 +1,825 @@
+{
+ "manifest": {
+  "id": "core.daily",
+  "name": {
+   "vi": "Gói gốc: rắc rối đời thường",
+   "en": "Core: everyday hassles"
+  },
+  "version": "1.0.0",
+  "rating": "all",
+  "languages": [
+   "vi",
+   "en"
+  ]
+ },
+ "events": [
+  {
+   "id": "hs_lost_keys",
+   "category": "random",
+   "age": [
+    14,
+    95
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn mất chìa khóa nhà, đứng trước cửa lúc 10 giờ đêm.",
+    "en": "You lose your keys and stand outside your door at 10pm."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Gọi thợ khóa",
+      "en": "Call a locksmith"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -1
+       },
+       "text": {
+        "vi": "Thợ mở trong 30 giây. Bạn trả tiền cho 30 giây đó.",
+        "en": "They open it in 30 seconds. You pay for those 30 seconds."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Lục lại mọi túi áo",
+      "en": "Search every pocket again"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Nó ở túi áo trong. Như mọi lần.",
+        "en": "It's in the inside pocket. As always."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Không có. Bạn ngủ nhờ nhà bạn.",
+        "en": "Nothing. You crash at a friend's."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_phone_drop",
+   "category": "random",
+   "age": [
+    13,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Điện thoại rơi màn hình xuống đất.",
+    "en": "Your phone falls screen-first onto the pavement."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lật lên thật chậm",
+      "en": "Turn it over slowly"
+     },
+     "outcomes": [
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": 4
+       },
+       "text": {
+        "vi": "Không sao! Một phép màu.",
+        "en": "Not a scratch! A miracle."
+       }
+      },
+      {
+       "chance": 0.5,
+       "effects": {
+        "happy": -3,
+        "money": -2
+       },
+       "text": {
+        "vi": "Màn hình như mạng nhện. Bạn sống với nó thêm ba tháng.",
+        "en": "A spiderweb screen. You live with it for three months."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mua ốp lưng xịn ngay hôm đó",
+      "en": "Buy a tough case that day"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "money": -1,
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Đáng lẽ phải mua từ đầu.",
+        "en": "Should have bought it on day one."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_traffic",
+   "category": "random",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Kẹt xe một tiếng rưỡi trên đường đi làm.",
+    "en": "A 90-minute traffic jam on the way to work."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Nghe podcast học thêm điều mới",
+      "en": "Listen to a podcast and learn something"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2
+       },
+       "text": {
+        "vi": "Bạn đến muộn nhưng biết thêm về lịch sử La Mã.",
+        "en": "You're late but now know about Ancient Rome."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bấm còi liên tục",
+      "en": "Lean on the horn"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Không ai đi nhanh hơn. Kể cả bạn.",
+        "en": "Nobody moves faster. Including you."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Hát to trong xe",
+      "en": "Sing loudly in the car"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Người xe bên cạnh hát theo. Kết bạn trong kẹt xe.",
+        "en": "The driver next to you joins in. Traffic-jam friendship."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_wifi",
+   "category": "random",
+   "age": [
+    12,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Wi-Fi mất đúng lúc bạn đang làm việc quan trọng.",
+    "en": "The Wi-Fi dies right in the middle of something important."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Khởi động lại modem lần thứ năm",
+      "en": "Restart the router a fifth time"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Lần thứ năm có tác dụng. Bạn không biết tại sao.",
+        "en": "The fifth time works. You don't know why."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -3
+       },
+       "text": {
+        "vi": "Không có tác dụng. Bạn ra quán cà phê.",
+        "en": "No luck. Off to a café."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Coi như nghỉ giải lao",
+      "en": "Take it as a break"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Bạn đi dạo một vòng và nghĩ ra ý tưởng hay.",
+        "en": "You take a walk and have a great idea."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_wrong_order",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Đơn đồ ăn giao đến sai món hoàn toàn.",
+    "en": "Your food delivery arrives completely wrong."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Ăn luôn, coi như khám phá",
+      "en": "Eat it anyway, call it adventure"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Hóa ra ngon hơn món bạn gọi. Bạn đặt lại món đó tuần sau.",
+        "en": "It's better than what you ordered. You order it again next week."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Gọi khiếu nại",
+      "en": "Call to complain"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Họ giao lại đúng món kèm một phần tráng miệng xin lỗi.",
+        "en": "They send the right meal plus an apology dessert."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_rain_no_umbrella",
+   "category": "random",
+   "age": [
+    8,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Mưa to bất chợt, bạn không mang ô.",
+    "en": "A sudden downpour and no umbrella."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chạy thật nhanh",
+      "en": "Run for it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -1,
+        "happy": 1
+       },
+       "text": {
+        "vi": "Ướt sũng, nhưng về đến nơi trước.",
+        "en": "Drenched, but home first."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Trú mưa ở một quán nhỏ",
+      "en": "Shelter in a little café"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 4,
+        "money": -0.5
+       },
+       "text": {
+        "vi": "Một ly trà nóng và một cuộc trò chuyện với người lạ.",
+        "en": "A hot tea and a chat with a stranger."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_noisy_upstairs",
+   "category": "random",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Nhà trên lầu kéo bàn ghế lúc nửa đêm.",
+    "en": "The upstairs neighbours drag furniture around at midnight."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Lên gõ cửa nhẹ nhàng",
+      "en": "Go up and knock politely"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Họ xin lỗi, đang chuyển nhà. Bạn giúp họ khiêng tủ.",
+        "en": "They apologise, they're moving. You help carry a wardrobe."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Đeo tai nghe chống ồn",
+      "en": "Put on noise-cancelling headphones"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Bạn ngủ ngon. Rồi lỡ chuông báo thức.",
+        "en": "You sleep well. Then miss your alarm."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_bill_shock",
+   "category": "random",
+   "age": [
+    18,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Hóa đơn tiền điện tháng này cao gấp đôi.",
+    "en": "This month's electricity bill is double."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi kiểm tra từng thiết bị",
+      "en": "Check every appliance"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 1,
+        "money": 1
+       },
+       "text": {
+        "vi": "Hóa ra tủ lạnh cũ ngốn điện. Bạn thay, tiết kiệm được.",
+        "en": "The old fridge was guzzling power. You replace it and save."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Cắt giảm điều hòa",
+      "en": "Cut back on the AC"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2,
+        "money": 1
+       },
+       "text": {
+        "vi": "Nóng hơn, nhưng ví nhẹ nhõm.",
+        "en": "Hotter, but your wallet breathes."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_sock_missing",
+   "category": "random",
+   "age": [
+    6,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Máy giặt lại ăn mất một chiếc tất.",
+    "en": "The washing machine eats another sock."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đi tất lệch đôi",
+      "en": "Wear mismatched socks"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 2
+       },
+       "text": {
+        "vi": "Một đồng nghiệp khen \"phong cách\". Bạn nhận lời khen.",
+        "en": "A coworker calls it \"a look\". You accept."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Mở máy giặt tìm",
+      "en": "Take the machine apart to find it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Bạn tìm thấy bốn chiếc tất và một đồng xu từ năm ngoái.",
+        "en": "You find four socks and a coin from last year."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_password",
+   "category": "random",
+   "age": [
+    12,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Bạn quên mật khẩu lần thứ ba trong tuần.",
+    "en": "You forget a password for the third time this week."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Đặt lại, ghi vào sổ",
+      "en": "Reset it and write it down"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 1
+       },
+       "text": {
+        "vi": "Sổ ghi mật khẩu của bạn giờ là tài sản quý nhất.",
+        "en": "Your password notebook is now your most valuable possession."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Dùng trình quản lý mật khẩu",
+      "en": "Use a password manager"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "smarts": 2,
+        "happy": 2
+       },
+       "text": {
+        "vi": "Cuộc sống thay đổi.",
+        "en": "Life-changing."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_queue",
+   "category": "random",
+   "age": [
+    14,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Hàng chờ ở cơ quan hành chính dài vô tận.",
+    "en": "The queue at the government office is endless."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Kiên nhẫn chờ",
+      "en": "Wait patiently"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "willpower": 2
+       },
+       "text": {
+        "vi": "Ba tiếng. Đến lượt bạn thì thiếu một bản photo.",
+        "en": "Three hours. At your turn, you're missing one photocopy."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Làm thủ tục online",
+      "en": "Do it online"
+     },
+     "outcomes": [
+      {
+       "chance": 0.6,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Mười phút. Tương lai là đây.",
+        "en": "Ten minutes. The future has arrived."
+       }
+      },
+      {
+       "chance": 0.4,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Trang web sập. Bạn quay lại xếp hàng.",
+        "en": "The website crashes. Back to the queue."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_spill_coffee",
+   "category": "random",
+   "age": [
+    14,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Đổ cà phê lên áo sơ mi trắng trước cuộc họp.",
+    "en": "Coffee all over your white shirt before a meeting."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Mặc áo khoác che lại",
+      "en": "Cover it with a jacket"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Không ai thấy. Bạn đổ mồ hôi dưới áo khoác.",
+        "en": "Nobody sees. You sweat under the jacket."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Kể chuyện cười về nó",
+      "en": "Make a joke of it"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Mọi người cười. Cuộc họp bắt đầu vui vẻ.",
+        "en": "Everyone laughs. The meeting starts on a high."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_gps_wrong",
+   "category": "random",
+   "age": [
+    16,
+    90
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Định vị dẫn bạn vào một con hẻm cụt.",
+    "en": "The GPS leads you into a dead-end alley."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Hỏi đường người dân",
+      "en": "Ask a local"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 3
+       },
+       "text": {
+        "vi": "Một bác chỉ đường kèm lịch sử con hẻm.",
+        "en": "An old man gives directions plus the alley's history."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Tin định vị thêm lần nữa",
+      "en": "Trust the GPS again"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": -2
+       },
+       "text": {
+        "vi": "Một con hẻm cụt khác.",
+        "en": "Another dead end."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hs_alarm_fail",
+   "category": "random",
+   "age": [
+    12,
+    80
+   ],
+   "weight": 5,
+   "once": false,
+   "rating": "all",
+   "text": {
+    "vi": "Báo thức không kêu. Bạn dậy muộn một tiếng.",
+    "en": "Your alarm doesn't go off. You're an hour late."
+   },
+   "choices": [
+    {
+     "label": {
+      "vi": "Chạy như phim hành động",
+      "en": "Rush like an action film"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "health": -1,
+        "happy": -1
+       },
+       "text": {
+        "vi": "Bạn đến nơi, tóc rối, đánh răng trên xe.",
+        "en": "You make it, hair wild, having brushed your teeth on the bus."
+       }
+      }
+     ]
+    },
+    {
+     "label": {
+      "vi": "Bình tĩnh nhắn báo muộn",
+      "en": "Calmly message that you're late"
+     },
+     "outcomes": [
+      {
+       "chance": 1,
+       "effects": {
+        "happy": 1
+       },
+       "text": {
+        "vi": "Không ai quá để tâm. Bạn có buổi sáng thong thả.",
+        "en": "Nobody minds much. You get a slow morning."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

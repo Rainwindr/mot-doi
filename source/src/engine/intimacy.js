@@ -18,8 +18,10 @@ const sev = (uid, text, choices) => ({ uid, sys: true, text, choices });
 
 export const FAMILY = ['mother', 'father', 'sibling', 'half', 'child', 'pet'];
 export const ROM = ['partner', 'spouse', 'lover'];
+/** Không bao giờ có tình cảm: gia đình, thú cưng, và thầy cô cũ (người quen từ khi bạn còn nhỏ). */
+export const NOROM = [...FAMILY, 'teacher'];
 /** Cặp người lớn hợp lệ cho mọi nội dung tình cảm: cả hai ≥ 18, không phải gia đình. */
-export const adultOK = (life, p) => !!p && p.alive && life.age >= 18 && p.age >= 18 && !FAMILY.includes(p.role);
+export const adultOK = (life, p) => !!p && p.alive && life.age >= 18 && p.age >= 18 && !NOROM.includes(p.role);
 const on = (st, life) => !!(st && st.adult25 && life.age >= 18);
 
 function seedOf(str) { let h = 2166136261; for (const c of String(str)) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; }
@@ -33,6 +35,7 @@ export const ATT = {
   crush: { em: '🙈', name: L('Yêu thầm', 'Secret crush'), rom: true },
   like: { em: '😍', name: L('Thích công khai', 'Openly into you'), rom: true },
   affair: { em: '😈', name: L('Muốn ngoại tình với bạn', 'Wants an affair with you'), rom: true },
+  heir: { em: '👶', name: L('Muốn có con với bạn', 'Wants a child with you'), rom: true, heir: true },
 };
 // ───────── Xu hướng tính dục (mục 90) ─────────
 export const ORIENT = {
@@ -54,7 +57,14 @@ export function orientOf(life, p) {
 export const likes = (life, p, gender) => likesG(orientOf(life, p), p.gender, gender);
 export const attOf = (p) => p.att || (p.role === 'rival' ? 'rival' : ROM.includes(p.role) ? 'like' : 'neutral');
 /** Thái độ được phép: thái độ lãng mạn chỉ dành cho người lớn ngoài gia đình. */
-export const attOptions = (life, p) => Object.keys(ATT).filter((k) => !ATT[k].rom || (p.alive && p.age >= 18 && !FAMILY.includes(p.role)));
+export const attOptions = (life, p) => Object.keys(ATT).filter((k) => (!ATT[k].rom || (p.alive && p.age >= 18 && !NOROM.includes(p.role))) && (!ATT[k].heir || heirOK(life, p)));
+/** Mục 342: chỉ người lớn ngoài gia đình, khác giới, hợp xu hướng, người mang thai trong độ tuổi sinh nở. */
+export function heirOK(life, p) {
+  if (!p || !p.alive || p.age < 18 || life.age < 18 || NOROM.includes(p.role) || p.gender === life.gender) return false;
+  if (!likes(life, p, life.gender)) return false;
+  const carrier = p.gender === 'female' ? p.age : life.age;
+  return carrier >= 18 && carrier <= (life.fcfg?.carrierMax ?? 48);
+}
 export function setAtt(life, p, k) {
   if (!ATT[k] || !attOptions(life, p).includes(k)) return false;
   p.att = k;
@@ -182,9 +192,11 @@ export function me(life) {
 export function agree(life, p, base, romantic = false) {
   const a = attOf(p);
   const attB = romantic
-    ? { hate: -0.4, rival: -0.12, neutral: 0, friendly: 0.05, crush: 0.22, like: 0.18, affair: 0.3 }[a]
-    : { hate: -0.3, rival: -0.1, neutral: 0, friendly: 0.1, crush: 0.1, like: 0.1, affair: 0.08 }[a];
-  return clamp(base + (50 - firmOf(p)) / 150 + attB, 0.02, 0.98);
+    ? { hate: -0.4, rival: -0.12, neutral: 0, friendly: 0.05, crush: 0.22, like: 0.18, affair: 0.3, heir: 0.32 }[a]
+    : { hate: -0.3, rival: -0.1, neutral: 0, friendly: 0.1, crush: 0.1, like: 0.1, affair: 0.08, heir: 0.1 }[a];
+  // Mục 341: hào quang làm người khác dễ nói "có" hơn (vẫn không vượt giới hạn)
+  const aura = (life.auraT || 0) * 0.035;
+  return clamp(base + (50 - firmOf(p)) / 150 + (attB || 0) + aura, 0.02, 0.98);
 }
 
 const cl = (life, p, a, b) => { p.closeness = clamp(p.closeness + randint(life, a, b)); };
@@ -710,7 +722,7 @@ export function ixYear(life, st) {
   for (const p of life.people) {
     if (!adultOK(life, p) || !p.ix) continue;
     if (ROM.includes(p.role)) p.ix.fire = clamp(p.ix.fire - 4);
-    else if (['crush', 'like', 'affair'].includes(attOf(p))) p.ix.fire = clamp(p.ix.fire + 4);
+    else if (['crush', 'like', 'affair', 'heir'].includes(attOf(p))) p.ix.fire = clamp(p.ix.fire + 4);
   }
   // Ham muốn thay đổi theo tuổi, stress, con nhỏ
   const target = life.age < 30 ? 75 : life.age < 45 ? 65 : life.age < 60 ? 50 : 35;
@@ -743,7 +755,7 @@ export function ixYear(life, st) {
     const px = prof(pt);
     px.libido = clamp(px.libido + randint(life, -3, 2));
     if (Math.abs(px.libido - m.libido) > 35 && chance(life, 0.15)) pushes.push({ sys: 'ix_mismatch' });
-    const admirer = life.people.find((q) => adultOK(life, q) && !ROM.includes(q.role) && ['crush', 'like', 'affair'].includes(attOf(q)));
+    const admirer = life.people.find((q) => adultOK(life, q) && !ROM.includes(q.role) && ['crush', 'like', 'affair', 'heir'].includes(attOf(q)));
     if (admirer && chance(life, 0.1)) pushes.push({ sys: 'ix_jealous', id: admirer.id });
   }
   const fm = (FREQ[st?.eventFreq] || FREQ.mid).m;

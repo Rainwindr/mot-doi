@@ -27,8 +27,10 @@ export const personName = (life, p) => fullName(p, country(life).region);
 export function randomPerson(s, life, { role, gender, age, last, closeness = 60 }) {
   const pool = NAMES[country(life).region];
   const g = gender ?? (chance(s, 0.5) ? 'male' : 'female');
+  let id = uid(s);
+  while ((life.people || []).some((q) => q.id === id)) id = uid(s);
   const p = {
-    id: uid(s),
+    id,
     role,
     gender: g,
     first: pick(s, g === 'male' ? pool.m : pool.f),
@@ -172,6 +174,7 @@ export function createLife(opts = {}) {
       { text: wealthLine(wealth) },
     ],
   });
+  life.rng = s.rng; // tiếp nối dòng số ngẫu nhiên, tránh trùng id với người nhà
   return life;
 }
 
