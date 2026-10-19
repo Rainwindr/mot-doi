@@ -22,3 +22,18 @@ export function weighted(s, items, w) {
   return items[items.length - 1];
 }
 export const uid = (s) => Math.floor(rand(s) * 1e9).toString(36);
+
+/** Tần suất sự kiện (mục 190): phân bố số sự kiện gói mỗi năm, hệ số sự kiện hệ thống, giới hạn mỗi năm, số năm bảo đảm. */
+export const FREQ = {
+  low: { n: [20, 60, 20, 0, 0], m: 0.6, cap: 1, g: 25 },
+  mid: { n: [6, 54, 40, 0, 0], m: 1, cap: 2, g: 15 },
+  high: { n: [0, 30, 50, 20, 0], m: 1.8, cap: 2, g: 8 },
+  max: { n: [0, 0, 40, 40, 20], m: 3, cap: 3, g: 4 },
+};
+export const freqOf = (st) => FREQ[st?.eventFreq] || FREQ.mid;
+/** Ghi nhận đã gặp một sự kiện (tính trên mọi đời, lưu trong cài đặt). */
+export function markSeen(st, uid) {
+  if (!st || !uid) return;
+  st.seen ||= [];
+  if (!st.seen.includes(uid)) st.seen.push(uid);
+}

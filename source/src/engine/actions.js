@@ -15,6 +15,7 @@ import { CRIMES, commitCrime, prisonAction } from './crime.js';
 import { ROMANTIC, partnerActionList, partnerAction, datingApp, blindDate } from './love.js';
 import { ixPersonActions, doIxPersonAction, IX_ACTIVITIES, agree, prof, godIxPerson, godIxSelf, me } from './intimacy.js';
 import { memberActions, doMemberAction, haremAction, godHaremSelf, godHaremMember } from './harem.js';
+import { DRAMA_ACTIVITIES, doDramaHaremAction, godDramaPerson, godDramaSelf, godTrigger } from './drama.js';
 import { WORLD_ACTIVITIES, workPersonActions, doWorkPersonAction, babyActions, doBabyAction, doAllPeople, godWorldSelf, godWorldPerson, godUnlockAll } from './world.js';
 
 const fx = (life, effects) => applyEffects(life, effects);
@@ -148,7 +149,7 @@ export const ACTIVITIES = [
 ];
 
 const PRISON_OK = new Set(['gym', 'library', 'meditate']);
-ACTIVITIES.push(...EXTRA_ACTIVITIES, ...IX_ACTIVITIES, ...WORLD_ACTIVITIES);
+ACTIVITIES.push(...EXTRA_ACTIVITIES, ...IX_ACTIVITIES, ...WORLD_ACTIVITIES, ...DRAMA_ACTIVITIES);
 
 export function availableActivities(life, settings) {
   if (life.prison) return ACTIVITIES.filter((a) => a.group === 'prison' || PRISON_OK.has(a.id));
@@ -375,6 +376,7 @@ export function godApply(life, change) {
   if (change.harem) godHaremSelf(life, change.harem);
   if (change.world) godWorldSelf(life, change.world);
   if (change.unlockAll) godUnlockAll(life);
+  if (change.drama) godDramaSelf(life, change.drama);
   if (change.body) for (const k of ['fert', 'skill', 'size']) if (change.body[k] != null && (k !== 'size' || life.gender === 'male')) life[k] = clamp(Number(change.body[k]));
   if (change.country && byCode[change.country] && change.country !== life.country) {
     const from = country(life);
@@ -400,6 +402,7 @@ export function godPerson(life, id, vals) {
   godIxPerson(life, p, vals);
   godHaremMember(life, p, vals);
   godWorldPerson(life, p, vals);
+  godDramaPerson(life, p, vals);
   return p;
 }
 
@@ -415,7 +418,9 @@ export function godRewind(life) {
 }
 
 /** Hành động trên màn hình Hậu cung. */
-export function doHaremAction(life, settings, act, arg) { if (!life || life.dead) return null; return haremAction(life, settings, act, arg); }
+export function doHaremAction(life, settings, act, arg) { if (!life || life.dead) return null; return haremAction(life, settings, act, arg) || doDramaHaremAction(life, settings, act); }
+/** God Mode: kích hoạt một kịch bản ngay. */
+export function doGodTrigger(life, settings, id) { if (!life || life.dead) return { ok: false }; life.customized = true; life.counts.godUses++; return godTrigger(life, settings, id); }
 /** Nút "Làm tất cả": tương tác tích cực với mọi người, rồi chăm sóc cả hậu cung nếu có. */
 export function doAll(life, settings) {
   if (!life || life.dead) return null;

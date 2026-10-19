@@ -1,5 +1,5 @@
 // Sự kiện: lọc theo điều kiện, áp dụng kết quả, và các sự kiện hệ thống (mang thai, ngoại tình bị lộ, sau tốt nghiệp...).
-import { L, clamp, rand, chance, randint, pick, weighted } from './util.js';
+import { L, clamp, rand, chance, randint, pick, weighted, freqOf } from './util.js';
 import { STATS } from './validate.js';
 import { portfolioValue } from './economy.js';
 import { majorEvent, tradeEvent } from './school.js';
@@ -75,11 +75,15 @@ export function pickYearEvents(life, events, settings) {
   const perPack = {};
   for (const e of pool) perPack[e.pack] = (perPack[e.pack] || 0) + e.weight;
   const w = (e) => (e.weight / perPack[e.pack]) * Math.sqrt(perPack[e.pack]) * (settings.packWeight?.[e.pack] ?? 1) * (e.big ? 0.22 : 1);
-  const n = weighted(life, [0, 1, 2], (k) => [6, 54, 40][k]);
+  const F = freqOf(settings);
+  const seen = new Set(settings.seen || []);
+  const w0 = w;
+  const w2 = (e) => w0(e) * (seen.has(e.uid) ? 1 : 3);
+  const n = weighted(life, [0, 1, 2, 3, 4], (k) => F.n[k]);
   const out = [];
   const left = [...pool];
   for (let i = 0; i < n && left.length; i++) {
-    const e = weighted(life, left, w);
+    const e = weighted(life, left, w2);
     out.push(e.uid);
     left.splice(left.indexOf(e), 1);
   }

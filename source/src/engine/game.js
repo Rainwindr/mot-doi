@@ -14,6 +14,8 @@ import { buildCareerSys } from './career.js';
 import { buildIxSys, inheritSecrets } from './intimacy.js';
 import { buildHaremSys } from './harem.js';
 import { buildWorldSys } from './world.js';
+import { buildDramaSys } from './drama.js';
+import { markSeen } from './util.js';
 import big from '../data/packs/core_big.json';
 import love from '../data/packs/love_core.json';
 import coreLife from '../data/packs/core_life.json';
@@ -95,6 +97,7 @@ function autoResolve(game) {
     if (!ev) { life.queue.shift(); continue; }
     if (ev.choices) return;
     life.queue.shift();
+    markSeen(game.settings, ev.uid);
     if (ev.once) life.done.push(ev.uid);
     applyEffects(life, ev.effects);
     for (const f of ev.clearFlags || []) delete life.flags[f];
@@ -110,7 +113,7 @@ export function currentEvent(game) {
   while (life.queue.length) {
     const item = life.queue[0];
     if (item.sys) {
-      const ev = buildSysEvent(life, item, game.settings) || buildCrimeSys(life, item) || buildLoveSys(life, item) || buildArcEvent(life, item) || buildCareerSys(life, item) || buildIxSys(life, item, game.settings) || buildHaremSys(life, item, game.settings) || buildWorldSys(life, item, game.settings);
+      const ev = buildSysEvent(life, item, game.settings) || buildCrimeSys(life, item) || buildLoveSys(life, item) || buildArcEvent(life, item) || buildCareerSys(life, item) || buildIxSys(life, item, game.settings) || buildHaremSys(life, item, game.settings) || buildWorldSys(life, item, game.settings) || buildDramaSys(life, item, game.settings);
       if (ev && ev.choices.every((c) => choiceLocked(life, c))) ev.choices = ev.choices.map((c, i) => (i === ev.choices.length - 1 ? { ...c, requires: undefined } : c));
       if (ev) return ev;
       life.queue.shift();
@@ -146,6 +149,7 @@ export function chooseEvent(game, idx) {
     if (ev.once) life.done.push(ev.uid);
     changes = applyOutcome(life, ev, outcome, game.settings);
   }
+  markSeen(game.settings, ev.uid.startsWith('sc/') ? ev.uid.replace(/\/\d+$/, '/1') : ev.uid);
   addLog(life, ev.text);
   if (outcome.text) addLog(life, outcome.text, tone(changes));
   if (ev.big && outcome.text) milestone(life, outcome.text, tone(changes) || 'good');

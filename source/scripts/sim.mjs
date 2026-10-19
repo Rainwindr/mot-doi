@@ -13,7 +13,9 @@ import { SPECIALS, specialAction, canJoin, socialAction } from '../src/engine/sp
 import { checkGoals, archiveLife, emptyProfile } from '../src/engine/goals.js';
 import { ATT, KINKS, FAMILY, ROM, attOf } from '../src/engine/intimacy.js';
 import { haremActions, members as hMembers } from '../src/engine/harem.js';
-import { doHaremAction, doAll } from '../src/engine/actions.js';
+import { doHaremAction, doAll, doGodTrigger } from '../src/engine/actions.js';
+import { dramaHaremActions, SCENARIOS } from '../src/engine/drama.js';
+const trig = {};
 let haremMax = 0, haremLives = 0;
 let ruleErr = 0; const ixStat = { pos: 0, tried: 0, babies: 0, groups: 0, funeral: 0, memoir: 0, rom: 0, care: 0 };
 const ribbonsSeen = {};
@@ -25,7 +27,7 @@ const R = (a) => a[Math.floor(Math.random() * a.length)];
 let jailed = 0, escaped = 0, bizs = 0, homes = 0, moved = 0, worthMax = 0, cobornDead = 0;
 
 const N = Number(process.argv[2]) || 2000;
-const st = { ...defaultSettings(), adult25: true, alwaysProtect: false };
+const st = { ...defaultSettings(), adult25: true, alwaysProtect: false, eventFreq: process.env.FREQ || 'mid' };
 if (process.env.NOPACKS) for (const id of process.env.NOPACKS.split(',')) st.packs[id] = false;
 const game = makeGame(st);
 const byC = {};
@@ -72,7 +74,7 @@ for (let i = 0; i < N; i++) {
         if (Math.random() < 0.03) godPerson(life, q.id, { poly: 90, fert: 90, skill: 80, size: 70, firm: R([0, 50, 100]), att: R(Object.keys(ATT)), chem: 80, fire: 85, kinks: Object.fromEntries(KINKS.map((k) => [k.id, R(['want', 'never', ''])])), reveal: Math.random() < 0.5, fav: R(['', 3, 30]) });
       }
       if (!life.dead && life.age >= 18 && Math.random() < 0.5) {
-        const ha = haremActions(life, st);
+        const ha = haremActions(life, st).concat(dramaHaremActions(life, st));
         if (ha.length) {
           const [act] = R(ha);
           let r = doHaremAction(life, st, act);
@@ -81,6 +83,7 @@ for (let i = 0; i < N; i++) {
         }
         haremMax = Math.max(haremMax, hMembers(life).length);
         if (Math.random() < 0.1) doAll(life, st);
+        if (!process.env.NOTRIG && Math.random() < 0.05) { const sc = R(SCENARIOS); const r = doGodTrigger(life, st, sc.id); if (r.ok) trig[sc.id] = (trig[sc.id] || 0) + 1; }
         if (Math.random() < 0.01) godPerson(life, R(life.people).id, { joinHarem: true, htrait: 'scheme', hrank: 0, hfavor: 90, dyn: 'wild', allowPct: 50, term: 2 });
       }
       if (life.job && Math.random() < 0.3) workAction(life, R(['overtime', 'bossdrinks', 'transfer', 'leave', 'strike', 'whistle']));
@@ -154,7 +157,8 @@ for (let i = 0; i < N; i++) {
   }
 }
 const total = game.events.length;
-console.log('harem lives', haremLives, 'max members', haremMax);
+console.log('harem lives', haremLives, 'max members', haremMax, '· triggered', Object.keys(trig).length, '/', SCENARIOS.length, '· seen', (st.seen || []).length);
+console.log('scenario events seen', [...seen].filter((u) => u.startsWith('sc/')).map((u) => u.split('/')[1]).filter((v, i, a) => a.indexOf(v) === i).length);
 console.log('RULE VIOLATIONS', ruleErr, '· ix', JSON.stringify(ixStat));
 console.log('ribbons', JSON.stringify(ribbonsSeen));
 console.log('ix events', [...seen].filter((u) => /ix|h_|cr_|nc_/.test(u)).sort().join(' '));

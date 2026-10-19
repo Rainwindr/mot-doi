@@ -23,7 +23,9 @@ import { emigrate, emigrationOdds, emigrationCost, cobornName } from '../engine/
 import { ATT, attOf, attOptions, KINKS, KINK_GROUPS, kinkById, CHEST, POSITIONS, POS_LEVELS, posLevel, prof, me, firmOf, adultOK, ROM as ROM_ROLES, ROOMS } from '../engine/intimacy.js';
 import { members as hMembers, inHarem, hm, titleOf, HTRAITS, HOUSES, relOf, haremActions } from '../engine/harem.js';
 import { ensureTeam, teamPeople, DYN } from '../engine/world.js';
-import { doHaremAction, doAll } from '../engine/actions.js';
+import { doHaremAction, doAll, doGodTrigger } from '../engine/actions.js';
+import { dramaHaremActions, pairsOf, PAIR_ST, SCENARIOS } from '../engine/drama.js';
+import { ORIENT, orientOf } from '../engine/intimacy.js';
 
 // ───────── Lưu trữ (an toàn khi trình duyệt chặn) ─────────
 const KEY = { gate: 'motdoi.gate', settings: 'motdoi.settings', save: 'motdoi.save', packs: 'motdoi.packs', profile: 'motdoi.profile' };
@@ -249,7 +251,7 @@ function resultCard(r) {
 
 function sheetBody() {
   if (ui.sheet.startsWith('godp:')) return sheetGodPerson(ui.sheet.slice(5));
-  return ({ harem: sheetHarem, work: sheetWork, people: sheetPeople, acts: sheetActs, self: sheetSelf, god: sheetGod, settings: sheetSettings, assets: sheetAssets, trophies: sheetTrophies, graveyard: sheetGraveyard }[ui.sheet] || (() => sheetPerson(ui.sheet.slice(7))))();
+  return ({ trigger: sheetTrigger, collection: sheetCollection, harem: sheetHarem, work: sheetWork, people: sheetPeople, acts: sheetActs, self: sheetSelf, god: sheetGod, settings: sheetSettings, assets: sheetAssets, trophies: sheetTrophies, graveyard: sheetGraveyard }[ui.sheet] || (() => sheetPerson(ui.sheet.slice(7))))();
 }
 
 function overlays(ev) {
@@ -811,7 +813,7 @@ function sheetHarem() {
   let html = head(`👑 ${t('harem')}`, '#9d174d', 'sheet:people');
   if (!settings.adult25 || L.age < 18) return html + `<p class="note">${t('haremLocked')}</p>`;
   const ms = hMembers(L);
-  const acts = haremActions(L, settings);
+  const acts = haremActions(L, settings).concat(dramaHaremActions(L, settings));
   const btns = acts.length ? `<div class="list">${acts.map(([k, em, lb]) => li(`h:${k}`, em, esc(tx(lb)))).join('')}</div>` : '';
   if (!ms.length) return html + `<p class="note">${t('haremIntro')}</p>` + (btns || `<p class="note">${t('haremNeed')}</p>`);
   const h = L.harem;
@@ -830,6 +832,8 @@ function sheetHarem() {
   for (let i = 0; i < ms.length; i++) for (let j = i + 1; j < ms.length; j++) pairs.push([ms[i], ms[j], relOf(L, ms[i], ms[j])]);
   const bad = pairs.filter((x) => x[2] <= -25).sort((a, b) => a[2] - b[2]).slice(0, 4);
   const good = pairs.filter((x) => x[2] >= 25).sort((a, b) => b[2] - a[2]).slice(0, 4);
+  const couples = pairsOf(L, settings.godEnabled);
+  if (couples.length) html += `<div class="section"><h3>💞 ${t('couples')}</h3><div class="list">${couples.map(([a, b, pr]) => `<div class="li"><span class="em">${PAIR_ST[pr.st].em}</span><span class="tx"><b>${esc(personName(L, a))} & ${esc(personName(L, b))}</b><small>${esc(tx(PAIR_ST[pr.st].name))}${pr.room ? ' · 🛏️' : ''}</small></span><span class="side">${lvl(pr.love, true)}</span></div>`).join('')}</div></div>`;
   if (bad.length || good.length) {
     html += `<div class="section"><h3>🕸️ ${t('relations')}</h3><div class="list">${bad.map(([a, b]) => li(`h:reconcile:${a.id},${b.id}`, '⚔️', `${esc(personName(L, a))} – ${esc(personName(L, b))}`, `${t('relJealous')} · ${t('reconcile')}`)).join('')}${good.map(([a, b]) => `<div class="li"><span class="em">💞</span><span class="tx"><b>${esc(personName(L, a))} – ${esc(personName(L, b))}</b><small>${t('relClose')}</small></span></div>`).join('')}</div></div>`;
   }
@@ -848,7 +852,8 @@ function sheetPerson(id) {
     ${p.age >= 18 ? `<dt>💼 ${t('job')}</dt><dd>${p.job ? esc(tx(p.job)) : t('unemployed')}</dd>${p.income ? `<dt>💵 ${t('salary')}</dt><dd class="mono">${money(p.income)}</dd>` : ''}${p.wealth ? `<dt>💰 ${t('netWorth')}</dt><dd class="mono">${money(p.wealth)}</dd>` : ''}` : ''}
     ${romantic ? `<dt>⏳ ${t('together')}</dt><dd>${p.years || 0} ${t('years')}</dd>` : ''}
     ${p.alive && p.role !== 'pet' && (settings.godEnabled || p.attKnown) ? `<dt>💭 ${t('attitude')}</dt><dd>${ATT[attOf(p)].em} ${esc(tx(ATT[attOf(p)].name))}</dd>` : ''}
-    ${p.alive && p.role !== 'pet' && settings.godEnabled ? `<dt>🪨 ${t('firm')}</dt><dd>${lvl(firmOf(p))}</dd>` : ''}</dl>
+    ${p.alive && p.role !== 'pet' && settings.godEnabled ? `<dt>🪨 ${t('firm')}</dt><dd>${lvl(firmOf(p))}</dd>` : ''}
+    ${p.alive && p.age >= 18 && p.role !== 'pet' && (p.orientKnown || settings.godEnabled) ? `<dt>🧭 ${t('orient')}</dt><dd>${ORIENT[orientOf(L, p)].em} ${esc(tx(ORIENT[orientOf(L, p)].name))}</dd>` : ''}</dl>
     ${intimateKv(L, p)}
     ${knownKv(L, p)}
     ${acts ? `<div class="list">${acts}</div>` : ''}
@@ -893,7 +898,7 @@ function sheetGodPerson(id) {
   return `${head(`⚡ ${esc(personName(L, p))}`, '#a16207', `person:${p.id}`)}
     <p class="note">${t('godPersonNote')}</p>
     <div class="box">${sl('closeness', '🤝')}${sl('looks', '✨')}${sl('smarts', '🧠')}</div>
-    <div class="section"><h3>💭 ${t('attitudeTitle')}</h3><div class="box">${attSel}${sl('firm', '🪨')}<p class="note" style="margin:0">${t('firmNote')}</p></div></div>
+    <div class="section"><h3>💭 ${t('attitudeTitle')}</h3><div class="box">${attSel}${p.age >= 18 ? `<div class="field"><label for="gps-orient">🧭 ${t('orient')}</label><select id="gps-orient" data-gps="orient">${Object.entries(ORIENT).map(([k, o]) => `<option value="${k}" ${g.orient === k ? 'selected' : ''}>${o.em} ${esc(tx(o.name))}</option>`).join('')}</select></div>` : ''}${sl('firm', '🪨')}<p class="note" style="margin:0">${t('firmNote')}</p></div></div>
     ${adult ? `<div class="section"><h3>🔞 ${t('intimateStats')}</h3><div class="box">${sl('poly', '💞')}${sl('skill', '🔥')}${sl('fert', '🌱')}${p.gender === 'male' ? sl('size', '📏') : ''}${sl('fidelity', '🔒')}${sl('crazy', '😤')}${sl('chem', '🧪')}${sl('fire', '🔥')}${sl('libido', '💓')}${sl('flex', '🤸')}${p.role === 'lover' ? sl('jeal', '👀') : ''}${p.baby ? sl('sincere', '💎') : ''}${p.role === 'lover' ? chk('knows', t('knowsOthers')) : ''}${favSel}</div></div>
     <div class="section"><details class="box"><summary><b>🗝️ ${t('kinksTitle')}</b></summary>${kinkRows}${chk('reveal', t('revealAll'))}</details></div>
     ${godExtra(L, p, g, sl, chk)}` : ''}
@@ -910,6 +915,7 @@ function godExtra(L, p, g, sl, chk) {
       ${sl('hfavor', '💗')}${sl('hmood', '🙂')}${chk('hknown', t('hknown'))}
       ${others.map((q) => `<div class="slider"><span>🤝</span><label for="gpr-${q.id}">${esc(personName(L, q))}</label><input id="gpr-${q.id}" type="range" min="0" max="100" value="${g.hrel[q.id] ?? 50}" data-gpr="${q.id}"><output class="mono">${g.hrel[q.id] ?? 50}</output></div>`).join('')}
       ${others.length ? `<p class="note" style="margin:0">${t('hRelNote')}</p>` : ''}
+      ${others.length ? `${sel('pairWith', t('pairWith'), [['', '—'], ...others.map((q) => [q.id, personName(L, q)])])}${sel('pairSt', t('pairSt'), Object.entries(PAIR_ST).map(([k, d]) => [k, `${d.em} ${tx(d.name)}`]))}${chk('pairClear', t('pairClear'))}` : ''}
       ${chk('leaveHarem', t('leaveHarem'))}</div></div>`;
   } else if (adultOK(L, p)) html += `<div class="section"><div class="box">${chk('joinHarem', t('joinHarem'))}</div></div>`;
   if (p.baby) html += `<div class="section"><h3>💎 ${t('sugarGroup')}</h3><div class="box">
@@ -961,8 +967,15 @@ function sheetSelf() {
       ${L.record ? `<dt>📁 ${t('record')}</dt><dd>✓</dd>` : ''}
     </dl>
     ${privateBlock(L)}
+    ${newsBlock(L)}
+    <div class="list">${li('sheet:collection', '📚', t('collection'), t('collectionSub'))}</div>
     ${L.age >= 18 && !L.prison ? emigrateBlock(L) : ''}
     ${cobornBlock(L)}`;
+}
+function newsBlock(L) {
+  if (!L.news || !L.news.length) return '';
+  const rows = L.news.slice(-6).reverse().map((n) => `<details class="box news"><summary><b>📰 ${t('ageHead', { n: n.age })} · ${esc(tx(n.head))}</b></summary>${n.items.map((x) => `<p class="note" style="margin:6px 0 0">• ${esc(tx(x))}</p>`).join('')}${n.rumor ? `<p class="note" style="margin:6px 0 0">🗣️ ${esc(tx(n.rumor))}</p>` : ''}</details>`).join('');
+  return `<div class="section"><h3>📰 ${t('newspaper')}</h3>${rows}</div>`;
 }
 function privateBlock(L) {
   if (!settings.adult25 || L.age < 18 || !L.ix) return '';
@@ -977,6 +990,8 @@ function privateBlock(L) {
     <dt>🌹 ${t('charm')}</dt><dd>${lvl(m.charm)}</dd>
     <dt>💍 ${t('loyal')}</dt><dd>${lvl(m.loyal)}</dd>
     <dt>📰 ${t('scandal')}</dt><dd>${lvl(m.scandal)}</dd>
+    ${(m.lc || []).length ? `<dt>🌍 ${t('loverMap')}</dt><dd>${m.lc.map((c) => byCode[c]?.flag || '').join(' ')} (${m.lc.length})</dd>` : ''}
+    ${m.portrait ? `<dt>🖼️ ${t('portrait')}</dt><dd>${t(m.portrait === 'harem' ? 'portraitHarem' : 'portraitSelf')}</dd>` : ''}
     ${m.club ? `<dt>🎭 ${t('clubCard')}</dt><dd>✓</dd>` : ''}
   </dl></div>`;
 }
@@ -1090,7 +1105,31 @@ function godSelfExtra(L, g) {
     ${num('followers', t('followersN'))}${num('creatorSubs', t('creatorSubs'))}
     ${L.nclub ? `<div class="slider"><span>🪩</span><label for="gw-clubRep">${t('clubRep')}</label><input id="gw-clubRep" type="range" min="0" max="100" value="${g.world.clubRep}" data-gw="clubRep"><output class="mono">${g.world.clubRep}</output></div>${num('clubStaff', t('clubStaff'))}` : ''}
   </details></div>
-  <div class="list">${li('god-unlock', '🔓', t('unlockAll'), t('unlockAllSub'))}</div>`;
+  <div class="section"><details class="box"><summary><b>🧭 ${t('dramaGod')}</b></summary>
+    <div class="field"><label for="gds-orientation">🧭 ${t('myOrient')}</label><select id="gds-orientation" data-gds="orientation">${[['opposite', t('opposite')], ['same', t('same')], ['both', t('both')]].map(([v, lb]) => `<option value="${v}" ${g.drama.orientation === v ? 'selected' : ''}>${lb}</option>`).join('')}</select></div>
+    ${[['pole', t('poleDone')], ...(ms.length ? [['allowPairs', t('allowPairs')], ['nude', t('nudeRule')], ['jacuzzi', t('jacuzziHave')], ['vowed', t('vowedDone')]] : [])].map(([k, lb]) => `<label class="toggle" for="gdc-${k}"><span><b>${lb}</b></span><input id="gdc-${k}" type="checkbox" data-gdc="${k}" ${g.drama[k] ? 'checked' : ''}></label>`).join('')}
+    <div class="field"><label for="gds-portrait">🖼️ ${t('portrait')}</label><select id="gds-portrait" data-gds="portrait">${[['', '—'], ['self', t('portraitSelf')], ['harem', t('portraitHarem')]].map(([v, lb]) => `<option value="${v}" ${(g.drama.portrait || '') === v ? 'selected' : ''}>${lb}</option>`).join('')}</select></div>
+  </details></div>
+  <div class="list">${li('god-unlock', '🔓', t('unlockAll'), t('unlockAllSub'))}${li('sheet:trigger', '🎬', t('triggerTitle'), t('triggerSub'))}</div>`;
+  return html;
+}
+function sheetTrigger() {
+  const L = game.life;
+  let html = head(`🎬 ${t('triggerTitle')}`, '#a16207', 'sheet:god');
+  if (!settings.godEnabled || !L || L.dead) return html + `<p class="note">${t('godOff')}</p>`;
+  html += `<p class="note">${t('triggerNote')}</p>`;
+  const FATED = [['oneroom', { vi: 'Chỉ còn một phòng', en: 'Only one room left' }], ['elevator', { vi: 'Kẹt thang máy với người cũ', en: 'Stuck in a lift with your ex' }], ['wedding', { vi: 'Đám cưới người cũ', en: "Your ex's wedding" }], ['enemies', { vi: 'Kẻ thù thành người tình', en: 'Enemies to lovers' }], ['reunion', { vi: 'Họp lớp 20 năm', en: '20-year reunion' }]];
+  html += `<div class="section"><h3>✨ ${t('fatedNights')}</h3><div class="list">${FATED.map(([k, lb]) => li(`trig:fated:${k}`, '🌙', esc(tx(lb)))).join('')}</div></div>`;
+  html += `<div class="section"><h3>🎭 ${t('scenarios')}</h3><div class="list">${SCENARIOS.map((sc) => { const seen = (settings.seen || []).includes(`sc/${sc.id}/1`); return li(`trig:${sc.id}`, seen ? '✅' : '🎬', esc(tx(sc.title)), `${t('needs')}: ${esc(tx(sc.req))}`); }).join('')}</div></div>`;
+  return html;
+}
+function sheetCollection() {
+  const seen = new Set(settings.seen || []);
+  let html = head(`📚 ${t('collection')}`, '#475569', game.life ? 'sheet:self' : null);
+  const rows = game.packs.filter((p) => settings.packs[p.manifest.id] !== false).map((p) => { const n = p.events.filter((e) => seen.has(e.uid)).length; return `<div class="li"><span class="em">📦</span><span class="tx"><b>${esc(tx(p.manifest.name))}</b><small>${n}/${p.events.length} · ${p.manifest.rating}</small></span><span class="side">${lvl((n / Math.max(1, p.events.length)) * 100, true)}</span></div>`; }).join('');
+  const sn = SCENARIOS.filter((sc) => seen.has(`sc/${sc.id}/1`)).length;
+  html += `<div class="list"><div class="li"><span class="em">🎭</span><span class="tx"><b>${t('scenarios')}</b><small>${sn}/${SCENARIOS.length}</small></span><span class="side">${lvl((sn / SCENARIOS.length) * 100, true)}</span></div>${rows}</div>`;
+  html += `<div class="section"><h3>🎭 ${t('scenarios')}</h3><div class="list">${SCENARIOS.map((sc) => `<div class="li"><span class="em">${seen.has(`sc/${sc.id}/1`) ? '✅' : '❔'}</span><span class="tx"><b>${seen.has(`sc/${sc.id}/1`) ? esc(tx(sc.title)) : '???'}</b></span></div>`).join('')}</div></div>`;
   return html;
 }
 function sheetSettings() {
@@ -1102,6 +1141,8 @@ function sheetSettings() {
     ${tog('adult25', `🔞 ${t('adult25')}`, t('adult25Sub'))}
     ${tog('alwaysProtect', `🛡️ ${t('protect')}`, t('protectSub'))}
     ${tog('godEnabled', `⚡ ${t('godToggle')}`, t('godToggleSub'))}
+    <div class="box"><div class="field"><label for="setsel-eventFreq">🎲 ${t('eventFreq')}</label><select id="setsel-eventFreq" data-setsel="eventFreq">${[['low', t('freqLow')], ['mid', t('freqMid')], ['high', t('freqHigh')], ['max', t('freqMax')]].map(([v, lb]) => `<option value="${v}" ${(settings.eventFreq || 'mid') === v ? 'selected' : ''}>${lb}</option>`).join('')}</select></div><p class="note" style="margin:0">${t('eventFreqNote')}</p></div>
+    <div class="list">${li('sheet:collection', '📚', t('collection'), t('collectionSub'))}</div>
     <div class="section"><h3>📦 ${t('packs')}</h3><div class="list">${packs}</div>
       <div class="box"><div class="field"><label for="packfile">${t('loadPack')}</label><input id="packfile" type="file" accept=".json,.txt,application/json"></div>
       ${m ? (m.ok ? `<p style="color:var(--good);font-weight:700;margin:0">${esc(m.ok)}</p>` : `<p class="err" style="margin:0">${t('packErr')}</p><div class="errors">${esc(m.errors.slice(0, 30).join('\n'))}</div>`) : ''}</div>
@@ -1195,14 +1236,14 @@ $app.addEventListener('click', (e) => {
     case 'sheet':
       ui.sheet = arg; ui.resetArmed = false; ui.packMsg = null; ui.sub = null;
       if (arg === 'work' && L) ensureTeam(L);
-      if (arg === 'god' && L) { const m = me(L); ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate, body: { fert: L.fert ?? 70, skill: L.skill ?? 50, size: L.size ?? 50 }, ix: { libido: m.libido, flex: m.flex, charm: m.charm, loyal: m.loyal, scandal: m.scandal, chest: [...m.chest], allPos: false, club: m.club, rope: m.rope }, harem: L.harem ? { harmony: Math.round(L.harem.harmony), head: L.harem.head, structure: L.harem.structure, house: L.harem.house, protect: L.harem.protect || 'each', cungdau: L.harem.cungdau } : {}, world: { yacht: !!m.yacht, room: m.room || '', followers: L.social?.followers || 0, creatorSubs: L.creator?.subs || 0, clubRep: L.nclub?.rep ?? 0, clubStaff: L.nclub?.staff ?? 0 } }; }
+      if (arg === 'god' && L) { const m = me(L); ui.god = { stats: { ...L.stats }, money: L.money * country(L).rate, body: { fert: L.fert ?? 70, skill: L.skill ?? 50, size: L.size ?? 50 }, ix: { libido: m.libido, flex: m.flex, charm: m.charm, loyal: m.loyal, scandal: m.scandal, chest: [...m.chest], allPos: false, club: m.club, rope: m.rope }, drama: { orientation: L.orientation, pole: !!m.pole, portrait: m.portrait || '', allowPairs: L.harem ? L.harem.allowPairs !== false : true, nude: !!L.harem?.nude, jacuzzi: !!L.harem?.jacuzzi, vowed: !!L.harem?.vowed }, harem: L.harem ? { harmony: Math.round(L.harem.harmony), head: L.harem.head, structure: L.harem.structure, house: L.harem.house, protect: L.harem.protect || 'each', cungdau: L.harem.cungdau } : {}, world: { yacht: !!m.yacht, room: m.room || '', followers: L.social?.followers || 0, creatorSubs: L.creator?.subs || 0, clubRep: L.nclub?.rep ?? 0, clubStaff: L.nclub?.staff ?? 0 } }; }
       break;
     case 'close': ui.sheet = null; break;
     case 'person': ui.sheet = `person:${arg}`; break;
     case 'godp': {
       const p = L.people.find((x) => x.id === arg);
       if (p) {
-        ui.godp = { closeness: p.closeness, looks: p.looks, smarts: p.smarts, poly: p.poly ?? 30, skill: p.skill ?? 50, fert: p.fert ?? 70, size: p.size ?? 50, fidelity: p.fidelity ?? 60, crazy: p.crazy ?? 50, firm: firmOf(p), att: attOf(p), kinks: {} };
+        ui.godp = { orient: p.age >= 18 ? orientOf(L, p) : undefined, closeness: p.closeness, looks: p.looks, smarts: p.smarts, poly: p.poly ?? 30, skill: p.skill ?? 50, fert: p.fert ?? 70, size: p.size ?? 50, fidelity: p.fidelity ?? 60, crazy: p.crazy ?? 50, firm: firmOf(p), att: attOf(p), kinks: {} };
         if (p.age >= 18) {
           const x = prof(p);
           Object.assign(ui.godp, { chem: x.chem, fire: x.fire, libido: x.libido, flex: x.flex, jeal: x.jeal, sincere: x.sincere, knows: x.knows, fav: x.fav ?? '', reveal: false });
@@ -1210,7 +1251,7 @@ $app.addEventListener('click', (e) => {
           for (const k of x.limits) ui.godp.kinks[k] = 'never';
           ui.godp.dyn = x.dyn || '';
           ui.godp.hrel = {};
-          if (inHarem(L, p)) { const h = hm(p); Object.assign(ui.godp, { htrait: h.trait, hrank: h.rank, hfavor: Math.round(h.favor), hmood: Math.round(h.mood), hknown: h.known }); for (const q of hMembers(L)) if (q !== p) ui.godp.hrel[q.id] = Math.round(relOf(L, p, q) / 2 + 50); }
+          if (inHarem(L, p)) { const h = hm(p); const myPair = pairsOf(L, true).find(([a, b]) => a === p || b === p); Object.assign(ui.godp, { htrait: h.trait, hrank: h.rank, hfavor: Math.round(h.favor), hmood: Math.round(h.mood), hknown: h.known, pairWith: myPair ? (myPair[0] === p ? myPair[1].id : myPair[0].id) : '', pairSt: myPair ? myPair[2].st : 'blessed', pairClear: false }); for (const q of hMembers(L)) if (q !== p) ui.godp.hrel[q.id] = Math.round(relOf(L, p, q) / 2 + 50); }
           if (p.baby) Object.assign(ui.godp, { allowPct: Math.round((p.allow || 0) / (country(L).gdp / 100)), term: Math.min(10, Math.max(1, p.term ?? 3)), sinKnown: !!p.sinKnown });
         }
         ui.sheet = `godp:${arg}`;
@@ -1237,9 +1278,15 @@ $app.addEventListener('click', (e) => {
     }
     case 'job': record(applyJob(L, arg), { vi: `${STRINGS.vi.apply}: ${careerById[arg].title.vi}`, en: `${STRINGS.en.apply}: ${careerById[arg].title.en}` }, false, JOB_EM[arg]); break;
     case 'w': record(workAction(L, arg), { vi: STRINGS.vi[W_LABEL[arg]], en: STRINGS.en[W_LABEL[arg]] }, false, { exam: '📝', overtime: '⏰', bossdrinks: '🍻', transfer: '🔁', leave: '🏖️', strike: '✊', whistle: '📣', promote: '⬆️', study: '📚', skip: '🛹', dropout: '🚪', uni: '🎓', trade: '🧰', grad: '📜', switch: '🔀', club: '🎭', parttime: '☕', scholar: '🏅', exchange: '✈️', intern: '🗂️', olympiad: '🏆', hard: '💪', raise: '💰', quit: '🚪' }[arg]); break;
-    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate, body: ui.god.body, ix: settings.adult25 && L.age >= 18 ? ui.god.ix : undefined, harem: settings.adult25 && L.harem ? ui.god.harem : undefined, world: settings.adult25 && L.age >= 18 ? ui.god.world : undefined }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
+    case 'god-apply': godApply(L, { stats: ui.god.stats, money: ui.god.money / country(L).rate, body: ui.god.body, ix: settings.adult25 && L.age >= 18 ? ui.god.ix : undefined, harem: settings.adult25 && L.harem ? ui.god.harem : undefined, world: settings.adult25 && L.age >= 18 ? ui.god.world : undefined, drama: ui.god.drama }); ui.sheet = null; ui.result = { text: t('godDone'), tone: 'good', emoji: '⚡' }; break;
     case 'god-unlock': godApply(L, { unlockAll: true }); ui.sheet = null; ui.result = { text: t('unlockDone'), tone: 'good', emoji: '🔓' }; break;
     case 'doall': record(doAll(L, settings), { vi: STRINGS.vi.doAll, en: STRINGS.en.doAll }, true, '⚡'); break;
+    case 'trig': {
+      const id = arg === 'fated' ? `fated:${arg2}` : arg;
+      const r = doGodTrigger(L, settings, id);
+      if (r.ok) { ui.sheet = null; } else ui.result = { text: r.req ? { vi: `${STRINGS.vi.needs}: ${r.req.vi}`, en: `${STRINGS.en.needs}: ${r.req.en}` } : t('triggerFail'), tone: 'bad', emoji: '🎬' };
+      break;
+    }
     case 'h': record(doHaremAction(L, settings, arg, arg2), { vi: STRINGS.vi.harem, en: STRINGS.en.harem }, true, '👑'); break;
     case 'god-cure': godApply(L, { cure: true }); ui.god.stats = { ...L.stats }; ui.result = { text: t('cure'), tone: 'good', emoji: '💊' }; break;
     case 'god-debt': godApply(L, { clearDebt: true }); ui.god.money = L.money * country(L).rate; ui.result = { text: t('clearDebt'), tone: 'good', emoji: '🧾' }; break;
@@ -1346,6 +1393,14 @@ $app.addEventListener('change', (e) => {
     ui.god.ix.chest = el.checked ? [...new Set([...ui.god.ix.chest, k])] : ui.god.ix.chest.filter((x) => x !== k);
   } else if (el.dataset.gxb) {
     ui.god.ix[el.dataset.gxb] = el.checked;
+  } else if (el.dataset.gds) {
+    ui.god.drama[el.dataset.gds] = el.value;
+  } else if (el.dataset.gdc) {
+    ui.god.drama[el.dataset.gdc] = el.checked;
+  } else if (el.dataset.setsel) {
+    settings[el.dataset.setsel] = el.value;
+    persist();
+    render();
   } else if (el.dataset.ghs) {
     ui.god.harem[el.dataset.ghs] = el.value;
   } else if (el.dataset.ghc) {

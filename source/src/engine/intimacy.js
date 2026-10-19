@@ -1,7 +1,7 @@
 // Nội dung thân mật 25+ (bản duyệt 29 mục), thái độ của nhân vật với bạn, độ kiên định, và tương tác cho mọi người.
 // Luật cứng: mọi cảnh tình cảm/tình dục chỉ giữa người từ 18 tuổi, không bao giờ với gia đình hay thú cưng,
 // luôn có đồng thuận; "giới hạn" của nhân vật không bao giờ bị phá, dù độ kiên định thấp đến đâu.
-import { L, clamp, rand, chance, randint, pick } from './util.js';
+import { L, clamp, rand, chance, randint, pick, FREQ } from './util.js';
 import {
   country, unit, partner, people, byId, randomPerson, partnerGender, personName, addLog, setFlag,
   lovers, polyOk, makeLover, endLover, syncAffair,
@@ -34,6 +34,24 @@ export const ATT = {
   like: { em: '😍', name: L('Thích công khai', 'Openly into you'), rom: true },
   affair: { em: '😈', name: L('Muốn ngoại tình với bạn', 'Wants an affair with you'), rom: true },
 };
+// ───────── Xu hướng tính dục (mục 90) ─────────
+export const ORIENT = {
+  straight: { em: '⚤', name: L('Thích khác giới', 'Into the opposite sex') },
+  gay: { em: '🌈', name: L('Thích cùng giới', 'Into the same sex') },
+  bi: { em: '💗', name: L('Thích cả hai', 'Into both') },
+  ace: { em: '🤍', name: L('Ít hứng thú tình dục', 'Asexual') },
+};
+export const likesG = (o, self, other) => o === 'bi' || (o === 'straight' && self !== other) || (o === 'gay' && self === other);
+/** Xu hướng của một nhân vật: cố định theo id cho tới khi God Mode chỉnh. Người đang yêu bạn luôn hợp với bạn. */
+export function orientOf(life, p) {
+  if (!p.orient) {
+    const r = (seedOf(p.id + ':o') % 1000) / 1000;
+    p.orient = r < 0.78 ? 'straight' : r < 0.9 ? 'bi' : r < 0.97 ? 'gay' : 'ace';
+    if (ROM.includes(p.role) && !likesG(p.orient, p.gender, life.gender)) p.orient = 'bi';
+  }
+  return p.orient;
+}
+export const likes = (life, p, gender) => likesG(orientOf(life, p), p.gender, gender);
 export const attOf = (p) => p.att || (p.role === 'rival' ? 'rival' : ROM.includes(p.role) ? 'like' : 'neutral');
 /** Thái độ được phép: thái độ lãng mạn chỉ dành cho người lớn ngoài gia đình. */
 export const attOptions = (life, p) => Object.keys(ATT).filter((k) => !ATT[k].rom || (p.alive && p.age >= 18 && !FAMILY.includes(p.role)));
@@ -251,6 +269,7 @@ export function doIxPersonAction(life, st, p, act, n) {
       if (n > 2) return tired;
       cl(life, p, 4, 8);
       p.attKnown = true;
+      if (p.age >= 18) p.orientKnown = true;
       const a = attOf(p);
       const reveal = {
         hate: L(`Nói chuyện một lúc, ${name} buột miệng: họ chưa bao giờ ưa bạn.`, `Halfway through, ${name} admits they've never liked you.`),
@@ -685,7 +704,7 @@ export function ixYear(life, st) {
   if (life.age < 18) return;
   // Người lớn ngoài gia đình có thể tự nảy sinh tình cảm
   if (chance(life, 0.05 + life.stats.looks / 1500)) {
-    const c = life.people.filter((p) => adultOK(life, p) && !ROM.includes(p.role) && attOf(p) === 'neutral' && p.closeness >= 50);
+    const c = life.people.filter((p) => adultOK(life, p) && !ROM.includes(p.role) && attOf(p) === 'neutral' && p.closeness >= 50 && likes(life, p, life.gender));
     if (c.length) pick(life, c).att = 'crush';
   }
   for (const p of life.people) {
@@ -706,7 +725,7 @@ export function ixYear(life, st) {
   if (exp > m.seenExp) { m.scandal = clamp(m.scandal + 20 * (exp - m.seenExp)); m.loyal = clamp(m.loyal - 15); m.seenExp = exp; }
   m.scandal = clamp(m.scandal - 3); m.charm = clamp(m.charm - 1);
   if (m.scandal > 60 && life.job && chance(life, 0.12)) { life.job.perf = clamp((life.job.perf || 50) - 10); addLog(life, L('Đồng nghiệp xì xào về đời tư của bạn. Sếp nhìn bạn khác đi.', 'Coworkers whisper about your private life. Your boss looks at you differently.'), 'bad'); }
-  if (!on(st, life)) { flush(life, pushes); return; }
+  if (!on(st, life)) { flush(life, pushes, st); return; }
   // Sugar babies: trợ cấp và chuyện phát sinh
   for (const p of life.people.filter((q) => q.alive && q.baby && q.role === 'lover')) {
     life.money -= p.allow || 0;
@@ -727,13 +746,14 @@ export function ixYear(life, st) {
     const admirer = life.people.find((q) => adultOK(life, q) && !ROM.includes(q.role) && ['crush', 'like', 'affair'].includes(attOf(q)));
     if (admirer && chance(life, 0.1)) pushes.push({ sys: 'ix_jealous', id: admirer.id });
   }
-  if (chance(life, 0.07)) pushes.push({ sys: 'ix_fated', id: pick(life, fatedPool(life)), step: 1 });
-  if (life.job && chance(life, 0.06)) pushes.push({ sys: 'ix_office' });
+  const fm = (FREQ[st?.eventFreq] || FREQ.mid).m;
+  if (chance(life, 0.07 * fm)) pushes.push({ sys: 'ix_fated', id: pick(life, fatedPool(life)), step: 1 });
+  if (life.job && chance(life, 0.06 * fm)) pushes.push({ sys: 'ix_office' });
   const exes = life.people.filter((q) => q.role === 'ex' && adultOK(life, q) && !q.cut);
-  if (exes.length && chance(life, 0.07)) pushes.push({ sys: 'ix_ex', id: pick(life, exes).id });
-  flush(life, pushes);
+  if (exes.length && chance(life, 0.07 * fm)) pushes.push({ sys: 'ix_ex', id: pick(life, exes).id });
+  flush(life, pushes, st);
 }
-function flush(life, pushes) { for (const x of pushes.slice(0, 2)) life.queue.push(x); }
+function flush(life, pushes, st) { for (const x of pushes.slice(0, (FREQ[st?.eventFreq] || FREQ.mid).cap)) life.queue.push(x); }
 
 function attYear(life, p, pushes) {
   const a = attOf(p);

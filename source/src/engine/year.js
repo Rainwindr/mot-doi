@@ -14,6 +14,7 @@ import { loveYear } from './love.js';
 import { ixYear, funeral } from './intimacy.js';
 import { haremYear, haremFuneral } from './harem.js';
 import { worldYear } from './world.js';
+import { dramaYear } from './drama.js';
 import { arcYear } from './arcs.js';
 
 /** Xác suất chết trong năm. */
@@ -199,6 +200,7 @@ export function ageUp(life, events, settings) {
   ixYear(life, settings);
   haremYear(life, settings);
   worldYear(life, settings);
+  dramaYear(life, settings);
   arcYear(life);
   cobornYear(life, mortality);
   life.counts.maxMoney = Math.max(life.counts.maxMoney, netWorth(life));
@@ -264,6 +266,8 @@ export const RIBBONS = {
   peace: { name: L('Thái bình thịnh trị', 'Golden age'), why: L('Hậu cung trên 5 năm, Hòa hợp chưa bao giờ dưới 50', 'A harem for 5+ years, harmony never below 50') },
   coup: { name: L('Sống sót qua cung đấu', 'Survived the palace intrigue'), why: L('Dập tắt một cuộc đảo chính trong nhà', 'Crushed a coup at home') },
   island: { name: L('Chủ đảo', 'Island ruler'), why: L('Có hậu cung trên đảo riêng', 'Kept a harem on a private island') },
+  fullfamily: { name: L('Gia đình trọn vẹn', 'A complete family'), why: L('Mọi thành viên hậu cung đều có người yêu trong nhà, Hòa hợp từ 70', 'Every harem member had a love inside the house, harmony 70+') },
+  passport: { name: L('Hộ chiếu đỏ', 'Red passport'), why: L('Có người tình ở 10 quốc gia', 'Lovers in 10 countries') },
   crowdfuneral: { name: L('Đám tang đông nhất', 'Packed funeral'), why: L('Từ 5 người tình dự đám tang', 'Five or more lovers at the funeral') },
   mediocre: { name: L('Bình thường', 'Ordinary'), why: L('Một đời không có gì đặc biệt', 'An unremarkable life') },
 };
@@ -302,6 +306,8 @@ export function ribbonsFor(life) {
     if (ix.babies >= 5) r.push('sugarlegend');
   }
   if ((life.counts.funeralLovers || 0) >= 5) r.push('crowdfuneral');
+  if (life.counts.fullFamily) r.push('fullfamily');
+  if ((life.ix?.lc || []).length >= 10) r.push('passport');
   const hh = life.harem;
   if (hh) {
     if (hh.years4 >= 10) r.push('harem');
