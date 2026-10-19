@@ -1,0 +1,3524 @@
+{
+  "manifest": {
+    "id": "tacgia.nhieu_nu_mot_nam",
+    "name": {
+      "vi": "Một Nam Nhiều Nữ – Những Đêm Dài",
+      "en": "One Man Many Women – Long Nights"
+    },
+    "version": "1.0.0",
+    "rating": "25+",
+    "languages": ["vi", "en"]
+  },
+  "events": [
+    {
+      "id": "nn_gap_ba_nguoi",
+      "category": "love",
+      "age": [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true, "lovers": 1 },
+      "text": {
+        "vi": "Người yêu và một người bạn thân cùng ở lại nhà bạn tối nay. Không khí trở nên nóng bỏng.",
+        "en": "Your partner and a close friend both stay over tonight. The air grows charged."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Để mọi thứ tự diễn ra", "en": "Let things unfold" },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 12, "rel_partner": 5 },
+              "setFlags": ["nn_da_ba_nguoi"],
+              "text": {
+                "vi": "Ba người tìm được nhịp chung. Sáng hôm sau không ai muốn rời giường sớm.",
+                "en": "The three of you find a shared rhythm. No one wants to leave the bed early the next morning."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": 4, "rel_partner": -2 },
+              "text": {
+                "vi": "Có chút vụng về, nhưng không ai phàn nàn.",
+                "en": "A little awkward, but no one complains."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Giữ khoảng cách", "en": "Keep some distance" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "willpower": 3 },
+              "text": {
+                "vi": "Bạn chọn ngủ riêng. Đêm dài và yên tĩnh hơn bình thường.",
+                "en": "You choose to sleep alone. The night feels longer and quieter than usual."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_ngoi_len_mat",
+      "category": "love",
+      "age": [18, 110],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true, "flags": ["nn_da_ba_nguoi"] },
+      "text": {
+        "vi": "Hai người phụ nữ nhìn nhau rồi nhìn bạn, mỉm cười đầy ý.",
+        "en": "The two women glance at each other, then at you, smiling with intent."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Nằm xuống và để họ quyết định", "en": "Lie back and let them decide" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15, "looks": 2 },
+              "text": {
+                "vi": "Một người ngồi nhẹ lên mặt bạn trong khi người kia chiếm lấy phần còn lại. Hơi thở của bạn bị chiếm hoàn toàn.",
+                "en": "One settles gently over your face while the other claims the rest of you. Your breath is completely taken."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Chủ động hơn", "en": "Take more control" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 10, "rel_partner": 4 },
+              "text": {
+                "vi": "Bạn đảo vị trí. Cả hai đều hài lòng với cách bạn phân chia sự chú ý.",
+                "en": "You switch positions. Both are pleased with how you divide your attention."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_thay_phien",
+      "category": "love",
+       "age": [18, 110],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Họ đề nghị thay phiên nhau. Không ai muốn bị bỏ quên.",
+        "en": "They suggest taking turns. No one wants to be left out."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Đồng ý theo nhịp của họ", "en": "Follow their rhythm" },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "happy": 14, "karma": 2 },
+              "text": {
+                "vi": "Mỗi người đều được chăm sóc kỹ lưỡng. Đêm kéo dài hơn dự kiến.",
+                "en": "Each receives careful attention. The night stretches longer than expected."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": 6 },
+              "text": {
+                "vi": "Có lúc hơi lộn xộn, nhưng tiếng cười át đi mọi thứ.",
+                "en": "It gets a little chaotic at times, but laughter covers everything."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Tập trung vào một người trước", "en": "Focus on one first" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "rel_partner": -3, "happy": 8 },
+              "text": {
+                "vi": "Người còn lại chờ đợi với ánh mắt phức tạp.",
+                "en": "The other waits with a complicated look."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_hai_phia",
+      "category": "love",
+    "age": [18, 110],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Họ quỳ hai bên giường, chờ bạn chọn.",
+        "en": "They kneel on either side of the bed, waiting for you to choose."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Không chọn, nhận cả hai", "en": "Refuse to choose — take both" },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": { "happy": 14, "fame": 1 },
+              "text": {
+                "vi": "Hai đôi môi cùng lúc. Bạn phải nằm xuống để không mất thăng bằng.",
+                "en": "Two mouths at once. You have to lie back to keep your balance."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": { "happy": 8 },
+              "text": {
+                "vi": "Có chút cạnh tranh nhẹ, nhưng nhanh chóng trở thành trò chơi.",
+                "en": "A little light competition, but it quickly becomes a game."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Lần lượt từng người", "en": "One after the other" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 11, "rel_partner": 3 },
+              "text": {
+                "vi": "Mỗi người đều được dành đủ thời gian. Không khí chậm rãi và sâu.",
+                "en": "Each gets enough time. The mood stays slow and deep."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_tu_the_dung",
+      "category": "love",
+      "age": [18, 110],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "min": { "health": 50 } },
+      "text": {
+        "vi": "Họ muốn thử tư thế đứng, dựa vào tường.",
+        "en": "They want to try standing, against the wall."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Nâng lần lượt", "en": "Lift them in turn" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 12, "health": -3 },
+              "text": {
+                "vi": "Cơ tay bạn phải làm việc. Cả hai đều thở dốc khi được đặt xuống.",
+                "en": "Your arms work hard. Both are breathing heavily when set down."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Giữ một người, người kia hỗ trợ", "en": "Hold one while the other helps" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 13 },
+              "text": {
+                "vi": "Sự phối hợp bất ngờ hiệu quả. Không ai muốn dừng sớm.",
+                "en": "The unexpected coordination works well. No one wants to stop early."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_tren_san",
+      "category": "love",
+      "age": [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nn_da_ba_nguoi"] },
+      "text": {
+        "vi": "Giường quá nhỏ. Họ kéo bạn xuống sàn.",
+        "en": "The bed is too small. They pull you onto the floor."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Nằm ngửa, để họ ở trên", "en": "Lie on your back and let them be on top" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Một người ngồi lên mặt, người kia cưỡi. Bạn bị kẹt ở giữa theo cách tốt nhất.",
+                "en": "One sits over your face, the other rides. You are trapped in the middle in the best way."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Đổi vai trò liên tục", "en": "Keep rotating roles" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 12, "willpower": -1 },
+              "text": {
+                "vi": "Không ai giữ vị trí quá lâu. Mọi thứ trở nên mồ hôi và vui vẻ.",
+                "en": "No one stays in place too long. Everything turns sweaty and playful."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_song_song",
+      "category": "love",
+     "age": [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Họ nằm song song, chờ bạn quyết định thứ tự.",
+        "en": "They lie side by side, waiting for you to decide the order."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Từ người này sang người kia không nghỉ", "en": "Move from one to the other without pause" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "text": {
+                "vi": "Nhịp độ nhanh. Cả hai đều kêu lên khi đến lượt.",
+                "en": "A fast pace. Both cry out when their turn comes."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Chậm rãi và sâu với từng người", "en": "Slow and deep with each" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 11, "rel_partner": 4 },
+              "text": {
+                "vi": "Thời gian dường như giãn ra. Không ai vội vàng.",
+                "en": "Time seems to stretch. No one is in a hurry."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_mat_va_mieng",
+      "category": "love",
+     "age": [18, 110],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Một người ngồi lên mặt bạn, người kia dùng miệng.",
+        "en": "One sits over your face while the other uses her mouth."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Tận hưởng cả hai", "en": "Enjoy both at once" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17, "willpower": -3 },
+              "text": {
+                "vi": "Bạn bị chiếm đoạt hoàn toàn. Chỉ còn lại cảm giác và hơi thở ngắn.",
+                "en": "You are completely claimed. Only sensation and short breaths remain."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Đề nghị đổi chỗ sau một lúc", "en": "Suggest switching after a while" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 13 },
+              "text": {
+                "vi": "Họ vui vẻ chấp nhận. Cảm giác mới lại bắt đầu.",
+                "en": "They happily agree. A new wave of sensation begins."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_sau_dem_dai",
+      "category": "love",
+     "age": [18, 110],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nn_da_ba_nguoi"] },
+      "text": {
+        "vi": "Sáng hôm sau, cả ba vẫn nằm trên cùng một giường, người này đụng người kia.",
+        "en": "The next morning the three of you are still in the same bed, touching."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Tiếp tục nhẹ nhàng", "en": "Continue gently" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 9, "health": 2 },
+              "text": {
+                "vi": "Không vội vàng. Chỉ là sự gần gũi chậm rãi dưới ánh sáng ban ngày.",
+                "en": "No rush. Just slow closeness in the daylight."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Rời giường chuẩn bị bữa sáng", "en": "Get up and make breakfast" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 6, "rel_partner": 3 },
+              "text": {
+                "vi": "Họ cười và kéo chăn. Bạn nghe thấy tiếng thì thầm từ phòng ngủ.",
+                "en": "They laugh and pull the covers. You hear soft whispers from the bedroom."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_goi_them",
+      "category": "love",
+     "age": [18, 110],
+      "weight": 2,
+      "once": true,
+      "rating": "25+",
+      "requires": { "lovers": 2, "min": { "money": 30 } },
+      "text": {
+        "vi": "Họ hỏi bạn có muốn thêm một người nữa không.",
+        "en": "They ask if you want to add one more."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Đồng ý", "en": "Agree" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 12, "money": -15, "risk": 3 },
+              "setFlags": ["nn_bon_nguoi"],
+              "text": {
+                "vi": "Không gian trở nên chật hơn, nóng hơn, và khó quên hơn.",
+                "en": "The space becomes tighter, hotter, and harder to forget."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Giữ nguyên ba người", "en": "Keep it at three" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 8, "rel_partner": 4 },
+              "text": {
+                "vi": "Họ gật đầu hiểu. Ba người là đủ cho đêm nay.",
+                "en": "They nod in understanding. Three is enough for tonight."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_bon_nguoi",
+      "category": "love",
+      "age": [18, 110],
+      "weight": 2,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nn_bon_nguoi"] },
+      "text": {
+        "vi": "Bốn cơ thể trong một căn phòng. Ai cũng muốn được chú ý.",
+        "en": "Four bodies in one room. Everyone wants attention."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Cố gắng chia đều", "en": "Try to share equally" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16, "health": -5 },
+              "text": {
+                "vi": "Bạn gần như không còn không khí. Mọi hướng đều có người.",
+                "en": "You barely have air left. There is someone in every direction."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Để họ tự sắp xếp quanh bạn", "en": "Let them arrange themselves around you" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "text": {
+                "vi": "Bạn chỉ việc nằm đó. Họ biết phải làm gì.",
+                "en": "You only have to lie there. They know what to do."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_nhac_lai",
+      "category": "love",
+      "age": [18, 110],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nn_da_ba_nguoi"] },
+      "text": {
+        "vi": "Vài ngày sau, họ nhắc lại đêm đó với ánh mắt đầy ý.",
+        "en": "A few days later they bring that night up again with knowing looks."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Hẹn lần nữa", "en": "Arrange another time" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 7, "rel_partner": 3 },
+              "text": {
+                "vi": "Lịch được xếp. Không khí đã nóng lên từ bây giờ.",
+                "en": "A date is set. The air is already warming up."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Cười và chuyển chủ đề", "en": "Laugh and change the subject" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "willpower": 2 },
+              "text": {
+                "vi": "Họ không ép. Nhưng bạn biết chuyện này chưa kết thúc.",
+                "en": "They don't push. But you know this isn't over."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_chi_hai_nguoi_mot_luc",
+      "category": "love",
+     "age": [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Đêm nay chỉ có hai người phụ nữ, và họ muốn bạn chọn tư thế yêu thích.",
+        "en": "Tonight there are just the two women, and they want you to choose a favorite position."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Một trên mặt, một phía trước", "en": "One on your face, one in front" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Bạn bị bao phủ. Mọi giác quan đều bị chiếm lĩnh.",
+                "en": "You are covered. Every sense is claimed."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Cả hai cùng phía trước, thay phiên", "en": "Both in front, taking turns" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 12 },
+              "text": {
+                "vi": "Nhịp độ thay đổi liên tục. Không bao giờ nhàm chán.",
+                "en": "The pace keeps changing. It never gets boring."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nn_ket_thuc_goi",
+      "category": "love",
+     "age": [18, 110],
+      "weight": 2,
+      "once": true,
+      "rating": "25+",
+      "requires": { "flags": ["nn_da_ba_nguoi"] },
+      "text": {
+        "vi": "Sau nhiều đêm như vậy, bạn nhận ra đây đã trở thành một phần của cuộc sống.",
+        "en": "After many nights like this, you realize it has become part of life."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Giữ mọi thứ như hiện tại", "en": "Keep things as they are" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 8, "karma": 2 },
+              "text": {
+                "vi": "Không cần đặt tên. Chỉ cần những đêm dài và sự đồng thuận.",
+                "en": "No need to name it. Just the long nights and the consent."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Nói chuyện nghiêm túc về ranh giới", "en": "Have a serious talk about boundaries" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "rel_partner": 6, "willpower": 3 },
+              "text": {
+                "vi": "Mọi người ngồi lại. Không khí rõ ràng và dễ chịu hơn sau đó.",
+                "en": "Everyone sits down. The air feels clearer and more comfortable afterward."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mt_quy_xuong_tho",
+      "category": "love",
+     "age": [18, 110],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true, "lovers": 1 },
+      "text": {
+        "vi": "Người yêu và các cô bạn quỳ thành vòng tròn quanh bạn, mắt nhìn chằm chằm vào dương vật cứng.",
+        "en": "Your partner and her friends kneel in a circle around you, eyes locked on your hard cock."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Để họ thờ phụng", "en": "Let them worship" },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 18, "looks": 2 },
+              "setFlags": ["mt_da_tho"],
+              "text": {
+                "vi": "Bốn năm cái miệng lần lượt liếm từ gốc đến đầu. Họ hôn, bú, thè lưỡi liếm hai bên tinh hoàn, rồi lại tranh nhau ngậm sâu. Nước bọt chảy dài xuống cặc và đùi bạn. Họ rên rỉ khen ngợi kích thước và mùi của bạn.",
+                "en": "Four or five mouths take turns licking from base to tip. They kiss, suck, tongue your balls, then fight to deepthroat. Spit runs down your cock and thighs. They moan praise for your size and scent."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": 14 },
+              "setFlags": ["mt_da_tho"],
+              "text": {
+                "vi": "Họ thay phiên nhau: một người bú sâu, hai người liếm tinh hoàn, người còn lại hôn đùi và bụng bạn. Dương vật bạn ướt nhẹp vì nước bọt.",
+                "en": "They rotate: one deepthroats, two lick your balls, the last kisses your thighs and stomach. Your cock is soaked in spit."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Ra lệnh ai được bú trước", "en": "Order who gets to suck first" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16, "willpower": 2 },
+              "setFlags": ["mt_da_tho"],
+              "text": {
+                "vi": "Bạn chỉ tay. Người được chọn há miệng rộng, nhận cả gốc. Những người còn lại quỳ nhìn, tay tự móc hoặc liếm tinh hoàn từ dưới.",
+                "en": "You point. The chosen one opens wide and takes you to the base. The others kneel watching, fingering themselves or licking your balls from below."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mt_riding_while_worshipped",
+      "category": "love",
+     "age": [18, 110],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["mt_da_tho"] },
+      "text": {
+        "vi": "Một người ngồi lên dương vật cưỡi, những người còn lại quỳ quanh liếm chỗ nối và tinh hoàn.",
+        "en": "One woman sits on your cock and rides while the others kneel around licking the connection and your balls."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Nằm để họ phục vụ", "en": "Lie back and let them serve" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 20 },
+              "text": {
+                "vi": "Người trên nhún mạnh, âm hộ siết chặt. Bên dưới, nhiều cái lưỡi liếm gốc cặc, tinh hoàn, thậm chí liếm cả lỗ đít bạn. Có người hôn đùi, có người bú ngón chân. Bạn bị bao quanh bởi miệng và lưỡi.",
+                "en": "The one on top bounces hard, pussy gripping tight. Below, multiple tongues lick the base of your cock, your balls, even your asshole. Someone kisses your thighs, someone sucks your toes. You are surrounded by mouths and tongues."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Đẩy hông lên đâm mạnh", "en": "Thrust up hard" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18, "health": -2 },
+              "text": {
+                "vi": "Bạn nắm hông người cưỡi và đâm từ dưới lên. Những người quỳ phải liếm nhanh hơn để theo nhịp. Nước từ âm hộ chảy xuống tinh hoàn và bị họ liếm sạch ngay.",
+                "en": "You grab the rider’s hips and thrust upward. The kneeling women have to lick faster to keep up. Pussy juices run down onto your balls and are licked clean at once."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mt_foot_and_cock",
+      "category": "love",
+     "age": [18, 110],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["mt_da_tho"] },
+      "text": {
+        "vi": "Họ muốn thờ cả bàn chân và dương vật cùng lúc.",
+        "en": "They want to worship both your feet and your cock at the same time."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Cho phép", "en": "Allow it" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Hai người quỳ liếm và hút ngón chân bạn, hai người khác tranh nhau bú dương vật. Họ hôn ướt từ gót chân lên đến ống chân trong khi miệng khác đang nuốt cặc.",
+                "en": "Two kneel licking and sucking your toes, two others compete to suck your cock. They give wet kisses from your heels up your calves while other mouths swallow your cock."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Chỉ cho thờ cặc thôi", "en": "Only allow cock worship" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn ra lệnh. Tất cả lập tức dồn về dương vật. Nhiều miệng cùng lúc liếm, bú, hôn khắp thân và đầu.",
+                "en": "You give the order. Everyone immediately crowds your cock. Multiple mouths lick, suck and kiss every part of the shaft and head at once."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mt_morning_worship",
+      "category": "love",
+      "age": [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["mt_da_tho"] },
+      "text": {
+        "vi": "Sáng sớm bạn vừa mở mắt đã thấy nhiều cái miệng đang liếm dương vật cứng buổi sáng.",
+        "en": "You open your eyes in the morning to find multiple mouths already licking your morning wood."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Nằm im cho họ làm", "en": "Stay still and let them work" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15, "health": 2 },
+              "text": {
+                "vi": "Họ thì thầm chào buổi sáng bằng miệng. Lưỡi liếm chậm từ gốc lên đầu, rồi ngậm sâu. Có người hôn ngực, có người liếm tai. Bạn xuất vào miệng một người và họ nuốt trước khi nói lời cảm ơn.",
+                "en": "They whisper good morning with their mouths. Tongues slowly lick from base to tip then take you deep. Someone kisses your chest, someone licks your ear. You cum in one mouth and she swallows before saying thank you."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Nắm tóc đâm vào họng", "en": "Grab hair and fuck their throats" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Bạn kéo từng người vào và đâm sâu ngay khi vừa tỉnh. Họ chấp nhận hoàn toàn, nước mắt chảy nhưng ánh mắt vẫn đầy tôn thờ.",
+                "en": "You pull each one in and thrust deep the moment you wake. They accept everything, tears running but eyes still full of worship."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mt_throne",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["mt_da_tho"] },
+      "text": {
+        "vi": "Họ kê ghế giữa phòng và mời bạn ngồi như ngồi ngai. Tất cả quỳ quanh.",
+        "en": "They place a chair in the middle of the room and invite you to sit like on a throne. Everyone kneels around it."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Ngồi và nhận sự thờ phụng", "en": "Sit and receive the worship" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 19, "fame": 2 },
+              "text": {
+                "vi": "Bạn ngồi. Họ bò tới, hôn bàn chân, liếm lên đùi, rồi tập trung vào dương vật. Có người bú, có người liếm tinh hoàn, có người hôn bụng và nói lời tôn thờ. Bạn chỉ việc ngồi và nhận.",
+                "en": "You sit. They crawl forward, kiss your feet, lick up your thighs, then focus on your cock. One sucks, one licks your balls, one kisses your stomach and speaks words of worship. You only have to sit and receive."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Đứng dậy đâm vào miệng từng người", "en": "Stand up and fuck each mouth" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18 },
+              "text": {
+                "vi": "Bạn đứng. Từng người vẫn quỳ, há miệng nhận những nhát đâm sâu. Họ nhìn lên bạn như nhìn thần tượng.",
+                "en": "You stand. Each remains kneeling, mouth open to receive deep thrusts. They look up at you like looking at an idol."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mt_multiple_ride_worship",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["mt_da_tho"] },
+      "text": {
+        "vi": "Họ thay phiên nhau ngồi lên dương vật, nhưng những người không cưỡi vẫn quỳ liếm chỗ nối và nói lời tôn thờ.",
+        "en": "They take turns sitting on your cock, but those not riding still kneel licking the connection and speaking words of worship."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Nằm nhận cả hai", "en": "Lie back and receive both" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 19 },
+              "text": {
+                "vi": "Người này ngồi xuống hết gốc, người kia liếm tinh hoàn và chỗ da tiếp xúc. Họ thay phiên. Mỗi người khi cưỡi đều nhìn bạn và nói cảm ơn vì được phục vụ.",
+                "en": "One sinks down to the base, the other licks your balls and the skin where you join. They switch. Each one while riding looks at you and thanks you for the privilege of serving."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Đứng địt và bắt họ quỳ bú sau mỗi lần", "en": "Stand and fuck, then make them kneel and suck after each one" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18 },
+              "text": {
+                "vi": "Bạn địt từng người từ phía sau hoặc bế lên. Sau mỗi người bạn rút ra, họ lập tức quỳ xuống bú sạch và chuẩn bị cho người tiếp theo.",
+                "en": "You fuck each one from behind or lift them. After each you pull out and they immediately kneel to suck you clean and prepare for the next."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mt_new_girl_join",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 3,
+      "once": true,
+      "rating": "25+",
+      "requires": { "flags": ["mt_da_tho"], "min": { "money": 20 } },
+      "text": {
+        "vi": "Họ mang thêm một người mới đến và bảo cô ấy phải học cách tôn thờ bạn.",
+        "en": "They bring a new girl and tell her she must learn how to worship you."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Để họ dạy cô ấy", "en": "Let them teach her" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16, "money": -10 },
+              "text": {
+                "vi": "Họ nắm tóc cô mới, đẩy miệng cô vào dương vật bạn và hướng dẫn cách liếm, cách ngậm sâu, cách nhìn lên bạn. Cô ấy học nhanh dưới sự giám sát của những người cũ.",
+                "en": "They grip the new girl’s hair, push her mouth onto your cock and teach her how to lick, how to deepthroat, how to look up at you. She learns quickly under the others’ supervision."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Tự dạy cô ấy", "en": "Teach her yourself" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17, "money": -10 },
+              "text": {
+                "vi": "Bạn nắm tóc và đâm vào miệng cô ấy, vừa đâm vừa bảo phải thè lưỡi, phải nuốt sâu, phải nhìn vào mắt bạn. Những người cũ quỳ xung quanh vừa xem vừa liếm tinh hoàn.",
+                "en": "You grip her hair and thrust into her mouth, telling her to stick out her tongue, take it deep, and look into your eyes. The others kneel around watching while licking your balls."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mt_permanent_habit",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 2,
+      "once": true,
+      "rating": "25+",
+      "requires": { "flags": ["mt_da_tho"] },
+      "text": {
+        "vi": "Sau nhiều đêm, họ hỏi bạn có muốn việc tôn thờ này trở thành thói quen cố định không.",
+        "en": "After many nights they ask if you want this worship to become a fixed habit."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Đồng ý – mỗi ngày đều phải có", "en": "Agree – it must happen every day" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14, "rel_partner": 5, "risk": 2 },
+              "text": {
+                "vi": "Họ vui vẻ nhận. Từ giờ trở đi, mỗi ngày đều có miệng quỳ xuống thờ phụng dương vật bạn, nuốt tinh dịch, và nói lời cảm ơn.",
+                "en": "They happily accept. From now on, every day there will be mouths kneeling to worship your cock, swallow your cum, and say thank you."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Chỉ giữ những đêm đặc biệt", "en": "Keep it only for special nights" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 10, "willpower": 3 },
+              "text": {
+                "vi": "Họ gật đầu. Vẫn sẽ có những buổi tôn thờ dài và tận tụy, chỉ không phải ngày nào cũng vậy.",
+                "en": "They nod. There will still be long, devoted worship sessions, just not every single day."
+              }
+            }
+          ]
+        }
+      ]
+    },
+     {
+      "id": "nb_harem_hang_ngay",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true, "lovers": 2 },
+      "text": {
+        "vi": "Mỗi sáng và tối, harem đã quỳ sẵn. Họ không hỏi, chỉ chờ bạn dùng.",
+        "en": "Every morning and night the harem is already kneeling. They don’t ask — they just wait for you to use them."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Dùng miệng theo thứ tự", "en": "Use their mouths in order" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "setFlags": ["nb_harem_active"],
+              "text": {
+                "vi": "Bạn đi dọc hàng quỳ. Mỗi miệng há rộng nhận dương vật đến tận gốc. Nước bọt chảy thành sợi dài khi bạn rút ra và đâm vào miệng tiếp theo. Họ không được dùng tay, chỉ được môi và họng.",
+                "en": "You walk down the kneeling line. Each mouth opens wide and takes your cock to the base. Long strings of spit stretch when you pull out and thrust into the next. No hands allowed — only lips and throat."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Chọn một người cưỡi, những người khác liếm", "en": "Choose one to ride while the others lick" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "setFlags": ["nb_harem_active"],
+              "text": {
+                "vi": "Bạn kéo một người ngồi xuống hết gốc. Những người còn lại lập tức cúi xuống liếm tinh hoàn, chỗ nối và đùi trong. Âm hộ siết chặt trong khi nhiều lưỡi hoạt động không nghỉ.",
+                "en": "You pull one down until she is fully seated. The others immediately bend to lick your balls, the junction and your inner thighs. Her pussy grips tight while multiple tongues work without pause."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_ca_dem_khong_nghi",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"], "min": { "health": 55 } },
+      "text": {
+        "vi": "Họ tuyên bố đêm nay không ai được ngủ cho đến khi bạn chịu dừng.",
+        "en": "They declare that no one sleeps tonight until you decide to stop."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Để họ làm cả đêm", "en": "Let them work all night" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 20, "health": -8 },
+              "text": {
+                "vi": "Miệng này vừa rút thì miệng khác đã ngậm vào. Họ thay phiên cưỡi, bú, liếm tinh hoàn, giữ dương vật trong họng khi bạn nằm. Đến sáng lưỡi họ tê, giọng khàn, nhưng dương vật bạn vẫn được chăm sóc không ngớt.",
+                "en": "The moment one mouth leaves, another takes its place. They rotate riding, sucking, licking balls, keeping your cock in a throat while you lie there. By morning their tongues are numb and voices hoarse, but your cock has not been left alone for a second."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Giới hạn đến 3 giờ sáng", "en": "Limit it until 3 a.m." },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14, "health": -4 },
+              "text": {
+                "vi": "Bạn đặt mốc. Họ dồn hết sức trong khoảng thời gian đó, luân phiên không nghỉ đến đúng giờ mới chịu dừng.",
+                "en": "You set the cutoff. They pour everything into the time allowed, rotating without pause until the exact hour."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_public_xe_hoi",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Trong xe hơi đêm khuya, họ kéo khóa quần bạn xuống ngay khi bạn vừa đậu.",
+        "en": "In the car late at night they pull your zipper down the moment you park."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Để họ bú ngay tại chỗ", "en": "Let them suck right there" },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 15, "risk": 5 },
+              "text": {
+                "vi": "Hai cái miệng tranh nhau trong không gian chật. Một người ngậm sâu, người kia liếm tinh hoàn. Xe hơi nhẹ nhàng lắc. Có tiếng chân người đi ngoài nhưng họ chỉ bú nhanh hơn.",
+                "en": "Two mouths compete in the tight space. One takes you deep, the other licks your balls. The car rocks gently. Footsteps pass outside but they only suck faster."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": 8, "risk": 10 },
+              "text": {
+                "vi": "Đèn pin chiếu vào cửa kính. Các bạn vội vàng ngồi dậy, tim đập thình thịch.",
+                "en": "A flashlight hits the window. You all scramble upright, hearts pounding."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Lái về nhà đã", "en": "Drive home first" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 10 },
+              "text": {
+                "vi": "Họ không vui nhưng vẫn nghe. Về đến nhà là đã có người quỳ sẵn ở cửa.",
+                "en": "They are not pleased but obey. Someone is already kneeling at the door when you arrive home."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_milking",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Họ muốn vắt kiệt bạn bằng mọi cách – miệng, tay, âm hộ – đến khi không còn gì.",
+        "en": "They want to milk you dry by every means – mouth, hand, pussy – until nothing is left."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Nằm để họ vắt", "en": "Lie back and let them milk you" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 19, "health": -3 },
+              "text": {
+                "vi": "Một người ngồi lên dương vật nhún mạnh. Hai người dùng miệng luân phiên ngậm tinh hoàn và liếm chỗ nối. Người thứ tư dùng tay xoa phần còn lại. Bạn xuất lần một, họ không dừng. Lần hai, lần ba… đến khi chỉ còn giật khô.",
+                "en": "One sits on your cock and rides hard. Two others take turns mouthing your balls and licking the junction. A fourth strokes whatever is left with her hand. You cum the first time — they don’t stop. Second, third… until only dry spasms remain."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Đứng và đâm vào từng người", "en": "Stand and thrust into each of them" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Bạn đụ từng người đến khi xuất, rút ra, đâm ngay vào người tiếp theo. Họ giữ chặt lấy bạn, không cho rút sớm.",
+                "en": "You fuck each one until you cum, pull out, and thrust straight into the next. They hold you tight, not letting you pull away early."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_hai_loc_dau_ngay",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Sáng sớm, trước khi bạn kịp mở mắt, đã có miệng đang ngậm dương vật cứng buổi sáng.",
+        "en": "Early morning, before you even open your eyes, a mouth is already wrapped around your morning wood."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Nằm im cho họ làm", "en": "Stay still and let them work" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14, "health": 2 },
+              "text": {
+                "vi": "Họ bú chậm và sâu, thay phiên nhau. Một người ngậm đến gốc, người khác hôn tinh hoàn. Bạn xuất vào miệng ai đó và họ nuốt hết trước khi nói “chào buổi sáng”.",
+                "en": "They suck slow and deep, taking turns. One takes you to the base, another kisses your balls. You cum in someone’s mouth and she swallows everything before saying “good morning”."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Nắm tóc đâm họng ngay", "en": "Grab hair and throat-fuck immediately" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn kéo đầu họ vào và đâm mạnh ngay khi vừa tỉnh. Họ chấp nhận hoàn toàn, nước mắt chảy nhưng không rút ra.",
+                "en": "You pull their head in and thrust hard the moment you wake. They accept everything, tears running, but do not pull away."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_breast_focus",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Họ ép hai bên ngực vào dương vật bạn, tạo thành khe mềm và nóng.",
+        "en": "They press their breasts together around your cock, forming a soft, hot valley."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Đâm vào giữa ngực họ", "en": "Thrust between their breasts" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Nhiều cặp ngực lần lượt kẹp lấy bạn. Họ nghiêng đầu xuống liếm đầu cặc mỗi khi nó thò ra. Nước bọt và nước nhờn làm khe ngực ướt nhẹp. Bạn xuất lên cổ và miệng họ.",
+                "en": "Multiple pairs of breasts take turns squeezing you. They lean down to lick the head every time it emerges. Spit and precum make the cleavage soaking wet. You cum across their necks and mouths."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Vừa đụ vừa vùi mặt vào ngực", "en": "Fuck them while burying your face in their breasts" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn đâm mạnh từ phía sau trong khi mặt bị vùi giữa hai bầu ngực của người khác. Họ ép chặt, che hết cả mũi bạn một lúc.",
+                "en": "You thrust hard from behind while your face is buried between another woman’s breasts. They press tight, covering even your nose for moments at a time."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_khi_nam_lam_viec",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Bạn đang xem phim / chơi game / làm việc. Họ quỳ dưới bàn và kéo khóa quần.",
+        "en": "You are watching something / playing a game / working. They kneel under the desk and pull your zipper down."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Tiếp tục làm việc và để họ bú", "en": "Keep working and let them suck" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Miệng ướt bao lấy dương vật trong khi mắt bạn vẫn nhìn màn hình. Họ bú chậm, sâu, thỉnh thoảng nuốt đến gốc khiến bạn phải nín thở. Khi bạn xuất họ nuốt hết và liếm sạch trước khi kéo khóa lại.",
+                "en": "A wet mouth engulfs your cock while your eyes stay on the screen. They suck slow and deep, occasionally taking you to the base until you have to hold your breath. When you cum they swallow everything and lick you clean before zipping you back up."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Tắt hết và đụ họ ngay", "en": "Turn everything off and fuck them right away" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Bạn tắt máy, kéo họ ra và đụ ngay trên bàn. Những người còn lại quỳ chờ lượt.",
+                "en": "You switch everything off, pull them out and fuck them right on the desk. The others kneel waiting their turn."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_freeuse_harem",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Luật mới: bất cứ lúc nào bạn muốn, bất cứ người nào, không cần hỏi.",
+        "en": "New rule: whenever you want, whoever you want, no asking required."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Dùng ngay người gần nhất", "en": "Use the nearest one immediately" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn kéo người đang đi ngang vào, kéo quần xuống và đâm vào từ phía sau. Cô ấy chỉ rên và chống tay vào tường. Những người khác nhìn và tiếp tục việc của mình như không có gì.",
+                "en": "You pull the one walking past, yank her pants down and thrust into her from behind. She only moans and braces against the wall. The others watch and continue what they were doing as if nothing is unusual."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Gọi cả nhóm và dùng lần lượt", "en": "Call the whole group and use them one by one" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18 },
+              "text": {
+                "vi": "Họ đến và xếp hàng. Bạn đụ từng người đến khi hài lòng rồi đẩy sang bên, gọi người tiếp theo. Không ai được mặc lại quần áo cho đến khi bạn chịu dừng.",
+                "en": "They come and line up. You fuck each one until satisfied then push her aside and call the next. No one is allowed to put clothes back on until you decide to stop."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_creampie_marathon",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Họ nằm thành hàng, sẵn sàng nhận tinh dịch vào trong.",
+        "en": "They lie in a row, ready to take your cum inside."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Đụ và xuất vào từng người", "en": "Fuck and cum inside each one" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 19, "health": -4 },
+              "text": {
+                "vi": "Bạn đâm sâu vào người thứ nhất đến khi bắn hết bên trong, rút ra, đâm thẳng vào người thứ hai còn đang mở. Tinh dịch lẫn nước nhờn chảy ra khi bạn chuyển người. Đến người cuối cùng thì dương vật bạn vẫn còn giật.",
+                "en": "You thrust deep into the first until you empty inside her, pull out, and drive straight into the second who is already open. Cum mixed with juices leaks as you move. By the last one your cock is still twitching."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Xuất vào một người nhiều lần", "en": "Cum inside one woman multiple times" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Bạn chọn một người và đụ đến khi xuất, nghỉ ngắn rồi đụ tiếp. Những người khác giữ chân cô ấy và liếm chỗ đang chảy.",
+                "en": "You choose one and fuck her until you cum, rest briefly, then fuck her again. The others hold her legs and lick what is leaking out."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_giu_tinh",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Sau khi bạn xuất vào trong, họ bị bắt phải giữ chặt, không cho chảy ra.",
+        "en": "After you cum inside them they are ordered to hold it in, nothing allowed to leak."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bắt họ nằm im và giữ", "en": "Make them lie still and hold it" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Họ nằm ngửa, hai chân khép chặt. Bạn quan sát xem có giọt nào chảy không. Nếu có, bạn bắt họ dùng ngón tay đẩy lại vào và chịu phạt bằng cách bị đụ thêm.",
+                "en": "They lie on their backs, legs pressed together. You watch for any leak. If something escapes you make them push it back in with their fingers and punish them with another round."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Bắt họ đứng và đi lại", "en": "Make them stand and walk around" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Họ phải đứng dậy và đi quanh phòng trong khi vẫn giữ tinh dịch bên trong. Mỗi bước đều có nguy cơ chảy. Bạn theo dõi và sẵn sàng đụ lại người nào để tuột.",
+                "en": "They have to stand and walk around the room while still holding your cum inside. Every step risks a leak. You watch and are ready to fuck again anyone who fails."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_tickle_fuck",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Họ vừa bị đụ vừa bị cù lét đến mức vừa cười vừa rên.",
+        "en": "They are fucked and tickled at the same time until they are laughing and moaning together."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Vừa đụ vừa cù", "en": "Fuck and tickle at the same time" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "text": {
+                "vi": "Bạn đâm mạnh từ phía sau trong khi ngón tay cù lét nách và sườn họ. Họ cười phá lên, âm hộ siết chặt không kiểm soát. Những người khác giữ chân và tay họ để không vùng vẫy.",
+                "en": "You thrust hard from behind while your fingers tickle their armpits and sides. They burst out laughing, pussy clenching uncontrollably. The others hold their arms and legs so they cannot squirm away."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Bắt họ cù lẫn nhau khi bị đụ", "en": "Make them tickle each other while being fucked" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Người đang bị đụ buộc phải cù lét người bên cạnh. Tiếng cười và tiếng da thịt và nước văng khắp phòng.",
+                "en": "The one being fucked is forced to tickle the one next to her. Laughter and the sound of skin slapping fill the room."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_squirting_mess",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Họ muốn bị làm cho squirt thật nhiều, rồi bị đụ ngay trong vũng nước đó.",
+        "en": "They want to be made to squirt a lot, then fucked right in the middle of the mess."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Làm họ squirt rồi đụ", "en": "Make them squirt then fuck them" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18 },
+              "text": {
+                "vi": "Bạn dùng tay và miệng đến khi họ bắn nước tùm lum giường. Ngay khi còn đang giật, bạn đâm dương vật vào chỗ ướt nhẹp và đụ mạnh. Nước bắn lên bụng và đùi bạn mỗi nhát.",
+                "en": "You use fingers and mouth until they squirt all over the bed. While they are still spasming you drive your cock into the soaked hole and fuck hard. Fluid splashes up your stomach and thighs with every thrust."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Bắt họ squirt lên nhau", "en": "Make them squirt on each other" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Một người ngồi trên mặt người khác và bị làm cho squirt. Nước chảy xuống miệng và ngực người dưới. Bạn đụ người đang squirt từ phía sau trong khi họ vẫn còn bắn.",
+                "en": "One sits on another’s face and is made to squirt. Fluid runs down into the mouth and chest of the one below. You fuck the squirting woman from behind while she is still shooting."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_after_sex_inspection",
+      "category": "love",
+      "age":  [18, 110],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["nb_harem_active"] },
+      "text": {
+        "vi": "Sau khi chơi xong, bạn bắt họ nằm ra để kiểm tra từng người.",
+        "en": "After everything is finished you make them lie down so you can inspect each one."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Kiểm tra kỹ từng chỗ", "en": "Inspect every part carefully" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 13, "rel_partner": 3 },
+              "text": {
+                "vi": "Bạn dùng tay tách, quan sát âm hộ đang đỏ và chảy, lỗ đít, dấu răng trên ngực, dấu tay trên mông. Họ nằm im chịu để bạn xem. Có người còn bị bạn thọc ngón vào để kiểm tra độ ướt còn lại.",
+                "en": "You spread them with your fingers, examining the red and leaking pussies, assholes, bite marks on breasts, handprints on asses. They lie still and take it. Some get your fingers pushed inside to check how wet they still are."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Bắt họ tự mở ra cho bạn xem", "en": "Make them spread themselves for you" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "text": {
+                "vi": "Họ dùng hai tay tách rộng. Bạn đi từ người này sang người khác, nhìn, chạm, đôi khi cúi xuống liếm thử trước khi chuyển sang người tiếp theo.",
+                "en": "They use both hands to spread wide. You move from one to the next, looking, touching, sometimes leaning down to lick before moving on."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_cumflation_1",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true, "lovers": 1 },
+      "text": {
+        "vi": "Bạn quyết định bơm đầy một người đến mức bụng cô ấy phình rõ.",
+        "en": "You decide to fill one of them until her belly visibly swells."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Xuất liên tục vào trong", "en": "Cum inside repeatedly" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18, "health": -3 },
+              "text": {
+                "vi": "Bạn đụ sâu và xuất lần một, hai, ba… không rút ra. Bụng cô ấy dần căng tròn, da căng bóng. Những người khác ấn tay lên bụng cô và cảm nhận từng đợt tinh dịch được bơm vào. Khi bạn rút ra, tinh dịch đặc trào ra thành dòng dày.",
+                "en": "You thrust deep and cum once, twice, three times… without pulling out. Her belly slowly rounds, skin stretching tight and shiny. The others press their hands on her stomach and feel each pulse of cum being pumped in. When you finally pull out, thick cum pours out in a heavy stream."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_invisible_force",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn bảo họ nhắm mắt. Một lực vô hình bắt đầu tách chân, nâng hông và đâm vào họ.",
+        "en": "You tell them to close their eyes. An invisible force starts spreading their legs, lifting their hips and thrusting into them."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Điều khiển lực vô hình", "en": "Control the invisible force" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Họ bị nâng lên không trung, chân bị tách rộng. Dương vật vô hình đâm mạnh vào từng người. Họ rên và vùng vẫy nhưng không thể thấy gì đang chiếm lấy cơ thể. Bạn chỉ ngồi nhìn và điều chỉnh tốc độ, độ sâu bằng lời nói.",
+                "en": "They are lifted into the air, legs forced wide. An invisible cock thrusts hard into each of them. They moan and struggle but cannot see what is claiming their bodies. You simply sit and watch, adjusting speed and depth with your words."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_extreme_medical",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Bạn mặc áo blouse và bắt họ nằm lên bàn khám, chân đặt lên giá.",
+        "en": "You put on a white coat and make them lie on the examination table with legs in stirrups."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Khám rất kỹ và chi tiết", "en": "Perform a very thorough examination" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn dùng mỏ vịt mở rộng âm hộ, soi đèn, thọc ngón tay sâu kiểm tra. Sau đó đưa dương vật vào “thử phản xạ”. Họ bị buộc phải trả lời câu hỏi trong lúc bị đụ trên bàn khám. Những người còn lại đứng quan sát và ghi chép theo lệnh bạn.",
+                "en": "You use a speculum to open her pussy wide, shine a light, push fingers deep to check. Then you insert your cock to “test the response”. They are forced to answer questions while being fucked on the exam table. The others stand watching and taking notes as you order."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_predicament_bondage",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn trói họ ở tư thế buộc phải chọn giữa hai cực: đứng kiễng thì đỡ bị đụ sâu, ngồi xuống thì dương vật đâm đến tận cùng.",
+        "en": "You tie them in a position where they must choose: stand on tiptoe and get fucked less deeply, or sink down and take your cock to the hilt."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bắt họ tự chọn", "en": "Make them choose themselves" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18 },
+              "text": {
+                "vi": "Dây trói giữ cổ và cổ tay. Dương vật bạn cố định hướng lên. Họ phải liên tục quyết định: chịu mỏi chân để đỡ sâu, hay buông lỏng và bị đâm đến tận cổ tử cung. Mỗi lần họ ngồi xuống bạn đều cảm nhận được tiếng rên thất thanh.",
+                "en": "Ropes hold their necks and wrists. Your cock is fixed pointing upward. They must constantly decide: endure the leg burn for shallower penetration, or sink down and be impaled to the cervix. Every time they drop you feel their broken moan."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_cmnf",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Bạn vẫn mặc đầy đủ quần áo. Tất cả phụ nữ trong phòng đều bị bắt phải ở trần hoàn toàn.",
+        "en": "You remain fully clothed. Every woman in the room is forced to stay completely naked."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Ra lệnh và sử dụng", "en": "Give orders and use them" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Họ đứng hoặc quỳ trần truồng trước mặt bạn đang mặc vest. Bạn chỉ cần kéo khóa quần và đút vào miệng hoặc âm hộ người nào muốn. Sự chênh lệch quần áo khiến họ đỏ mặt và càng thêm ngoan ngoãn.",
+                "en": "They stand or kneel completely naked in front of you still in your suit. You only need to unzip and push into whichever mouth or pussy you want. The clothing contrast makes them blush and become even more obedient."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_hypno",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Bạn đưa họ vào trạng thái thôi miên. Từ giờ họ chỉ biết tuân lệnh.",
+        "en": "You put them into a hypnotic state. From now on they only know how to obey."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Ra lệnh tình dục", "en": "Give sexual commands" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Họ nhìn bạn bằng ánh mắt trống rỗng. Bạn bảo “há miệng”, họ há. Bạn bảo “ngồi lên”, họ ngồi. Bạn đụ từng người trong khi họ vẫn ở trạng thái mơ màng, chỉ biết rên và làm đúng từng chữ bạn nói.",
+                "en": "They look at you with empty eyes. You say “open your mouth” and they open. You say “sit on it” and they sit. You fuck each of them while they remain in a dreamy state, only able to moan and follow every word you speak."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_omorashi_gameshow",
+      "category": "love",
+      "age": [18, 100]
+      "weight": 3,
+      "once": true,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn tổ chức trò chơi: ai nhịn tiểu được lâu nhất sẽ được thưởng. Thua thì bị đụ ngay khi đang muốn đi vệ sinh.",
+        "en": "You organize a game: whoever holds their pee the longest gets a reward. Losers get fucked the moment they are desperate to go."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bắt đầu trò chơi", "en": "Start the game" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Họ ngồi xếp hàng, chân chéo. Càng về sau họ càng nhỏ nước mắt và rung đùi. Người đầu tiên chịu hết nổi bị bạn kéo ra, kéo quần trong xuống và đụ mạnh ngay khi nước tiểu bắt đầu rỉ. Những người còn lại vừa nhìn vừa cố nhịn.",
+                "en": "They sit in a row, legs crossed. Later they start tearing up and trembling. The first one who cannot hold it is pulled forward, panties yanked down and fucked hard the moment pee starts leaking. The others watch while still trying to hold on."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_biastophilia",
+      "category": "love",
+      "age":[18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Họ muốn chơi cảnh “bị cưỡng bức”. Bạn đồng ý và bắt đầu.",
+        "en": "They want to play a “forced” scene. You agree and begin."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Chơi CNC", "en": "Play CNC" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18 },
+              "text": {
+                "vi": "Bạn giữ chặt tay họ trên đầu, dùng đầu gối tách chân và đâm vào dù họ giả vờ vùng vẫy. Họ nói “không” nhưng hông vẫn đẩy ngược lại. Bạn bịt miệng và đụ mạnh hơn. Những người khác bị bắt phải nhìn và chờ đến lượt bị “cưỡng”.",
+                "en": "You pin their wrists above their heads, use your knee to spread their legs and thrust in while they pretend to struggle. They say “no” but their hips still push back. You cover their mouth and fuck harder. The others are forced to watch and wait their turn to be “forced”."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_clothing_malfunction",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Dây áo ngực và dây bikini của họ bất ngờ đứt ngay trước mặt bạn.",
+        "en": "The straps of their bras and bikinis suddenly snap right in front of you."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Tận dụng ngay", "en": "Take advantage immediately" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Ngực họ bung ra hoàn toàn. Bạn không cho họ chỉnh lại, kéo thong sang một bên và đút dương vật vào ngay. Họ vừa xấu hổ vừa ướt. Mỗi lần bạn đâm, vải mỏng còn lại cọ vào âm vật khiến họ run.",
+                "en": "Their breasts spill out completely. You do not let them fix it, pull the thong aside and push your cock in at once. They are both embarrassed and soaked. Every thrust makes the remaining thin fabric rub their clit until they shake."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_carried_and_fucked",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "min": { "health": 50 } },
+      "text": {
+        "vi": "Bạn bế từng người lên, ép lưng họ vào tường và đụ trong tư thế chân họ không chạm đất.",
+        "en": "You pick each of them up, press their backs against the wall and fuck them with their feet off the ground."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bế và đụ lần lượt", "en": "Carry and fuck them one by one" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17, "health": -4 },
+              "text": {
+                "vi": "Bạn nâng đùi họ, đâm mạnh. Toàn bộ trọng lượng dồn xuống dương vật. Họ phải ôm cổ bạn và rên vào tai. Xong một người bạn đặt xuống và bế ngay người tiếp theo mà không nghỉ.",
+                "en": "You lift their thighs and thrust hard. All their weight rests on your cock. They have to wrap their arms around your neck and moan into your ear. After one you set her down and immediately pick up the next without rest."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_lingerie_thong",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Họ chỉ mặc bộ lingerie mỏng và thong. Bạn không cho cởi hết.",
+        "en": "They wear only thin lingerie and thongs. You do not allow them to take everything off."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Đụ qua bên", "en": "Fuck them sideways through the fabric" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn chỉ kéo sợi thong sang một bên và đâm vào. Vải ướt cọ vào dương vật và âm vật mỗi nhát. Áo ngực mỏng không che được núm vú dựng đứng. Bạn vừa đụ vừa bóp ngực qua lớp ren.",
+                "en": "You only pull the thong string aside and thrust in. The wet fabric rubs your cock and their clit with every stroke. The thin bra does nothing to hide the hard nipples. You fuck them while squeezing their breasts through the lace."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_watch_lesbian",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn ngồi ghế và bảo hai người phụ nữ làm với nhau cho bạn xem.",
+        "en": "You sit in a chair and tell two women to pleasure each other for you to watch."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Ngồi xem và ra lệnh", "en": "Sit, watch and give orders" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Họ liếm nhau, dùng ngón tay và đồ chơi theo đúng chỉ dẫn của bạn. Bạn bảo “nhanh hơn”, “ngồi lên mặt”, “nhìn anh khi lên đỉnh”. Khi họ sắp ra bạn mới đứng dậy và đụ người còn đang thở dốc.",
+                "en": "They lick each other, use fingers and toys exactly as you instruct. You say “faster”, “sit on her face”, “look at me when you cum”. Only when they are about to orgasm do you stand up and fuck the one still gasping."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_women_orgasms",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Bạn muốn xem tất cả họ lần lượt lên đỉnh trước mặt mình.",
+        "en": "You want to watch all of them orgasm one after another in front of you."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Làm họ ra bằng tay và miệng", "en": "Make them cum with hands and mouth" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn lần lượt dùng lưỡi và ngón tay đưa từng người đến đỉnh. Họ run rẩy, bắn nước, khóc vì quá sướng. Người này chưa kịp hồi thì bạn đã chuyển sang người kế, không cho ai nghỉ.",
+                "en": "You take turns using tongue and fingers to bring each one to climax. They tremble, squirt, cry from the intensity. Before one can recover you already move to the next, giving no one a break."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_pussy_massage",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Bạn bắt họ nằm và massage âm hộ rất chậm, rất kỹ.",
+        "en": "You make them lie down and massage their pussies very slowly and thoroughly."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Massage đến khi họ cầu xin", "en": "Massage until they beg" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "text": {
+                "vi": "Ngón tay bạn lướt nhẹ trên môi lớn, môi bé, vòng quanh âm vật nhưng không chạm trực tiếp. Dầu massage làm mọi thứ bóng loáng. Họ dần ướt đẫm và bắt đầu xin được đụ. Bạn chỉ cười và tiếp tục xoa.",
+                "en": "Your fingers glide lightly over the outer lips, inner lips, circling the clit without direct contact. Massage oil makes everything glossy. They grow soaking wet and start begging to be fucked. You only smile and keep rubbing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_always_bottomless",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Luật trong nhà: từ giờ trở đi họ không được mặc quần hoặc váy. Luôn để dưới trần.",
+        "en": "House rule: from now on they are not allowed to wear pants or skirts. Always bottomless."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Duy trì luật", "en": "Enforce the rule" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Họ đi lại trong nhà chỉ mặc áo. Mỗi khi bạn muốn, chỉ cần kéo họ lại, nâng một chân và đút vào. Sự trống trải phía dưới khiến họ luôn ướt và luôn sẵn sàng.",
+                "en": "They walk around the house wearing only tops. Whenever you want, you simply pull them close, lift one leg and push in. The constant exposure keeps them wet and always ready."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_in_front_of_husband",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 2,
+      "once": true,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Một người trong nhóm có chồng. Bạn đụ cô ấy ngay trước mặt anh ta.",
+        "en": "One of the women has a husband. You fuck her right in front of him."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Làm trước mặt chồng cô ấy", "en": "Do it in front of her husband" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 19, "risk": 8 },
+              "text": {
+                "vi": "Anh ta bị buộc phải ngồi nhìn. Bạn đặt cô ấy lên đùi, tách chân và đụ chậm để anh ta thấy rõ từng nhát. Cô ấy vừa xấu hổ vừa không kìm được tiếng rên. Bạn xuất vào trong khi vẫn nhìn thẳng vào mắt người chồng. Anh ta cứng lên",
+                "en": "He is forced to sit and watch. You put her on your lap, spread her legs and fuck slowly so he can see every thrust clearly. She is both embarrassed and unable to hold back her moans. You cum inside while still looking straight into the husband’s eyes."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_embarrassed_nude",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Bạn bắt họ đứng trần truồng giữa phòng và mô tả chi tiết cơ thể mình.",
+        "en": "You make them stand completely naked in the middle of the room and describe their own bodies in detail."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bắt họ tự nhận xét", "en": "Make them comment on themselves" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "text": {
+                "vi": "Họ đỏ mặt, giọng run run kể về ngực, mông, âm hộ của mình trong khi bạn đi vòng quanh quan sát. Sau mỗi câu bạn chạm vào đúng chỗ họ vừa nói và hỏi “có đúng không?”. Sự xấu hổ khiến họ ướt rõ ràng.",
+                "en": "They blush, voice trembling as they describe their own breasts, ass and pussy while you walk around inspecting. After every sentence you touch the exact place they just mentioned and ask “is that right?”. The embarrassment makes them visibly wet."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_row_of_dildos",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn xếp một hàng dương vật giả từ nhỏ đến lớn. Họ phải ngồi lên từng cái theo thứ tự.",
+        "en": "You line up a row of dildos from small to large. They must sit on each one in order."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bắt họ ngồi hết hàng", "en": "Make them take the entire row" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Từng người một phải ngồi xuống hết gốc mỗi cây. Cây càng lớn họ càng rên và nước mắt lưng tròng. Bạn đứng cuối hàng, đợi đến khi họ ngồi xong cây lớn nhất thì thay bằng dương vật thật và đụ tiếp.",
+                "en": "One by one they must sink all the way down on each toy. The larger the dildo the more they moan and tear up. You stand at the end of the row; once they finish the biggest one you replace it with your real cock and continue fucking."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_tits_clit_massage",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Bạn dành thời gian chỉ massage ngực và âm vật, không đụ ngay.",
+        "en": "You spend time only massaging breasts and clits, not fucking yet."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Massage đến khi họ cầu xin được đụ", "en": "Massage until they beg to be fucked" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Hai tay bạn bóp và xoa vòng quanh núm vú, thỉnh thoảng kéo nhẹ. Ngón tay khác thì lướt nhẹ trên âm vật theo hình tròn. Họ dần mất kiểm soát, hông tự đẩy lên và xin bạn đụ. Bạn vẫn chưa cho.",
+                "en": "Both your hands squeeze and circle their nipples, occasionally tugging gently. Other fingers lightly stroke their clits in circles. They gradually lose control, hips pushing up and begging you to fuck them. You still refuse."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb_groping_sucking_tits",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Bạn kéo tất cả họ lại và tập trung vào ngực: bóp, mân, hút.",
+        "en": "You pull all of them close and focus on their breasts: squeezing, groping, sucking."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bóp và hút đến khi núm vú đỏ", "en": "Squeeze and suck until the nipples are red" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn dùng cả hai tay bóp mạnh ngực người này, miệng thì hút và cắn nhẹ núm vú người khác. Họ bị đẩy sát vào nhau. Nước bọt của bạn làm ngực họ ướt bóng. Có người đã rên và điên cuồng chỉ vì bị chơi ngực.",
+                "en": "You use both hands to roughly squeeze one woman’s breasts while your mouth sucks and lightly bites another’s nipples. They are pushed tightly together. Your spit leaves their chests glistening. Some of them are already moaning wildly just from having their breasts played with."
+              }
+            }
+          ]
+        }
+      ]
+    },
+   {
+      "id": "nb2_shaving_pussy",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true, "lovers": 1 },
+      "text": {
+        "vi": "Bạn bắt họ nằm ra và cạo lông âm hộ thật sạch sẽ ngay trước mặt mình.",
+        "en": "You make them lie down and shave their pussies completely clean right in front of you."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Cạo kỹ từng người", "en": "Shave each one carefully" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "text": {
+                "vi": "Bạn phết kem cạo, kéo da căng và đưa lưỡi dao sát. Lông rụng dần, để lộ da mềm và môi âm hộ. Bạn dùng tay kiểm tra độ mịn, thỉnh thoảng chạm vào âm vật khiến họ giật mình. Cạo xong bạn thổi nhẹ và liếm thử độ sạch.",
+                "en": "You spread shaving cream, stretch the skin and run the razor close. Hair falls away, revealing soft skin and pussy lips. You check smoothness with your fingers, occasionally brushing the clit and making them flinch. When finished you blow gently and lick to test how clean it is."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_porn_gameshow",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": true,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn tổ chức gameshow khiêu dâm ngay trong phòng. Người thắng được xuất vào, người thua bị phạt.",
+        "en": "You host a porn gameshow right in the room. Winner gets cummed in, losers get punished."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bắt đầu trò chơi", "en": "Start the show" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Họ phải lần lượt ngồi lên dương vật giả, bú sâu trong 30 giây, hoặc tự làm cho mình ra trước mặt bạn. Bạn chấm điểm. Người thấp điểm nhất bị trói tay và bị đụ mạnh trong khi những người khác phải đếm số nhát.",
+                "en": "They take turns sitting on dildos, deepthroating for 30 seconds, or making themselves cum in front of you. You score them. The lowest score gets her wrists tied and is fucked hard while the others have to count the thrusts."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_lesbian_eating",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn bảo hai người phụ nữ liếm nhau cho bạn xem.",
+        "en": "You tell two women to eat each other out for you to watch."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Ra lệnh chi tiết", "en": "Give detailed orders" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Một người nằm, người kia vùi mặt vào giữa hai chân. Bạn bảo “thè lưỡi sâu hơn”, “hút âm vật”, “nhìn anh khi đang liếm”. Nước chảy xuống cằm và cổ. Khi họ sắp ra bạn mới kéo người bên trên ra và đút dương vật vào miệng cô ấy còn đang thở dốc.",
+                "en": "One lies down, the other buries her face between her legs. You order “stick your tongue deeper”, “suck the clit”, “look at me while you lick”. Juices run down chin and neck. When they are about to cum you pull the top one off and push your cock into her still-gasping mouth."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_see_through",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Họ chỉ được mặc đồ trong suốt. Mọi thứ bên trong lộ rõ.",
+        "en": "They are only allowed to wear see-through clothing. Everything underneath is clearly visible."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Dùng họ qua lớp vải", "en": "Use them through the fabric" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Áo và quần lót mỏng dính vào da vì mồ hôi và nước. Bạn nhìn thấy rõ núm vú và khe âm hộ. Bạn không cởi đồ họ, chỉ xé một lỗ nhỏ hoặc kéo sang một bên rồi đút dương vật vào. Vải ướt cọ xát liên tục khiến họ run.",
+                "en": "The thin top and panties stick to their skin from sweat and juices. You can clearly see nipples and pussy slits. You do not undress them, only tear a small hole or pull the fabric aside and push your cock in. The wet fabric rubs constantly and makes them tremble."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_public_caught",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "min": { "risk": 10 } },
+      "text": {
+        "vi": "Đang làm thì bị người khác phát hiện. Thay vì chạy, họ quyết định tham gia.",
+        "en": "You are in the middle of it when someone else discovers you. Instead of running, they decide to join."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Để họ tham gia", "en": "Let them join" },
+          "outcomes": [
+            {
+              "chance": 0.7,
+              "effects": { "happy": 18, "risk": 6 },
+              "text": {
+                "vi": "Người mới đến không báo cảnh sát. Họ cởi đồ và quỳ xuống cạnh. Bây giờ có thêm miệng và tay. Bạn đụ người cũ trong khi người mới liếm tinh hoàn và chỗ nối. Không khí trở nên hỗn loạn và nóng hơn.",
+                "en": "The newcomer does not call anyone. They strip and kneel beside you. Now there are extra mouths and hands. You fuck the original one while the new one licks your balls and the junction. The atmosphere becomes more chaotic and hotter."
+              }
+            },
+            {
+              "chance": 0.3,
+              "effects": { "happy": 8, "risk": 12 },
+              "text": {
+                "vi": "Họ do dự quá lâu. Có tiếng chân người khác tiến lại gần. Mọi người phải vội vàng mặc đồ.",
+                "en": "They hesitate too long. More footsteps approach. Everyone has to scramble to put clothes back on."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_gloryhole",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Bạn dựng một tấm vách có lỗ. Họ phải quỳ bên kia và phục vụ mà không nhìn thấy mặt bạn.",
+        "en": "You set up a partition with a hole. They must kneel on the other side and serve without seeing your face."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Sử dụng lỗ", "en": "Use the hole" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Dương vật bạn thò qua lỗ. Họ thay phiên ngậm, liếm, nuốt sâu. Bạn không nói gì, chỉ đâm vào họng khi muốn. Đôi khi bạn rút ra và chuyển sang lỗ khác nơi người tiếp theo đang há miệng chờ. Họ không biết lúc nào sẽ bị xuất vào miệng.",
+                "en": "Your cock pushes through the hole. They take turns sucking, licking, deepthroating. You say nothing, only thrust into a throat when you feel like it. Sometimes you pull out and move to another hole where the next one is already waiting with open mouth. They never know when they will get cum in their mouth."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_sex_in_front",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn đụ một người ngay trước mặt những người còn lại.",
+        "en": "You fuck one of them right in front of the others."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Làm chậm và rõ ràng", "en": "Do it slowly and clearly" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Bạn đặt cô ấy nằm ngửa, tách chân rộng và đụ chậm để mọi người thấy rõ dương vật ra vào. Những người xem bị bắt phải mô tả to những gì đang thấy. Có người phải quỳ cạnh và liếm tinh hoàn trong khi bạn vẫn đâm.",
+                "en": "You lay her on her back, spread her legs wide and fuck slowly so everyone can clearly see your cock going in and out. The watchers are ordered to describe out loud what they see. Someone has to kneel beside and lick your balls while you keep thrusting."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_taking_off_clothes",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Bạn ngồi ghế và ra lệnh họ lần lượt cởi đồ thật chậm.",
+        "en": "You sit in a chair and order them to take their clothes off one by one, very slowly."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bắt cởi từng món", "en": "Make them remove each item" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "text": {
+                "vi": "Áo trước, rồi áo ngực, rồi quần, cuối cùng là quần lót. Mỗi món phải được đưa cho bạn. Khi họ đứng trần, bạn đi vòng quanh sờ soạng và quyết định ai sẽ bị đụ trước. Sự chậm rãi khiến họ ướt và đỏ mặt.",
+                "en": "Top first, then bra, then pants, finally panties. Each item must be handed to you. When they stand naked you walk around groping and decide who gets fucked first. The slow pace makes them wet and blushing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_holding_pee",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Bạn không cho họ đi vệ sinh. Họ phải nhịn trong khi bị kích thích.",
+        "en": "You do not allow them to use the bathroom. They must hold it while being stimulated."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Kích thích đến khi gần chịu hết nổi", "en": "Stimulate until they can barely hold it" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Bạn xoa âm vật và đút ngón tay vào trong khi họ đang nhịn. Bụng họ căng, đùi run. Có người bắt đầu rỉ nước mắt. Bạn đợi đến khi họ cầu xin rồi mới cho đi, hoặc đụ ngay khi họ đang cố giữ.",
+                "en": "You rub their clits and push fingers inside while they are holding it. Their bellies are tight, thighs trembling. Some start tearing up. You wait until they beg before allowing them to go, or you fuck them while they are still trying to hold on."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_forced_orgasms",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Bạn buộc họ phải lên đỉnh liên tục, không được xin dừng.",
+        "en": "You force them to orgasm continuously, no asking to stop allowed."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Ép họ ra nhiều lần", "en": "Force multiple orgasms" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18, "willpower": -3 },
+              "text": {
+                "vi": "Bạn dùng lưỡi, ngón tay và dương vật luân phiên. Vừa ra xong bạn tiếp tục kích thích ngay. Họ khóc, vùng vẫy, nói không chịu nổi nhưng bạn không dừng. Đến lần thứ tư, thứ năm thì cơ thể họ chỉ còn giật và bắn nước không kiểm soát.",
+                "en": "You alternate tongue, fingers and cock. The moment one orgasm ends you stimulate again immediately. They cry, struggle, say they cannot take more but you do not stop. By the fourth and fifth their bodies only spasm and squirt uncontrollably."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_interview",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Bạn phỏng vấn họ về đời sống tình dục trong khi tay vẫn đang làm việc dưới đó.",
+        "en": "You interview them about their sex life while your hand is still working between their legs."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Hỏi vừa làm vừa hỏi", "en": "Ask questions while stimulating" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "“Em thích bị đụ mạnh hay nhẹ?” – bạn hỏi trong khi hai ngón tay đang đẩy vào trong. Họ phải trả lời thành câu hoàn chỉnh dù đang run và ướt. Nếu trả lời sai hoặc ngắt quãng, bạn tăng tốc độ cho đến khi họ nói được.",
+                "en": "“Do you like being fucked hard or soft?” – you ask while two fingers are pushing inside. They must answer in complete sentences even while trembling and wet. If the answer is wrong or broken you increase the speed until they can speak properly."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_drunk",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Họ hơi say. Phản ứng chậm hơn, dễ bảo hơn, và ướt hơn.",
+        "en": "They are a little drunk. Reactions are slower, they are more obedient, and wetter."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Tận dụng lúc họ say", "en": "Take advantage while they are drunk" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn đặt họ lên giường và đụ chậm. Họ cười ngây, ôm chặt và nói những câu dâm mà bình thường không dám nói. Dương vật bạn trượt dễ dàng vì họ ướt bất thường. Bạn xuất vào trong và họ chỉ cười rồi ngủ quên ngay trên dương vật bạn.",
+                "en": "You put them on the bed and fuck slowly. They giggle, hold you tight and say dirty things they normally would not dare. Your cock slides easily because they are unusually wet. You cum inside and they just laugh then fall asleep still on your cock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_long_orgasms",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Bạn muốn làm họ lên đỉnh dài và liên tục, không cho hạ xuống.",
+        "en": "You want to give them long, continuous orgasms without letting them come down."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Giữ họ ở đỉnh", "en": "Keep them at the peak" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Khi họ bắt đầu ra, bạn không rút tay hay miệng ra. Bạn tiếp tục liếm và đẩy ngón đúng nhịp để cơn cực khoái kéo dài hàng phút. Họ khóc, đùi kẹp chặt đầu bạn, nước bắn liên tục. Chỉ khi họ gần ngất bạn mới chịu dừng.",
+                "en": "When they start cumming you do not remove your hand or mouth. You keep licking and fingering at the exact rhythm to stretch the orgasm for minutes. They cry, thighs locking around your head, fluid squirting nonstop. Only when they are close to passing out do you finally stop."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_disgust_look",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 2,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Sau một hành động khá nặng, một người lộ vẻ mặt không thích, thậm chí hơi ghê.",
+        "en": "After a rather intense act, one of them shows a look of dislike, even slight disgust."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Tiếp tục dù họ có vẻ không thích", "en": "Continue even if they look like they dislike it" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 13, "rel_partner": -2 },
+              "text": {
+                "vi": "Bạn nhìn thấy rõ vẻ mặt nhăn lại và ánh mắt tránh né. Bạn vẫn giữ nguyên tư thế và đụ tiếp. Họ không nói dừng, nhưng cơ thể hơi cứng và tiếng rên trở nên gượng. Những người khác nhìn và không nói gì.",
+                "en": "You clearly see the wrinkled expression and the averted eyes. You keep the same position and continue fucking. They do not say stop, but their body stiffens slightly and the moans become forced. The others watch and say nothing."
+              }
+            }
+          ]
+        },
+        {
+          "label": { "vi": "Dừng và chuyển sang người khác", "en": "Stop and switch to someone else" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 10, "rel_partner": 3 },
+              "text": {
+                "vi": "Bạn rút ra và kéo người khác vào thay. Người vừa rồi được nằm nghỉ, vẫn còn vẻ mặt phức tạp.",
+                "en": "You pull out and pull someone else in instead. The previous one is allowed to rest, still wearing a complicated expression."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_forced_strip",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Bạn không cho họ tự cởi. Bạn tự tay lột đồ họ.",
+        "en": "You do not let them undress themselves. You strip them with your own hands."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Lột từng món", "en": "Strip them piece by piece" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Bạn kéo áo lên qua đầu, bật móc áo ngực, kéo quần xuống đến mắt cá chân. Họ bị bắt đứng yên. Khi chỉ còn lại quần lót, bạn xé thay vì kéo. Vải rách và họ đứng hoàn toàn trần trước mặt bạn.",
+                "en": "You pull the top up over their head, unhook the bra, drag the pants down to the ankles. They are ordered to stand still. When only the panties remain you tear them instead of pulling. The fabric rips and they stand completely naked in front of you."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_lesbian_femdom",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Một người phụ nữ trong nhóm chiếm quyền, bắt những người còn lại phục vụ cô ấy trong khi bạn chỉ được ngồi xem.",
+        "en": "One woman in the group takes control, making the others serve her while you are only allowed to watch."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Ngồi xem femdom", "en": "Sit and watch the femdom" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "text": {
+                "vi": "Cô ấy ngồi lên mặt người khác, kéo tóc và ra lệnh liếm. Người còn lại phải bú ngực và dùng tay làm cô ấy ra. Bạn chỉ được quan sát. Khi cô ấy đã thỏa mãn, cô ấy mới quay sang bạn và cho phép bạn tham gia.",
+                "en": "She sits on another woman’s face, pulls her hair and orders her to lick. The remaining one has to suck her breasts and use hands to make her cum. You are only allowed to watch. When she is satisfied she finally turns to you and permits you to join."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_groped",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Bạn sờ soạng họ một cách công khai và thô ráp ngay trong phòng.",
+        "en": "You grope them openly and roughly right in the room."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Sờ mạnh và nhiều chỗ", "en": "Grope hard and everywhere" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Hai tay bạn bóp ngực, kéo núm vú, luồn xuống dưới váy hoặc quần, xoa mạnh vào âm hộ qua lớp vải. Họ bị đẩy sát tường hoặc bị kéo lại gần. Bạn không hỏi, chỉ lấy những gì muốn. Có người đã ướt rõ qua quần lót chỉ sau vài phút bị sờ.",
+                "en": "Both your hands squeeze breasts, tug nipples, slide under skirts or pants and rub hard over their pussies through the fabric. They are pushed against the wall or pulled close. You do not ask, you simply take what you want. Some are visibly wet through their panties after only a few minutes of groping."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_rubbing",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Bạn chỉ dùng tay và dương vật cọ xát bên ngoài, chưa đút vào.",
+        "en": "You only use your hand and cock to rub them on the outside, not inserting yet."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Cọ đến khi họ xin được đụ", "en": "Rub until they beg to be fucked" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "text": {
+                "vi": "Dương vật bạn trượt lên xuống giữa hai môi âm hộ, đầu cặc liên tục chạm vào âm vật. Tay bạn thì xoa vòng quanh. Họ ngày càng ướt, hông tự đẩy theo và bắt đầu xin bạn đút vào. Bạn vẫn chỉ cọ bên ngoài thêm vài phút nữa.",
+                "en": "Your cock slides up and down between their pussy lips, the head constantly brushing the clit. Your hand circles around. They grow wetter, hips pushing back and start begging you to put it in. You still only rub on the outside for several more minutes."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb2_grab",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Bạn bất ngờ túm lấy họ, kéo lại và giữ chặt.",
+        "en": "You suddenly grab them, pull them close and hold them tight."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Túm và dùng ngay", "en": "Grab and use them immediately" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn túm tóc hoặc cánh tay, kéo họ lại, ép ngực họ vào tường hoặc vào người bạn. Một tay giữ chặt, tay kia kéo quần lót sang và đút dương vật vào chỉ trong vài giây. Họ bị bất ngờ nhưng nhanh chóng ướt và nhận lấy những nhát đâm mạnh.",
+                "en": "You grab their hair or arm, pull them in, press their chest against the wall or against you. One hand holds them firm, the other yanks the panties aside and pushes your cock in within seconds. They are surprised but quickly become wet and take the hard thrusts."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    ,
+    {
+      "id": "nb3_shave_group",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn xếp họ nằm thành hàng và cạo lần lượt từng người trong khi những người còn lại phải nhìn.",
+        "en": "You line them up on the bed and shave each one in turn while the others are forced to watch."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Cạo trước mặt mọi người", "en": "Shave in front of everyone" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Người đầu tiên bị tách chân, cạo sạch. Bạn nâng mông họ lên để cạo cả phần phía sau. Những người chờ bị bắt phải mô tả to những gì đang thấy. Khi cạo xong một người, bạn thọc hai ngón vào kiểm tra độ mịn rồi mới chuyển sang người tiếp theo.",
+                "en": "The first one has her legs spread and is shaved clean. You lift her hips to shave the area further back as well. Those waiting are ordered to describe out loud what they see. After finishing one you push two fingers inside to check the smoothness before moving to the next."
+              }
+            }
+          ]
+        }
+      ]
+    },
+        {
+      "id": "nb3_drug_1",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Họ đang trong trạng thái hơi phê. Cơ thể nhạy cảm hơn bình thường rất nhiều.",
+        "en": "They are in a slightly high state. Their bodies are far more sensitive than usual."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Tận dụng độ nhạy cảm", "en": "Take advantage of the sensitivity" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18 },
+              "text": {
+                "vi": "Chạm nhẹ vào âm vật thôi cũng khiến họ rên dài. Bạn chỉ cần dùng đầu lưỡi liếm vòng quanh đã làm họ bắn nước. Khi bạn đút dương vật vào, họ ôm chặt và orgasmm gần như ngay lập tức. Bạn đụ chậm nhưng mỗi nhát đều kéo dài cơn cực khoái của họ.",
+                "en": "Even a light touch on the clit makes them moan long. You only need to circle with the tip of your tongue to make them squirt. When you push your cock in they cling tightly and orgasm almost immediately. You fuck slowly but every thrust stretches their climax."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_drug_2",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 1 },
+      "text": {
+        "vi": "Trong trạng thái phê, họ trở nên rất ngoan và sẵn sàng làm bất cứ điều gì bạn bảo.",
+        "en": "While high they become very obedient and ready to do whatever you tell them."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Ra lệnh liên tục", "en": "Give continuous orders" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Bạn bảo “há miệng” – họ há. “Quay lại” – họ quay. “Ngồi xuống hết gốc” – họ ngồi. Mắt họ hơi lim dim nhưng vẫn nhìn bạn và làm đúng từng lời. Bạn đụ và xuất vào miệng họ; họ nuốt hết rồi há miệng ra cho bạn kiểm tra mà không cần bạn phải nói thêm.",
+                "en": "You say “open your mouth” – they open. “Turn around” – they turn. “Sit all the way down” – they sit. Their eyes are slightly heavy but still look at you and follow every word. You fuck and cum in their mouth; they swallow everything then open their mouth for inspection without you needing to say anything more."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_drunk_1",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Họ đã uống hơi nhiều. Má đỏ, cười nhiều, và phản ứng chậm.",
+        "en": "They have had a bit too much to drink. Cheeks flushed, laughing a lot, reactions slowed."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Đụ khi họ đang say", "en": "Fuck them while they are drunk" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn đặt họ lên giường. Họ cười ngây khi bạn kéo quần lót xuống. Dương vật trượt vào dễ dàng vì họ ướt bất thường. Họ ôm chặt cổ bạn, nói những câu dâm dột mà lúc tỉnh không bao giờ nói, rồi orgasmm trong khi vẫn còn cười.",
+                "en": "You put them on the bed. They giggle when you pull their panties down. Your cock slides in easily because they are unusually wet. They wrap their arms around your neck, say filthy things they would never say sober, then orgasm while still laughing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_drunk_2",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Cả nhóm đều hơi say. Không khí trở nên lỏng lẻo và dễ dãi hơn nhiều.",
+        "en": "The whole group is a little drunk. The atmosphere becomes much looser and more permissive."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Tận dụng không khí", "en": "Take advantage of the mood" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Bạn không cần ra lệnh nhiều. Chỉ cần kéo ai đó lại là họ đã há miệng hoặc tách chân. Họ hôn nhau, liếm nhau và cười trong khi bạn đụ từng người. Tinh dịch và nước bọt lẫn vào nhau. Đến cuối buổi thì cả phòng đều ngổn ngang quần áo và cơ thể.",
+                "en": "You do not need many orders. Just pulling someone close makes them open their mouth or spread their legs. They kiss each other, lick each other and laugh while you fuck them one by one. Cum and spit mix together. By the end of the night the room is a mess of clothes and bodies."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    ,
+    {
+      "id": "nb3_groping_2",
+      "category": "love",
+      "age": [21, 46],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn sờ cả nhóm cùng lúc, không phân biệt ai.",
+        "en": "You grope the whole group at the same time, no preference."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Sờ tất cả", "en": "Grope everyone" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Một tay bóp ngực người này, tay kia đã luồn vào quần người kia. Bạn kéo họ lại gần nhau, sờ từ người này sang người khác liên tục. Ngực, mông, âm hộ đều bị bạn chiếm lấy. Họ đứng sát nhau, thở gấp và không ai bị bỏ quên.",
+                "en": "One hand squeezes one woman’s breasts while the other is already inside another’s pants. You pull them close together and move from one to the next without pause. Breasts, asses and pussies are all claimed by you. They stand tightly together, breathing hard, and no one is left out."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_shave_then_fuck",
+      "category": "love",
+      "age": [20, 44],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Vừa cạo xong, bạn đụ ngay vào vùng da vẫn còn sạch sẽ và nhạy cảm.",
+        "en": "Right after shaving you fuck the still clean and sensitive area."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Đụ ngay sau khi cạo", "en": "Fuck right after shaving" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Da vừa cạo vẫn còn hơi rát và cực kỳ nhạy. Dương vật bạn trượt vào dễ dàng. Mỗi nhát đâm đều cọ vào da mới làm họ rên to hơn bình thường. Bạn cố ý đụ chậm để họ cảm nhận rõ sự khác biệt của vùng vừa được cạo sạch.",
+                "en": "The freshly shaved skin is still slightly raw and extremely sensitive. Your cock slides in easily. Every thrust rubs against the new skin and makes them moan louder than usual. You deliberately fuck slowly so they clearly feel the difference of the just-shaved area."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_gameshow_shave",
+      "category": "love",
+      "age": [21, 40],
+      "weight": 3,
+      "once": true,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Trong gameshow, phần thưởng cho người thắng là được bạn cạo và đụ ngay tại chỗ.",
+        "en": "In the gameshow, the prize for the winner is to be shaved and fucked by you on the spot."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Thưởng người thắng", "en": "Reward the winner" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Người thắng được nằm giữa phòng. Bạn cạo sạch trước sự chứng kiến của những người thua. Sau đó bạn đụ cô ấy ngay trên sàn trong khi những người còn lại phải quỳ xung quanh và nhìn. Người thua bị bắt phải liếm sạch dương vật bạn sau khi rút ra.",
+                "en": "The winner lies in the middle of the room. You shave her clean under the eyes of the losers. Then you fuck her right on the floor while the others must kneel around and watch. The losers are ordered to lick your cock clean after you pull out."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_drunk_groping",
+      "category": "love",
+      "age": [20, 45],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Họ đang say. Bạn sờ soạng mạnh hơn bình thường mà không bị phản kháng nhiều.",
+        "en": "They are drunk. You grope more roughly than usual and meet little resistance."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Sờ và đụ luôn", "en": "Grope and fuck at once" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn bóp ngực mạnh đến mức họ rên, rồi kéo váy lên, kéo quần lót sang và đút vào ngay. Họ cười và ôm lấy bạn thay vì đẩy ra. Dương vật bạn đâm sâu trong khi tay vẫn không ngừng bóp và kéo núm vú.",
+                "en": "You squeeze their breasts hard enough to make them moan, then pull the skirt up, shift the panties aside and push in at once. They laugh and hold onto you instead of pushing away. Your cock thrusts deep while your hands keep squeezing and tugging the nipples."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_drug_sex_front",
+      "category": "love",
+      "age": [22, 41],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Trong trạng thái phê, bạn đụ một người ngay trước mặt người còn lại.",
+        "en": "While high, you fuck one of them right in front of the other."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Làm trước mặt", "en": "Do it in front" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18 },
+              "text": {
+                "vi": "Người đang bị đụ nhạy cảm đến mức chỉ vài nhát đã orgasmm. Người xem cũng đang phê nên chỉ biết nhìn chằm chằm và tự xoa. Bạn đụ mạnh hơn, cố ý để tiếng da thịt và tiếng rên vang rõ. Khi xuất bạn rút ra và bắn lên mặt cả hai.",
+                "en": "The one being fucked is so sensitive that only a few thrusts make her orgasm. The watcher is also high so she can only stare and touch herself. You fuck harder, deliberately making the sound of skin and the moans loud. When you cum you pull out and shoot across both their faces."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_groping_public_feel",
+      "category": "love",
+      "age": [23, 44],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "min": { "risk": 5 } },
+      "text": {
+        "vi": "Bạn sờ họ ở nơi có nguy cơ bị nhìn thấy, tăng cảm giác hồi hộp.",
+        "en": "You grope them in a place where there is a risk of being seen, increasing the excitement."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Sờ táo bạo", "en": "Grope boldly" },
+          "outcomes": [
+            {
+              "chance": 0.75,
+              "effects": { "happy": 15, "risk": 5 },
+              "text": {
+                "vi": "Tay bạn luồn vào áo và quần ngay khi có tiếng người đi lại phía xa. Họ cắn môi để không rên thành tiếng. Bạn thọc ngón vào trong và xoa mạnh. Khi nguy cơ giảm, bạn kéo họ vào góc khuất và đụ ngay.",
+                "en": "Your hand slides into their top and pants the moment footsteps are heard in the distance. They bite their lip to keep from moaning out loud. You push fingers inside and rub hard. When the risk lessens you pull them into a hidden corner and fuck them at once."
+              }
+            },
+            {
+              "chance": 0.25,
+              "effects": { "happy": 8, "risk": 10 },
+              "text": {
+                "vi": "Có người đi đến gần hơn dự kiến. Bạn phải rút tay ra nhanh. Cả hai đứng im với tim đập thình thịch.",
+                "en": "Someone comes closer than expected. You have to pull your hand out quickly. Both of you stand still with hearts pounding."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_drunk_gameshow",
+      "category": "love",
+      "age": [20, 42],
+      "weight": 3,
+      "once": true,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Gameshow diễn ra khi cả nhóm đang say. Luật lệ trở nên lỏng lẻo hơn.",
+        "en": "The gameshow happens while the whole group is drunk. The rules become looser."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Chơi tiếp", "en": "Keep playing" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Họ cười phá lên mỗi khi thua cuộc. Người thua tự nguyện nằm ra để bị đụ thay vì bị phạt. Bạn đụ lần lượt trong tiếng cười và tiếng rên lẫn lộn. Đến cuối thì không còn ai nhớ điểm số nữa, chỉ còn lại việc thay phiên nhau bị dùng.",
+                "en": "They burst out laughing every time they lose. The loser willingly lies down to be fucked instead of taking a real punishment. You fuck them one after another amid mixed laughter and moans. By the end no one remembers the scores anymore, only the rotation of being used."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_full_combo",
+      "category": "love",
+      "age": [22, 40],
+      "weight": 2,
+      "once": true,
+      "rating": "25+",
+      "requires": { "lovers": 2, "min": { "health": 50 } },
+      "text": {
+        "vi": "Một buổi kết hợp tất cả: cạo, gameshow, đụ trước mặt nhau, trong lúc mọi người đang say.",
+        "en": "A session combining everything: shaving, gameshow, fucking in front of each other, while everyone is drunk."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Làm tất cả", "en": "Do it all" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 20, "health": -5 },
+              "text": {
+                "vi": "Bạn cạo từng người trước sự chứng kiến của cả nhóm. Sau đó tổ chức thi bú và thi ngồi lên dương vật. Người thua bị đụ ngay tại chỗ trong khi những người khác phải nhìn và tự sờ. Tất cả đều đang say nên tiếng cười, tiếng rên và tiếng da thịt hòa vào nhau đến sáng.",
+                "en": "You shave each one under the eyes of the whole group. Then you hold contests for sucking and for sitting on your cock. Losers are fucked on the spot while the others must watch and touch themselves. Everyone is drunk so laughter, moans and the sound of skin mix together until morning."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nb3_aftercare_groping",
+      "category": "love",
+      "age": [20, 50],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "hasPartner": true },
+      "text": {
+        "vi": "Sau khi xong, bạn vẫn tiếp tục sờ soạng họ trong khi họ đang mệt và nhạy cảm.",
+        "en": "After finishing you continue groping them while they are tired and sensitive."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Sờ tiếp", "en": "Keep groping" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 13 },
+              "text": {
+                "vi": "Họ nằm thở dốc. Bạn vẫn dùng tay bóp nhẹ ngực, xoa vòng quanh âm hộ vừa bị đụ, thỉnh thoảng thọc ngón vào kiểm tra. Họ rên yếu ớt nhưng không đẩy tay bạn ra. Bạn sờ đến khi họ lại ướt lần nữa rồi mới chịu dừng.",
+                "en": "They lie breathing hard. You still use your hands to gently squeeze their breasts, rub around the just-fucked pussy, occasionally pushing a finger in to check. They moan weakly but do not push your hand away. You keep touching until they grow wet again before finally stopping."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_mo_man",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": true,
+      "rating": "25+",
+      "requires": { "lovers": 2 },
+      "text": {
+        "vi": "Bạn tuyên bố bắt đầu Porn Game Show. Tất cả phụ nữ phải xếp hàng trần truồng trước mặt bạn.",
+        "en": "You announce the start of the Porn Game Show. All the women must line up completely naked in front of you."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bắt đầu vòng loại", "en": "Start the qualifying round" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14 },
+              "setFlags": ["pgs_active"],
+              "text": {
+                "vi": "Bạn đi dọc hàng, dùng tay sờ ngực, bóp mông, thọc ngón vào âm hộ từng người để “kiểm tra”. Ai ướt nhất được điểm cao. Người khô nhất phải quỳ xuống bú bạn 60 giây không dùng tay ngay lập tức.",
+                "en": "You walk down the line, using your hands to squeeze breasts, grab asses and push fingers into each pussy for “inspection”. The wettest scores highest. The driest must immediately kneel and suck you for 60 seconds without using her hands."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_riding_contest",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 5,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng thi cưỡi: Ai làm bạn xuất nhanh nhất bằng cách ngồi lên.",
+        "en": "Riding contest: Who can make you cum fastest by sitting on it."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Cho họ thi cưỡi", "en": "Let them compete in riding" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18 },
+              "text": {
+                "vi": "Họ lần lượt ngồi xuống hết gốc và nhún. Bạn ngồi ghế, hai tay chống ra sau, chỉ việc nhìn. Người nào kỹ thuật tốt, siết chặt và nhún đúng nhịp sẽ làm bạn bắn sớm. Người thắng được nằm nghỉ, người thua phải liếm sạch dương vật và tinh dịch chảy ra từ người thắng.",
+                "en": "They take turns sinking all the way down and bouncing. You sit in the chair, hands behind you, simply watching. Whoever has good technique, squeezes tightly and rides with the right rhythm makes you shoot early. The winner gets to rest; the losers must lick your cock clean and the cum leaking from the winner."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_squirt_challenge",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Thử thách: Ai squirt được nhiều và xa nhất.",
+        "en": "Challenge: Who can squirt the most and the farthest."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Làm họ squirt", "en": "Make them squirt" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Bạn dùng tay và miệng lần lượt với từng người. Ngón tay đẩy điểm G, lưỡi hút âm vật. Họ bị giữ chân tách rộng. Người bắn xa nhất và nhiều nhất được điểm. Người ít nhất phải nằm xuống và bị những người khác ngồi lên mặt trong khi bạn đụ cô ấy.",
+                "en": "You use hands and mouth on each one in turn. Fingers press the G-spot, tongue sucks the clit. Their legs are held wide open. Whoever squirts farthest and most scores highest. The least must lie down and have the others sit on her face while you fuck her."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_endurance",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng chịu đựng: Bị đụ liên tục mà không được lên đỉnh cho đến khi bạn cho phép.",
+        "en": "Endurance round: Get fucked continuously without orgasm until you allow it."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bắt đầu thử thách", "en": "Start the challenge" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Bạn đụ từng người trong 3 phút. Họ bị trói tay, không được tự sướng. Nếu ai đó ra trước khi bạn cho phép thì bị phạt bằng cách bị đụ thêm 2 phút không nghỉ. Người chịu được lâu nhất được bạn xuất vào trong.",
+                "en": "You fuck each one for 3 minutes. Their hands are tied, no touching themselves. If anyone cums before you allow it they are punished with an extra 2 minutes of nonstop fucking. The one who endures longest gets your cum inside."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_blindfold_taste",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng bịt mắt: Đoán xem đang bú ai hoặc đang bị đụ bởi tư thế nào.",
+        "en": "Blindfold round: Guess whose cock they are sucking or which position they are being fucked in."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bịt mắt và kiểm tra", "en": "Blindfold and test" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Họ bị bịt mắt. Bạn lần lượt đút dương vật vào miệng hoặc đụ họ từ các góc khác nhau. Họ phải nói to đang cảm thấy gì. Đoán sai bị tát nhẹ vào mông và bị đụ mạnh hơn. Đoán đúng được thưởng một lần xuất vào miệng.",
+                "en": "They are blindfolded. You take turns putting your cock in their mouths or fucking them from different angles. They must say out loud what they feel. Wrong guesses earn a light slap on the ass and harder fucking. Correct guesses are rewarded with a load in the mouth."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_team_blowjob",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng đồng đội: Hai người phải cùng bú bạn một lúc.",
+        "en": "Team round: Two women must suck you at the same time."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Cho họ làm việc nhóm", "en": "Make them work as a team" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 18 },
+              "text": {
+                "vi": "Hai cái miệng cùng lúc liếm, hôn và nuốt. Họ phải phối hợp: một người ngậm đầu, người kia liếm tinh hoàn và thân. Bạn giữ tóc cả hai và đâm vào giữa. Nếu họ làm bạn xuất trong vòng 2 phút thì cả hai được thưởng. Nếu không, cả hai bị đụ liên tiếp.",
+                "en": "Two mouths lick, kiss and swallow at once. They must coordinate: one takes the head, the other licks balls and shaft. You hold both their hair and thrust between them. If they make you cum within 2 minutes both are rewarded. If not, both get fucked back to back."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_position_roulette",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng quay tư thế: Bạn quay một vòng và họ phải chịu tư thế được chọn.",
+        "en": "Position roulette: You spin and they must take whatever position comes up."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Quay và thực hiện", "en": "Spin and perform" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16 },
+              "text": {
+                "vi": "Kết quả là tư thế đứng bế. Bạn nâng đùi họ lên, ép vào tường và đụ mạnh. Người tiếp theo nhận tư thế 69 ngược – họ phải nằm trên bạn và bú trong khi bị liếm. Mỗi tư thế kéo dài 4 phút. Ai rên to nhất hoặc ra trước bị trừ điểm.",
+                "en": "The result is standing carry. You lift their thighs, press them against the wall and fuck hard. The next gets reverse 69 – they must lie on top of you and suck while being licked. Each position lasts 4 minutes. Whoever moans loudest or cums first loses points."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_cum_target",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng mục tiêu: Bạn xuất lên đâu thì họ phải giữ nguyên và không được lau.",
+        "en": "Target round: Wherever you cum, they must leave it and not wipe."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Chọn mục tiêu", "en": "Choose the targets" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Bạn lần lượt xuất lên mặt, ngực, bụng và miệng từng người. Họ phải đứng im để tinh dịch chảy xuống. Người nào để tinh dịch rơi xuống sàn bị phạt bằng cách bị đụ thêm. Người giữ được nhiều nhất trên người được chọn để bạn đụ đến sáng.",
+                "en": "You take turns cumming on faces, breasts, stomachs and mouths. They must stand still while the cum runs down. Whoever lets cum drip onto the floor is punished with extra fucking. The one who keeps the most on her body is chosen for you to fuck until morning."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_public_style",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"], "min": { "risk": 5 } },
+      "text": {
+        "vi": "Vòng cảm giác công cộng: Làm ngay cạnh cửa sổ hoặc nơi có thể bị nhìn thấy.",
+        "en": "Public-feeling round: Do it next to a window or where you might be seen."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Thực hiện gần cửa", "en": "Perform near the window" },
+          "outcomes": [
+            {
+              "chance": 0.8,
+              "effects": { "happy": 16, "risk": 6 },
+              "text": {
+                "vi": "Bạn đụ họ áp vào cửa kính. Họ phải nhìn ra ngoài trong khi bị đâm. Cảm giác có thể bị thấy khiến họ siết chặt hơn. Bạn cố ý đụ mạnh để tiếng da thịt vang. Không ai đi ngang, nhưng mồ hôi và nước của họ đã làm kính mờ đi một phần.",
+                "en": "You fuck them pressed against the glass. They must look outside while being thrust into. The feeling of possibly being seen makes them squeeze tighter. You deliberately fuck hard so the sound of skin echoes. No one walks by, but their sweat and juices have fogged part of the glass."
+              }
+            },
+            {
+              "chance": 0.2,
+              "effects": { "happy": 9, "risk": 11 },
+              "text": {
+                "vi": "Có bóng người đi ngang ngoài đường. Các bạn phải dừng đột ngột và nín thở.",
+                "en": "A shadow passes outside. You all have to stop suddenly and hold your breath."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_score_punishment",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Tổng kết điểm giữa giờ. Người thấp điểm nhất nhận hình phạt tập thể.",
+        "en": "Mid-show score summary. The lowest score receives a group punishment."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Thực hiện hình phạt", "en": "Carry out the punishment" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Người thấp điểm bị trói tay chân vào ghế. Tất cả những người còn lại lần lượt ngồi lên mặt cô ấy trong 1 phút, sau đó bạn đụ cô ấy trong khi họ vẫn ngồi. Cô ấy vừa bị bịt mặt vừa bị đụ đến khi bạn xuất vào trong.",
+                "en": "The lowest score has her wrists and ankles tied to a chair. All the others take turns sitting on her face for 1 minute each, then you fuck her while they are still sitting. She is smothered and fucked until you cum inside."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_free_use_round",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng free-use: Trong 10 phút bạn muốn dùng ai thì dùng, không cần hỏi.",
+        "en": "Free-use round: For 10 minutes you may use anyone you want without asking."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Sử dụng tự do", "en": "Use freely" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 19 },
+              "text": {
+                "vi": "Bạn kéo người này đụ 1 phút rồi chuyển sang người khác. Miệng, âm hộ, tay, ngực đều bị bạn chiếm lấy theo ý muốn. Họ phải giữ tư thế sẵn sàng. Hết 10 phút bạn xuất lên người nào đang ở gần nhất.",
+                "en": "You pull one woman and fuck her for a minute then switch to another. Mouths, pussies, hands and breasts are all claimed however you like. They must stay in ready positions. When the 10 minutes end you cum on whoever is closest."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_orgasm_denial",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 4,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng cấm lên đỉnh: Họ bị kích thích đến sát mép nhưng không được ra.",
+        "en": "Orgasm denial round: They are brought to the edge but not allowed to cum."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Ép đến mép rồi dừng", "en": "Bring to the edge then stop" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16, "willpower": -2 },
+              "text": {
+                "vi": "Bạn dùng lưỡi và ngón tay đưa từng người đến gần cực khoái rồi rút ra đúng lúc. Họ khóc và xin được ra. Ai xin nhiều nhất bị phạt bằng cách bị đụ mạnh nhưng vẫn không cho lên đỉnh. Chỉ người kiên nhẫn nhất cuối cùng mới được bạn cho phép orgasmm khi đang bị đụ.",
+                "en": "You use tongue and fingers to bring each one close to climax then pull away at the exact moment. They cry and beg to cum. Whoever begs the most is punished by being fucked hard but still denied orgasm. Only the most patient one is finally allowed to cum while being fucked."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_double_penetration_toy",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng đồ chơi: Vừa bị bạn đụ vừa bị nhét thêm dương vật giả.",
+        "en": "Toy round: Get fucked by you while also taking a dildo."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Thực hiện double", "en": "Perform the double" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 17 },
+              "text": {
+                "vi": "Bạn đụ vào âm hộ trong khi dương vật giả được đẩy vào lỗ đít hoặc ngược lại. Họ phải chịu cả hai. Người nào chịu được lâu và không kêu nhiều được điểm cao. Người nào xin dừng sớm bị giữ nguyên tư thế và bị đụ thêm 2 phút không rút ra.",
+                "en": "You fuck their pussy while a dildo is pushed into the ass, or the other way around. They must take both. Whoever lasts longest and complains least scores high. Whoever asks to stop early is held in position and fucked for an extra 2 minutes without pulling out."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_audience_vote",
+      "category": "love",
+      "age": [18, 10],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng khán giả bình chọn: Những người không tham gia được vote xem ai sẽ bị đụ tiếp.",
+        "en": "Audience vote round: Those not currently involved vote on who gets fucked next."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Để họ vote", "en": "Let them vote" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Họ thì thầm và chỉ tay. Người được chọn nhiều nhất phải nằm ra ngay. Bạn đụ cô ấy theo đúng yêu cầu của những người vote (mạnh, chậm, doggy, missionary…). Người bị vote ít nhất phải quỳ cạnh và liếm mọi chỗ bạn ra lệnh.",
+                "en": "They whisper and point. The one with the most votes must lie down at once. You fuck her exactly as the voters request (hard, slow, doggy, missionary…). The one with the fewest votes must kneel beside and lick whatever you order."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_final_round",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": true,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Vòng chung kết: Tất cả cùng lúc phục vụ bạn trong 15 phút.",
+        "en": "Final round: Everyone serves you at the same time for 15 minutes."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bắt đầu chung kết", "en": "Start the final" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 20, "health": -4 },
+              "text": {
+                "vi": "Một người ngồi lên dương vật, một người ngồi lên mặt, những người còn lại dùng miệng và tay kích thích mọi chỗ còn lại. Bạn bị bao phủ hoàn toàn. Họ thay phiên vị trí theo lệnh bạn. Khi hết giờ bạn xuất vào người nào đang ở trên cùng.",
+                "en": "One sits on your cock, one sits on your face, the others use mouths and hands on everything else. You are completely covered. They rotate positions on your command. When time is up you cum in whoever is on top."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_winner_reward",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": true,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Người chiến thắng overall được chọn phần thưởng.",
+        "en": "The overall winner gets to choose her reward."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Cho người thắng chọn", "en": "Let the winner choose" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 16, "rel_partner": 3 },
+              "text": {
+                "vi": "Cô ấy chọn bị bạn đụ riêng trong 20 phút không bị ai xen vào. Bạn chiều đúng ý: đụ sâu, xuất vào trong, rồi tiếp tục đến khi cô ấy không còn sức. Những người còn lại chỉ được ngồi nhìn và tự xử.",
+                "en": "She chooses to be fucked by you alone for 20 minutes with no one else interfering. You give her exactly what she wants: deep fucking, cum inside, then continue until she has no strength left. The others may only sit and watch while touching themselves."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_loser_punishment",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": true,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Người điểm thấp nhất nhận hình phạt cuối cùng.",
+        "en": "The lowest overall score receives the final punishment."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Thực hiện án phạt", "en": "Carry out the sentence" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 15 },
+              "text": {
+                "vi": "Cô ấy bị trói nằm giữa phòng. Tất cả những người khác lần lượt dùng miệng, tay và đồ chơi với cô ấy trong 15 phút dưới sự chỉ đạo của bạn. Cuối cùng bạn đụ cô ấy đến khi xuất trong khi họ vẫn đang kích thích cô ấy.",
+                "en": "She is tied lying in the middle of the room. All the others take turns using mouths, hands and toys on her for 15 minutes under your direction. Finally you fuck her until you cum while they continue stimulating her."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pgs_after_show",
+      "category": "love",
+      "age": [18, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "25+",
+      "requires": { "flags": ["pgs_active"] },
+      "text": {
+        "vi": "Gameshow kết thúc. Mọi người đều mệt và ướt, nhưng bạn vẫn chưa muốn dừng.",
+        "en": "The gameshow is over. Everyone is tired and wet, but you still do not want to stop."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Tiếp tục free-use thêm", "en": "Continue free-use a bit more" },
+          "outcomes": [
+            {
+              "chance": 1,
+              "effects": { "happy": 14, "health": -2 },
+              "text": {
+                "vi": "Bạn kéo bất kỳ ai còn sức và đụ thêm vài lượt. Họ không còn kháng cự, chỉ biết nằm hoặc quỳ theo tư thế bạn đặt. Bạn xuất lần cuối lên người họ rồi mới chịu dừng hẳn.",
+                "en": "You pull anyone who still has strength and fuck a few more rounds. They no longer resist, only lie or kneel in the positions you put them in. You cum one last time on them before finally stopping for good."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
