@@ -1,0 +1,134 @@
+{
+  "manifest": {
+    "id": "tacgia.ten_goi",
+    "name": { "vi": "Tên gói tiếng Việt", "en": "Pack name in English" },
+    "version": "1.0.0",
+    "rating": "18+",
+    "languages": ["vi", "en"]
+  },
+  "events": [
+    {
+      "id": "vd_lua_chon_co_ban",
+      "category": "random",
+      "age": [10, 90],
+      "weight": 5,
+      "once": true,
+      "rating": "all",
+      "text": {
+        "vi": "Bạn nhặt được một con mèo con dưới mưa.",
+        "en": "You find a kitten in the rain."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Mang về nuôi", "en": "Take it home" },
+          "outcomes": [
+            { "chance": 0.8, "effects": { "happy": 8, "karma": 3 }, "text": { "vi": "Nó ngủ trên ngực bạn suốt đêm.", "en": "It sleeps on your chest all night." } },
+            { "chance": 0.2, "effects": { "happy": -2, "money": -3 }, "text": { "vi": "Nó cào nát rèm cửa ngay đêm đầu.", "en": "It shreds the curtains on night one." } }
+          ]
+        },
+        {
+          "label": { "vi": "Đưa đến trạm cứu hộ", "en": "Take it to a shelter" },
+          "outcomes": [
+            { "chance": 1, "effects": { "karma": 4 }, "text": { "vi": "Một tuần sau nó có chủ mới.", "en": "A week later it has a new home." } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vd_khoa_theo_chi_so",
+      "category": "work",
+      "age": [18, 65],
+      "weight": 4,
+      "once": false,
+      "rating": "all",
+      "requires": { "employed": true },
+      "text": {
+        "vi": "Sếp hỏi ai muốn thuyết trình trước ban giám đốc.",
+        "en": "Your boss asks who wants to present to the board."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Giơ tay xung phong", "en": "Volunteer" },
+          "requires": { "min": { "smarts": 60 } },
+          "outcomes": [
+            { "chance": 1, "effects": { "jobPerf": 10, "fame": 2 }, "text": { "vi": "Bài thuyết trình trơn tru. Sếp nhớ tên bạn.", "en": "A smooth presentation. The boss remembers your name." } }
+          ]
+        },
+        {
+          "label": { "vi": "Cúi mặt xuống bàn", "en": "Stare at the table" },
+          "outcomes": [
+            { "chance": 1, "effects": { "willpower": -1 }, "text": { "vi": "Người khác nhận việc. Bạn thở phào.", "en": "Someone else takes it. You exhale." } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vd_chuoi_dung_co",
+      "category": "love",
+      "age": [18, 60],
+      "weight": 5,
+      "once": true,
+      "rating": "18+",
+      "requires": { "hasPartner": true, "notFlags": ["vd_da_hen_bien"] },
+      "text": {
+        "vi": "Người yêu rủ bạn đi biển cuối tuần.",
+        "en": "Your partner invites you to the beach this weekend."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Đi luôn", "en": "Let's go" },
+          "outcomes": [
+            { "chance": 1, "effects": { "happy": 8, "rel_partner": 6, "money": -5 }, "setFlags": ["vd_da_hen_bien"], "text": { "vi": "Hai người ngắm hoàng hôn đến khi trời tối hẳn.", "en": "You watch the sunset until it is fully dark." } }
+          ]
+        },
+        {
+          "label": { "vi": "Để dịp khác", "en": "Another time" },
+          "outcomes": [
+            { "chance": 1, "effects": { "rel_partner": -3 }, "text": { "vi": "Họ nói không sao, giọng hơi buồn.", "en": "They say it's fine, a little sadly." } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vd_su_kien_tu_dong",
+      "category": "random",
+      "age": [5, 100],
+      "weight": 3,
+      "once": false,
+      "rating": "all",
+      "text": {
+        "vi": "Một con chim đậu lên cửa sổ và hót rất lâu.",
+        "en": "A bird lands on your windowsill and sings for ages."
+      },
+      "effects": { "happy": 2 }
+    },
+    {
+      "id": "vd_bien_co_lon",
+      "category": "random",
+      "age": [18, 80],
+      "weight": 1,
+      "once": true,
+      "rating": "all",
+      "big": true,
+      "requires": { "country": ["VN"], "min": { "money": 50 } },
+      "text": {
+        "vi": "Một người lạ đề nghị mua lại mảnh đất của gia đình bạn với giá gấp ba.",
+        "en": "A stranger offers to buy your family's land for triple its value."
+      },
+      "choices": [
+        {
+          "label": { "vi": "Bán", "en": "Sell" },
+          "outcomes": [
+            { "chance": 1, "effects": { "money": 150, "happy": 5, "rel_mother": -5 }, "text": { "vi": "Bạn giàu lên, nhưng mẹ không nói chuyện với bạn cả tuần.", "en": "You're richer, but Mum doesn't speak to you for a week." } }
+          ]
+        },
+        {
+          "label": { "vi": "Giữ lại đất tổ tiên", "en": "Keep the ancestral land" },
+          "outcomes": [
+            { "chance": 1, "effects": { "karma": 5, "rel_mother": 8 }, "text": { "vi": "Mẹ nắm tay bạn thật lâu.", "en": "Mum holds your hand for a long time." } }
+          ]
+        }
+      ]
+    }
+  ]
+}

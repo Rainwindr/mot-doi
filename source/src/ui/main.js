@@ -65,6 +65,31 @@ function boot(data) {
   if (ui.view === 'game' && !game.life) ui.view = 'home';
   applyTheme();
   render();
+  loadRemotePacks();
+}
+
+// Gói nội dung đặt trong thư mục packs/ của trang (GitHub Pages): sửa trên GitHub là game tự nạp.
+async function loadRemotePacks() {
+  if (!/^https?:$/.test(location.protocol)) return;
+  let list;
+  try { const r = await fetch('packs/danh-sach.json', { cache: 'no-store' }); if (!r.ok) return; list = await r.json(); } catch { return; }
+  const files = Array.isArray(list) ? list : list.files || [];
+  const errs = [];
+  let ok = 0;
+  for (const f of files) {
+    try {
+      const r = await fetch(`packs/${f}`, { cache: 'no-store' });
+      if (!r.ok) { errs.push(`${f}: không tìm thấy file (lỗi ${r.status})`); continue; }
+      const res = loadPackText(game, await r.text());
+      if (res.errors) { errs.push(`${f}:\n  ${res.errors.slice(0, 8).join('\n  ')}`); continue; }
+      res.pack.remote = f;
+      if (settings.packs[res.pack.manifest.id] == null) settings.packs[res.pack.manifest.id] = true;
+      ok++;
+    } catch (e) { errs.push(`${f}: ${e.message}`); }
+  }
+  ui.remote = { ok, errs };
+  refreshEvents(game);
+  render();
 }
 function persist() {
   store.set(KEY.settings, settings);
@@ -1150,7 +1175,7 @@ function sheetCollection() {
 }
 function sheetSettings() {
   const tog = (k, title, sub) => `<label class="toggle" for="set-${k}"><span><b>${title}</b><small>${sub}</small></span><input id="set-${k}" type="checkbox" data-set="${k}" ${settings[k] ? 'checked' : ''}></label>`;
-  const packs = game.packs.map((p) => `<div class="item"><div class="main"><b>${esc(tx(p.manifest.name))}</b><small>${p.events.length} ${t('events')} · ${p.manifest.rating} · ${p.builtin ? t('builtin') : t('custom')}</small></div>${p.builtin ? '' : `<button class="btn small danger" data-a="pack-del:${esc(p.manifest.id)}">${t('removePack')}</button>`}<input type="checkbox" aria-label="${esc(tx(p.manifest.name))}" data-pack="${esc(p.manifest.id)}" ${settings.packs[p.manifest.id] !== false ? 'checked' : ''} style="width:22px;height:22px;accent-color:var(--b-age-d)"></div>`).join('');
+  const packs = game.packs.map((p) => `<div class="item"><div class="main"><b>${esc(tx(p.manifest.name))}</b><small>${p.events.length} ${t('events')} · ${p.manifest.rating} · ${p.builtin ? t('builtin') : p.remote ? `GitHub · ${esc(p.remote)}` : t('custom')}</small></div>${p.builtin || p.remote ? '' : `<button class="btn small danger" data-a="pack-del:${esc(p.manifest.id)}">${t('removePack')}</button>`}<input type="checkbox" aria-label="${esc(tx(p.manifest.name))}" data-pack="${esc(p.manifest.id)}" ${settings.packs[p.manifest.id] !== false ? 'checked' : ''} style="width:22px;height:22px;accent-color:var(--b-age-d)"></div>`).join('');
   const m = ui.packMsg;
   return `${head(`⚙️ ${t('settings')}`, '#475569')}
     <div class="toggle"><span><b>🌐 ${t('lang')}</b></span>${langSwitch()}</div>
@@ -1159,7 +1184,7 @@ function sheetSettings() {
     ${tog('godEnabled', `⚡ ${t('godToggle')}`, t('godToggleSub'))}
     <div class="box"><div class="field"><label for="setsel-eventFreq">🎲 ${t('eventFreq')}</label><select id="setsel-eventFreq" data-setsel="eventFreq">${[['low', t('freqLow')], ['mid', t('freqMid')], ['high', t('freqHigh')], ['max', t('freqMax')]].map(([v, lb]) => `<option value="${v}" ${(settings.eventFreq || 'mid') === v ? 'selected' : ''}>${lb}</option>`).join('')}</select></div><p class="note" style="margin:0">${t('eventFreqNote')}</p></div>
     <div class="list">${li('sheet:collection', '📚', t('collection'), t('collectionSub'))}</div>
-    <div class="section"><h3>📦 ${t('packs')}</h3><div class="list">${packs}</div>
+    <div class="section"><h3>📦 ${t('packs')}</h3>${ui.remote ? `<p class="note">🐙 ${t('remotePacks', { n: ui.remote.ok })}</p>${ui.remote.errs.length ? `<p class="err" style="margin:0">${t('remoteErr')}</p><div class="errors">${esc(ui.remote.errs.join('\n'))}</div>` : ''}` : ''}<div class="list">${packs}</div>
       <div class="box"><div class="field"><label for="packfile">${t('loadPack')}</label><input id="packfile" type="file" accept=".json,.txt,application/json"></div>
       ${m ? (m.ok ? `<p style="color:var(--good);font-weight:700;margin:0">${esc(m.ok)}</p>` : `<p class="err" style="margin:0">${t('packErr')}</p><div class="errors">${esc(m.errors.slice(0, 30).join('\n'))}</div>`) : ''}</div>
     </div>
