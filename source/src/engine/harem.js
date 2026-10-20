@@ -310,6 +310,7 @@ export function autoCare(life, st, mode, prot) {
   life.stats.health = clamp(life.stats.health - Math.ceil(ok.length / 3));
   hrm(life, 3 + Math.min(ok.length, 6) - skip.length * 2);
   setFlag(life, 'recent_intimate');
+  life.fuMany = ok.length; // mỗi người được chăm sóc kéo theo một sự kiện 25+
   const dh = Math.round(h.harmony - before.harmony);
   const dhe = Math.round(life.stats.health - before.health);
   const preg = !before.preg && life.pregnancy ? 1 : 0;

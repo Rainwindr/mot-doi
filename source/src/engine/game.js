@@ -93,6 +93,7 @@ export function newLife(game, opts) {
 export function ageUpGame(game) {
   const life = game.life;
   if (!ageUp(life, game.events, game.settings)) return false;
+  delete life.fuMany;
   life.ixSeen = life.ixTick || 0; // chuyện thân mật tự xảy ra trong năm không kích hoạt thêm
   autoResolve(game);
   return true;
@@ -175,26 +176,34 @@ export function chooseEvent(game, idx) {
  * Sau mỗi hành động thân mật của người chơi: bốc ngay một sự kiện 25+ phù hợp từ các gói đang bật.
  * settings.fu25: 'always' (mặc định) | 'some' (một nửa số lần) | 'off'.
  */
+const FU_MAX = 30;
 export function followUp25(game) {
   const life = game.life;
   const st = game.settings;
   if (!life || life.dead) return false;
   const tick = life.ixTick || 0;
-  if (tick <= (life.ixSeen || 0)) return false;
+  if (tick <= (life.ixSeen || 0)) { delete life.fuMany; return false; }
   life.ixSeen = tick;
   const mode = st.fu25 || 'always';
-  if (!st.adult25 || life.age < 18 || mode === 'off') return false;
-  if (mode === 'some' && !chance(life, 0.5)) return false;
-  if (life.queue.some((q) => q.fu)) return false;
+  if (!st.adult25 || life.age < 18 || mode === 'off') { delete life.fuMany; return false; }
+  if (mode === 'some' && !chance(life, 0.5)) { delete life.fuMany; return false; }
+  if (life.queue.some((q) => q.fu)) { delete life.fuMany; return false; }
   life.fuUsed = (life.fuUsed || []).filter((x) => x.age === life.age);
   const used = new Set(life.fuUsed.map((x) => x.uid));
   const seen = new Set(st.seen || []);
+  const many = Math.min(FU_MAX, Math.max(1, life.fuMany || 1));
+  delete life.fuMany;
   const pool = game.events.filter((e) => e.rating === '25+' && e.choices && !used.has(e.uid) && eligible(e, life, st));
-  if (!pool.length) return false;
-  const ev = weighted(life, pool, (e) => e.weight * (seen.has(e.uid) ? 1 : 3));
-  life.fuUsed.push({ uid: ev.uid, age: life.age });
-  life.queue.unshift({ uid: ev.uid, fu: true });
-  return true;
+  const picks = [];
+  while (picks.length < many && pool.length) {
+    const ev = weighted(life, pool, (e) => e.weight * (seen.has(e.uid) ? 1 : 3));
+    pool.splice(pool.indexOf(ev), 1);
+    picks.push(ev);
+    life.fuUsed.push({ uid: ev.uid, age: life.age });
+  }
+  if (!picks.length) return false;
+  life.queue.unshift(...picks.map((ev) => ({ uid: ev.uid, fu: true })));
+  return picks.length;
 }
 
 /** Trả lời một cảnh do hành động tạo ra (hộp đêm, hẹn hò...). */
