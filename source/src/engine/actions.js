@@ -206,6 +206,7 @@ export function doPersonAction(life, settings, personId, act) {
   const p = byId(life, personId);
   if (!p || !p.alive || life.dead) return null;
   if (ROMANTIC.includes(p.role) && !life.prison) { const r0 = partnerAction(life, settings, p, act); if (r0) return r0; }
+  if (['intimate', 'seduce', 'kink', 'pos', 'group', 'sext', 'scene3'].includes(act) && life.age >= 18 && p.age >= 18) life.ixTick = (life.ixTick || 0) + 1;
   const name = personName(life, p);
   const key = `p:${act}:${p.id}`;
   const n = (life.yearActs[key] = (life.yearActs[key] || 0) + 1);

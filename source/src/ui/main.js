@@ -4,7 +4,7 @@ import { COUNTRIES, byCode, tierOf } from '../data/countries.js';
 import { careerById, ladderOf, COMPANIES } from '../data/careers.js';
 import { entryRank, entryBonus, salaryFor, nextRank, rankName, effExp } from '../engine/career.js';
 import {
-  makeGame, defaultSettings, refreshEvents, loadPackText, newLife, ageUpGame, currentEvent, chooseEvent, chooseModal, continueAsChild, BUILTIN,
+  makeGame, defaultSettings, refreshEvents, followUp25, loadPackText, newLife, ageUpGame, currentEvent, chooseEvent, chooseModal, continueAsChild, BUILTIN,
 } from '../engine/game.js';
 import { normalizePack, validatePack } from '../engine/validate.js';
 import { STAT_KEYS, HIDDEN_KEYS, TRAITS, WEALTH, country, tier, personName, partner, people, addLog, polyOk } from '../engine/life.js';
@@ -1182,6 +1182,7 @@ function sheetSettings() {
     ${tog('adult25', `🔞 ${t('adult25')}`, t('adult25Sub'))}
     ${tog('alwaysProtect', `🛡️ ${t('protect')}`, t('protectSub'))}
     ${tog('godEnabled', `⚡ ${t('godToggle')}`, t('godToggleSub'))}
+    ${settings.adult25 ? `<div class="box"><div class="field"><label for="setsel-fu25">🔥 ${t('fu25')}</label><select id="setsel-fu25" data-setsel="fu25">${[['always', t('fu25Always')], ['some', t('fu25Some')], ['off', t('fu25Off')]].map(([v, lb]) => `<option value="${v}" ${(settings.fu25 || 'always') === v ? 'selected' : ''}>${lb}</option>`).join('')}</select></div><p class="note" style="margin:0">${t('fu25Note')}</p></div>` : ''}
     <div class="box"><div class="field"><label for="setsel-eventFreq">🎲 ${t('eventFreq')}</label><select id="setsel-eventFreq" data-setsel="eventFreq">${[['low', t('freqLow')], ['mid', t('freqMid')], ['high', t('freqHigh')], ['max', t('freqMax')]].map(([v, lb]) => `<option value="${v}" ${(settings.eventFreq || 'mid') === v ? 'selected' : ''}>${lb}</option>`).join('')}</select></div><p class="note" style="margin:0">${t('eventFreqNote')}</p></div>
     <div class="list">${li('sheet:collection', '📚', t('collection'), t('collectionSub'))}</div>
     <div class="section"><h3>📦 ${t('packs')}</h3>${ui.remote ? `<p class="note">🐙 ${t('remotePacks', { n: ui.remote.ok })}</p>${ui.remote.errs.length ? `<p class="err" style="margin:0">${t('remoteErr')}</p><div class="errors">${esc(ui.remote.errs.join('\n'))}</div>` : ''}` : ''}<div class="list">${packs}</div>
@@ -1539,6 +1540,7 @@ $app.addEventListener('click', (e) => {
 function afterAction(cmd) {
   const L = game.life;
   if (!L || ui.view !== 'game' || ui.birth) return;
+  if (cmd !== 'ageup') followUp25(game);
   const fresh = cmd === 'result-ok' ? [] : checkGoals(L);
   if (fresh.length) {
     const pop = { emoji: '🎯', title: { vi: STRINGS.vi.goalDone, en: STRINGS.en.goalDone }, text: { vi: fresh.map((g) => `${g.em} ${g.name.vi}`).join('\n'), en: fresh.map((g) => `${g.em} ${g.name.en}`).join('\n') }, tone: 'good' };

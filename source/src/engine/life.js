@@ -201,8 +201,10 @@ export function milestone(life, text, tone) {
   (life.miles = life.miles || []).push({ age: life.age, text, tone });
 }
 
+const INTIMATE_TICK = new Set(['recent_intimate', 'ons_happened', 'uni_intimate', 'uni_ons']);
 export function setFlag(life, f) {
   life.flags[f] = life.age;
+  if (INTIMATE_TICK.has(f)) life.ixTick = (life.ixTick || 0) + 1;
 }
 export function clearFlag(life, f) {
   delete life.flags[f];

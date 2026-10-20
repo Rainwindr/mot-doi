@@ -1,5 +1,5 @@
 // Mô phỏng nhiều đời ngẫu nhiên để kiểm tra lỗi và cân bằng tuổi thọ.
-import { makeGame, defaultSettings, newLife, ageUpGame, currentEvent, chooseEvent, chooseModal } from '../src/engine/game.js';
+import { makeGame, defaultSettings, newLife, ageUpGame, currentEvent, chooseEvent, chooseModal, followUp25 } from '../src/engine/game.js';
 import { availableActivities, doActivity, workAction, applyJob, jobOpenings, personActions, doPersonAction, godPerson } from '../src/engine/actions.js';
 import { country } from '../src/engine/life.js';
 import { invest, divest, buyHome, buyCar, startBiz, bizAction, ASSETS, HOMES, CARS, INDUSTRIES, netWorth } from '../src/engine/economy.js';
@@ -84,6 +84,7 @@ for (let i = 0; i < N; i++) {
         const r2 = doPersonAction(life, st, q.id, R(acts2)[0]);
         if (r2 && r2.event) { let rr = r2, g = 0; while (rr && rr.event && g++ < 5) { const m = chooseModal(game, rr.event, Math.floor(Math.random() * rr.event.choices.length)); rr = m.next ? { event: m.next } : null; } }
         if (r2 && r2.mini) autoPlay(life, r2.mini);
+        if (followUp25(game)) { let e3, g3 = 0; while ((e3 = currentEvent(game)) && g3++ < 5) chooseEvent(game, pickOpen(life, e3)); }
         if (Math.random() < 0.03) godPerson(life, q.id, { poly: 90, fert: 90, skill: 80, size: 70, firm: R([0, 50, 100]), att: R(Object.keys(ATT)), chem: 80, fire: 85, kinks: Object.fromEntries(KINKS.map((k) => [k.id, R(['want', 'never', ''])])), reveal: Math.random() < 0.5, fav: R(['', 3, 30]) });
       }
       if (!life.dead && life.age >= 18 && Math.random() < 0.5) {

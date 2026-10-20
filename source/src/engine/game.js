@@ -8,7 +8,8 @@ import { initEconomy, netWorth } from './economy.js';
 import { createCoborns, buildCrimeSys, applyCrimeSys } from './crime.js';
 import { buildLoveSys, applyLoveSys } from './love.js';
 import { buildArcEvent, applyArc } from './arcs.js';
-import { choiceLocked } from './events.js';
+import { choiceLocked, eligible } from './events.js';
+import { weighted, chance } from './util.js';
 import { assignGoals } from './goals.js';
 import { buildCareerSys } from './career.js';
 import { buildIxSys, inheritSecrets } from './intimacy.js';
@@ -92,6 +93,7 @@ export function newLife(game, opts) {
 export function ageUpGame(game) {
   const life = game.life;
   if (!ageUp(life, game.events, game.settings)) return false;
+  life.ixSeen = life.ixTick || 0; // chuyện thân mật tự xảy ra trong năm không kích hoạt thêm
   autoResolve(game);
   return true;
 }
@@ -159,6 +161,7 @@ export function chooseEvent(game, idx) {
   }
   // 272/280: lựa chọn đúng tính cách khiến bạn thấy "đúng là mình"; tuổi thơ hình thành tính cách
   if (nudgePersona(life, choice)) { life.stats.happy = Math.min(100, life.stats.happy + 1); changes = (changes || []).concat([['happy', 1]]); }
+  if (!ev.sys) life.ixSeen = life.ixTick || 0; // sự kiện gói không tự nối thêm sự kiện 25+
   markSeen(game.settings, ev.uid.startsWith('sc/') ? ev.uid.replace(/\/\d+$/, '/1') : ev.uid);
   addLog(life, ev.text);
   if (outcome.text) addLog(life, outcome.text, tone(changes));
@@ -166,6 +169,32 @@ export function chooseEvent(game, idx) {
   autoResolve(game);
   checkHealthDeath(life);
   return { event: ev, choice, outcome, changes };
+}
+
+/**
+ * Sau mỗi hành động thân mật của người chơi: bốc ngay một sự kiện 25+ phù hợp từ các gói đang bật.
+ * settings.fu25: 'always' (mặc định) | 'some' (một nửa số lần) | 'off'.
+ */
+export function followUp25(game) {
+  const life = game.life;
+  const st = game.settings;
+  if (!life || life.dead) return false;
+  const tick = life.ixTick || 0;
+  if (tick <= (life.ixSeen || 0)) return false;
+  life.ixSeen = tick;
+  const mode = st.fu25 || 'always';
+  if (!st.adult25 || life.age < 18 || mode === 'off') return false;
+  if (mode === 'some' && !chance(life, 0.5)) return false;
+  if (life.queue.some((q) => q.fu)) return false;
+  life.fuUsed = (life.fuUsed || []).filter((x) => x.age === life.age);
+  const used = new Set(life.fuUsed.map((x) => x.uid));
+  const seen = new Set(st.seen || []);
+  const pool = game.events.filter((e) => e.rating === '25+' && e.choices && !used.has(e.uid) && eligible(e, life, st));
+  if (!pool.length) return false;
+  const ev = weighted(life, pool, (e) => e.weight * (seen.has(e.uid) ? 1 : 3));
+  life.fuUsed.push({ uid: ev.uid, age: life.age });
+  life.queue.unshift({ uid: ev.uid, fu: true });
+  return true;
 }
 
 /** Trả lời một cảnh do hành động tạo ra (hộp đêm, hẹn hò...). */
